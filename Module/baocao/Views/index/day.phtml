@@ -1,0 +1,27 @@
+<ol class="breadcrumb" >
+    <li><a href="/backend/" class="" >Dashboard</a></li>
+    <li>Báo cáo Ngày</li>
+</ol>
+<div class="container-fluid">
+    <form action="" enctype="multipart/form-data" method="POST" >
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Báo Cáo Ngày: <?php echo date(Model\Common::DateTimeFomatView()); ?></h3>
+                <div class="box-tools">
+                    <button class="btn-confirm btn btn-success" title="Bạn Muốn Lưu Báo Cáo Ngày?" ><i class="fa fa-save" ></i> Lưu</button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="form-group">
+                    <label>Nội Dung Công Việc</label>
+                    <?php
+                    new \Module\baocao\Model\FormBaoCao();
+                    $Item = new \Module\baocao\Model\BaoCaoService($Item);
+                    \Module\baocao\Model\FormBaoCao::Content($Item->Content())->render();
+                    ?>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>

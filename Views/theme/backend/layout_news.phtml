@@ -1,0 +1,35 @@
+<?php
+
+use Views\theme\backend\Functions;
+?>
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php
+        Functions::head();
+        ?>
+
+    </head>
+    <body class="hold-transition skin-blue sidebar-mini">
+        <div class="wrapper"> 
+            <?php
+            Functions::header();
+            Functions::leftaside();
+            ?> 
+            <div class="content-wrapper">
+                
+                <?php
+                include $_Content;
+                ?> 
+            </div>
+            <?php 
+            Functions::footer();  
+            Functions::aside();
+            ?>  
+        </div><!-- ./wrapper --> 
+        <?php
+        Functions::js();
+        ?> 
+    </body>
+</html>

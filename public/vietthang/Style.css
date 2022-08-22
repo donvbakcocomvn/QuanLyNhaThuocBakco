@@ -1,0 +1,10 @@
+.no-border-radius{
+    border-radius: 0px;
+}
+.d-flex{
+    display: flex;
+}
+.form-control{
+
+    border-radius: 0px;
+}

@@ -1,0 +1,21 @@
+<?php
+$modelUser = Model\User::CurentUser();
+?>
+<ol class="breadcrumb" >
+    <li><a href="/backend/" >Dashboard</a></li>
+    <li>Mã QRCode Cá Nhân</li>
+</ol>
+<div class="container-fluid">
+    <div class="box box-primary">
+        <div class="box-header">
+            <h3 class="box-title">Mã QRCode Cá Nhân</h3>
+            <div class="box-tools">
+
+            </div>
+        </div>
+        <div class="box-body">
+            <img class="img-bordered img center-block img-responsive" id="imgContent" src="/public/phpqrcode/index.php?data=<?php echo $modelUser->QRDataCode(); ?>" >
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,22 @@
+{
+    "name": "namdong92/lap1",
+    "description": "Hướng dẫn lập trình php.",
+    "authors": [
+        {
+            "name": "MSI",
+            "email": "namdong92@gmail.com"
+        }
+    ],
+    "require": {
+        "namdongvando/rpfbc": "^3.22",
+        "namdongvando/imagesoptimizer": "^1.0",
+        "phpmailer/phpmailer": "^6.5",
+        "zaloplatform/zalo-php-sdk": "^2.0"
+    } , 
+    "autoload": {
+        "psr-4": {
+            "QuanLyNhanVien\\": "App/QuanLyNhanVien/src/",
+            "HangSanXuat\\": "App/HangSanXuat/src/"
+        }
+    }
+}

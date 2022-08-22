@@ -1,0 +1,46 @@
+<ol class="breadcrumb" >
+    <li><a href="/index.php?controller=backend" >Home</a></li>
+    <li><a href="/index.php?controller=quanlyquyen" >Danh Sách Quyền</a></li>
+    <li> Sửa </li>
+</ol>
+<?php
+$roleDetail = new Model\Role($roleDetail);
+?>
+<div class="container-fluid" >
+    <div class="box box-primary" >
+        <div class="box-header" >
+            <h3 class="box-title" >Sửa Quyền</h3>
+            <div class="box-tools" >
+                <!--<a href="#" class="btn btn-success" ><i class="fa fa-plus" ></i></a>-->
+            </div>
+        </div>
+        <div class="box-body" >
+            <form action="" method="POST">
+                <div class="row" >
+                    <div class="col-md-6" >
+                        <div class="form-group" >
+                            <label>Mã</label>
+                            <input readonly="" class="form-control" name="Id" value="<?php echo $roleDetail->Id ?>" placeholder="Mã" type="Text"  >
+                        </div>
+                        <div class="form-group" >
+                            <label>Tên</label>
+                            <input class="form-control" name="Name" value="<?php echo $roleDetail->Name ?>" placeholder="Tên" type="type"  >
+                        </div>
+                        <div class="form-group" >
+                            <label>Mô Tả</label>
+                            <textarea rows="10" class="form-control" name="Des" placeholder="Mô tả"  ><?php echo $roleDetail->Des ?></textarea>
+                        </div>
+                        <div class="form-group" > 
+                            <button class="btn btn-default"  type="reset" >Làm Lại</button>
+                            <button class="btn btn-success" >Lưu</button>
+                            <button class="btn btn-success" name="LuuThoat" >Lưu & Thoát</button>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+</div>

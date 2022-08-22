@@ -1,0 +1,223 @@
+<?php
+
+use Module\nhanvien\Model\Form\FormLichLamViec;
+
+$_Thang = date("m", time());
+$_Nam = date("Y", time());
+?>
+<ol class="breadcrumb" >
+    <li><a href="/backend" >Home</a></li>
+    <li> Lich làm việc </li>
+</ol>
+
+<div class="container-fluid"  ng-controller="searchCtrl" >
+    <form method="get" action="/nhanvien/lichlamviec/index/">
+        <div class="form-group d-flex" >
+            <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type=""  >
+            <button class="btn btn-primary no-border-radius" name="btnTim" type="submit"  >
+                <i class="fa fa-search"  ></i>
+            </button>
+        </div>
+    </form>
+    <div class="clearfix">
+
+    </div>
+    <div class="box box-primary" >
+        <div class="box-header" >
+            <h3 class="box-title" >Lịch Làm Việc: <?php echo $_Thang; ?>/<?php echo $_Nam; ?></h3>
+            <div class="box-tools">
+                <a target="_self" class="btn btn-primary" data-toggle="modal" href='#caiDatNhanh'><i class="fa fa-gears" ></i> Cài Đặt</a>
+            </div>
+        </div>
+        <div class="box-body" >
+
+            <div class="table-responsive" >
+                <table class="table table-bordered table-hover table-striped ">
+                    <thead>
+                        <tr>
+                            <th>Nhân Viên</th>
+                            <?php
+                            for ($day = 1; $day <= Model\Common::DaysInMonth($_Thang, $_Nam); $day++) {
+                                ?>
+                                <th class="text-center"  >
+                                    <?php
+                                    echo $day . "<br>";
+                                    $thang = date("m", time());
+                                    $nam = date("Y", time());
+                                    $ngayThanhNam = "{$nam}-{$thang}-{$day}";
+                                    ?>
+                                    <span style="font-size: 10px;white-space: nowrap" >
+                                        <?php
+                                        echo Model\Common::NameDateByDate($ngayThanhNam);
+                                        ?>
+                                    </span>
+                                </th>
+                                <?php
+                            }
+                            ?>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        if ($Items) {
+                            foreach ($Items as $index => $user) {
+                                $_user = new \Module\nhanvien\Model\NhanVien($user);
+                                ?>
+                                <tr>
+                                    <th class="" style="white-space: nowrap;"  >
+                                        <?php echo $_user->Name; ?>
+                                    </th>
+                                    <?php
+                                    for ($day = 1; $day <= Model\Common::DaysInMonth($_Thang, $_Nam); $day++) {
+                                        $d = mktime(1, 1, 1, $_Thang, $day, $_Nam);
+                                        $ngayHienTai = date("Y-m-d", $d);
+                                        $id_modal = $_user->Id . $_Thang . $_Nam . $day;
+                                        $id_modal = md5($id_modal);
+                                        $itemDetail = \Module\nhanvien\Model\LichLamViec::GetByDayIdNhanVien($ngayHienTai, $_user->Id);
+
+                                        $itemDetail = new \Module\nhanvien\Model\LichLamViec($itemDetail);
+                                        ?>
+                                        <td >
+
+                                            <?php
+                                            if ($itemDetail->Id) {
+                                                echo $itemDetail->CaLamViec == "" ? "N/a" : $itemDetail->CaLamViec;
+                                            } else {
+                                                echo "Trống";
+                                            }
+                                            ?>
+
+                                        </td>
+                                        <?php
+                                    }
+                                    ?>
+                                </tr>
+                                <?php
+                            }
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <div class="box-footer" >
+            <div  class="d-flex">
+                <?php
+                \Model\FormCommon::Select("", "", [10, 20, 50, 100], [
+                    "style" => "max-width:70px;",
+                    "class" => "form-control",
+                    "value" => $pageNumber,
+                    "onchange" => "SoDongHienThi(this.value)",
+                        ]
+                )->render();
+                ?>
+                <?php
+                $linkPhanTrang = "/nhanvien/lichlamviec/index/?indexPage=[i]&pageNumber={$pageNumber}";
+                echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form action="/nhanvien/lichlamviec/caidatnhanh/" enctype="multipart/form-data" method="POST" >
+    <div class="modal fade" id="caiDatNhanh">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Cài Đặt Nhanh</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php
+                            FormLichLamViec::IdNhanVien(null, false)->renderHTML();
+                            ?>
+                        </div>
+                        <div class="col-md-6">
+                            <?php
+                            FormLichLamViec::CaLamViec($itemDetail->CaLamViec)->renderHTML();
+                            ?>
+                        </div>
+                        <div class="col-md-6">
+                            <input class="form-control" type="date" required="" name="TuNgay" >
+
+                        </div>
+                        <div class="col-md-6">
+                            <input class="form-control" type="date" required="" name="DenNgay" >
+                        </div>
+                        <div class="col-md-12">
+                            <div class="box box-primary" style="margin-top: 15px;" >
+                                <div class="box-body">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <?php
+                                            $thuNgay = Model\Common::NgayTrongTuan();
+                                            foreach ($thuNgay as $key => $value) {
+                                                ?>
+                                                <td>
+                                                    <label  ><?php echo $value; ?>
+                                                        <input type="checkbox"  name="Thu[<?php echo $key; ?>]" value="1" >
+                                                    </label>
+                                                </td>
+                                                <?php
+                                            }
+                                            ?>
+                                        </tr>
+                                    </table>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Thoát</button>
+                    <button type="submit" class="btn btn-primary">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<form action="/nhanvien/lichlamviec/savelichlamviec/" enctype="multipart/form-data" method="POST" >
+    <div class="modal fade" id="modal<?php echo $id_modal ?>">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Ngày: (<?php echo date("d-m-Y", strtotime($ngayHienTai)); ?> )
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <label>Nhân Viên:  <?php echo $_user->Name; ?></label>
+                    <?php
+                    FormLichLamViec::Id($itemDetail->Id)->renderHTML();
+                    FormLichLamViec::Ngay($ngayHienTai, true)->render();
+                    FormLichLamViec::IdNhanVien($_user->Id, true)->render();
+                    FormLichLamViec::CaLamViec($itemDetail->CaLamViec)->renderHTML();
+                    ?>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" name="SaveCa" class="btn btn-primary">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript" >
+    var SoDongHienThi = function(evalue) {
+        var linkPhanTrang = '/nhanvien/lichlamviec/index/?indexPage=1&pageNumber=[j]';
+        linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
+        window.location.href = linkPhanTrang;
+    }
+</script>

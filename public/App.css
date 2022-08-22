@@ -1,0 +1,13 @@
+.system-alert{
+    position: fixed;
+    right: 0px;
+    width: 250px;
+    top: 25%;
+    z-index: 9999;
+}
+.d-flex{
+    display: flex;
+}
+.no-border-radius{
+    border-radius: 0px;
+}

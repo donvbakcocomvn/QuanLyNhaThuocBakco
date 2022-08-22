@@ -1,0 +1,38 @@
+### Rewrite Rules Added by CyberPanel Rewrite Rule Generator
+
+RewriteEngine On
+#RewriteCond %{HTTPS}  !=on
+#RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R,L]
+
+### End CyberPanel Generated Rules.
+
+RewriteEngine On
+RewriteBase /
+RewriteCond %{ENV:REDIRECT_STATUS} ^200
+RewriteRule ^ - [L]
+RewriteCond %{QUERY_STRING} ^(.*)&?fbclid=[^&]+&?(.*)$ [NC]
+RewriteRule ^(.*)$ /$1?%1%2 [R=301,L]
+RewriteCond %{QUERY_STRING} ^(.*)&?gidzl=[^&]+&?(.*)$ [NC]
+RewriteRule ^(.*)$ /$1?%1%2 [R=301,L]
+RewriteCond %{QUERY_STRING} ^(.*)&?utm_medium=[^&]+&?(.*)$ [NC]
+RewriteRule ^(.*)$ /$1?%1%2 [R=301,L]
+RewriteCond %{QUERY_STRING} ^(.*)&?utm_source=[^&]+&?(.*)$ [NC]
+RewriteRule ^(.*)$ /$1?%1%2 [R=301,L]
+RewriteCond %{QUERY_STRING} ^(.*)&?utm_campaign=[^&]+&?(.*)$ [NC]
+RewriteRule ^(.*)$ /$1?%1%2 [R=301,L]
+RewriteCond %{QUERY_STRING} ^(.*)&?zarsrc=[^&]+&?(.*)$ [NC]
+RewriteRule ^(.*)$ /$1?%1%2 [R=301,L]
+#RewriteRule fonts -  [L]
+RewriteRule public - [L]
+#RewriteRule confix -  [L]
+RewriteRule robots.txt -  [L]
+#RewriteRule smarty -  [L]
+#SetOutputFilter DEFLATE
+#RewriteRule ^backend/(.*) /index.php?ctr=backend&action=index&param=$1 [L]
+#Redirect ^backend/ /
+RewriteCond %{HTTPS} on
+RewriteRule (.*) http://%{SERVER_NAME}/$1 [L]
+
+RewriteRule  (.*)\.html(.*) /index.php?controller=index&action=pages&param=$1 [L]
+
+RewriteRule (.*) index.php [L]

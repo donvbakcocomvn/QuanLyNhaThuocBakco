@@ -1,0 +1,15 @@
+<div class="container-fluid">
+    <div class="form-group">
+        <label for="">Nội Dung</label>
+        <input id="ContentQRCode" type="text" class="form-control" name="name" id="id" placeholder="SDT|Họ&Tên">
+    </div>
+    <img id="imgContent" src="/public/phpqrcode/index.php?data=aaa" >
+    <script type="text/javascript" >
+        $(function() {
+            $("#ContentQRCode").change(function() {
+                var code = btoa(unescape(encodeURIComponent($(this).val())));
+                $("#imgContent").attr("src", "/public/phpqrcode/index.php?data=" + code);
+            });
+        });
+    </script>
+</div>

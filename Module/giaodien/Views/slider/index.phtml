@@ -1,0 +1,46 @@
+<?php
+
+use Module\giaodien\Model\Slide\SliderService;
+?>
+<ol class="breadcrumb" >
+    <li><a href="/backend" >Home</a></li>
+    <li> Danh Sách Banner Động</li>
+</ol>
+<div class="container-fluid" >
+    <div class="box box-primary" >
+        <div class="box-header" >
+            <h3 class="box-title" >Banner</h3>
+            <div class="box-tools" >
+                <?php
+                SliderService::btnPost();
+                ?>
+            </div>
+        </div>
+        <div class="box-body" >
+            <table class="table table-bordered">
+                <?php
+                foreach ($Items as $key => $item) {
+                    $_item = new SliderService($item);
+                    ?> 
+                    <tr> 
+                        <td style="width: 200px;" > 
+                            <?php
+                            $_item->btnPut();
+                            $_item->btnDelete();
+                            ?>
+                        </td>
+                        <td>
+                            <img src="<?php echo $_item->Images ?>" style="height: 100px;width: auto;" class="img img-responsive" > 
+                        </td> 
+                        <td> <?php echo $_item->Name ?> </td>
+                        <td> <?php echo $_item->GroupsId ?> </td>
+                    </tr>
+                    <?php
+                }
+                ?>
+
+            </table> 
+
+        </div>
+    </div>    
+</div>    

@@ -1,0 +1,37 @@
+<?php
+
+use Module\nhanvien\Model\Form\FormCaLamViec;
+?>
+<ol class="breadcrumb" >
+    <li><a href="/backend" >Home</a></li>
+    <li><a href="/nhanvien/calamviec/index/" >Ca làm việc</a></li>
+    <li> Thêm </li>
+</ol>
+
+<div class="container-fluid"  ng-controller="searchCtrl" >
+
+    <div class="row" >
+        <div class="col-md-6" >
+            <div class="box box-primary" >
+                <div class="box-header" >
+                    <h3 class="box-title" >Ca Làm Việc</h3>
+                </div>
+                <div class="box-body" >
+                    <?php
+                    FormCaLamViec::Code()->renderHTML();
+                    FormCaLamViec::Name()->renderHTML();
+                    FormCaLamViec::Des()->renderHTML();
+                    ?>
+                </div>
+                <div class="box-footer">
+                    <?php
+                    Model\btnLink::btnSave();
+                    ?>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

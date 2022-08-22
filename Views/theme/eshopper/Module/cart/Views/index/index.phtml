@@ -1,0 +1,68 @@
+VIEW THEME
+<div class="table-responsive cart_info">
+    <table class="table table-condensed">
+        <thead>
+            <tr class="cart_menu">
+                <td class="image">Item</td>
+                <td class="description"></td>
+                <td class="price">Price</td>
+                <td class="quantity">Quantity</td>
+                <td class="total">Total</td>
+                <td><a class="cart_quantity_delete" href="<?php echo Module\cart\Model\Cart::LinkXoaGioHang(); ?>"><i class="fa fa-times"></i></a></td>
+            </tr>
+        </thead>
+        <tbody>
+
+            <?php
+            $DSSanPham = Module\cart\Model\Cart::DSSanPham();
+            foreach ($DSSanPham as $sanpham) {
+                $_item = new Module\quanlysanpham\Model\SanPham($sanpham);
+                ?> 
+                <tr>
+                    <td class="cart_product">
+                        <a href=""><img style="height: 80px;" src="<?php echo $_item->UrlImages; ?>" alt="<?php echo $_item->Name; ?>"></a>
+                    </td>
+                    <td class="cart_description">
+                        <h4><a href=""><?php echo $_item->Name; ?></a></h4>
+                        <p>Mã: <?php echo $_item->Code; ?></p>
+                    </td>
+                    <td class="cart_price">
+                        <p><?php echo $_item->Price(); ?></p>
+                    </td>
+                    <td class="cart_quantity">
+                        <div class="cart_quantity_button">
+                            <a class="cart_quantity_up" href="<?php echo Module\cart\Model\Cart::LinkThemSLSanPham($_item->Id,1); ?>"> + </a>
+                            <input onchange="" data-id="<?php echo $_item->Id; ?>" class="cart_quantity_input" type="text" name="quantity" value="<?php echo $_item->Number; ?>" autocomplete="off" size="2">
+                            <a class="cart_quantity_down" href="<?php echo Module\cart\Model\Cart::LinkTruSLSanPham($_item->Id,1); ?>"> - </a>
+                        </div>
+                    </td>
+                    <td class="cart_total">
+                        <p class="cart_total_price"><?php echo $_item->ThanhTienToVND(); ?></p>
+                    </td>
+                    <td class="cart_delete">
+                        <a class="cart_quantity_delete" href="<?php echo Module\cart\Model\Cart::LinkXoaSanPham($_item->Id); ?>"><i class="fa fa-times"></i></a>
+                    </td>
+                </tr> 
+                <?php
+            }
+            ?>
+
+            <tr>
+                <td colspan="4" class="text-right" >
+                    <h4>Tổng Tiền  </h4> 
+
+                </td>
+                <td colspan="2" >
+                     <p class="cart_total_price">
+                        <?php
+                       echo Module\cart\Model\Cart::TongTienToVnd();
+                        ?>
+                     </p>
+                </td>
+            </tr> 
+
+        </tbody>
+    </table>
+</div>
+    <a class="btn btn-default" >Xem Sản Phẩm Khác </a>
+    <a href="<?php echo Module\cart\Model\Cart::LinkDatHang(); ?>" class="btn btn-default pull-right">Đặt Hàng </a>

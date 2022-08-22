@@ -1,0 +1,29 @@
+<?php
+$error = \Model\Error::GetError();
+if ($error != null) {
+    ?> 
+    <div class="alert alert-<?php echo $error["Type"]; ?> alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <?php echo $error["Content"]; ?>
+    </div>
+    <?php
+} 
+$isCheck = isset($_COOKIE["GhiNhoMatKhau"]) ? "checked" : "";
+$taiKhoan = isset($_COOKIE["TaiKhoan"]) ? $_COOKIE["TaiKhoan"] : "";
+?>
+<div class="login-logo">
+    <a href="">Quyên mật khẩu</a>
+</div><!-- /.login-logo -->
+<form action="" method="post">
+    <div class="form-group has-feedback">
+        <input type="email" value="<?php echo $taiKhoan; ?>" required="required" name="Email" class="form-control" placeholder="Email">
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+    </div> 
+    <div class="row"> 
+        <div class="col-xs-4">
+            <button type="submit"  class="btn btn-primary btn-block btn-flat">Gửi</button>
+        </div><!-- /.col -->
+    </div>
+</form> 
+<p> Nhập email để nhận lại mật khẩu.</p>
+<a href="/index.php?controller=login">Bạn đã có tài khoản</a><br> 

@@ -1,0 +1,44 @@
+<ol class="breadcrumb" >
+    <li><a href="/index.php?controller=backend" >Home</a></li>
+    <li><a href="/index.php?controller=quanlyusers" >Quản Lý Tài Khoản</a></li>
+    <li> Danh sách quyền </li>
+</ol> 
+
+<div class="container-fluid" >
+    <div class="box box-primary" >
+        <div class="box-header" >
+            <h3 class="box-title" >Danh Sách Quyền</h3>
+            <div class="box-tools" >
+                <a href="/index.php?controller=quanlyusers&action=install" class="btn btn-success" >
+                    Cài Đặt Quyền
+                </a>
+            </div>
+        </div>
+        <div class="box-body" >
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th style="width: 150px" >Key</th>   
+                        <th>Action</th>
+                        <th>Des</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($data as $role) {
+                        ?> 
+                        <tr> 
+                            <th><?php echo $role["Id"]; ?></th> 
+                            <th><?php echo $role["Name"]; ?></th>
+                            <th><?php echo $role["Des"]; ?></th> 
+                        </tr>
+                        <?php
+                    }
+                    ?> 
+                </tbody>
+            </table> 
+        </div>
+    </div>
+
+
+</div>

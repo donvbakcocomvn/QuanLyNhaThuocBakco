@@ -1,0 +1,76 @@
+<?php
+
+use Module\baiviet\Model\Pages\FormPages;
+use Module\baiviet\Model\Pages\PagesService;
+
+ 
+$_item = new PagesService();
+?>
+<ol class="breadcrumb" >
+    <li><a href="/backend" >Home</a></li>
+    <li><a href="/baiviet/pages/" >Quản Lý Trang</a></li>
+    <li> Thêm Mới </li>
+</ol>
+<div  class="container-fluid" >
+    <form action="" method="post">
+        <div class="box box-primary" >
+            <div class="box-header" >
+                <h3 class="box-title" >Thêm Mới</h3>  
+            </div>
+            <div class="box-body" >
+                <div class="col-md-3" >
+                    <?php 
+                    FormPages::Name($_item->Name)->renderHTML(); 
+                    ?>   
+                </div>
+                <div class="col-md-9" >
+                    <div class="row" >
+                        <div role="tabpanel">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active">
+                                    <a href="#Images" aria-controls="Images" role="tab" data-toggle="tab"> Hình Ảnh </a>
+                                </li> 
+                                <li role="presentation">
+                                    <a href="#tab" aria-controls="tab" role="tab" data-toggle="tab">Nội Dung</a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#seo" aria-controls="seo" role="tab" data-toggle="tab">SEO</a>
+                                </li>
+                            </ul> 
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane  " id="Images">
+                                    <img src="<?php echo $_item->Images; ?>" style="height: 100px;" id="thumbnailsImages" >
+                                    <?php
+                                    FormPages::Images($_item->Images)->render();
+                                    ?>
+                                    <button type="button" onclick="BrowseServer('Input_Images', 'thumbnailsImages')" >Chọn hình</button>
+                                </div> 
+                                <div role="tabpanel" class="tab-pane" id="seo">
+                                    <?php
+                                    FormPages::Title($_item->Title)->renderHTML();
+                                    FormPages::Des($_item->Des)->renderHTML();
+                                    FormPages::Keyword($_item->Keyword)->renderHTML();
+                                    ?>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="tab">
+                                    <?php
+                                    FormPages::Content($_item->Content())->renderHTML();
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>   
+            </div>
+            <div class="box-footer" >
+                <input type="submit" class="btn btn-success" name="Luu" value="Lưu" />
+            </div>
+        </div>    
+    </form>    
+</div>
+
+

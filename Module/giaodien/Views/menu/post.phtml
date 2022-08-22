@@ -1,0 +1,53 @@
+<?php
+
+use Module\giaodien\Model\Menu\MenuService;
+use Module\giaodien\Model\Menu\FormMenu;
+
+$_item = new MenuService();
+?>
+<ol class="breadcrumb" >
+    <li><a href="/backend" >Home</a></li>
+    <li><a href="/giaodien/menu/" >Danh Sách Banner Động</a> </li>
+    <li> Thêm Mới</li>
+</ol>
+<div class="container-fluid" >
+    <div class=" " >
+        <form action="" method="POST" >
+            <div class="box box-primary" >
+                <div class="box-header" >
+                    <h3 class="box-title" >Sửa Slide</h3>
+                    <div class="box-tools" >     
+                    </div>
+                </div>
+                <div class="box-body" > 
+                    <div class="row" >
+                        <div class="col-md-4" >
+                            <?php FormMenu::Name($_item->Name)->renderHTML(); ?>
+                            <?php FormMenu::GroupsId($_item->GroupsId)->renderHTML(); ?>
+                            <?php FormMenu::Icon($_item->Icon)->renderHTML(); ?>
+                            <?php FormMenu::Link($_item->Link)->renderHTML(); ?>
+                            <?php FormMenu::ParentsId($_item->ParentsId)->renderHTML(); ?>
+                            <img id="imgHinhChinh" class="img  img-responsive" src="<?php echo $_item->Images; ?>" > 
+                            <div class="form-group" >
+                                <label>Hình</label>
+                                <div class="d-flex" >
+                                    <?php
+                                    FormMenu::Images($_item->Images)->render();
+                                    ?>
+                                    <button class="btn btn-primary" type="button" onclick="BrowseServer('Input_Images', 'imgHinhChinh')" >Chọn Hình</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+
+                </div>
+                <div class="box-footer" >
+                    <button class="btn btn-success" >Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>

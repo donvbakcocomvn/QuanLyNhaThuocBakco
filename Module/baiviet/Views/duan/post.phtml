@@ -1,0 +1,33 @@
+<?php
+
+use Module\baiviet\Model\DuAn\FormDuAn;
+?>
+<ol class="breadcrumb" >
+    <li><a href="/backend" >Home</a></li>
+    <li><a href="/baiviet/duan/" >Quản Lý Dự Án</a></li>
+    <li> Thêm Mới </li>
+</ol>
+<div  class="container-fluid" >
+    <form action="" method="post">
+        <div class="box box-primary" >
+            <div class="box-header" >
+                <h3 class="box-title" >Thêm Mới</h3>  
+            </div>
+            <div class="box-body" >
+                <div class="col-md-6" >
+                    <div class="row" >
+                        <?php
+                        FormDuAn::Name()->renderHTML();
+                        ?>
+                    </div>
+
+                </div>
+            </div>
+            <div class="box-footer" >
+                <input type="submit" class="btn btn-success" name="Luu" value="Lưu" />
+            </div>
+        </div>    
+    </form>    
+</div>
+
+

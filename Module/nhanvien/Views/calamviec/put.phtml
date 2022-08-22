@@ -1,0 +1,86 @@
+<?php
+
+use Module\nhanvien\Model\Form\FormCaLamViec;
+?>
+<ol class="breadcrumb" >
+    <li><a href="/backend" >Home</a></li>
+    <li><a href="/nhanvien/calamviec/index/" >Ca làm việc</a></li>
+    <li> Sửa </li>
+</ol>
+
+<div class="container-fluid"  ng-controller="searchCtrl" >
+    <form method="get" action="/nhanvien/lichlamviec/index/">
+        <div class="form-group d-flex" >
+            <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type=""  >
+            <button class="btn btn-primary no-border-radius" name="btnTim" type="submit"  >
+                <i class="fa fa-search"  ></i>
+            </button>
+        </div>
+    </form>
+    <div class="box box-primary" >
+        <div class="box-header" >
+            <h3 class="box-title" >Ca Làm Việc</h3>
+        </div>
+        <div class="box-body" >
+            <div class="table-responsive" >
+                <table class="table table-bordered table-hover table-striped ">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Mã</th>
+                            <th>Tên</th>
+                            <th>Mô Tả</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        if ($Items) {
+                            foreach ($Items as $index => $item) {
+                                $_item = new \Module\nhanvien\Model\CaLamViec($item);
+                                ?>
+                                <tr>
+                                    <th>
+                                        <?php
+                                        echo $_item->btnSua();
+                                        ?>
+                                    </th>
+                                    <th><?php echo $_item->Code; ?></th>
+                                    <th><?php echo $_item->Name; ?></th>
+                                    <th><?php echo $_item->Des; ?></th>
+                                </tr>
+                                <?php
+                            }
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <div class="box-footer" >
+            <div  class="d-flex">
+                <?php
+                \Model\FormCommon::Select("", "", [10, 20, 50, 100], [
+                    "style" => "max-width:70px;",
+                    "class" => "form-control",
+                    "value" => $pageNumber,
+                    "onchange" => "SoDongHienThi(this.value)",
+                        ]
+                )->render();
+                ?>
+                <?php
+                $linkPhanTrang = "/nhanvien/lichlamviec/index/?indexPage=[i]&pageNumber={$pageNumber}";
+                echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" >
+    var SoDongHienThi = function(evalue) {
+        var linkPhanTrang = '/nhanvien/calamviec/index/?indexPage=1&pageNumber=[j]';
+        linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
+        window.location.href = linkPhanTrang;
+    }
+</script>

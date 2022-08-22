@@ -1,0 +1,23 @@
+{
+    "short_name": "Bakco ERP",
+    "name": "Bakco | Enterprise Resource Planning",
+    "description": "Enterprise Resource Planning",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "http://nhanvien.bakco.vn/public/Logo_full.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "http://nhanvien.bakco.vn/public/Logo_full.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ],
+    "start_url": "/",
+    "background_color": "#fff",
+    "display": "standalone",
+    "scope": "/",
+    "theme_color": "#fff"
+}

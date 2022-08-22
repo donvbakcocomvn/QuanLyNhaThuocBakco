@@ -1,0 +1,81 @@
+
+<h3>Thông tin Khách hàng</h3>
+<div>
+    <div class="form-group" >
+        <label>Họ & Tên</label>
+        <input class="form-control" name="Name"  type="type"  >
+    </div>
+    <div class="form-group" >
+        <label>SĐT</label>
+        <input class="form-control" name="SDT"  type="type"  >
+    </div>
+    <div class="form-group" >
+        <label>Email</label>
+        <input class="form-control" name="Email"  type="email"  >
+    </div>
+    
+</div>
+
+<h3>Thông tin sản phẩm</h3>
+<div class="table-responsive cart_info">
+    <table class="table table-condensed">
+        <thead>
+            <tr class="cart_menu">
+                <td class="image">Item</td>
+                <td class="description"></td>
+                <td class="price">Price</td>
+                <td class="quantity">Quantity</td>
+                <td class="total">Total</td>
+                 
+            </tr>
+        </thead>
+        <tbody>
+
+            <?php
+            $DSSanPham = Module\cart\Model\Cart::DSSanPham();
+            foreach ($DSSanPham as $sanpham) {
+                $_item = new Module\quanlysanpham\Model\SanPham($sanpham);
+                ?> 
+                <tr>
+                    <td class="cart_product">
+                        <a href=""><img style="height: 80px;" src="<?php echo $_item->UrlImages; ?>" alt="<?php echo $_item->Name; ?>"></a>
+                    </td>
+                    <td class="cart_description">
+                        <h4><a href=""><?php echo $_item->Name; ?></a></h4>
+                        <p>Mã: <?php echo $_item->Code; ?></p>
+                    </td>
+                    <td class="cart_price">
+                        <p><?php echo $_item->Price(); ?></p>
+                    </td>
+                    <td class="cart_quantity">
+                        <div class="cart_quantity_button">
+                            <?php echo $_item->Number; ?>
+                        </div>
+                    </td>
+                    <td class="cart_total">
+                        <p class="cart_total_price"><?php echo $_item->ThanhTienToVND(); ?></p>
+                    </td> 
+                </tr> 
+                <?php
+            }
+            ?>
+
+            <tr>
+                <td colspan="4" class="text-right" >
+                    <h4>Tổng Tiền  </h4> 
+
+                </td>
+                <td colspan="2" >
+                     <p class="cart_total_price">
+                        <?php
+                       echo Module\cart\Model\Cart::TongTienToVnd();
+                        ?>
+                     </p>
+                </td>
+            </tr> 
+
+        </tbody>
+    </table>
+</div>
+    <a class="btn btn-default" >Xem Sản Phẩm Khác </a>
+    <a class="btn btn-default pull-right">Đặt Hàng </a>

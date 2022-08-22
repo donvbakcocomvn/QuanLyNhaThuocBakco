@@ -1,0 +1,32 @@
+<ol class="breadcrumb" >
+    <li><a href="/index.php?controller=backend" >Home</a></li>
+    <li> Tỉnh Thành Phố </li>
+
+</ol>
+<div class="container" >
+    <div class="box box-primary" >
+        <div class="box-header" >
+            <h3 class="box-title" >Sửa Tỉnh Thành</h3>
+            <div class="box-tools" >
+
+            </div>
+        </div>
+        <div class="box-body" >
+            <form method="post" action="">
+
+
+                <?php
+                $_item = new \Model\Locations($item);
+
+                Model\Locations\FormLocations::Id($_item->Id)->renderHTML();
+                Model\Locations\FormLocations::Name($_item->Name)->renderHTML();
+                Model\Locations\FormLocations::IsPublic($_item->IsPublic)->renderHTML();
+                Model\Locations\FormLocations::ParentsId($_item->ParentsId)->renderHTML();
+                Model\Locations\FormLocations::Note($_item->Note)->renderHTML();
+                ?>
+                <button class="btn btn-success" name="Save" >Save</button>
+            </form>
+        </div>
+    </div>
+
+</div>
