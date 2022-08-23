@@ -40,7 +40,7 @@ class quanlyquyen extends \Application implements IControllerBE {
             }
             new \Model\Error(\Model\Error::success, "Xóa thành công");
         } catch (\Exception $exc) {
-            new \Model\Error(\Model\Error::danger, "Xóa không thành công");
+            new \Model\Error(\Model\Error::danger, $exc->getMessage());
         }
 
         \Model\Common::ToUrl("/index.php?controller=quanlyquyen");

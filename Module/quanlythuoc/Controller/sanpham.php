@@ -3,6 +3,7 @@
 namespace Module\quanlythuoc\Controller;
 
 use Module\quanlysanpham\Model\SanPham\FormSanPham;
+use Module\quanlythuoc\Permission;
 
 class sanpham extends \Application implements \Controller\IControllerBE {
 
@@ -17,7 +18,7 @@ class sanpham extends \Application implements \Controller\IControllerBE {
 
     function index() {
 
-        \Model\Permission::Check([\Model\User::Admin, "quanlysanpham_sanpham_view"]);
+        \Model\Permission::Check([\Model\User::Admin, Permission::QuanLyThuoc]);
         $modelItem = new \Module\quanlysanpham\Model\SanPham();
         $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
         $params["danhmuc"] = isset($_REQUEST["danhmuc"]) ? \Model\Common::TextInput($_REQUEST["danhmuc"]) : "";
@@ -42,6 +43,7 @@ class sanpham extends \Application implements \Controller\IControllerBE {
 	 * @return mixed
 	 */
 	function post() {
+        \Model\Permission::Check([\Model\User::Admin,\Model\User::QuanLy, Permission::QuanLyThuocThem]);
         $this->View();
 	}
 	

@@ -2,19 +2,23 @@
 
 namespace Views\theme\backend;
 
+use Model\User;
 use Module\quanlysanpham\Model\btnHtml;
+use Module\quanlythuoc\Permission;
 
-class Functions {
+class Functions
+{
 
-    function __construct() {
-
+    function __construct()
+    {
     }
 
-    public static function head() {
+    public static function head()
+    {
 
         $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         $hotlint_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]" . "/";
-        ?>
+?>
 
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -32,30 +36,30 @@ class Functions {
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.5 -->
-        <link rel="stylesheet"  href="/public/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/public/bootstrap/css/bootstrap.min.css">
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
         <!-- Ionicons -->
         <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
         <!-- Theme style -->
-        <link href="/public/plugins/select2/select2.min.css" rel="stylesheet" type="text/css"/>
+        <link href="/public/plugins/select2/select2.min.css" rel="stylesheet" type="text/css" />
 
-        <link rel="stylesheet"  href="/public/dist/css/AdminLTE.min.css">
+        <link rel="stylesheet" href="/public/dist/css/AdminLTE.min.css">
 
-        <link rel="stylesheet"  href="/public/dist/css/skins/_all-skins.min.css">
+        <link rel="stylesheet" href="/public/dist/css/skins/_all-skins.min.css">
         <!-- iCheck -->
-        <link rel="stylesheet"  href="/public/plugins/iCheck/flat/blue.css">
+        <link rel="stylesheet" href="/public/plugins/iCheck/flat/blue.css">
         <!-- Morris chart -->
-        <link rel="stylesheet"  href="/public/plugins/morris/morris.css">
+        <link rel="stylesheet" href="/public/plugins/morris/morris.css">
         <!-- jvectormap -->
-        <link rel="stylesheet"  href="/public/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+        <link rel="stylesheet" href="/public/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
         <!-- Date Picker -->
-        <link rel="stylesheet"  href="/public/plugins/datepicker/datepicker3.css">
+        <link rel="stylesheet" href="/public/plugins/datepicker/datepicker3.css">
         <link rel="manifest" href="/public/manifest.json?v=<?php echo filemtime('public/manifest.json') ?>">
         <!-- Daterange picker -->
-        <link rel="stylesheet"  href="/public/plugins/daterangepicker/daterangepicker-bs3.css">
-        <link rel="stylesheet"  href="/public/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-        <link href="/public/App.css?v=<?php echo filemtime("public/App.css"); ?>" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="/public/plugins/daterangepicker/daterangepicker-bs3.css">
+        <link rel="stylesheet" href="/public/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+        <link href="/public/App.css?v=<?php echo filemtime("public/App.css"); ?>" rel="stylesheet" type="text/css" />
 
 
         <meta property="og:image" content="/public/Logo_full.png">
@@ -75,11 +79,12 @@ class Functions {
         <script src="/public/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 
         <script src="/public/Ang1/App.js?v=<?php echo filemtime("public/Ang1/App.js"); ?>" type="text/javascript"></script>
-        <?php
+    <?php
     }
 
-    public static function js() {
-        ?>
+    public static function js()
+    {
+    ?>
         <!-- jQuery 2.1.4 -->
 
         <!-- jQuery UI 1.11.4 -->
@@ -124,19 +129,21 @@ class Functions {
 
 
 
-        <?php
+    <?php
     }
 
-    public static function aside() {
-        ?>
+    public static function aside()
+    {
+    ?>
 
         <div class="control-sidebar-bg"></div>
-        <?php
+    <?php
     }
 
-    public static function header() {
+    public static function header()
+    {
         $user = \Model\User::CurentUser();
-        ?>
+    ?>
         <header class=" main-header">
             <!-- Logo -->
             <a href="/backend/" class="logo">
@@ -181,19 +188,20 @@ class Functions {
                             </ul>
                         </li>
                         <!-- Control Sidebar Toggle Button -->
-                        <li class="hidden" >
+                        <li class="hidden">
                             <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
                         </li>
                     </ul>
                 </div>
             </nav>
         </header>
-        <?php
+    <?php
     }
 
-    public static function leftaside() {
+    public static function leftaside()
+    {
         $user = \Model\User::CurentUser();
-        ?>
+    ?>
         <!-- Left side column. contains the logo and sidebar -->
         <aside class=" main-sidebar">
             <!-- sidebar: style can be found in sidebar.less -->
@@ -221,10 +229,34 @@ class Functions {
                     </li>
 
                     <?php
+
+                    if (\Model\Permission::CheckPremision([Permission::QuanLyThuoc], []) == true) {
+                    ?>
+                        <li class="treeview <?php echo \Application::$_Module == "quanlythuoc" ? 'active' : '' ?>">
+                            <a href="#">
+                                <i class="fa fa-dashboard"></i>
+                                <span>Quản lý thuốc</span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <?php
+                                if (\Model\Permission::CheckPremision([User::Admin, Permission::QuanLyThuoc], []) == true) {
+                                ?>
+                                    <li><a href="/quanlythuoc/sanpham/"><i class="fa fa-circle-o"></i> Danh sách thuốc</a></li>
+                                <?php  } ?>
+                                <?php
+                                if (\Model\Permission::CheckPremision([User::Admin, Permission::QuanLyThuocThem], []) == true) {
+                                ?>
+                                    <li><a href="/quanlythuoc/sanpham/post"><i class="fa fa-circle-o"></i> Thêm thuốc</a></li>
+                                <?php  } ?>
+                            </ul>
+                        </li>
+                    <?php
+                    }
+
                     \Module\nhanvien\Functions::menulayout(\Application::$_Module);
 
                     if (\Model\Permission::CheckPremision([\Model\User::Admin, "quanlysanpham_view"]) == true) {
-                        ?>
+                    ?>
                         <li class="hidden <?php echo \Application::$_Module == "quanlysanpham" ? 'active' : '' ?> treeview">
                             <a href="#">
                                 <i class="fa fa-dashboard"></i> <span>Quản Lý Sản Phẩm</span>
@@ -239,37 +271,37 @@ class Functions {
                                 ?>
                             </ul>
                         </li>
-                        <?php
+                    <?php
                     }
 
                     \Module\congty\Functions::menulayout(\Application::$_Module);
                     \Module\baocao\Functions::menulayout(\Application::$_Module);
 
                     if (\Model\Permission::CheckPremision([\Model\User::Admin, md5(\Controller\quanlyquyen::class . "_view")]) == true) {
-                        ?>
+                    ?>
                         <li class="<?php echo \Application::$_Controller == "quanlyquyen" ? 'active' : '' ?> treeview">
                             <a href="/index.php?controller=quanlyquyen">
                                 <i class="fa fa-dashboard"></i> <span>Quản Lý Quyền</span>
                             </a>
                         </li>
-                        <?php
+                    <?php
                     }
                     ?>
                     <?php
                     // \Module\giaodien\Functions::menulayout(\Application::$_Module);
 
                     if (\Model\Permission::CheckPremision([\Model\User::Admin, md5(\Controller\quanlyusers::class . "_view")]) == true) {
-                        ?>
+                    ?>
                         <li class="<?php echo \Application::$_Controller == "quanlyusers" ? 'active' : '' ?> treeview">
                             <a href="/index.php?controller=quanlyusers">
                                 <i class="fa fa-dashboard"></i> <span>Quản Lý Tài Khoản</span>
                             </a>
                         </li>
-                        <?php
+                    <?php
                     }
 
                     if (\Model\Permission::CheckPremision([\Model\User::Admin]) == true) {
-                        ?>
+                    ?>
                         <li class="treeview <?php echo (\Application::$_Controller == "options" || \Application::$_Controller == "locations") ? 'active' : "" ?> ">
                             <a href="#">
                                 <i class="fa fa-gears"></i>
@@ -288,7 +320,7 @@ class Functions {
                                 <li><a href="/options/index/NameFunction/"><i class="fa fa-circle-o"></i> Module</a></li>
                             </ul>
                         </li>
-                        <?php
+                    <?php
                     }
                     ?>
                     <li class="">
@@ -303,18 +335,18 @@ class Functions {
             </section>
             <!-- /.sidebar -->
         </aside>
-        <?php
+    <?php
     }
 
-    public static function footer() {
-        ?>
+    public static function footer()
+    {
+    ?>
         <footer class="main-footer">
             <div class="pull-right hidden-xs">
                 <b>Version</b> 0.0.1
             </div>
             <strong>Copyright<a href="http://bakco.com.vn"></a>.</strong> bakco.com.vn
         </footer>
-        <?php
+<?php
     }
-
 }

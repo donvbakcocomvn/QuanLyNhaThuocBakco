@@ -6,9 +6,8 @@ class User {
 
     const Admin = "Admin";
     const QuanLy = "QuanLy";
-    const VietBai = "VietBai";
-    const QuanLySanPham = "QuanLySanPham";
-
+    const QuanLyThuoc = "QuanLyThuoc";
+    const QuanLyKeToa = "QuanLyKeToa"; 
     public $Id;
     public $Name;
     public $Username;
