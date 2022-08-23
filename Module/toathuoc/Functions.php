@@ -1,6 +1,6 @@
 <?php
 
-namespace Module\quanlysanpham;
+namespace Module\toathuoc;
 
 class Functions {
     //put your code here

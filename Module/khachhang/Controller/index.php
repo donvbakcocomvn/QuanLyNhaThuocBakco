@@ -1,10 +1,9 @@
 <?php
 
-namespace Module\quanlytoathuoc\Controller;
+namespace Module\khachhang\Controller;
 
-use Module\quanlysanpham\Model\SanPham\FormSanPham;
-
-class toathuoc extends \Application implements \Controller\IControllerBE {
+use Module\khachhang\Permission;
+class index extends \Application implements \Controller\IControllerBE {
 
     public function __construct() {
         /**
@@ -17,7 +16,7 @@ class toathuoc extends \Application implements \Controller\IControllerBE {
 
     function index() {
 
-        \Model\Permission::Check([\Model\User::Admin, "quanlysanpham_sanpham_view"]);
+        \Model\Permission::Check([\Model\User::Admin,\Model\User::QuanLy, Permission::KhachHangDS]);
         $modelItem = new \Module\quanlysanpham\Model\SanPham();
         $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
         $params["danhmuc"] = isset($_REQUEST["danhmuc"]) ? \Model\Common::TextInput($_REQUEST["danhmuc"]) : "";
@@ -37,12 +36,13 @@ class toathuoc extends \Application implements \Controller\IControllerBE {
         $this->View($data);
     }
 
-
+    
 	/**
 	 *
 	 * @return mixed
 	 */
 	function post() {
+        \Model\Permission::Check([\Model\User::Admin,\Model\User::QuanLy, Permission::KhachHangPost]);
         $this->View();
 	}
 	
@@ -51,6 +51,7 @@ class toathuoc extends \Application implements \Controller\IControllerBE {
 	 * @return mixed
 	 */
 	function put() {
+        \Model\Permission::Check([\Model\User::Admin,\Model\User::QuanLy, Permission::KhachHangPut]);
         $this->View();
 	}
 	
@@ -59,8 +60,23 @@ class toathuoc extends \Application implements \Controller\IControllerBE {
 	 * @return mixed
 	 */
 	function delete() {
+        \Model\Permission::Check([\Model\User::Admin,\Model\User::QuanLy, Permission::KhachHangDelete]);
+	}
+
+    function import() {
+        \Model\Permission::Check([\Model\User::Admin,\Model\User::QuanLy, Permission::KhachHangImport]);
+	}
+
+    function export() {
+        \Model\Permission::Check([\Model\User::Admin,\Model\User::QuanLy, Permission::KhachHangExport]);
 	}
 
     function GetByName() {
+	}
+
+    function GetByPhone() {
+	}
+
+    function GetByAdd() {
 	}
 }

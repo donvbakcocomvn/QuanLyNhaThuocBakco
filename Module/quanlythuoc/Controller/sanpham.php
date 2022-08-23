@@ -2,7 +2,6 @@
 
 namespace Module\quanlythuoc\Controller;
 
-use Module\quanlysanpham\Model\SanPham\FormSanPham;
 use Module\quanlythuoc\Permission;
 
 class sanpham extends \Application implements \Controller\IControllerBE {
@@ -18,7 +17,7 @@ class sanpham extends \Application implements \Controller\IControllerBE {
 
     function index() {
 
-        \Model\Permission::Check([\Model\User::Admin, Permission::QuanLyThuoc]);
+        \Model\Permission::Check([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_Thuoc_DS]);
         $modelItem = new \Module\quanlysanpham\Model\SanPham();
         $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
         $params["danhmuc"] = isset($_REQUEST["danhmuc"]) ? \Model\Common::TextInput($_REQUEST["danhmuc"]) : "";
@@ -43,7 +42,7 @@ class sanpham extends \Application implements \Controller\IControllerBE {
 	 * @return mixed
 	 */
 	function post() {
-        \Model\Permission::Check([\Model\User::Admin,\Model\User::QuanLy, Permission::QuanLyThuocThem]);
+        \Model\Permission::Check([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_Thuoc_Post]);
         $this->View();
 	}
 	
@@ -52,6 +51,7 @@ class sanpham extends \Application implements \Controller\IControllerBE {
 	 * @return mixed
 	 */
 	function put() {
+        \Model\Permission::Check([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_Thuoc_Put]);
         $this->View();
 	}
 	
@@ -60,6 +60,7 @@ class sanpham extends \Application implements \Controller\IControllerBE {
 	 * @return mixed
 	 */
 	function delete() {
+        \Model\Permission::Check([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_Thuoc_Delete]);
 	}
 
     function GetByName() {

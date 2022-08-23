@@ -3,8 +3,10 @@
 namespace Views\theme\backend;
 
 use Model\User;
+use Module\khachhang\Permission as KhachhangPermission;
 use Module\quanlysanpham\Model\btnHtml;
 use Module\quanlythuoc\Permission;
+use Module\toathuoc\Permission as ToathuocPermission;
 
 class Functions
 {
@@ -31,7 +33,7 @@ class Functions
         <link rel="dns-prefetch" href="//ajax.googleapis.com" />
         <link rel="dns-prefetch" href="//www.facebook.com" />
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />
-        <title>Bakco | Nhân Viên</title>
+        <title>Bakco | Quản Lý Phòng Khám</title>
         <link rel=icon href=https://www.bakco.com.vn/wp-content/uploads/2017/10/cropped-bakco_favicon-1-32x32.png sizes=32x32>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -148,9 +150,9 @@ class Functions
             <!-- Logo -->
             <a href="/backend/" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
-                <span class="logo-mini"><b>BAK</b></span>
+                <span class="logo-mini"><b>PK</b></span>
                 <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg"><b>BAK</b>ERP</span>
+                <span class="logo-lg" style="font-weight:500 ; font-size: 16px;">QUẢN LÝ PHÒNG KHÁM</span>
             </a>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top" role="navigation">
@@ -162,7 +164,7 @@ class Functions
                     <ul class="nav navbar-nav ">
 
                         <li class="dropdown user user-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="background-color: #193a9dd1; color: #fff;">
                                 <img onerror="this.src='/public/no-user.jpg'" src="<?php echo $user->UserInfor(\Model\Users\UserInfor::HinhNhanVien)->Val; ?>" class="user-image" alt="User Image">
                                 <span class="hidden-xs"><?php echo $user->Name; ?></span>
                             </a>
@@ -177,12 +179,12 @@ class Functions
                                         <small><?php echo $user->BODView(); ?></small>
                                     </p>
                                 </li>
-                                <li class="user-footer">
+                                <li class="user-footer" style="background-color: #a3a1a19e;">
                                     <div class="pull-left">
-                                        <a href="/profile" class="btn btn-default btn-flat">Tài Khoản</a>
+                                        <a href="/profile" class="btn btn-primary btn-flat">Tài Khoản</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="/backend/logout" class="btn btn-default btn-flat">Thoát</a>
+                                        <a href="/backend/logout" class="btn btn-primary btn-flat">Thoát</a>
                                     </div>
                                 </li>
                             </ul>
@@ -200,7 +202,7 @@ class Functions
 
     public static function leftaside()
     {
-        $user = \Model\User::CurentUser();
+        $user = User::CurentUser();
     ?>
         <!-- Left side column. contains the logo and sidebar -->
         <aside class=" main-sidebar">
@@ -227,33 +229,62 @@ class Functions
                             <i class="fa fa-info"></i> <span>Thông Tin</span>
                         </a>
                     </li>
-
                     <?php
 
-                    if (\Model\Permission::CheckPremision([Permission::QuanLyThuoc], []) == true) {
+                    ?>
+
+                    <?php
+                    // ----------------------------
+                    if (\Model\Permission::CheckPremision([Permission::QLT_Thuoc_DS, Permission::QLT_DanhMuc_DS, User::Admin], []) == true) {
                     ?>
                         <li class="treeview <?php echo \Application::$_Module == "quanlythuoc" ? 'active' : '' ?>">
                             <a href="#">
-                                <i class="fa fa-dashboard"></i>
+                                <i class="fa fa-medkit"></i>
                                 <span>Quản lý thuốc</span>
                             </a>
                             <ul class="treeview-menu">
                                 <?php
-                                if (\Model\Permission::CheckPremision([User::Admin, Permission::QuanLyThuoc], []) == true) {
+                                if (\Model\Permission::CheckPremision([User::Admin, Permission::QLT_Thuoc_Post], []) == true) {
                                 ?>
                                     <li><a href="/quanlythuoc/sanpham/"><i class="fa fa-circle-o"></i> Danh sách thuốc</a></li>
                                 <?php  } ?>
                                 <?php
-                                if (\Model\Permission::CheckPremision([User::Admin, Permission::QuanLyThuocThem], []) == true) {
+                                if (\Model\Permission::CheckPremision([User::Admin, Permission::QLT_Thuoc_Post], []) == true) {
                                 ?>
-                                    <li><a href="/quanlythuoc/sanpham/post"><i class="fa fa-circle-o"></i> Thêm thuốc</a></li>
+                                    <li><a href="/quanlythuoc/danhmuc"><i class="fa fa-circle-o"></i> Danh sách loại thuốc</a></li>
                                 <?php  } ?>
                             </ul>
                         </li>
                     <?php
                     }
 
-                    \Module\nhanvien\Functions::menulayout(\Application::$_Module);
+                    // ----------------------------
+                    if (\Model\Permission::CheckPremision([KhachhangPermission::KhachHangDS, User::Admin], []) == true) {
+                    ?>
+                        <li class="<?php echo \Application::$_Module == "khachhang" ? 'active' : '' ?>">
+                            <a href="/khachhang/index">
+                                <i class="fa fa-user-plus"></i>
+                                <span>Quản lý bệnh nhân</span>
+                            </a>
+                            
+                        </li>
+                    <?php
+                    }
+
+                    if (\Model\Permission::CheckPremision([ToathuocPermission::ToaThuocDS, User::Admin], []) == true) {
+                        ?>
+                            <li class="<?php echo \Application::$_Module == "toathuoc" ? 'active' : '' ?>">
+                                <a href="/toathuoc/index">
+                                    <i class="fa fa-paper-plane"></i>
+                                    <span>Quản lý đơn thuốc</span>
+                                </a>
+                                
+                            </li>
+                        <?php
+                        }
+    
+
+                    // \Module\nhanvien\Functions::menulayout(\Application::$_Module);
 
                     if (\Model\Permission::CheckPremision([\Model\User::Admin, "quanlysanpham_view"]) == true) {
                     ?>
@@ -274,8 +305,8 @@ class Functions
                     <?php
                     }
 
-                    \Module\congty\Functions::menulayout(\Application::$_Module);
-                    \Module\baocao\Functions::menulayout(\Application::$_Module);
+                    // \Module\congty\Functions::menulayout(\Application::$_Module);
+                    // \Module\baocao\Functions::menulayout(\Application::$_Module);
 
                     if (\Model\Permission::CheckPremision([\Model\User::Admin, md5(\Controller\quanlyquyen::class . "_view")]) == true) {
                     ?>

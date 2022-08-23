@@ -2,7 +2,7 @@
 
 namespace Module\quanlythuoc\Controller;
 
-use Module\quanlysanpham\Model\DanhMuc\FormDanhMuc;
+use Module\quanlythuoc\Permission;
 
 class danhmuc extends \Application implements \Controller\IControllerBE {
 
@@ -17,9 +17,11 @@ class danhmuc extends \Application implements \Controller\IControllerBE {
 
     function index() {
 
-        \Model\Permission::Check([\Model\User::Admin, "quanlysanpham_danhmuc_view"]);
-        $modelItem = new \Module\quanlysanpham\Model\DanhMuc();
-        $params["keyword"] = isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "";
+        \Model\Permission::Check([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_DanhMuc_DS]);
+        $modelItem = new \Module\quanlysanpham\Model\SanPham();
+        $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
+        $params["danhmuc"] = isset($_REQUEST["danhmuc"]) ? \Model\Common::TextInput($_REQUEST["danhmuc"]) : "";
+        $params["isShow"] = isset($_REQUEST["isShow"]) ? \Model\Common::TextInput($_REQUEST["isShow"]) : "";
         $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
         $indexPage = max(1, $indexPage);
         $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;
@@ -40,6 +42,7 @@ class danhmuc extends \Application implements \Controller\IControllerBE {
 	 * @return mixed
 	 */
 	function post() {
+        \Model\Permission::Check([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_DanhMuc_Post]);
         $this->View();
 	}
 	
@@ -48,6 +51,7 @@ class danhmuc extends \Application implements \Controller\IControllerBE {
 	 * @return mixed
 	 */
 	function put() {
+        \Model\Permission::Check([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_DanhMuc_Put]);
         $this->View();
 	}
 	
@@ -56,5 +60,12 @@ class danhmuc extends \Application implements \Controller\IControllerBE {
 	 * @return mixed
 	 */
 	function delete() {
+        \Model\Permission::Check([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_DanhMuc_Delete]);
+	}
+
+    function GetByName() {
+	}
+
+    function GetByNameBietDuoc() {
 	}
 }

@@ -1,10 +1,9 @@
 <?php
 
-namespace Module\quanlythuoc\Controller;
+namespace Module\khachhang\Controller;
 
 use Model\Common;
-use Module\quanlysanpham\Model\DanhMuc\FormDanhMuc;
-use Module\quanlythuoc\Permission;
+use Module\khachhang\Permission;
 
 class install extends \Application  {
 
@@ -22,11 +21,11 @@ class install extends \Application  {
 
     function install() {
         Permission::install();
-        Common::ToUrl("/quanlythuoc/sanpham");
+        Common::ToUrl("/khachhang/index");
 
     }
     function uninstall() {
         Permission::uninstall();
-        Common::ToUrl("/quanlythuoc/sanpham");
+        Common::ToUrl("/khachhang/index");
     }
 }
