@@ -1,0 +1,164 @@
+<script src="/Module/quanlysanpham/public/AppDanhSachSP.js" type="text/javascript"></script>
+<ol class="breadcrumb" >
+    <li><a href="/backend/" >Home</a></li>
+    <li> Danh Sách Sản Phẩm </li>
+</ol> 
+<?php
+
+use Module\quanlysanpham\Model\SanPham;
+?>
+
+
+<div class="container-fluid" ng-controller="AppDanhSachSP" >
+    <form action="/quanlysanpham/sanpham/index/"  >
+        <div class="form-group-md " >
+            <div class="d-flex" >  
+                <label class="btn btn-default" >
+                    <i class="fa fa-filter" ></i>
+                    <input style="display:  none;" type="checkbox" ng-click="SaveStatus(more)" ng-model="more" >
+                </label>
+                <?php
+                $params["keyword"] = isset($params["keyword"]) ? $params["keyword"] : '';
+                \Model\FormCommon::TextBox("Từ Khóa", "keyword",
+                        [
+                            "style" => "",
+                            "class" => "form-control",
+                            "value" => $params["keyword"],
+                        ]
+                )->render();
+                ?> 
+                <button class="btn btn-success" ><i class="fa fa-search" ></i></button>
+            </div>
+        </div>
+        <div ng-show="more" class="ng-hide" >
+            <div class="row" > 
+                <div class="col-md-3" >
+                    <?php
+                    $params["danhmuc"] = isset($params["danhmuc"]) ? $params["danhmuc"] : "";
+                    \Model\FormCommon::Select("Danh Mục", "danhmuc", Module\quanlysanpham\Model\DanhMuc::CapChaTpOptions(true),
+                            [
+                                "style" => "",
+                                "class" => "form-control",
+                                "value" => $params["danhmuc"],
+                            ]
+                    )->renderHTML();
+                    ?> 
+                </div>
+                <div class="col-md-3" >
+                    <?php
+                    $params["isShow"] = isset($params["isShow"]) ? $params["isShow"] : "";
+                    \Model\FormCommon::Select("Ẩn Hiện", "isShow", ["" => "Tất Cả", 1 => "Hiện", 0 => "Ẩn"],
+                            [
+                                "style" => "",
+                                "class" => "form-control",
+                                "value" => $params["isShow"],
+                            ]
+                    )->renderHTML();
+                    ?> 
+                </div>
+            </div>
+        </div>
+    </form>
+    <form action="/quanlysanpham/sanpham/delete/" method="POST" >
+        <div class="box box-primary" >
+            <div class="box-header" > 
+                <h3  class="box-header"></h3>
+                <div class="box-tools" >
+                    <a href="/quanlysanpham/sanpham/trash/" class="btn btn-default" > <i class="fa fa-trash" ></i> </a>
+
+                    <?php
+                    Module\quanlysanpham\Model\SanPham::btnPost();
+                    ?>
+                </div>
+            </div>
+            <div class="box-body" >
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" ng-model="checkAll"  ></th>
+                            <th> 
+                                <div class="btn-group pull-left"  >
+                                    <?php
+                                    Module\quanlysanpham\Model\SanPham::btnDeleteSelect();
+                                    ?>
+                                </div>
+                            </th>
+                            <th>Hình</th>
+                            <th>Thông Tin Sản Phẩm</th>
+                            <th>Giá</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        foreach ($items as $key => $value) {
+                            $_item = new Module\quanlysanpham\Model\SanPham($value);
+                            ?> 
+                            <tr>
+                                <th>
+                                    <input ng-checked="checkAll" type="checkbox" name="SanPham[<?php echo $_item->Id; ?>]"   >
+                                </th>
+                                <th>
+                                    <?php
+                                    $_item->btnPut();
+                                    $_item->btnMoveToTrash();
+                                    ?>
+
+                                </th> 
+                                <th style="width: 150px;" ><img onerror="this.src='/public/no-img.jpg'" src="<?php echo $_item->UrlImages; ?>" style="height: 100px;" >  </th>
+                                <th>
+                                    <p style="font-size: 20px;" ><?php echo $_item->Name; ?></p>
+                                    <p>Danh Mục:<?php echo $_item->DanhMuc()->Name; ?></p>
+                                    <p><i class="fa fa-cart-arrow-down" ></i> <?php echo $_item->BuyTimes; ?>
+                                        |
+                                        <i class="fa fa-eye" ></i><?php echo $_item->Views; ?></p>
+
+                                </th>
+                                <th><?php echo $_item->Price(); ?></th>
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th><input type="checkbox" ng-model="checkAll"  ></th>
+                            <th></th>
+                            <th>Hình</th>
+                            <th>Thông Tin Sản Phẩm</th>
+                            <th>Giá</th>
+                        </tr>
+                    </tfoot>
+                </table> 
+                <div class="box-footer" >
+                    <div  class="d-flex"> 
+                        <?php
+                        \Model\FormCommon::Select("", "", [10, 20, 50, 100],
+                                [
+                                    "style" => "max-width:150px;",
+                                    "class" => "form-control",
+                                    "value" => $pageNumber,
+                                    "onchange" => "SoDongHienThi(this.value)",
+                                ]
+                        )->render();
+                        ?> 
+                        <?php
+                        $linkPhanTrang = "/quanlysanpham/sanpham/index/?keyword={$params["keyword"]}&danhmuc={$params["danhmuc"]}&isShow={$params["isShow"]}&indexPage=[i]&pageNumber={$pageNumber}";
+                        echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
+                        ?> 
+                    </div>
+                </div>
+            </div>
+        </div>    
+
+    </form>
+</div>
+<script type="text/javascript" >
+    var SoDongHienThi = function (evalue) {
+        var keyword = '<?php echo $params["keyword"] ?>';
+        var danhmuc = '<?php echo $params["danhmuc"] ?>';
+        var isShow = '<?php echo $params["isShow"] ?>';
+        var linkPhanTrang = `/quanlysanpham/sanpham/index/?keyword=` + keyword + `&danhmuc=` + danhmuc + `&isShow=` + isShow + `&indexPage=1&pageNumber=[j]`;
+        linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
+        window.location.href = linkPhanTrang;
+    }
+</script>

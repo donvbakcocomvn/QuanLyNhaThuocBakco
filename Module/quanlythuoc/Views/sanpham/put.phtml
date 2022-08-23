@@ -1,0 +1,241 @@
+<ol class="breadcrumb" >
+    <li><a href="/index.php?controller=backend" >Home</a></li>
+    <li><a href="/index.php?module=quanlysanpham&controller=sanpham&action=index" >Danh Sách Sản Phẩm</a></li>
+    <li> Sửa </li>
+</ol>
+<?php
+
+use Module\quanlysanpham\Model\SanPham\FormSanPham;
+
+$_item = new Module\quanlysanpham\Model\SanPham($item);
+?>
+<script src="/Module/quanlysanpham/public/AppSanPham.js?v=<?php echo filemtime('Module/quanlysanpham/public/AppSanPham.js'); ?>" type="text/javascript"></script>
+<div  class="container-fluid" ng-controller="SanPhamPut" ng-init="SanPhamPutInit('<?php echo $_GET["id"]; ?>')" >
+    <form action="" method="post">
+        <div class="box box-primary" > 
+            <div class="box-header" >
+                <div class="box-tools" >
+                    <button type="submit" class="btn btn-success" name="Luu" value="Lưu" >Lưu</button>
+                </div>
+            </div>
+            <div class="box-body" >
+                <div class="col-md-9" > 
+                    <?php
+                    FormSanPham::Id($_item->Id)->render();
+                    FormSanPham::Name($_item->Name)->renderHTML();
+                    ?>
+                    <div class="form-group" >
+                        <label>Perlink</label>
+                        <div class="d-flex" >
+                            <?php
+                            FormSanPham::Alias($_item->Alias)->render();
+                            ?>
+                            <label class="btn btn-primary">
+                                <input checked value="1" name="KhoaAlias" type="checkbox" >
+                                Khóa
+                            </label>
+                        </div>
+                    </div>
+
+
+                    <div class="row" >
+                        <div class="col-md-4" >
+                            <?php
+                            FormSanPham::Price($_item->Price)->renderHTML();
+                            ?>
+                        </div>
+                        <div class="col-md-4" >
+                            <?php
+                            FormSanPham::oldPrice($_item->oldPrice)->renderHTML();
+                            ?>
+                        </div>
+                        <div class="col-md-4" >
+                            <?php
+                            FormSanPham::Number($_item->Number)->renderHTML();
+                            ?>
+                        </div>
+                    </div>
+                    <div role="tabpanel">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#MoTa" target="_self" aria-controls="MoTa" role="tab" data-toggle="tab">Mô Tả Ngắn</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#Content"  target="_self" aria-controls="Content" role="tab" data-toggle="tab">Mô Tả Sản Phẩm</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#SEO" target="_self" aria-controls="SEO" role="tab" data-toggle="tab">SEO</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#ThuocTinh" target="_self" aria-controls="Other" role="tab" data-toggle="tab">Thuộc Tính</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#ThongTinBanHang" target="_self" aria-controls="Other" role="tab" data-toggle="tab">Thông Tin Bán Hàng</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#Other" target="_self" aria-controls="Other" role="tab" data-toggle="tab">Khác</a>
+                            </li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane  " id="ThuocTinh"> 
+                                <div class="row" >
+
+                                    <div class="col-md-6" > 
+                                        <div class="box box-primary" >
+                                            <div class="box-header" >
+                                                <h3 class="box-title" >Thuộc Tính 1</h3> 
+                                            </div>
+                                            <div class="box-body" >
+                                                <select ng-change="CapNhatThuocTinhOptions(SPO1, 1, _SanPham.Id)" ng-model="SPO1" class="form-control" >
+                                                    <option value="0" >Không Chọn</option>
+                                                    <option ng-repeat="item in _DSThuocTinh" value="{{item.Id}}" >{{item.Name}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6" >
+                                        <div class="box box-primary" ng-show="SPO1 != '0'" >
+                                            <div class="box-header" >
+                                                <h3 class="box-title" >Thuộc Tính 2</h3> 
+                                            </div>
+                                            <div class="box-body" >
+
+                                                <select ng-change="CapNhatThuocTinhOptions(SPO2, 2, _SanPham.Id)" ng-model="SPO2" class="form-control" >
+                                                    <option value="0" >Không Chọn</option>
+                                                    <option ng-repeat="item in _DSThuocTinh" value="{{item.Id}}" >{{item.Name}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-12" >
+                                        <table class="table" >
+                                            <tr>
+                                                <td><label>Tên Thuộc Tinh</label></td>
+                                                <td><label>Loại Thuộc Tinh</label></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="form-group" >  
+                                                        <input ng-model="ThuocTinhChiTiet.TenThuocTinh" class="form-control" type="type"  >
+                                                    </div>
+
+                                                </td>
+                                                <td>
+                                                    <div class="form-group" > 
+
+                                                        <select class="form-control" ng-model="ThuocTinhChiTiet.LoaiThuocTinh" >
+                                                            <option ng-repeat="item1 in  _SanPham.Options" value="{{item1.Id}}" >{{item1.LoaiThuocTinh.Name}}</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-success" ng-click="ThemThuocTinhChiTiet(ThuocTinhChiTiet)" type="button" >Thêm</button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table class="table" >
+                                            <tr>
+                                                <td>Tên Thuộc Tinh</td>
+                                                <td>Loại Thuộc Tinh</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr  ng-repeat="item in _DanhSachThuocTinhChiTiet" >
+                                                <td>{{item.Name}}</td>
+                                                <td>{{item.ThuocTinh.LoaiThuocTinh.Name}}</td>
+                                                <td><button ng-click="XoaThuocTinhChiTiet(item.Id)" type="button" >Xóa</button></td>
+                                            </tr>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div role="tabpanel" class="tab-pane  " id="ThongTinBanHang">
+                                <button type="button" ng-click="TaoThongTinBanHang(_SanPham.Id)" >Tao Thông Tin Bán Hàng</button>
+                                <table  class="table " >
+                                    <tr>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td>Số Lượng </td>
+                                        <td>Giá</td>
+                                        <td>
+                                            <button class="btn btn-success" ng-click="LuuTatCaThongTinBanHang()" type="button" >
+                                                 Lưu
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr ng-repeat="ttbh in _ThongTinBanHang track by $index" >
+                                        <td>{{ttbh.Option1Detail.Name}}</td>
+                                        <td>{{ttbh.Option2Detail.Name}}</td>
+                                        <td><input ng-model="ttbh.SoLuong" class="form-control"  ></td>
+                                        <td><input ng-model="ttbh.Gia" class="form-control"  ></td> 
+                                        <td>
+                                            <button ng-click="XoaThongTinBanHang(ttbh.Id)" class="btn btn-danger" type="button" >Xóa</button>
+                                            <button class="btn btn-success" ng-click="LuuThongTinBanHang(ttbh)" type="button" >
+                                                <i ng-show="_onLuuThongTinBanHang == ttbh.Id" class="fa fa-spin fa-spinner" ></i>
+                                                <i ng-show="_onLuuThongTinBanHang != ttbh.Id" class="fa fa-check" ></i>
+                                                Lưu
+                                            </button>
+                                        </td> 
+                                    </tr> 
+                                </table>
+
+
+                            </div>
+                            <div role="tabpanel" class="tab-pane active" id="MoTa">
+                                <?php
+                                FormSanPham::Summary($_item->Summary)->renderHTML()
+                                ?>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="Other">
+                                <?php
+                                FormSanPham::BuyTimes($_item->BuyTimes)->renderHTML();
+                                FormSanPham::Views($_item->Views)->renderHTML();
+                                ?>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="Content">
+                                <?php
+                                FormSanPham::Content($_item->Content())->renderHTML()
+                                ?>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="SEO">
+                                <div class="row" >
+                                    <div  class="col-md-4"><?php FormSanPham::Title($_item->Title)->renderHTML(); ?></div>
+                                    <div  class="col-md-4"><?php FormSanPham::Des($_item->Des)->renderHTML(); ?></div>
+                                    <div  class="col-md-4"><?php FormSanPham::Keyword($_item->Keyword)->renderHTML(); ?></div>
+                                </div>  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3" >
+
+                    <?php
+                    FormSanPham::DanhMucId($_item->DanhMucId)->renderHTML();
+                    FormSanPham::isShow($_item->isShow)->renderHTML();
+                    FormSanPham::STT($_item->STT)->renderHTML();
+                    FormSanPham::Lang($_item->Lang)->renderHTML();
+                    ?>
+                    <label style="border: dashed 2px green;display: block;width: 100%;height: 100px;overflow: hidden" >
+                        <img id="imgHinhDaiDien" style="min-height: 100px;height: 100px" src="<?php echo $_item->UrlImages ?>" >
+                        Chọn Hình Đại Diện
+                        <button style="display: none" type="button" onclick="BrowseServer('UrlImages', 'imgHinhDaiDien')" >Chọn Hình</button>
+                        <?php
+                        FormSanPham::UrlImages($_item->UrlImages)->render();
+                        ?>
+                    </label>
+                </div>
+            </div>
+            <div class="box-footer" >
+
+            </div>
+        </div>    
+    </form>    
+</div>
