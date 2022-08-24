@@ -2,11 +2,17 @@
 
 namespace Module\quanlythuoc\Controller;
 
+use Module\quanlysanpham\Model\DanhMuc as QuanlysanphamModelDanhMuc;
+use Module\quanlythuoc\Model\DanhMuc as ModelDanhMuc;
+use Module\quanlythuoc\Model\DanhMuc\FormDanhMuc;
 use Module\quanlythuoc\Permission;
 
-class danhmuc extends \Application implements \Controller\IControllerBE {
 
-    public function __construct() {
+class danhmuc extends \Application implements \Controller\IControllerBE
+{
+
+    public function __construct()
+    {
         /**
          * kiem tra đăng nhap
          * @param {type} parameter
@@ -15,10 +21,11 @@ class danhmuc extends \Application implements \Controller\IControllerBE {
         self::$_Theme = "backend";
     }
 
-    function index() {
+    function index()
+    {
 
-        \Model\Permission::Check([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_DanhMuc_DS]);
-        $modelItem = new \Module\quanlysanpham\Model\SanPham();
+        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DanhMuc_DS]);
+        $modelItem = new ModelDanhMuc();
         $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
         $params["danhmuc"] = isset($_REQUEST["danhmuc"]) ? \Model\Common::TextInput($_REQUEST["danhmuc"]) : "";
         $params["isShow"] = isset($_REQUEST["isShow"]) ? \Model\Common::TextInput($_REQUEST["isShow"]) : "";
@@ -37,35 +44,91 @@ class danhmuc extends \Application implements \Controller\IControllerBE {
         $this->View($data);
     }
 
-	/**
-	 *
-	 * @return mixed
-	 */
-	function post() {
-        \Model\Permission::Check([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_DanhMuc_Post]);
-        $this->View();
-	}
-	
-	/**
-	 *
-	 * @return mixed
-	 */
-	function put() {
-        \Model\Permission::Check([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_DanhMuc_Put]);
-        $this->View();
-	}
-	
-	/**
-	 *
-	 * @return mixed
-	 */
-	function delete() {
-        \Model\Permission::Check([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_DanhMuc_Delete]);
-	}
+    /**
+     *
+     * @return mixed
+     */
+    function post()
+    {
+        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DanhMuc_Post]);
+        try {
+            if (\Model\Request::Post(FormDanhMuc::$ElementsName, null)) {
+                $itemForm = \Model\Request::Post(FormDanhMuc::$ElementsName, null);
+                $itemForm["Id"] = \Model\Common::uuid();
+                $itemForm["Code"] = \Model\Common::uuid();
+                $itemForm["ThanhPhan"] = \Model\Common::BoDauTienViet($itemForm["ThanhPhan"]);
+                $itemForm["Name"] = $itemForm["Name"];
+                $danhmuc = new ModelDanhMuc();
+                $danhmuc->Post($itemForm);
+                // \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=danhmuc&action=put&id=" . $itemForm["Code"]);
+                \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=danhmuc&action=index");
 
-    function GetByName() {
-	}
+            }
+        } catch (\Exception $exc) {
+            echo $exc->getMessage();
+        }
+        $this->View();
+    }
 
-    function GetByNameBietDuoc() {
-	}
+    /**
+     *
+     * @return mixed
+     */
+    function put()
+    {
+        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DanhMuc_Put]);
+        try {
+            if (\Model\Request::Post(FormDanhMuc::$ElementsName, null)) {
+
+                $itemHtml = \Model\Request::Post(FormDanhMuc::$ElementsName, null);
+
+                $model["Id"] = $itemHtml["Id"];
+                // $model["Code"] = $itemHtml["Code"];
+                $model["Name"] = $itemHtml["Name"];
+                $model["Link"] = $itemHtml["Link"];
+                // $model["Lang"] = $itemHtml["Lang"];
+                $model["ThanhPhan"] = strip_tags($itemHtml["ThanhPhan"]);
+                $model["LuuY"] = strip_tags($itemHtml["LuuY"]);
+                $model["GhiChu"] = strip_tags($itemHtml["GhiChu"]);
+                $dm = new ModelDanhMuc();
+                $dm->Put($model);
+                new \Model\Error(\Model\Error::success, "Đã Sửa Danh Mục");
+                \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=danhmuc&action=index");
+            }
+        } catch (\Exception $exc) {
+            echo $exc->getMessage();
+        }
+
+        $id = \Model\Request::Get("id", null);
+        if ($id == null) {
+        }
+        $DM = new ModelDanhMuc();
+        $data["data"] = $DM->GetById($id);
+        $this->View($data);
+    }
+
+
+    public function delete()
+    {
+        try {
+            \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DanhMuc_Delete]);
+            $id = \Model\Request::Get("id", null);
+            if ($id) {
+                $DanhMuc = new ModelDanhMuc();
+                $DanhMuc->Delete($id);
+                new \Model\Error(\Model\Error::success, "Đã Xóa Danh Mục");
+            }
+        } catch (\Exception $ex) {
+            new \Model\Error(\Model\Error::danger, $ex->getMessage());
+        }
+        \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=danhmuc&action=index");
+    }
+
+    function GetByName()
+    {
+    }
+
+    function GetByNameBietDuoc()
+    {
+    }
 }

@@ -246,12 +246,12 @@ class Functions
                                 <?php
                                 if (\Model\Permission::CheckPremision([User::Admin, Permission::QLT_Thuoc_Post], []) == true) {
                                 ?>
-                                    <li><a href="/quanlythuoc/sanpham/"><i class="fa fa-circle-o"></i> Danh sách thuốc</a></li>
+                                    <li><a href="index.php?module=quanlythuoc&controller=sanpham&action=index"><i class="fa fa-circle-o"></i> Danh sách thuốc</a></li>
                                 <?php  } ?>
                                 <?php
                                 if (\Model\Permission::CheckPremision([User::Admin, Permission::QLT_Thuoc_Post], []) == true) {
                                 ?>
-                                    <li><a href="/quanlythuoc/danhmuc"><i class="fa fa-circle-o"></i> Danh sách loại thuốc</a></li>
+                                    <li><a href="index.php?module=quanlythuoc&controller=danhmuc&action=index"><i class="fa fa-circle-o"></i> Danh sách loại thuốc</a></li>
                                 <?php  } ?>
                             </ul>
                         </li>
@@ -341,14 +341,14 @@ class Functions
                             </a>
                             <ul class="treeview-menu">
                                 <li><a href="/locations/index"><i class="fa fa-circle-o"></i> Tỉnh Thành Phố</a></li>
-                                <li><a href="/options/congty/"><i class="fa fa-circle-o"></i> Công Ty</a></li>
+                                <!-- <li><a href="/options/congty/"><i class="fa fa-circle-o"></i> Công Ty</a></li>
                                 <li><a href="/options/index/phongban/"><i class="fa fa-circle-o"></i> Phòng Ban</a></li>
                                 <li><a href="/options/hopdong/"><i class="fa fa-circle-o"></i> Hợp Đồng</a></li>
                                 <li><a href="/options/tinhtrang/"><i class="fa fa-circle-o"></i>Tinh trạng Hợp Đồng</a></li>
-                                <li><a href="/options/hinhthuchd/"><i class="fa fa-circle-o"></i> Hình Thức Hợp Đồng</a></li>
+                                <li><a href="/options/hinhthuchd/"><i class="fa fa-circle-o"></i> Hình Thức Hợp Đồng</a></li> -->
                                 <li><a href="/options/gioitinh/"><i class="fa fa-circle-o"></i> Giới Tính</a></li>
-                                <li><a href="/options/chucvu/"><i class="fa fa-circle-o"></i> Chức Vụ</a></li>
-                                <li><a href="/options/index/NameFunction/"><i class="fa fa-circle-o"></i> Module</a></li>
+                                <!-- <li><a href="/options/chucvu/"><i class="fa fa-circle-o"></i> Chức Vụ</a></li>
+                                <li><a href="/options/index/NameFunction/"><i class="fa fa-circle-o"></i> Module</a></li> -->
                             </ul>
                         </li>
                     <?php

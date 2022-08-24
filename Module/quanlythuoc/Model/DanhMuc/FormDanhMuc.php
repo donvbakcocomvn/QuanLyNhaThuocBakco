@@ -1,51 +1,58 @@
 <?php
 
-namespace Module\quanlysanpham\Model\DanhMuc;
+namespace Module\quanlythuoc\Model\DanhMuc;
 
 use PFBC\Element;
 use Model\FormRender;
+use Module\quanlythuoc\Model\DanhMuc\iFormDanhMuc;
 
-class FormDanhMuc implements iFormDanhMuc {
+class FormDanhMuc implements iFormDanhMuc
+{
 
     static $properties = ["class" => "form-control"];
     static $ElementsName = "DanhMuc";
 
     //put your code here
-    public function __construct() {
-        
+    public function __construct()
+    {
     }
+    
+    // public static function keyword($val = null) {
+    //     $properties = self::$properties;
+    //     $properties["value"] = $val;
+    //     $properties[FormRender::Required] = "true";
+    //     $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+    //     return new FormRender(new Element\Textarea("Từ Khóa", $name, $properties));
+    // }
 
-    public static function Banner($val = null) {
-        
-    }
+    // public static function title($val = null) {
+    //     $properties = self::$properties;
+    //     $properties["value"] = $val;
+    //     $properties[FormRender::Required] = "true";
+    //     $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+    //     return new FormRender(new Element\Textarea("Tiêu Đề", $name, $properties));
+    // }
 
-    public static function Id($val = null) {
-         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        return new FormRender(new Element\Hidden($name,$val));
-    }
-
-    public static function IsPublic($val = null) {
-        
-    }
-
-    public static function Lang($val = null) {
-        $properties = self::$properties;
-        $properties["value"] = $val;
-        $properties[FormRender::Required] = "true";
+    /**
+     *
+     * @param mixed $val
+     *
+     * @return mixed
+     */
+    function Id($val = null)
+    {
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        $options = \Model\Lang::ToOptions();
-        return new FormRender(new Element\Select("Ngôn Ngữ", $name, $options, $properties));
+        return new FormRender(new Element\Hidden($name, $val));
     }
 
-    public static function Link($val = null) {
-        $properties = self::$properties;
-        $properties["value"] = $val;
-        $properties[FormRender::Required] = "true";
-        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        return new FormRender(new Element\Textbox("Link", $name, $properties));
-    }
-
-    public static function Name($val = null) {
+    /**
+     *
+     * @param mixed $val
+     *
+     * @return mixed
+     */
+    function Name($val = null)
+    {
         $properties = self::$properties;
         $properties["value"] = $val;
         $properties[FormRender::Required] = "true";
@@ -53,50 +60,94 @@ class FormDanhMuc implements iFormDanhMuc {
         return new FormRender(new Element\Textbox("Tên Danh Mục", $name, $properties));
     }
 
-    public static function Note($val = null) {
-        
-    }
-
-    public static function Path($val = null) {
-        
-    }
-
-    public static function STT($val = null) {
-        
-    }
-
-    public static function parentsId($val = null) {
-        $properties = self::$properties;
-        $properties["value"] = $val; 
-        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        $options = \Module\quanlysanpham\Model\DanhMuc::CapChaTpOptions();
-        $opLaCapCha = ["" => "Là Cấp Cha"];
-        $options = $opLaCapCha + $options;
-        return new FormRender(new Element\Select("Cấp Cha", $name, $options, $properties));
-    }
-
-    public static function des($val = null) {
+    /**
+     *
+     * @param mixed $val
+     *
+     * @return mixed
+     */
+    function Code($val = null)
+    {
         $properties = self::$properties;
         $properties["value"] = $val;
         $properties[FormRender::Required] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        return new FormRender(new Element\Textarea("Mô Tả", $name, $properties));
+        return new FormRender(new Element\Textbox("Mã Danh Mục", $name, $properties));
     }
 
-    public static function keyword($val = null) {
+    /**
+     *
+     * @param mixed $val
+     *
+     * @return mixed
+     */
+    function Link($val = null)
+    {
         $properties = self::$properties;
         $properties["value"] = $val;
         $properties[FormRender::Required] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        return new FormRender(new Element\Textarea("Từ Khóa", $name, $properties));
+        return new FormRender(new Element\Textbox("Link", $name, $properties));
     }
 
-    public static function title($val = null) {
+    /**
+     *
+     * @param mixed $val
+     *
+     * @return mixed
+     */
+    function ThanhPhan($val = null)
+    {
         $properties = self::$properties;
         $properties["value"] = $val;
         $properties[FormRender::Required] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        return new FormRender(new Element\Textarea("Tiêu Đề", $name, $properties));
+        return new FormRender(new Element\Textbox("Thành Phần", $name, $properties));
     }
 
+    /**
+     *
+     * @param mixed $val
+     *
+     * @return mixed
+     */
+    function LuuY($val = null)
+    {
+        $properties = self::$properties;
+        $properties["value"] = $val;
+        $properties[FormRender::Required] = "true";
+        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+        return new FormRender(new Element\Textarea("Lưu Ý", $name, $properties));
+    }
+
+    /**
+     *
+     * @param mixed $val
+     *
+     * @return mixed
+     */
+    function GhiChu($val = null)
+    {
+        $properties = self::$properties;
+        $properties["value"] = $val;
+        $properties[FormRender::Required] = "true";
+        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+        return new FormRender(new Element\Textarea("Ghi Chú", $name, $properties));
+    }
+
+    /**
+     *
+     * @param mixed $val
+     *
+     * @return mixed
+     */
+    function Lang($val = null)
+    {
+        $properties = self::$properties;
+        $properties["value"] = $val;
+        $properties[FormRender::Required] = "true";
+        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+        $options = \Model\Lang::ToOptions();
+        return new FormRender(new Element\Select("Ngôn Ngữ", $name, $options, $properties));
+    }
 }

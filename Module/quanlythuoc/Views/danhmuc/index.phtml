@@ -1,29 +1,17 @@
 <ol class="breadcrumb" >
     <li><a href="/index.php?controller=backend" >Home</a></li>
     <li> Quản Lý Danh Mục Thuốc </li>
-</ol>  
+</ol>
 
 <div class="container-fluid" >
-    <form method="get" action="">
-        <div class="form-group d-flex" >  
-            <input class="form-control" name="controller" value="quanlyusers" type="hidden"  >
-            <input class="form-control" name="action" value="index" type="hidden"  >
-            <input class="form-control" name="indexPage" value="<?php echo $indexPage ?>" type="hidden"  >
-            <input class="form-control" name="pageNumber" value="<?php echo $pageNumber ?>" type="hidden"  >
-            <input class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type=""  >
-            <button class="btn btn-primary" name="btnTim" type="submit"  >Tìm Kiếm</button>
-        </div>
-
-    </form>
-
     <div class="box box-primary" >
         <div class="box-header" >
             <h3 class="box-title" >Danh Mục Thuốc</h3>
             <div class="box-tools" >
                 <?php
-                echo Model\User::btnThem();
+                use Module\quanlythuoc\Model\DanhMuc;
+                Module\quanlythuoc\Model\btnHtml::btnThemDanhMuc();
                 ?>
-
             </div>
         </div>
         <div class="box-body" >
@@ -32,62 +20,65 @@
                     <tr>
                         <th></th>
                         <th>STT</th>
-                        <th>Tài Khoản</th>
-                        <th>Họ & Tên</th>
-                        <th>Email</th>
+                        <th>Mã Danh Mục</th>
+                        <th>Tên Danh Mục</th>
+                        <th>Đường Dẫn</th>
+                        <th>Thành Phần</th>
+                        <th>Lưu Ý</th>
+                        <th>Ghi Chú</th>
                     </tr>
                 </thead>
-                <!-- <tbody>
+                <tbody>
                     <?php
-                    foreach ($DanhSachTaiKhoan as $index => $user) {
-                        $_user = new Model\User($user);
+                    foreach ($items as $index => $item) {
+                        $_item = new DanhMuc($item)
                         ?> 
                         <tr>
-                            <th> 
-
+                            <th style="width: 150px;" > 
                                 <?php
-                                echo $_user->btnSua();
-                                echo $_user->btnXoa();
+                                echo Module\quanlythuoc\Model\btnHtml::btnSuaDanhMuc($_item->Id);
+                                echo Module\quanlythuoc\Model\btnHtml::btnXoaDanhMuc($_item->Id);
                                 ?>
                             </th>
-                            <th><?php echo $index + 1; ?></th>
-                            <th><?php echo $_user->Username; ?></th>
-                            <th><?php echo $_user->Name; ?></th>
-                            <th><?php echo $_user->Email; ?></th>
+                            <!-- <th><?php echo $index + 1; ?></th>  -->
+                            <th><?php echo $_item->Id; ?></th>
+                            <th><?php echo $_item->Code; ?></th>
+                            <th><?php echo $_item->Name; ?></th>
+                            <th><?php echo $_item->Link; ?></th>
+                            <th><?php echo $_item->ThanhPhan; ?></th>
+                            <th><?php echo $_item->LuuY; ?></th>
+                            <th><?php echo $_item->GhiChu; ?></th>
                         </tr>
                         <?php
                     }
                     ?> 
-                </tbody> -->
-            </table>    
-
-        </div>
-        <div class="box-footer" >
-            <div  class="d-flex"> 
-                <?php
-                \Model\FormCommon::Select("", "", [10, 20, 50, 100],
-                        [
-                            "style" => "max-width:150px;",
-                            "class" => "form-control",
-                            "value" => $pageNumber,
-                            "onchange" => "SoDongHienThi(this.value)",
-                        ]
-                )->render();
-                ?> 
-                <?php
-                $linkPhanTrang = "/index.php?controller=quanlyusers&action=index&indexPage=[i]&pageNumber={$pageNumber}";
-                echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
-                ?> 
+                </tbody>
+            </table> 
+            <div class="box-footer" >
+                <div  class="d-flex"> 
+                    <?php
+                    \Model\FormCommon::Select("", "", [10, 20, 50, 100],
+                            [
+                                "style" => "max-width:150px;",
+                                "class" => "form-control",
+                                "value" => $pageNumber,
+                                "onchange" => "SoDongHienThi(this.value)",
+                            ]
+                    )->render();
+                    ?> 
+                    <?php
+                    $linkPhanTrang = "/index.php?module=quanlythuoc&controller=danhmuc&action=index&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
+                    echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
+                    ?> 
+                </div>
             </div>
         </div>
     </div>    
 </div>
 <script type="text/javascript" >
     var SoDongHienThi = function (evalue) {
-        var linkPhanTrang = '/index.php?controller=quanlyusers&action=index&indexPage=1&pageNumber=[j]';
+        var linkPhanTrang = '/index.php?module=quanlythuoc&controller=danhmuc&action=index&indexPage=1&pageNumber=[j]';
         linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
         window.location.href = linkPhanTrang;
     }
 </script>
-
-

@@ -1,8 +1,11 @@
 <?php
 
-namespace Module\quanlysanpham\Model;
+namespace Module\quanlythuoc\Model;
 
-class btnHtml {
+use Module\quanlythuoc\Permission;
+
+class btnHtml
+{
 
     public function __construct() {
         
@@ -55,35 +58,34 @@ class btnHtml {
     }
 
     public static function btnThemDanhMuc() {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, "quanlysanpham_danhmuc_post"]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_DanhMuc_Post]) == false) {
             return;
         }
         ?> 
-        <a class="btn btn-success" href="/index.php?module=quanlysanpham&controller=danhmuc&action=post">
+        <a class="btn btn-success" href="/index.php?module=quanlythuoc&controller=danhmuc&action=post">
             <i class="fa fa-plus"></i> Thêm mới</a> 
         <?php
     }
 
     public static function btnSuaDanhMuc($id) {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, "quanlysanpham_danhmuc_put"]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_DanhMuc_Put]) == false) {
             return;
         }
         ?> 
-        <a class="btn btn-success" href="/index.php?module=quanlysanpham&controller=danhmuc&action=put&id=<?php echo $id; ?>">
+        <a class="btn btn-success" href="/index.php?module=quanlythuoc&controller=danhmuc&action=put&id=<?php echo $id; ?>">
             Sửa
         </a> 
         <?php
     }
 
     public static function btnXoaDanhMuc($id) {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, "quanlysanpham_danhmuc_delete"]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_DanhMuc_Delete]) == false) {
             return;
         }
         ?> 
-        <a class="btn btn-danger" title="Bạn có muốn xóa danh mục này?" href="/index.php?module=quanlysanpham&controller=danhmuc&action=delete&id=<?php echo $id; ?>">
+        <a class="btn btn-danger" title="Bạn có muốn xóa danh mục này?" href="/index.php?module=quanlythuoc&controller=danhmuc&action=delete&id=<?php echo $id; ?>">
             Xóa
         </a> 
         <?php
     }
-
 }

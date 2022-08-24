@@ -12,7 +12,7 @@
  * @author MSI
  */
 
-namespace Module\quanlysanpham\Model\SanPham;
+namespace Module\quanlythuoc\Model\SanPham;
 
 use PFBC\Element;
 use Model\FormRender;
@@ -20,161 +20,225 @@ use Model\FormRender;
 class FormSanPham implements iFormSanPham {
 
     static $properties = ["class" => "form-control"];
-    static $ElementsName = "SanPham";
+    static $ElementsName = "Thuoc";
 
     public function __construct() {
         
     }
 
-    //put your code here
-    public static function Alias($val = null) {
-        $properties = self::$properties;
-        $properties["value"] = $val;
-        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        return new FormRender(new Element\Textbox("Perlink", $name, $properties));
-    }
-
-    public static function BuyTimes($val = null) {
-        $properties = self::$properties;
-        $properties["value"] = $val;
-        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        return new FormRender(new Element\Textbox("Số Lần Mua", $name, $properties));
-    }
-
-    public static function Content($val = null) {
-        $properties = self::$properties;
-        $properties["value"] = $val;
-        $properties["id"] = "content";
-        $properties["class"] = "editorContent";
-        $properties[FormRender::Required] = "true";
-        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        return new FormRender(new Element\Textarea("Nội Dung", $name, $properties));
-    }
-
-    public static function DanhMucId($val = null) {
-        $properties = self::$properties;
-        $properties["value"] = $val;
-        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        $options = \Module\quanlysanpham\Model\DanhMuc::CapChaTpOptions();
-        return new FormRender(new Element\Select("Danh Mục", $name, $options, $properties));
-    }
-
-    public static function DateCreate($val = null) {
-        
-    }
-
-    public static function Id($val = null) {
-        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+	/**
+	 *
+	 * @param mixed $val
+	 *
+	 * @return mixed
+	 */
+	function Id($val = null) {
+		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
         return new FormRender(new Element\Hidden($name, $val));
-    }
-
-    public static function Lang($val = null) {
-        $properties = self::$properties;
+	}
+	
+	/**
+	 *
+	 * @param mixed $val
+	 *
+	 * @return mixed
+	 */
+	function Idloaithuoc($val = null) {
+		$properties = self::$properties;
         $properties["value"] = $val;
         $properties[FormRender::Required] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        $options = \Model\Lang::ToOptions();
-        return new FormRender(new Element\Select("Ngôn Ngữ", $name, $options, $properties));
-    }
-
-    public static function Name($val = null) {
-        $properties = self::$properties;
+        return new FormRender(new Element\Textbox("Code Loại Thuốc", $name, $properties));
+	}
+	
+	/**
+	 *
+	 * @param mixed $val
+	 *
+	 * @return mixed
+	 */
+	function Name($val = null) {
+		$properties = self::$properties;
         $properties["value"] = $val;
         $properties[FormRender::Required] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        return new FormRender(new Element\Textbox("Tên Sản Phẩm", $name, $properties));
-    }
-
-    public static function Note($val = null) {
-        
-    }
-
-    public static function Number($val = null) {
-        $properties = self::$properties;
-        $properties["value"] = number_format($val, 0, ".", ",");
-        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        return new FormRender(new Element\Textbox("Số Lượng Sản Phẩm", $name, $properties));
-    }
-
-    public static function Price($val = null) {
-        $properties = self::$properties;
-        $properties["value"] = number_format($val, 0, ".", ",");
-        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        return new FormRender(new Element\Textbox("Giá Sản Phẩm", $name, $properties));
-    }
-
-    public static function STT($val = null) {
-        $properties = self::$properties;
-        $properties["value"] = $val;
-        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        return new FormRender(new Element\Textbox("STT", $name, $properties));
-    }
-
-    public static function Summary($val = null) {
-        $properties = self::$properties;
-        $properties["value"] = $val; 
-        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        return new FormRender(new Element\Textarea("Mô Tả Ngắn", $name, $properties));
-    }
-
-    public static function UrlImages($val = null) {
-        $properties = self::$properties;
-        $properties["value"] = $val;
-//        $properties["style"] = "display:none";
-
-        $properties["id"] = __FUNCTION__;
-        $properties[FormRender::Readonly] = "true";
-        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        return new FormRender(new Element\Textbox("Hình Đại Diện", $name, $properties));
-    }
-
-    public static function Username($val = null) {
-        
-    }
-
-    public static function Views($val = null) {
-         $properties = self::$properties;
-        $properties["value"] =  $val;
-        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        return new FormRender(new Element\Textbox("Lượt Xem", $name, $properties));
-    }
-
-    public static function isShow($val = null) {
-        $properties = self::$properties;
+        return new FormRender(new Element\Textbox("Tên Thuốc", $name, $properties));
+	}
+	
+	/**
+	 *
+	 * @param mixed $val
+	 *
+	 * @return mixed
+	 */
+	function Namebietduoc($val = null) {
+		$properties = self::$properties;
         $properties["value"] = $val;
         $properties[FormRender::Required] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        $options = [1 => "Hiện", 0 => "Ẩn"];
-        return new FormRender(new Element\Select("Hiển Thị", $name, $options, $properties));
-    }
-
-    public static function oldPrice($val = null) {
-        $properties = self::$properties;
-        $properties["value"] = number_format($val, 0, ".", ",");
-        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        return new FormRender(new Element\Textbox("Giá Cũ", $name, $properties));
-    }
-
-    public static function Des($val = null) {
-        $properties = self::$properties;
+        return new FormRender(new Element\Textbox("Tên Biệt Dược", $name, $properties));
+	}
+	
+	/**
+	 *
+	 * @param mixed $val
+	 *
+	 * @return mixed
+	 */
+	function Solo($val = null) {
+		$properties = self::$properties;
         $properties["value"] = $val;
-
+        $properties[FormRender::Required] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        return new FormRender(new Element\Textarea("Mô Tả", $name, $properties));
-    }
-
-    public static function Keyword($val = null) {
-        $properties = self::$properties;
+        return new FormRender(new Element\Textbox("Số Lô", $name, $properties));
+	}
+	
+	/**
+	 *
+	 * @param mixed $val
+	 *
+	 * @return mixed
+	 */
+	function Gianhap($val = null) {
+		$properties = self::$properties;
         $properties["value"] = $val;
+        $properties[FormRender::Required] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        return new FormRender(new Element\Textarea("Từ Khóa", $name, $properties));
-    }
-
-    public static function Title($val = null) {
-        $properties = self::$properties;
+        return new FormRender(new Element\Textbox("Giá Nhập", $name, $properties));
+	}
+	
+	/**
+	 *
+	 * @param mixed $val
+	 *
+	 * @return mixed
+	 */
+	function Giaban($val = null) {
+		$properties = self::$properties;
         $properties["value"] = $val;
+        $properties[FormRender::Required] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        return new FormRender(new Element\Textarea("Tiêu Đề", $name, $properties));
-    }
-
+        return new FormRender(new Element\Textbox("Giá Bán", $name, $properties));
+	}
+	
+	/**
+	 *
+	 * @param mixed $val
+	 *
+	 * @return mixed
+	 */
+	function DVT($val = null) {
+		$properties = self::$properties;
+        $properties["value"] = $val;
+        $properties[FormRender::Required] = "true";
+        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+        return new FormRender(new Element\Textbox("Đơn vị tính", $name, $properties));
+	}
+	
+	/**
+	 *
+	 * @param mixed $val
+	 *
+	 * @return mixed
+	 */
+	function Ngaysx($val = null) {
+		$properties = self::$properties;
+        $properties["value"] = $val;
+        $properties[FormRender::Required] = "true";
+        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+        return new FormRender(new Element\Textbox("Ngày Sản Xuất", $name, $properties));
+	}
+	
+	/**
+	 *
+	 * @param mixed $val
+	 *
+	 * @return mixed
+	 */
+	function HSD($val = null) {
+		$properties = self::$properties;
+        $properties["value"] = $val;
+        $properties[FormRender::Required] = "true";
+        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+        return new FormRender(new Element\Textbox("Hạn Dùng", $name, $properties));
+	}
+	
+	/**
+	 *
+	 * @param mixed $val
+	 *
+	 * @return mixed
+	 */
+	function Tacdung($val = null) {
+		$properties = self::$properties;
+        $properties["value"] = $val;
+        $properties[FormRender::Required] = "true";
+        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+        return new FormRender(new Element\Textbox("Tác Dụng", $name, $properties));
+	}
+	
+	/**
+	 *
+	 * @param mixed $val
+	 *
+	 * @return mixed
+	 */
+	function Cochetacdung($val = null) {
+		$properties = self::$properties;
+        $properties["value"] = $val;
+        $properties[FormRender::Required] = "true";
+        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+        return new FormRender(new Element\Textarea("Cơ Chế Tác Dụng", $name, $properties));
+	}
+	
+	/**
+	 *
+	 * @param mixed $val
+	 *
+	 * @return mixed
+	 */
+	function Ghichu($val = null) {
+		$properties = self::$properties;
+        $properties["value"] = $val;
+        $properties[FormRender::Required] = "true";
+        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+        return new FormRender(new Element\Textarea("Ghi chú", $name, $properties));
+	}
+	
+	/**
+	 *
+	 * @param mixed $val
+	 *
+	 * @return mixed
+	 */
+	function NhaSX($val = null) {
+		$properties = self::$properties;
+        $properties["value"] = $val;
+        $properties[FormRender::Required] = "true";
+        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+        return new FormRender(new Element\Textbox("Nhà Sản Xuất", $name, $properties));
+	}
+	
+	/**
+	 *
+	 * @param mixed $val
+	 *
+	 * @return mixed
+	 */
+	function NuocSX($val = null) {
+		$properties = self::$properties;
+        $properties["value"] = $val;
+        $properties[FormRender::Required] = "true";
+        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+        return new FormRender(new Element\Textbox("Nước Sản Xuất", $name, $properties));
+	}
+	
+	/**
+	 *
+	 * @param mixed $val
+	 *
+	 * @return mixed
+	 */
+	function Lang($val = null) {
+	}
 }

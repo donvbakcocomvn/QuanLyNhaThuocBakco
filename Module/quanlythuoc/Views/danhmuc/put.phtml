@@ -1,38 +1,64 @@
-<ol class="breadcrumb" >
-    <li><a href="/index.php?controller=backend" >Home</a></li>
-    <li><a href="/index.php?module=quanlysanpham&controller=danhmuc&action=index" >Quản Lý Danh Mục Sản Phẩm</a></li>
-    <li> Sửa </li>
+<ol class="breadcrumb">
+    <li><a href="/index.php?controller=backend">Home</a></li>
+    <li><a href="index.php?module=quanlythuoc&controller=danhmuc&action=index"> Danh Mục Thuốc</a></li>
+    <li> Thêm Danh Mục </li>
 </ol>
 <?php
-$_item = new \Module\quanlysanpham\Model\DanhMuc($item);
+
+use Module\quanlythuoc\Model\DanhMuc;
+use Module\quanlythuoc\Model\DanhMuc\FormDanhMuc;
+use Module\quanlythuoc\Model\DMThuoc\FormDMThuoc;
+
+
+$roleDetail = new Model\Role();
 ?>
-<div  class="container-fluid" >
-    <form action="" method="post">
-        <div class="box box-primary" >
-            <div class="box-header" >
-                <h3 class="box-title" >Sửa Danh Mục</h3>  
+<div class="container-fluid">
+    <div class="box box-primary">
+        <div class="box-header">
+            <h3 class="box-title">Thêm Danh Mục</h3>
+            <div class="box-tools">
+                <!--<a href="#" class="btn btn-success" ><i class="fa fa-plus" ></i></a>-->
             </div>
-            <div class="box-body" >
-                <div class="col-md-6" >
-                    <div class="row" >
-                        <?php
-                        Module\quanlysanpham\Model\DanhMuc\FormDanhMuc::Id($_item->Id)->render();
-                        Module\quanlysanpham\Model\DanhMuc\FormDanhMuc::Name($_item->Name)->renderHTML();
-                        Module\quanlysanpham\Model\DanhMuc\FormDanhMuc::parentsId($_item->parentsId)->renderHTML();
-                        Module\quanlysanpham\Model\DanhMuc\FormDanhMuc::Lang($_item->Lang)->renderHTML();
-                        Module\quanlysanpham\Model\DanhMuc\FormDanhMuc::title($_item->title)->renderHTML();
-                        Module\quanlysanpham\Model\DanhMuc\FormDanhMuc::keyword($_item->keyword)->renderHTML();
-                        Module\quanlysanpham\Model\DanhMuc\FormDanhMuc::des($_item->des)->renderHTML();
-                        ?>
+        </div>
+        <!-- <div class="box-body"> -->
+        <form action="" method="post" enctype="multipart/form-data">
+            <div class="box-body">
+                <?php
+                $dm = new FormDanhMuc();
+                
+                $_item = new DanhMuc($data);
+                // var_dump($_item);
+                
+                ?>
+                <div class="">
+                    <div class="col-6">
+                        <?php $dm->Id($_item->Id)->render();  ?>
                     </div>
-
+                    <div class="col-md-4">
+                        <?php $dm->Name($_item->Name)->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php $dm->Link($_item->Link)->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php $dm->ThanhPhan($_item->ThanhPhan)->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?php $dm->LuuY($_item->LuuY)->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?php $dm->GhiChu($_item->GhiChu)->renderHtml();  ?>
+                    </div>
+                    <div class="form-group ">
+                        <button class="btn btn-default" type="reset">Làm Lại</button>
+                        <button class="btn btn-success">Lưu</button>
+                        <button class="btn btn-success" name="LuuThoat">Lưu & Thoát</button>
+                    </div>
                 </div>
-            </div>
-            <div class="box-footer" >
-                <input type="submit" class="btn btn-success" name="Luu" value="Lưu" />
-            </div>
-        </div>    
-    </form>    
+        </form>
+    </div>
 </div>
-
-
+</form>
+</div>
+</div>
+</div>

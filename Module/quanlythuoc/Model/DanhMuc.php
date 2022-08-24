@@ -4,7 +4,7 @@ namespace Module\quanlythuoc\Model;
 
 class DanhMuc extends \Model\DB implements \Model\IModelService {
 
-    public $IdDM; 
+    public $Id; 
     public $Code; 
     public $Name;
     public $Link; 
@@ -14,7 +14,7 @@ class DanhMuc extends \Model\DB implements \Model\IModelService {
     public $Lang;
 
     public function __construct($dm = null) {
-        self::$TableName = prefixTable . "danhmuc";
+        self::$TableName = prefixTable . "qlthuoc_danhmuc";
         parent::__construct();
         if ($dm) {
             if (!is_array($dm)) {
@@ -22,7 +22,7 @@ class DanhMuc extends \Model\DB implements \Model\IModelService {
                 $dm = $this->GetById($id);
             }
             if ($dm) {
-                $this->IdDM = isset($dm["IdDM"]) ? $dm["IdDM"] : null;
+                $this->Id = isset($dm["Id"]) ? $dm["Id"] : null;
                 $this->Code = isset($dm["Code"]) ? $dm["Code"] : null;
                 $this->Name = isset($dm["Name"]) ? $dm["Name"] : null;
                 $this->Link = isset($dm["Link"]) ? $dm["Link"] : null;
@@ -35,12 +35,12 @@ class DanhMuc extends \Model\DB implements \Model\IModelService {
     }
 
     public function Delete($Id) {
-        $tongSanPham = SanPham::CountSanPhamByDanhMuc($Id);
+        $tongSanPham = SanPham::CountSPThuocByDanhMuc($Id);
 
         if ($tongSanPham > 0) {
             throw new \Exception("Không xóa danh mục có sản phẩm.");
         }
-        $DM = new DanhMuc();
+        $DM = new danhmuc();
         return $DM->DeleteById($Id);
     }
 
@@ -62,17 +62,13 @@ class DanhMuc extends \Model\DB implements \Model\IModelService {
     }
 
     public static function CapChaTpOptions($dungTatCa = false) {
-        $dm = new DanhMuc();
+        $dm = new danhmuc();
         $where = "`parentsId` != '' or `parentsId` is null ";
         $a = $dm->SelectToOptions($where, ["Id", "Name"]);
         if ($dungTatCa == true) {
             $a = ["" => "Tất Cả"] + $a;
         }
         return $a;
-    }
-
-    public function btnSua() {
-        
     }
 
 }

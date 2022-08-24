@@ -105,7 +105,7 @@ class danhmuc extends \Application implements \Controller\IControllerBE {
         }
         $DM = new \Module\quanlysanpham\Model\DanhMuc();
         $data["item"] = $DM->GetById($id);
-        $this->View($data);
+    $this->View($data);
     }
 
 }
