@@ -15,8 +15,10 @@ $roleDetail = new Model\Role();
     <div class="box box-primary">
         <div class="box-header">
             <h3 class="box-title">Thêm Danh Mục</h3>
-            <div class="box-tools">
-                <!--<a href="#" class="btn btn-success" ><i class="fa fa-plus" ></i></a>-->
+            <div class="box-tools" >
+                <?php
+                Module\quanlythuoc\Model\btnHtml::btnViewDanhMuc();
+                ?>
             </div>
         </div>
         <!-- <div class="box-body"> -->
@@ -26,11 +28,8 @@ $roleDetail = new Model\Role();
                 $dm = new FormDanhMuc();
                 ?>
                 <div class="">
-                    <div class="col-6">
-                        <?php $dm->Id()->render(); ?>
-                    </div>
                     <div class="col-md-6">
-                        <?php $dm->Code()->renderHtml();  ?>
+                        <?php $dm->Id()->renderHtml(); ?>
                     </div>
                     <div class="col-md-6">
                         <?php $dm->Name()->renderHtml();  ?>
@@ -39,19 +38,13 @@ $roleDetail = new Model\Role();
                         <?php $dm->Link()->renderHtml();  ?>
                     </div>
                     <div class="col-md-6">
-                        <?php $dm->ThanhPhan()->renderHtml();  ?>
-                    </div>
-                    <div class="col-md-6">
                         <?php $dm->LuuY()->renderHtml();  ?>
                     </div>
-                    <div class="col-md-6">
-                        <?php $dm->GhiChu()->renderHtml();  ?>
-                    </div>
-                    <div class="form-group ">
-                        <button class="btn btn-default" type="reset">Làm Lại</button>
+                    <div class="col-md-12 ">
+                        <button class="btn btn-warning" type="reset">Làm Lại</button>
                         <!-- <button class="btn btn-success">Lưu</button> -->
                         <button class="btn btn-success" name="LuuThoat">Thêm Mới</button>
-                        </div>
+                    </div>
                 </div>
         </form>
     </div>

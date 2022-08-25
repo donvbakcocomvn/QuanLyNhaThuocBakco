@@ -12,6 +12,7 @@ class DanhMuc extends \Model\DB implements \Model\IModelService {
     public $LuuY; 
     public $GhiChu; 
     public $Lang;
+    public $CapCha;
 
     public function __construct($dm = null) {
         self::$TableName = prefixTable . "qlthuoc_danhmuc";
@@ -30,6 +31,7 @@ class DanhMuc extends \Model\DB implements \Model\IModelService {
                 $this->LuuY = isset($dm["LuuY"]) ? $dm["LuuY"] : null;
                 $this->GhiChu = isset($dm["GhiChu"]) ? $dm["GhiChu"] : null;
                 $this->Lang = isset($dm["Lang"]) ? $dm["Lang"] : null;
+                $this->CapCha = isset($dm["CapCha"]) ? $dm["CapCha"] : null;
             }
         }
     }
@@ -43,6 +45,7 @@ class DanhMuc extends \Model\DB implements \Model\IModelService {
         $DM = new danhmuc();
         return $DM->DeleteById($Id);
     }
+
 
     public function GetById($Id) {
         return $this->SelectById($Id);
@@ -61,14 +64,15 @@ class DanhMuc extends \Model\DB implements \Model\IModelService {
         return $this->UpdateRow($model);
     }
 
+
+    // Select option theo Name
     public static function CapChaTpOptions($dungTatCa = false) {
         $dm = new danhmuc();
-        $where = "`parentsId` != '' or `parentsId` is null ";
+        $where = "`Name` != '' or `Name` is null ";
         $a = $dm->SelectToOptions($where, ["Id", "Name"]);
         if ($dungTatCa == true) {
             $a = ["" => "Tất Cả"] + $a;
         }
         return $a;
     }
-
 }

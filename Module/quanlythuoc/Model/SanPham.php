@@ -7,6 +7,7 @@
 
 namespace Module\quanlythuoc\Model;
 
+use Model\OptionsService;
 use Module\quanlythuoc\Permission;
 
 /**
@@ -31,7 +32,6 @@ class SanPham extends \Model\DB implements \Model\IModelService {
     public $Ghichu; 
     public $NhaSX; 
     public $NuocSX; 
-    public $Lang;
 
     public function __construct($sp = null) {
         self::$TableName = prefixTable . "qlthuoc_thuoc";
@@ -57,12 +57,17 @@ class SanPham extends \Model\DB implements \Model\IModelService {
                 $this->Ghichu = isset($sp["Ghichu"]) ? $sp["Ghichu"] : null ;
                 $this->NhaSX = isset($sp["NhaSX"]) ? $sp["NhaSX"] : null ;
                 $this->NuocSX = isset($sp["NuocSX"]) ? $sp["NuocSX"] : null ;
-                $this->Lang = isset($sp["Lang"]) ? $sp["Lang"] : null ;
             }
         }
     }
 
+    public function IdLoaiThuoc()
+    {
+        return new DanhMuc($this->Idloaithuoc);
+    }
+
     public function Delete($Id) {
+        return $this->DeleteById($Id);
     }
 
     public function GetById($Id) {
@@ -83,28 +88,6 @@ class SanPham extends \Model\DB implements \Model\IModelService {
         return $Sp->SelectCount($where);
     }
 
-    public function btnPut() {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_Thuoc_Put]) == false) {
-            return;
-        }
-        ?> 
-        <a class="btn btn-primary" href="/quanlythuoc/thuoc/put/?id=<?php echo $this->Id; ?>">
-            <i class="fa fa-edit"></i>Sửa Thuốc
-        </a>
-        <?php
-    }
-
-    public function btnDelete() {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_Thuoc_Delete]) == false) {
-            return;
-        }
-        ?> 
-        <a class="btn btn-danger" title="Xóa Vĩnh Viễn Sản Phẩm Này?" href="/quanlythuoc/thuoc/delete/<?php echo $this->Id; ?>">
-            <i class="fa fa-times"></i>Xóa Thuốc
-        </a>
-        <?php
-    }
-
     public static function btnDeleteSelect() {
         if (\Model\Permission::CheckPremision([\Model\User::Admin, "quanlysanpham_sanpham_delete"]) == false) {
             return;
@@ -115,23 +98,12 @@ class SanPham extends \Model\DB implements \Model\IModelService {
         </button>
         <?php
     }
-    
-    public static function btnPost() {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_Thuoc_Post]) == false) {
-            return;
-        }
-        ?> 
-        <a class="btn btn-success" href="/index.php?module=quanlythuoc&controller=thuoc&action=post">
-            <i class="fa fa-plus"></i>Thêm Thuốc Mới
-        </a>
-        <?php
-    }
 
     public function GetItems($params, $indexPage, $pageNumber, &$total) {
         $name = isset($params["keyword"]) ? $params["keyword"] : '';
         $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
         $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
-        $isShowSql = "and `isShow` >= '0' ";
+        $isShowSql = "and `isShow` >= 0 ";
         $danhmucSql = "";
 
         if ($isShow) {
@@ -141,7 +113,7 @@ class SanPham extends \Model\DB implements \Model\IModelService {
             $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
         }
 
-        $where = " `Name` like '%{$name}%' {$danhmucSql} $isShowSql";
+        $where = " `Name` like '%{$name}%' or `Namebietduoc` like '%{$name}%' {$danhmucSql} ";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 
@@ -188,5 +160,4 @@ class SanPham extends \Model\DB implements \Model\IModelService {
         $where = " 1 = 1 ORDER BY `DateCreate` DESC limit 0,{$soLuongSanPham}";
         return $this->Select($where);
     }
-
 }

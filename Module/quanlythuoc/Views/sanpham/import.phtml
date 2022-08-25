@@ -1,0 +1,37 @@
+<ol class="breadcrumb">
+    <li><a href="/index.php?controller=backend">Home</a></li>
+    <li> Quản Lý Thuốc </li>
+</ol>
+
+<div class="container-fluid" ng-controller="searchCtrl">
+    <div class="clearfix">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Danh Sách Thuốc</h3>
+                <div class="box-tools">
+                    <?php
+
+                    use Module\quanlythuoc\Model\SanPham;
+
+                    Module\quanlythuoc\Model\btnHtml::btnImportSanPham();
+
+                    Module\quanlythuoc\Model\btnHtml::btnThemSanPham();
+                    ?>
+                </div>
+            </div>
+            <div class="box-body">
+                <table class="table table-bordered">
+                    <div class="container">
+                        <form action="" enctype="multipart/form-data" method="post">
+                            <a href="/public/excel/FileMauImportSP.xlsx" target="download" class="btn btn-success">Tải file mẫu</a>
+                            <br>
+                            <p>Chọn file .xls,xlsx</p>
+                            <input type="file" name="FileData" value="Chọn File">
+                            <button class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

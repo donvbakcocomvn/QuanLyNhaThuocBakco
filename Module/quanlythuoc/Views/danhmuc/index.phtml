@@ -1,82 +1,81 @@
-<ol class="breadcrumb" >
-    <li><a href="/index.php?controller=backend" >Home</a></li>
+<ol class="breadcrumb">
+    <li><a href="/index.php?controller=backend">Home</a></li>
     <li> Quản Lý Danh Mục Thuốc </li>
 </ol>
 
-<div class="container-fluid" >
-    <div class="box box-primary" >
-        <div class="box-header" >
-            <h3 class="box-title" >Danh Mục Thuốc</h3>
-            <div class="box-tools" >
+<div class="container-fluid">
+    <div class="box box-primary">
+        <div class="box-header">
+            <h3 class="box-title">Danh Mục Thuốc</h3>
+            <div class="box-tools">
                 <?php
+
                 use Module\quanlythuoc\Model\DanhMuc;
+
                 Module\quanlythuoc\Model\btnHtml::btnThemDanhMuc();
                 ?>
             </div>
         </div>
-        <div class="box-body" >
+        <div class="box-body">
             <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th></th>
                         <th>STT</th>
-                        <th>Mã Danh Mục</th>
                         <th>Tên Danh Mục</th>
                         <th>Đường Dẫn</th>
-                        <th>Thành Phần</th>
-                        <th>Lưu Ý</th>
                         <th>Ghi Chú</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     foreach ($items as $index => $item) {
-                        $_item = new DanhMuc($item)
-                        ?> 
+                        $_item = new DanhMuc($item);
+                        // var_dump($index);
+                    ?>
                         <tr>
-                            <th style="width: 150px;" > 
+                            <th style="width: 150px;">
                                 <?php
                                 echo Module\quanlythuoc\Model\btnHtml::btnSuaDanhMuc($_item->Id);
                                 echo Module\quanlythuoc\Model\btnHtml::btnXoaDanhMuc($_item->Id);
                                 ?>
                             </th>
-                            <!-- <th><?php echo $index + 1; ?></th>  -->
-                            <th><?php echo $_item->Id; ?></th>
-                            <th><?php echo $_item->Code; ?></th>
+                            <th><?php echo $index + 1; ?></th>
                             <th><?php echo $_item->Name; ?></th>
                             <th><?php echo $_item->Link; ?></th>
-                            <th><?php echo $_item->ThanhPhan; ?></th>
-                            <th><?php echo $_item->LuuY; ?></th>
                             <th><?php echo $_item->GhiChu; ?></th>
                         </tr>
-                        <?php
-                    }
-                    ?> 
-                </tbody>
-            </table> 
-            <div class="box-footer" >
-                <div  class="d-flex"> 
                     <?php
-                    \Model\FormCommon::Select("", "", [10, 20, 50, 100],
-                            [
-                                "style" => "max-width:150px;",
-                                "class" => "form-control",
-                                "value" => $pageNumber,
-                                "onchange" => "SoDongHienThi(this.value)",
-                            ]
+                    }
+                    ?>
+                </tbody>
+            </table>
+            <div class="box-footer">
+                <div class="d-flex">
+                    <?php
+                    \Model\FormCommon::Select(
+                        "",
+                        "",
+                        [10, 20, 50, 100],
+                        [
+                            "style" => "max-width:150px;",
+                            "class" => "form-control",
+                            "value" => $pageNumber,
+                            "onchange" => "SoDongHienThi(this.value)",
+                        ]
                     )->render();
-                    ?> 
+                    ?>
                     <?php
                     $linkPhanTrang = "/index.php?module=quanlythuoc&controller=danhmuc&action=index&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
                     echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
-                    ?> 
+                    ?>
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
 </div>
-<script type="text/javascript" >
-    var SoDongHienThi = function (evalue) {
+<script type="text/javascript">
+    var SoDongHienThi = function(evalue) {
         var linkPhanTrang = '/index.php?module=quanlythuoc&controller=danhmuc&action=index&indexPage=1&pageNumber=[j]';
         linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
         window.location.href = linkPhanTrang;

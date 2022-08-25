@@ -2,6 +2,7 @@
 
 namespace Controller;
 
+
 class options extends \Application implements IControllerBE {
 
     public function __construct() {
@@ -9,6 +10,17 @@ class options extends \Application implements IControllerBE {
     }
 
     public function delete() {
+        try {
+            $Id = \Model\Request::Get("id", null);
+            if ($Id) {
+                $option = new \Model\OptionsService();
+                $option->Delete($Id);
+                new \Model\Error(\Model\Error::success, "Đã Xóa Danh Mục");
+            }
+        } catch (\Exception $ex) {
+            new \Model\Error(\Model\Error::danger, $ex->getMessage());
+        }
+        \Model\Common::ToUrl("/options/donvitinh");
 
     }
 
@@ -31,10 +43,48 @@ class options extends \Application implements IControllerBE {
         $this->View($data);
     }
 
+    public function timkiemtheoboloc() {
+        $options = new \Model\OptionsService();
+        $params["keyword"] = isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "";
+        $params["GroupsId"] = "timkiemtheoboloc";
+        $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
+        $indexPage = max(1, $indexPage);
+        $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;
+        $pageNumber = max(1, $pageNumber);
+        $total = 0;
+        $items = $options->GetItems($params, $indexPage, $pageNumber, $total);
+        $data["Items"] = $items;
+        $data["indexPage"] = $indexPage;
+        $data["pageNumber"] = $pageNumber;
+        $data["params"] = $params;
+        $data["total"] = $total;
+
+        $this->View($data);
+    }
+
     public function hopdong() {
         $options = new \Model\OptionsService();
         $params["keyword"] = isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "";
         $params["GroupsId"] = "hopdong";
+        $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
+        $indexPage = max(1, $indexPage);
+        $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;
+        $pageNumber = max(1, $pageNumber);
+        $total = 0;
+        $items = $options->GetItems($params, $indexPage, $pageNumber, $total);
+        $data["Items"] = $items;
+        $data["indexPage"] = $indexPage;
+        $data["pageNumber"] = $pageNumber;
+        $data["params"] = $params;
+        $data["total"] = $total;
+
+        $this->View($data);
+    }
+
+    public function donvitinh() {
+        $options = new \Model\OptionsService();
+        $params["keyword"] = isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "";
+        $params["GroupsId"] = "donvitinh";
         $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
         $indexPage = max(1, $indexPage);
         $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;

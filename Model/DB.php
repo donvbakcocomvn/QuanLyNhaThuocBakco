@@ -7,6 +7,7 @@ class DB {
     public static $TableName;
     public static $Debug;
     private static $Connect;
+    // static protected $_Query = "";
 
     public function __construct() {
         if (self::$Connect == null) {
@@ -16,6 +17,23 @@ class DB {
             self::$Connect = $_conn;
         }
     }
+
+    // public function Query($sql)
+    // {
+    //     self::$_Query = $sql;
+    // }
+
+    // public function fetchAll($sql)
+    // {
+    //     $list = self::$Connect->query($sql);
+    //     $data = NULL;
+    //     if ($list) {
+    //         while ($row = mysqli_fetch_assoc($list)) {
+    //             $data[] = $row;
+    //         }
+    //     }
+    //     return $data;
+    // }
 
     protected function GetRows($sql) {
         if (self::$Debug)

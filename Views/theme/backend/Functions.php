@@ -246,12 +246,12 @@ class Functions
                                 <?php
                                 if (\Model\Permission::CheckPremision([User::Admin, Permission::QLT_Thuoc_Post], []) == true) {
                                 ?>
-                                    <li><a href="index.php?module=quanlythuoc&controller=sanpham&action=index"><i class="fa fa-circle-o"></i> Danh sách thuốc</a></li>
+                                    <li><a href="/index.php?module=quanlythuoc&controller=sanpham&action=index"><i class="fa fa-circle-o"></i> Danh sách thuốc</a></li>
                                 <?php  } ?>
                                 <?php
                                 if (\Model\Permission::CheckPremision([User::Admin, Permission::QLT_Thuoc_Post], []) == true) {
                                 ?>
-                                    <li><a href="index.php?module=quanlythuoc&controller=danhmuc&action=index"><i class="fa fa-circle-o"></i> Danh sách loại thuốc</a></li>
+                                    <li><a href="/index.php?module=quanlythuoc&controller=danhmuc&action=index"><i class="fa fa-circle-o"></i> Danh sách loại thuốc</a></li>
                                 <?php  } ?>
                             </ul>
                         </li>
@@ -341,6 +341,7 @@ class Functions
                             </a>
                             <ul class="treeview-menu">
                                 <li><a href="/locations/index"><i class="fa fa-circle-o"></i> Tỉnh Thành Phố</a></li>
+                                <li><a href="/options/donvitinh/"><i class="fa fa-circle-o"></i> Đơn Vị Tính</a></li>
                                 <!-- <li><a href="/options/congty/"><i class="fa fa-circle-o"></i> Công Ty</a></li>
                                 <li><a href="/options/index/phongban/"><i class="fa fa-circle-o"></i> Phòng Ban</a></li>
                                 <li><a href="/options/hopdong/"><i class="fa fa-circle-o"></i> Hợp Đồng</a></li>

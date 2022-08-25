@@ -7,6 +7,7 @@ interface iFormDanhMuc {
     //put your code here
 
     public function Id($val = null);
+    public function CapCha($val = null);
 
     public function Name($val = null);
 

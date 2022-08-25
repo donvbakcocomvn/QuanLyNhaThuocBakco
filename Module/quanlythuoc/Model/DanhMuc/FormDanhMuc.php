@@ -41,8 +41,27 @@ class FormDanhMuc implements iFormDanhMuc
      */
     function Id($val = null)
     {
+        // $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+        // return new FormRender(new Element\Hidden($name, $val));
+
+        $properties = self::$properties;
+        $properties["value"] = $val;
+        $properties[FormRender::Required] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        return new FormRender(new Element\Hidden($name, $val));
+        return new FormRender(new Element\Textbox("Mã Danh Mục", $name, $properties));
+    }
+
+    function IdPut($val = null)
+    {
+        // $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+        // return new FormRender(new Element\Hidden($name, $val));
+
+        $properties = self::$properties;
+        $properties["value"] = $val;
+        $properties["readonly"] = $val;
+        $properties[FormRender::Required] = "true";
+        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+        return new FormRender(new Element\Textbox("Mã Danh Mục", $name, $properties));
     }
 
     /**
@@ -87,7 +106,7 @@ class FormDanhMuc implements iFormDanhMuc
         $properties["value"] = $val;
         $properties[FormRender::Required] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        return new FormRender(new Element\Textbox("Link", $name, $properties));
+        return new FormRender(new Element\Textarea("Link", $name, $properties));
     }
 
     /**
@@ -100,9 +119,9 @@ class FormDanhMuc implements iFormDanhMuc
     {
         $properties = self::$properties;
         $properties["value"] = $val;
-        $properties[FormRender::Required] = "true";
+        // $properties[FormRender::Required] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        return new FormRender(new Element\Textbox("Thành Phần", $name, $properties));
+        return new FormRender(new Element\Textarea("Thành Phần", $name, $properties));
     }
 
     /**
@@ -115,7 +134,7 @@ class FormDanhMuc implements iFormDanhMuc
     {
         $properties = self::$properties;
         $properties["value"] = $val;
-        $properties[FormRender::Required] = "true";
+        // $properties[FormRender::Required] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
         return new FormRender(new Element\Textarea("Lưu Ý", $name, $properties));
     }
@@ -130,7 +149,7 @@ class FormDanhMuc implements iFormDanhMuc
     {
         $properties = self::$properties;
         $properties["value"] = $val;
-        $properties[FormRender::Required] = "true";
+        // $properties[FormRender::Required] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
         return new FormRender(new Element\Textarea("Ghi Chú", $name, $properties));
     }
@@ -150,4 +169,18 @@ class FormDanhMuc implements iFormDanhMuc
         $options = \Model\Lang::ToOptions();
         return new FormRender(new Element\Select("Ngôn Ngữ", $name, $options, $properties));
     }
+	/**
+	 *
+	 * @param mixed $val
+	 *
+	 * @return mixed
+	 */
+	function CapCha($val = null) {
+        $properties = self::$properties;
+        $properties["value"] = $val;
+        $properties[FormRender::Required] = "true";
+        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+        $options = \Model\Lang::ToOptions();
+        return new FormRender(new Element\Select("Cấp Cha", $name, $options, $properties));
+	}
 }

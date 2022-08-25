@@ -55,9 +55,13 @@ class danhmuc extends \Application implements \Controller\IControllerBE
             if (\Model\Request::Post(FormDanhMuc::$ElementsName, null)) {
                 $itemForm = \Model\Request::Post(FormDanhMuc::$ElementsName, null);
                 $itemForm["Id"] = \Model\Common::uuid();
-                $itemForm["Code"] = \Model\Common::uuid();
-                $itemForm["ThanhPhan"] = \Model\Common::BoDauTienViet($itemForm["ThanhPhan"]);
+                $itemForm["Link"] = \Model\Common::BoDauTienViet($itemForm["Link"]);
                 $itemForm["Name"] = $itemForm["Name"];
+                $itemForm["CapCha"] = $itemForm["CapCha"];
+                $itemForm["ThanhPhan"] = $itemForm["ThanhPhan"];
+                $itemForm["LuuY"] = $itemForm["LuuY"];
+                $itemForm["GhiChu"] = $itemForm["GhiChu"];
+
                 $danhmuc = new ModelDanhMuc();
                 $danhmuc->Post($itemForm);
                 // \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=danhmuc&action=put&id=" . $itemForm["Code"]);
@@ -77,12 +81,13 @@ class danhmuc extends \Application implements \Controller\IControllerBE
     function put()
     {
         \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DanhMuc_Put]);
+
         try {
             if (\Model\Request::Post(FormDanhMuc::$ElementsName, null)) {
 
                 $itemHtml = \Model\Request::Post(FormDanhMuc::$ElementsName, null);
 
-                $model["Id"] = $itemHtml["Id"];
+                $model["Id"] = $itemHtml["Id"]; // Phải Có
                 // $model["Code"] = $itemHtml["Code"];
                 $model["Name"] = $itemHtml["Name"];
                 $model["Link"] = $itemHtml["Link"];
@@ -112,10 +117,10 @@ class danhmuc extends \Application implements \Controller\IControllerBE
     {
         try {
             \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DanhMuc_Delete]);
-            $id = \Model\Request::Get("id", null);
-            if ($id) {
+            $Id = \Model\Request::Get("id", null);
+            if ($Id) {
                 $DanhMuc = new ModelDanhMuc();
-                $DanhMuc->Delete($id);
+                $DanhMuc->Delete($Id);
                 new \Model\Error(\Model\Error::success, "Đã Xóa Danh Mục");
             }
         } catch (\Exception $ex) {

@@ -7,85 +7,111 @@ use Module\quanlythuoc\Permission;
 class btnHtml
 {
 
-    public function __construct() {
-        
-    } 
-
-    static function btnThemSanPham() {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, "quanlysanpham_sanpham_them"]) == false) {
-            return;
-        }
-        ?> 
-        <li class="active"><a href="/index.php?module=quanlysanpham&controller=sanpham&action=post">
-                <i class="fa fa-plus"></i>Thêm Mới</a>
-        </li>
-        <?php
+    public function __construct()
+    {
     }
 
-    public static function btnViewSanPham() {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, "quanlysanpham_sanpham_them"]) == false) {
+
+    static function btnImportSanPham()
+    {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_Thuoc_Post, Permission::QLT_Thuoc_Put,Permission::QLT_DanhMuc_Delete, Permission::QLT_DanhMuc_Import]) == false) {
             return;
         }
-        ?> 
-        <li><a href="/quanlysanpham/sanpham/index/">
-                <i class="fa fa-list-alt"></i>Danh Sách Sản Phẩm</a>
-        </li>
-
-        <?php
+    ?>
+        <a class="btn btn-warning" href="/index.php?module=quanlythuoc&controller=sanpham&action=import">
+            <i class="fa fa-filter"></i> Import</a>
+    <?php
     }
 
-    public static function btnViewDanhMuc() {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, "quanlysanpham_danhmuc_view"]) == false) {
+    static function btnThemSanPham()
+    {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_Thuoc_Post]) == false) {
             return;
         }
-        ?> 
-        <li><a href="/index.php?module=quanlysanpham&controller=danhmuc&action=index">
-                <i class="fa fa-list-alt"></i>Danh Muc</a>
-        </li>
-
-        <?php
+    ?>
+        <a class="btn btn-success" href="/index.php?module=quanlythuoc&controller=sanpham&action=post">
+            <i class="fa fa-plus"></i> Thêm mới</a>
+    <?php
     }
 
-    public static function btnViewOptions() {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, "quanlysanpham_options_view"]) == false) {
+    public static function btnViewSanPham()
+    {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_Thuoc_DS]) == false) {
             return;
         }
-        ?> 
-        <li><a href="/index.php?module=quanlysanpham&controller=options&action=index">
-                <i class="fa fa-list-alt"></i>Thuộc Tính</a>
-        </li>
-        <?php
+    ?>
+        <a class="btn btn-success" href="/index.php?module=quanlythuoc&controller=sanpham&action=index">
+            <i class="fa fa-plus"></i> Xem danh sách thuốc</a>
+    <?php
     }
 
-    public static function btnThemDanhMuc() {
+    public static function btnSuaSanPham($id)
+    {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_Thuoc_Put]) == false) {
+            return;
+        }
+    ?>
+        <a class="btn btn-success" href="/index.php?module=quanlythuoc&controller=sanpham&action=put&id=<?php echo $id; ?>">
+            Sửa
+        </a>
+    <?php
+    }
+
+    public static function btnXoaSanPham($id)
+    {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_Thuoc_Delete]) == false) {
+            return;
+        }
+    ?>
+        <a class="btn btn-danger" title="Bạn có muốn xóa danh mục này?" href="/index.php?module=quanlythuoc&controller=sanpham&action=delete&id=<?php echo $id; ?>">
+            Xóa
+        </a>
+    <?php
+    }
+
+    public static function btnViewDanhMuc()
+    {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_DanhMuc_DS]) == false) {
+            return;
+        }
+    ?>
+        <a class="btn btn-primary" href="/index.php?module=quanlythuoc&controller=danhmuc&action=index">
+            <i class="fa fa-plus"></i> Xem danh mục</a>
+    <?php
+    }
+
+    public static function btnThemDanhMuc()
+    {
         if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_DanhMuc_Post]) == false) {
             return;
         }
-        ?> 
+    ?>
         <a class="btn btn-success" href="/index.php?module=quanlythuoc&controller=danhmuc&action=post">
-            <i class="fa fa-plus"></i> Thêm mới</a> 
-        <?php
+            <i class="fa fa-plus"></i> Thêm mới</a>
+    <?php
     }
 
-    public static function btnSuaDanhMuc($id) {
+    public static function btnSuaDanhMuc($id)
+    {
         if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_DanhMuc_Put]) == false) {
             return;
         }
-        ?> 
+    ?>
         <a class="btn btn-success" href="/index.php?module=quanlythuoc&controller=danhmuc&action=put&id=<?php echo $id; ?>">
             Sửa
-        </a> 
-        <?php
+        </a>
+    <?php
     }
 
-    public static function btnXoaDanhMuc($id) {
+    public static function btnXoaDanhMuc($id)
+    {
         if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_DanhMuc_Delete]) == false) {
             return;
         }
-        ?> 
+    ?>
         <a class="btn btn-danger" title="Bạn có muốn xóa danh mục này?" href="/index.php?module=quanlythuoc&controller=danhmuc&action=delete&id=<?php echo $id; ?>">
             Xóa
-        </a> 
-        <?php
+        </a>
+<?php
     }
 }
