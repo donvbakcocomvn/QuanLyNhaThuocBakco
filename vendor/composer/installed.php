@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '3dc39ff095cf351ddb15b6a39f2af9f31cb5187b',
+        'reference' => 'b73df2d3472f2a1086da248b576031e51e14e672',
         'name' => 'namdong92/lap1',
         'dev' => true,
     ),
@@ -61,7 +61,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '3dc39ff095cf351ddb15b6a39f2af9f31cb5187b',
+            'reference' => 'b73df2d3472f2a1086da248b576031e51e14e672',
             'dev_requirement' => false,
         ),
         'namdongvando/imagesoptimizer' => array(
@@ -83,12 +83,12 @@
             'dev_requirement' => false,
         ),
         'phpmailer/phpmailer' => array(
-            'pretty_version' => 'v6.5.3',
-            'version' => '6.5.3.0',
+            'pretty_version' => 'v6.6.4',
+            'version' => '6.6.4.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../phpmailer/phpmailer',
             'aliases' => array(),
-            'reference' => 'baeb7cde6b60b1286912690ab0693c7789a31e71',
+            'reference' => 'a94fdebaea6bd17f51be0c2373ab80d3d681269b',
             'dev_requirement' => false,
         ),
         'phpoffice/phpspreadsheet' => array(

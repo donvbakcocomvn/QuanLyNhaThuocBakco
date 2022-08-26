@@ -29,7 +29,7 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-success" href="/index.php?module=quanlythuoc&controller=sanpham&action=post">
+        <a class="btn btn-info" href="/index.php?module=quanlythuoc&controller=sanpham&action=post">
             <i class="fa fa-plus"></i> Thêm mới</a>
     <?php
     }

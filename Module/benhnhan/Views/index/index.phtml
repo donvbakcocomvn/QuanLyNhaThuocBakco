@@ -1,18 +1,20 @@
 <ol class="breadcrumb">
     <li><a href="/index.php?controller=backend">Home</a></li>
-    <li> Quản Lý Danh Mục Thuốc </li>
+    <li> Quản Lý Khách Hàng </li>
 </ol>
 
 <div class="container-fluid">
     <div class="box box-primary">
         <div class="box-header">
-            <h3 class="box-title">Danh Mục Thuốc</h3>
+            <h3 class="box-title">Danh Sách Khách Hàng</h3>
             <div class="box-tools">
                 <?php
 
-                use Module\quanlythuoc\Model\DanhMuc;
+use Model\Locations;
+use Model\OptionsService;
+use Module\benhnhan\Model\BenhNhan;
 
-                Module\quanlythuoc\Model\btnHtml::btnThemDanhMuc();
+                Module\benhnhan\Model\btnHtml::btnThemKhachHang();
                 ?>
             </div>
         </div>
@@ -22,31 +24,54 @@
                     <tr>
                         <th></th>
                         <th>STT</th>
-                        <th>Mã Loại Thuốc</th>
-                        <th>Tên Danh Mục</th>
-                        <th>Đường Dẫn</th>
-                        <th>Ghi Chú</th>
+                        <th>Mã Bệnh Nhân</th>
+                        <th>Tên Bệnh Nhân</th>
+                        <th>Giới Tính</th>
+                        <th>Ngày Sinh</th>
+                        <th>CMND</th>
+                        <th>Địa Chỉ</th>
+                        <th>Quê Quán</th>
+                        <th>Điện Thoại</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     foreach ($items as $index => $item) {
-                        $_item = new DanhMuc($item);
-                        // var_dump($items);
-                        // echo $_item->Id;
+                        $_item = new BenhNhan($item);
+
+                        // // Lấy huyện theo mã Id
+                        // $location = new Locations();
+                        // $a = $location->GetByIdParents(78);
+                        // $b = $a[0];
+                        // foreach ($a as $item) {
+                        //     // var_dump($item[1]);
+                        // }
+
+                        // // --------------------------------
+
+                        // $c = $location->GetIdParent();
+
+                        // $d = json_encode($c);
+                        // echo $d;
+                        // var_dump($b);
+                        // echo $b["Name"];
                     ?>
                         <tr>
                             <th style="width: 150px;">
                                 <?php
-                                echo Module\quanlythuoc\Model\btnHtml::btnSuaDanhMuc($_item->Id);
-                                echo Module\quanlythuoc\Model\btnHtml::btnXoaDanhMuc($_item->Id);
+                                echo Module\benhnhan\Model\btnHtml::btnSuaKhachHang($_item->Id);
+                                echo Module\benhnhan\Model\btnHtml::btnXoaKhachHang($_item->Id);
                                 ?>
                             </th>
                             <th><?php echo $index + 1; ?></th>
                             <th><?php echo $_item->Id; ?></th>
                             <th><?php echo $_item->Name; ?></th>
-                            <th><?php echo $_item->Link; ?></th>
-                            <th><?php echo $_item->GhiChu; ?></th>
+                            <th><?php echo $_item->Gioitinh; ?></th>
+                            <th><?php echo $_item->Ngaysinh; ?></th>
+                            <th><?php echo $_item->CMND; ?></th>
+                            <th><?php echo $_item->Address; ?></th>
+                            <th><?php echo $_item->Quequan; ?></th>
+                            <th><?php echo $_item->Phone; ?></th>
                         </tr>
                     <?php
                     }

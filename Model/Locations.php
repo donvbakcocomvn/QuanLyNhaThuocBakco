@@ -98,4 +98,11 @@ class Locations extends DB implements IModelService, IModelToOptions {
         return $this->Select($where);
     }
 
+    public static function GetIdParent()
+    {
+        $location = new Locations();
+        $where = " 1 =1 ";
+        return $location->SelectIdParent($where);
+    }
+
 }

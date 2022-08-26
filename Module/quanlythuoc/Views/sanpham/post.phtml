@@ -26,16 +26,16 @@ $roleDetail = new Model\Role();
                 $sp = new FormSanPham();
                 ?>
                 <div class="">
-                    <div class="col-md-12">
-                        <?php $sp->Id()->render(); ?>
+                    <div class="col-md-3">
+                        <?php $sp->Id()->renderHtml(); ?>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <?php $sp->Idloaithuoc()->renderHtml();  ?>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <?php $sp->Name()->renderHtml();  ?>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <?php $sp->Namebietduoc()->renderHtml();  ?>
                     </div>
                     <div class="col-md-4">

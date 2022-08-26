@@ -35,13 +35,13 @@ $roleDetail = new Model\Role();
                 ?>
                 <div class="">
                     <div class="col-md-6">
-                        <?php $dm->IdPut($_item->Id)->renderHtml();  ?>
+                        <?php $dm->Id($_item->Id)->renderHtml();  ?>
                     </div>
                     <div class="col-md-6">
                         <?php $dm->Name($_item->Name)->renderHtml();  ?>
                     </div>
                     <div class="col-md-6">
-                        <?php $dm->LuuY($_item->Link)->renderHtml();  ?>
+                        <?php $dm->Link($_item->Link)->renderHtml();  ?>
                     </div>
                     <div class="col-md-6">
                         <?php $dm->GhiChu($_item->GhiChu)->renderHtml();  ?>

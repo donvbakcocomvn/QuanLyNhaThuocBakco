@@ -153,6 +153,10 @@ class Common {
     public static function ViewPrice($number) {
         return number_format($number, 0, ".", ",") . " vnđ";
     }
+    
+    public static function CheckName($param) {
+        return strip_tags($param);
+    }
 
     public static function DateTime() {
         return date("Y-m-d H:i:s", time());

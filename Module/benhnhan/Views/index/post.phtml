@@ -1,23 +1,21 @@
 <ol class="breadcrumb">
     <li><a href="/index.php?controller=backend">Home</a></li>
-    <li><a href="index.php?module=quanlythuoc&controller=danhmuc&action=index"> Danh Mục Thuốc</a></li>
-    <li> Thêm Danh Mục </li>
+    <li><a href="/index.php?module=benhnhan&controller=index&action=index"> Danh Sách Khách Hàng</a></li>
+    <li> Thêm Khách Hàng </li>
 </ol>
 <?php
 
-use Module\quanlythuoc\Model\DanhMuc;
-use Module\quanlythuoc\Model\DanhMuc\FormDanhMuc;
-
+use Module\benhnhan\Model\BenhNhan\FormBenhNhan;
 
 $roleDetail = new Model\Role();
 ?>
 <div class="container-fluid">
     <div class="box box-primary">
         <div class="box-header">
-            <h3 class="box-title">Thêm Danh Mục</h3>
+            <h3 class="box-title">Thêm Khách Hàng</h3>
             <div class="box-tools" >
                 <?php
-                Module\quanlythuoc\Model\btnHtml::btnViewDanhMuc();
+                Module\benhnhan\Model\btnHtml::btnViewKhachHang();
                 ?>
             </div>
         </div>
@@ -25,20 +23,32 @@ $roleDetail = new Model\Role();
         <form action="" method="post" enctype="multipart/form-data">
             <div class="box-body">
                 <?php
-                $dm = new FormDanhMuc();
+                $bn = new FormBenhNhan();
                 ?>
                 <div class="">
-                    <div class="col-md-6">
-                        <?php $dm->Id()->renderHtml(); ?>
+                    <div class="col-md-12">
+                        <?php $bn->Id()->renderHTML(); ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php $bn->Name()->renderHTML();  ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php $bn->Gioitinh()->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php $bn->Ngaysinh()->renderHtml();  ?>
                     </div>
                     <div class="col-md-6">
-                        <?php $dm->Name()->renderHtml();  ?>
+                        <?php $bn->CMND()->renderHtml();  ?>
                     </div>
                     <div class="col-md-6">
-                        <?php $dm->Link()->renderHtml();  ?>
+                        <?php $bn->Address()->renderHtml();  ?>
                     </div>
                     <div class="col-md-6">
-                        <?php $dm->GhiChu()->renderHtml();  ?>
+                        <?php $bn->Quequan()->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?php $bn->Phone()->renderHtml();  ?>
                     </div>
                     <div class="col-md-12 ">
                         <button class="btn btn-warning" type="reset">Làm Lại</button>

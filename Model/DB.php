@@ -114,6 +114,16 @@ class DB {
         return $this->GetRows($sql);
     }
 
+    public function SelectIdParent($where, $col = []) {
+        $TableName = self::$TableName;
+        $sql = "SELECT DISTINCT `ParentsId` FROM `{$TableName}` WHERE {$where}";
+        if ($col) {
+            $strCol = implode("`,`", $col);
+            $sql = "SELECT `{$strCol}` FROM `{$TableName}` WHERE {$where}";
+        }
+        return $this->GetRows($sql);
+    }
+
     // sửa
 
     /**

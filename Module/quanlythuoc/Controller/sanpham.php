@@ -3,17 +3,20 @@
 namespace Module\quanlythuoc\Controller;
 
 use DateTime;
+use Exception;
+use Model\Common;
+use Model\OptionsService;
+use Module\baiviet\Model\Options\Options;
 use Module\quanlythuoc\Model\SanPham as ModelSanPham;
 use Module\quanlythuoc\Model\SanPham\FormSanPham;
 use Module\quanlythuoc\Permission;
 use PFBC\Element\Date;
-use PHPMailer\PHPMailer\Exception;
-use PhpOffice\PhpSpreadsheet\IOFactory;
 
+class sanpham extends \Application implements \Controller\IControllerBE
+{
 
-class sanpham extends \Application implements \Controller\IControllerBE {
-
-    public function __construct() {
+    public function __construct()
+    {
         /**
          * kiem tra đăng nhap
          * @param {type} parameter
@@ -22,44 +25,59 @@ class sanpham extends \Application implements \Controller\IControllerBE {
         self::$_Theme = "backend";
     }
 
-    function import(){
-    if (isset($_FILES["FileData"])) {
+    function import()
+    {
         try {
-            if ($_FILES["FileData"]["error"] != 0) {
-                throw new Exception("Bạn chưa chọn file.");
-            }
-            if ($_FILES["FileData"]["type"] != "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
-                throw new Exception("File không đúng định dạng.");
-            }
-            // da có file excel
-            // da có file
-            // var_dump($_FILES);
-            ini_set('memory_limit', '1024M');
-            $fileData = $_FILES["FileData"]["tmp_name"];
-            $reader = IOFactory::createReaderForFile($fileData);
-            $reader->setReadDataOnly(true);
-            $dataSheet = $reader->load($fileData);
-            $dataSheet0 = $dataSheet->getSheet(0)->toArray();
-            $danhMuc = new ModelSanPham();
-            foreach ($dataSheet0 as $index => $item) {
-                if ($index > 0) {
-                    // them vào database  
-                    $itemInsert["Id"] = $item[0];
-                    $itemInsert["Name"] = $item[1];
-                    $itemInsert["Decription"] = $item[2];
-                    $itemInsert["IsDelete"] = $item[3];
-                    // DB::$debug = true;
-                    $danhMuc->Post($itemInsert);
+            if (isset($_POST["submit"])) {
+                // Kiểm tra File đúng định dạng không khi import
+                $allowed_extension = array('xls', 'csv', 'xlsx');
+                $file_array = explode(".", $_FILES["import_file"]["name"]);
+                $file_extension = end($file_array);
+                if (in_array($file_extension, $allowed_extension) == false) {
+                    throw new Exception("File không đúng định dạng");
                 }
+                $file_type = \PhpOffice\PhpSpreadsheet\IOFactory::identify($_FILES['import_file']['tmp_name']);
+                $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($file_type);
+                $spreadsheet = $reader->load($_FILES['import_file']['tmp_name']);
+                $dataSheet0 = $spreadsheet->getSheet(0)->toArray();
+                $sanpham = new ModelSanPham();
+                foreach ($dataSheet0 as $index => $item) {
+                    if ($item[0] != "" and $index > 0) {
+                        $item[8] = str_replace("/","-",$item[8]);
+                        $item[9] = str_replace("/","-",$item[9]);
+                        // echo $item[8];
+                        // var_dump($index);
+                        // them vào database  
+                        $itemInsert["Id"] = $item[0];
+                        $itemInsert["Idloaithuoc"] = $item[1];
+                        $itemInsert["Name"] = Common::CheckName($item[2]) ;
+                        $itemInsert["Namebietduoc"] = $item[3];
+                        $itemInsert["Solo"] = intval($item[4]);
+                        $itemInsert["Gianhap"] = $item[5] ;
+                        $itemInsert["Giaban"] = $item[6];
+                        $itemInsert["DVT"] = $item[7];
+                        $itemInsert["Ngaysx"] = date("Y-m-d", strtotime($item[8]));
+                        $itemInsert["HSD"] = date("Y-m-d", strtotime($item[9]));
+                        $itemInsert["Tacdung"] = $item[10];
+                        $itemInsert["Cochetacdung"] = $item[11];
+                        $itemInsert["Ghichu"] = $item[12];
+                        $itemInsert["NhaSX"] = $item[13];
+                        $itemInsert["NuocSX"] = $item[14];
+                        $sanpham->Post($itemInsert);
+                        new \Model\Error(\Model\Error::success, "Import Thành Công");
+                    }
+                }
+                Common::ToUrl("/index.php?module=quanlythuoc&controller=sanpham&action=index");
+                // die();
             }
         } catch (Exception $ex) {
+            echo $ex->getMessage();
         }
+        $this->View();
     }
 
-    $this->View();
-}
-
-    function index() {
+    function index()
+    {
 
         \Model\Permission::Check([\Model\User::Admin, Permission::QLT_Thuoc_DS]);
         $modelItem = new ModelSanPham();
@@ -80,16 +98,20 @@ class sanpham extends \Application implements \Controller\IControllerBE {
         $this->View($data);
     }
 
-	/**
-	 *
-	 * @return mixed
-	 */
-	function post() {
-        \Model\Permission::Check([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_Thuoc_Post]);
+    /**
+     *
+     * @return mixed
+     */
+    function post()
+    {
+        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Thuoc_Post]);
         try {
             if (\Model\Request::Post(FormSanPham::$ElementsName, null)) {
+                $op = new OptionsService();
+                $nameDVT = $op->GetGroupsToSelect("donvitinh");
+
                 $itemForm = \Model\Request::Post(FormSanPham::$ElementsName, null);
-                $itemForm["Id"] = \Model\Common::uuid();
+                $itemForm["Id"] = $itemForm["Id"];
                 // $itemForm["Link"] = \Model\Common::BoDauTienViet($itemForm["Link"]);
                 $itemForm["Idloaithuoc"] = $itemForm["Idloaithuoc"];
                 $itemForm["Name"] = $itemForm["Name"];
@@ -98,6 +120,7 @@ class sanpham extends \Application implements \Controller\IControllerBE {
                 $itemForm["Gianhap"] = $itemForm["Gianhap"];
                 $itemForm["Giaban"] = $itemForm["Giaban"];
                 $itemForm["DVT"] = $itemForm["DVT"];
+                $itemForm["DVT"]  = $nameDVT[$itemForm["DVT"]];
                 $itemForm["Ngaysx"] = $itemForm["Ngaysx"];
                 $itemForm["HSD"] = $itemForm["HSD"];
                 $itemForm["Tacdung"] = $itemForm["Tacdung"];
@@ -108,23 +131,25 @@ class sanpham extends \Application implements \Controller\IControllerBE {
                 $danhmuc = new ModelSanPham();
                 $danhmuc->Post($itemForm);
                 // \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=danhmuc&action=put&id=" . $itemForm["Code"]);
-                \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=sanpham&action=index");
-
+                Common::ToUrl("/index.php?module=quanlythuoc&controller=sanpham&action=index");
             }
-        } catch (\Exception $exc) {
+        } catch (Exception $exc) {
             echo $exc->getMessage();
         }
         $this->View();
-	}
-	
-	/**
-	 *
-	 * @return mixed
-	 */
-	function put() {
-        \Model\Permission::Check([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_Thuoc_Put]);
+    }
+
+    /**
+     *
+     * @return mixed
+     */
+    function put()
+    {
+        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Thuoc_Put]);
         try {
             if (\Model\Request::Post(FormSanPham::$ElementsName, null)) {
+                $op = new OptionsService();
+                $nameDVT = $op->GetGroupsToSelect("donvitinh");
 
                 $itemHtml = \Model\Request::Post(FormSanPham::$ElementsName, null);
 
@@ -135,10 +160,9 @@ class sanpham extends \Application implements \Controller\IControllerBE {
                 $model["Solo"] = $itemHtml["Solo"];
                 $model["Gianhap"] = $itemHtml["Gianhap"];
                 $model["Giaban"] = $itemHtml["Giaban"];
-                $model["DVT"] = $itemHtml["DVT"];
-                $model["Ngaysx"] = Date("Y-m-d H:i:s", strtotime($itemHtml["Ngaysx"]));
-
-                $model["HSD"] = Date("Y-m-d H:i:s", strtotime($itemHtml["HSD"]));
+                $model["DVT"] = $nameDVT[$itemHtml["DVT"]];
+                $model["Ngaysx"] = Date("Y-m-d", strtotime($itemHtml["Ngaysx"]));
+                $model["HSD"] = Date("Y-m-d", strtotime($itemHtml["HSD"]));
                 $model["Tacdung"] = $itemHtml["Tacdung"];
                 $model["Cochetacdung"] = $itemHtml["Cochetacdung"];
                 $model["Ghichu"] = $itemHtml["Ghichu"];
@@ -149,7 +173,7 @@ class sanpham extends \Application implements \Controller\IControllerBE {
                 new \Model\Error(\Model\Error::success, "Đã Sửa Danh Mục");
                 // \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=sanpham&action=index");
             }
-        } catch (\Exception $exc) {
+        } catch (Exception $exc) {
             echo $exc->getMessage();
         }
 
@@ -159,30 +183,33 @@ class sanpham extends \Application implements \Controller\IControllerBE {
         $SP = new ModelSanPham();
         $data["items"] = $SP->GetById($id);
         $this->View($data);
-	}
-	
-	/**
-	 *
-	 * @return mixed
-	 */
-	function delete() {
+    }
+
+    /**
+     *
+     * @return mixed
+     */
+    function delete()
+    {
         try {
-            \Model\Permission::Check([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_Thuoc_Delete]);
+            \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Thuoc_Delete]);
             $Id = \Model\Request::Get("id", null);
             if ($Id) {
                 $SanPham = new ModelSanPham();
                 $SanPham->Delete($Id);
                 new \Model\Error(\Model\Error::success, "Đã Xóa Danh Mục");
             }
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             new \Model\Error(\Model\Error::danger, $ex->getMessage());
         }
-        \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=sanpham&action=index");
-	}
+        Common::ToUrl("/index.php?module=quanlythuoc&controller=sanpham&action=index");
+    }
 
-    function GetByName() {
-	}
+    function GetByName()
+    {
+    }
 
-    function GetByNameBietDuoc() {
-	}
+    function GetByNameBietDuoc()
+    {
+    }
 }

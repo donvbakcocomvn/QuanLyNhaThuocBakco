@@ -99,6 +99,8 @@ class SanPham extends \Model\DB implements \Model\IModelService {
         <?php
     }
 
+
+    // Tìm kiếm
     public function GetItems($params, $indexPage, $pageNumber, &$total) {
         $name = isset($params["keyword"]) ? $params["keyword"] : '';
         $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;

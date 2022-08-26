@@ -37,8 +37,13 @@ class FormSanPham implements iFormSanPham {
 	 * @return mixed
 	 */
 	function Id($val = null) {
-		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        return new FormRender(new Element\Hidden($name, $val));
+		// $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+        // return new FormRender(new Element\Hidden($name, $val));
+		$properties = self::$properties;
+        $properties["value"] = $val;
+        $properties[FormRender::Required] = "true";
+        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+        return new FormRender(new Element\Textbox("Mã Thuốc", $name,$properties));
 	}
 	
 	/**

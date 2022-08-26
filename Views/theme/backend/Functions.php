@@ -243,15 +243,15 @@ class Functions
                                 <span>Quản lý thuốc</span>
                             </a>
                             <ul class="treeview-menu">
-                                <?php
+                            <?php
                                 if (\Model\Permission::CheckPremision([User::Admin, Permission::QLT_Thuoc_Post], []) == true) {
                                 ?>
-                                    <li><a href="/index.php?module=quanlythuoc&controller=sanpham&action=index"><i class="fa fa-circle-o"></i> Danh sách thuốc</a></li>
+                                    <li><a href="/index.php?module=quanlythuoc&controller=danhmuc&action=index"><i class="fa fa-circle-o"></i> Danh Mục thuốc</a></li>
                                 <?php  } ?>
                                 <?php
                                 if (\Model\Permission::CheckPremision([User::Admin, Permission::QLT_Thuoc_Post], []) == true) {
                                 ?>
-                                    <li><a href="/index.php?module=quanlythuoc&controller=danhmuc&action=index"><i class="fa fa-circle-o"></i> Danh sách loại thuốc</a></li>
+                                    <li><a href="/index.php?module=quanlythuoc&controller=sanpham&action=index"><i class="fa fa-circle-o"></i> Danh sách thuốc</a></li>
                                 <?php  } ?>
                             </ul>
                         </li>
@@ -262,7 +262,7 @@ class Functions
                     if (\Model\Permission::CheckPremision([KhachhangPermission::KhachHangDS, User::Admin], []) == true) {
                     ?>
                         <li class="<?php echo \Application::$_Module == "khachhang" ? 'active' : '' ?>">
-                            <a href="/khachhang/index">
+                            <a href="/index.php?module=benhnhan&controller=index&action=index">
                                 <i class="fa fa-user-plus"></i>
                                 <span>Quản lý bệnh nhân</span>
                             </a>
@@ -342,6 +342,7 @@ class Functions
                             <ul class="treeview-menu">
                                 <li><a href="/locations/index"><i class="fa fa-circle-o"></i> Tỉnh Thành Phố</a></li>
                                 <li><a href="/options/donvitinh/"><i class="fa fa-circle-o"></i> Đơn Vị Tính</a></li>
+                                
                                 <!-- <li><a href="/options/congty/"><i class="fa fa-circle-o"></i> Công Ty</a></li>
                                 <li><a href="/options/index/phongban/"><i class="fa fa-circle-o"></i> Phòng Ban</a></li>
                                 <li><a href="/options/hopdong/"><i class="fa fa-circle-o"></i> Hợp Đồng</a></li>
