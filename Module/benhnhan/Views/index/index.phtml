@@ -30,7 +30,9 @@ use Module\benhnhan\Model\BenhNhan;
                         <th>Ngày Sinh</th>
                         <th>CMND</th>
                         <th>Địa Chỉ</th>
-                        <th>Quê Quán</th>
+                        <th>Tỉnh/Thành Phố</th>
+                        <th>Quận/Huyện</th>
+                        <th>Phường/Xã</th>
                         <th>Điện Thoại</th>
                     </tr>
                 </thead>
@@ -70,7 +72,9 @@ use Module\benhnhan\Model\BenhNhan;
                             <th><?php echo $_item->Ngaysinh; ?></th>
                             <th><?php echo $_item->CMND; ?></th>
                             <th><?php echo $_item->Address; ?></th>
-                            <th><?php echo $_item->Quequan; ?></th>
+                            <th><?php echo $_item->TinhThanh; ?></th>
+                            <th><?php echo $_item->QuanHuyen; ?></th>
+                            <th><?php echo $_item->PhuongXa; ?></th>
                             <th><?php echo $_item->Phone; ?></th>
                         </tr>
                     <?php

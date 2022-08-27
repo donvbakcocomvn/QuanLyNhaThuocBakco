@@ -13,7 +13,7 @@ $roleDetail = new Model\Role();
     <div class="box box-primary">
         <div class="box-header">
             <h3 class="box-title">Thêm Khách Hàng</h3>
-            <div class="box-tools" >
+            <div class="box-tools">
                 <?php
                 Module\benhnhan\Model\btnHtml::btnViewKhachHang();
                 ?>
@@ -44,8 +44,18 @@ $roleDetail = new Model\Role();
                     <div class="col-md-6">
                         <?php $bn->Address()->renderHtml();  ?>
                     </div>
-                    <div class="col-md-6">
-                        <?php $bn->Quequan()->renderHtml();  ?>
+                    <div class="col-md-4 form-group">
+                        <label for="">Tỉnh</label>
+                        <select id="tinhThanh" name="BenhNhan[TinhThanh]" class="form-control"> </select>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label for="">Huyện</label>
+                        <select id="quanHuyen" name="BenhNhan[QuanHuyen]" class="form-control"> </select>
+
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label for="">Xã</label>
+                        <select id="phuongXa" name="BenhNhan[PhuongXa]" class="form-control"> </select>
                     </div>
                     <div class="col-md-6">
                         <?php $bn->Phone()->renderHtml();  ?>
@@ -63,3 +73,4 @@ $roleDetail = new Model\Role();
 </div>
 </div>
 </div>
+<script src="/public/TinhThanh/tinhthanh.js"></script>

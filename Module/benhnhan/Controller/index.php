@@ -62,7 +62,9 @@ class index extends \Application implements \Controller\IControllerBE
                 $itemForm["Ngaysinh"] = $itemForm["Ngaysinh"];
                 $itemForm["CMND"] = $itemForm["CMND"];
                 $itemForm["Address"] = $itemForm["Address"];
-                $itemForm["Quequan"] = $itemForm["Quequan"];
+                $itemForm["TinhThanh"] = $itemForm["TinhThanh"];
+                $itemForm["QuanHuyen"] = $itemForm["QuanHuyen"];
+                $itemForm["PhuongXa"] = $itemForm["PhuongXa"];
                 $itemForm["Phone"] = $itemForm["Phone"];
                 $benhnhan = new ModelBenhNhan();
                 $benhnhan->Post($itemForm);
@@ -99,7 +101,9 @@ class index extends \Application implements \Controller\IControllerBE
                 $model["Ngaysinh"] = $itemHtml["Ngaysinh"];
                 $model["CMND"] = $itemHtml["CMND"];
                 $model["Address"] = $itemHtml["Address"];
-                $model["Quequan"] = $itemHtml["Quequan"];
+                $model["TinhThanh"] = $itemHtml["TinhThanh"];
+                $model["QuanHuyen"] = $itemHtml["QuanHuyen"];
+                $model["PhuongXa"] = $itemHtml["PhuongXa"];
                 $model["Phone"] = $itemHtml["Phone"];
                 $benhnhan = new ModelBenhNhan();
                 $benhnhan->Put($model);

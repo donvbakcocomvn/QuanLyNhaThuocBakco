@@ -11,7 +11,9 @@ class BenhNhan extends \Model\DB implements \Model\IModelService {
     public $Ngaysinh; 
     public $CMND; 
     public $Address; 
-    public $Quequan; 
+    public $TinhThanh; 
+    public $QuanHuyen; 
+    public $PhuongXa; 
     public $Phone;
 
     public function __construct($bn = null) {
@@ -29,7 +31,9 @@ class BenhNhan extends \Model\DB implements \Model\IModelService {
                 $this->Ngaysinh = isset($bn["Ngaysinh"]) ? $bn["Ngaysinh"] : null; 
                 $this->CMND = isset($bn["CMND"]) ? $bn["CMND"] : null; 
                 $this->Address = isset($bn["Address"]) ? $bn["Address"] : null; 
-                $this->Quequan = isset($bn["Quequan"]) ? $bn["Quequan"] : null; 
+                $this->TinhThanh = isset($bn["TinhThanh"]) ? $bn["TinhThanh"] : null; 
+                $this->QuanHuyen = isset($bn["QuanHuyen"]) ? $bn["QuanHuyen"] : null; 
+                $this->PhuongXa = isset($bn["PhuongXa"]) ? $bn["PhuongXa"] : null; 
                 $this->Phone = isset($bn["Phone"]) ? $bn["Phone"] : null; 
             }
         }
