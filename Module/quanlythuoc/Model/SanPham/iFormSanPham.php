@@ -15,6 +15,7 @@ interface iFormSanPham {
     public function Tacdung($val = null); 
     public function Cochetacdung($val = null); 
     public function Ghichu($val = null); 
+    public function Soluong($val = null); 
     public function NhaSX($val = null); 
     public function NuocSX($val = null); 
     public function Lang($val = null);

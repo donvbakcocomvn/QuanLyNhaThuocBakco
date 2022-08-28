@@ -45,7 +45,7 @@ class sanpham extends \Application implements \Controller\IControllerBE
                     if ($item[0] != "" and $index > 0) {
                         $item[8] = str_replace("/","-",$item[8]);
                         $item[9] = str_replace("/","-",$item[9]);
-                        // echo $item[8];
+                        echo $item[15];
                         // var_dump($index);
                         // them vào database  
                         $itemInsert["Id"] = $item[0];
@@ -63,6 +63,7 @@ class sanpham extends \Application implements \Controller\IControllerBE
                         $itemInsert["Ghichu"] = $item[12];
                         $itemInsert["NhaSX"] = $item[13];
                         $itemInsert["NuocSX"] = $item[14];
+                        $itemInsert["Soluong"] = $item[15];
                         $sanpham->Post($itemInsert);
                         new \Model\Error(\Model\Error::success, "Import Thành Công");
                     }
@@ -126,6 +127,7 @@ class sanpham extends \Application implements \Controller\IControllerBE
                 $itemForm["Tacdung"] = $itemForm["Tacdung"];
                 $itemForm["Cochetacdung"] = $itemForm["Cochetacdung"];
                 $itemForm["Ghichu"] = $itemForm["Ghichu"];
+                $itemForm["Soluong"] = $itemForm["Soluong"];
                 $itemForm["NhaSX"] = $itemForm["NhaSX"];
                 $itemForm["NuocSX"] = $itemForm["NuocSX"];
                 $danhmuc = new ModelSanPham();
@@ -166,6 +168,7 @@ class sanpham extends \Application implements \Controller\IControllerBE
                 $model["Tacdung"] = $itemHtml["Tacdung"];
                 $model["Cochetacdung"] = $itemHtml["Cochetacdung"];
                 $model["Ghichu"] = $itemHtml["Ghichu"];
+                $model["Soluong"] = $itemHtml["Soluong"];
                 $model["NhaSX"] = $itemHtml["NhaSX"];
                 $model["NuocSX"] = $itemHtml["NuocSX"];
                 $dm = new ModelSanPham();

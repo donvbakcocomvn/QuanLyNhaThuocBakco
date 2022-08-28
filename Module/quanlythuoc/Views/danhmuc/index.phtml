@@ -4,83 +4,93 @@
 </ol>
 
 <div class="container-fluid">
-    <div class="box box-primary">
-        <div class="box-header">
-            <h3 class="box-title">Danh Mục Thuốc</h3>
-            <div class="box-tools">
-                <?php
-
-                use Module\quanlythuoc\Model\DanhMuc;
-
-                Module\quanlythuoc\Model\btnHtml::btnThemDanhMuc();
-                ?>
-            </div>
+    <form method="get" action="/quanlythuoc/danhmuc/index/">
+        <div class="form-group d-flex">
+            <label class="btn btn-default"><input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox"><i class="fa fa-share" aria-hidden="true"></class=></i></label>
+            <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập Vào Danh Mục Thuốc Tìm Kiếm">
+            <button class="btn btn-primary no-border-radius" name="btnTim" type="submit">
+                <i class="fa fa-search"></i> Tìm Kiếm
+            </button>
         </div>
-        <div class="box-body">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>STT</th>
-                        <th>Mã Loại Thuốc</th>
-                        <th>Tên Danh Mục</th>
-                        <th>Đường Dẫn</th>
-                        <th>Ghi Chú</th>
-                    </tr>
-                </thead>
-                <tbody>
+    </form>
+    <div class="clearfix">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Danh Mục Thuốc</h3>
+                <div class="box-tools">
                     <?php
-                    foreach ($items as $index => $item) {
-                        $_item = new DanhMuc($item);
-                        // var_dump($items);
-                        // echo $_item->Id;
+
+                    use Module\quanlythuoc\Model\DanhMuc;
+
+                    Module\quanlythuoc\Model\btnHtml::btnThemDanhMuc();
                     ?>
+                </div>
+            </div>
+            <div class="box-body">
+                <table class="table table-bordered">
+                    <thead>
                         <tr>
-                            <th style="width: 150px;">
-                                <?php
-                                echo Module\quanlythuoc\Model\btnHtml::btnSuaDanhMuc($_item->Id);
-                                echo Module\quanlythuoc\Model\btnHtml::btnXoaDanhMuc($_item->Id);
-                                ?>
-                            </th>
-                            <th><?php echo $index + 1; ?></th>
-                            <th><?php echo $_item->Id; ?></th>
-                            <th><?php echo $_item->Name; ?></th>
-                            <th><?php echo $_item->Link; ?></th>
-                            <th><?php echo $_item->GhiChu; ?></th>
+                            <th></th>
+                            <th>STT</th>
+                            <th>Mã Loại Thuốc</th>
+                            <th>Tên Danh Mục</th>
+                            <th>Đường Dẫn</th>
+                            <th>Ghi Chú</th>
                         </tr>
-                    <?php
-                    }
-                    ?>
-                </tbody>
-            </table>
-            <div class="box-footer">
-                <div class="d-flex">
-                    <?php
-                    \Model\FormCommon::Select(
-                        "",
-                        "",
-                        [10, 20, 50, 100],
-                        [
-                            "style" => "max-width:150px;",
-                            "class" => "form-control",
-                            "value" => $pageNumber,
-                            "onchange" => "SoDongHienThi(this.value)",
-                        ]
-                    )->render();
-                    ?>
-                    <?php
-                    $linkPhanTrang = "/index.php?module=quanlythuoc&controller=danhmuc&action=index&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
-                    echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
-                    ?>
+                    </thead>
+                    <tbody>
+                        <?php
+                        foreach ($items as $index => $item) {
+                            $_item = new DanhMuc($item);
+                            // var_dump($items);
+                            // echo $_item->Id;
+                        ?>
+                            <tr>
+                                <th style="width: 150px;">
+                                    <?php
+                                    echo Module\quanlythuoc\Model\btnHtml::btnSuaDanhMuc($_item->Id);
+                                    echo Module\quanlythuoc\Model\btnHtml::btnXoaDanhMuc($_item->Id);
+                                    ?>
+                                </th>
+                                <th><?php echo $index + 1; ?></th>
+                                <th><?php echo $_item->Id; ?></th>
+                                <th><?php echo $_item->Name; ?></th>
+                                <th><?php echo $_item->Link; ?></th>
+                                <th><?php echo $_item->GhiChu; ?></th>
+                            </tr>
+                        <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
+                <div class="box-footer">
+                    <div class="d-flex">
+                        <?php
+                        \Model\FormCommon::Select(
+                            "",
+                            "",
+                            [10, 20, 50, 100],
+                            [
+                                "style" => "max-width:150px;",
+                                "class" => "form-control",
+                                "value" => $pageNumber,
+                                "onchange" => "SoDongHienThi(this.value)",
+                            ]
+                        )->render();
+                        ?>
+                        <?php
+                        $linkPhanTrang = "/index.php?module=quanlythuoc&controller=danhmuc&action=index&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
+                        echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
+                        ?>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<script type="text/javascript">
-    var SoDongHienThi = function(evalue) {
-        var linkPhanTrang = '/index.php?module=quanlythuoc&controller=danhmuc&action=index&indexPage=1&pageNumber=[j]';
-        linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
-        window.location.href = linkPhanTrang;
-    }
-</script>
+    <script type="text/javascript">
+        var SoDongHienThi = function(evalue) {
+            var linkPhanTrang = '/index.php?module=quanlythuoc&controller=danhmuc&action=index&indexPage=1&pageNumber=[j]';
+            linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
+            window.location.href = linkPhanTrang;
+        }
+    </script>

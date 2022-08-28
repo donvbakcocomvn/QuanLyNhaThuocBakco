@@ -69,7 +69,7 @@ class index extends \Application implements \Controller\IControllerBE
                 $benhnhan = new ModelBenhNhan();
                 $benhnhan->Post($itemForm);
                 // \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=danhmuc&action=put&id=" . $itemForm["Code"]);
-                \Model\Common::ToUrl("/index.php?module=benhnhan&controller=index&action=index");
+                // \Model\Common::ToUrl("/index.php?module=benhnhan&controller=index&action=index");
 
             }
         } catch (\Exception $exc) {

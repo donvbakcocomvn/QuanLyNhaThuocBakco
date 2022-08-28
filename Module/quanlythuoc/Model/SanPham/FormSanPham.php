@@ -255,4 +255,17 @@ class FormSanPham implements iFormSanPham {
 	 */
 	function Lang($val = null) {
 	}
+	/**
+	 *
+	 * @param mixed $val
+	 *
+	 * @return mixed
+	 */
+	function Soluong($val = null) {
+		$properties = self::$properties;
+        $properties["value"] = $val;
+        // $properties[FormRender::Required] = "true";
+        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+        return new FormRender(new Element\Textbox("Số Lượng", $name, $properties));
+	}
 }

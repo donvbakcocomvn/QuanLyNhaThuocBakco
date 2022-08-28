@@ -19,6 +19,12 @@ class TinhThanh
         $fileContent = file_get_contents("local.json");
         $DSTinh = json_decode($fileContent, JSON_UNESCAPED_UNICODE);
         return $DSTinh;
+        // foreach ($DSTinh as $index => $tinh) {
+        //     echo $tinh["name"] . "<br>";
+        //     echo $tinh["code"];
+        //     echo $tinh["id"]."<br>";
+        //     var_dump($tinh);
+        // }
     }
 
     public static function TinhThanhToOption()
@@ -30,10 +36,11 @@ class TinhThanh
         }
     }
     // tim danh sách huyện theo tỉnh
-    public function DSHuyen($maTinh)
+    public static function DSHuyen($maTinh)
     {
         // districts
-        $dsTinh = $this->DSTinh();
+        $huyen = new TinhThanh();
+        $dsTinh = self::DSTinh();
         foreach ($dsTinh as $key => $tinh) {
             if ($tinh["id"] == $maTinh) {
                 return $tinh["districts"];

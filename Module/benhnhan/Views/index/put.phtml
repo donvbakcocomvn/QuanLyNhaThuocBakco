@@ -49,7 +49,20 @@ $roleDetail = new Model\Role();
                     <div class="col-md-6">
                         <?php $bn->Address($itemBN->Address)->renderHtml();  ?>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 form-group">
+                        <label for="">Tỉnh</label>
+                        <select id="tinhThanh" name="BenhNhan[TinhThanh]" data-value="<?php echo $itemBN->TinhThanh; ?>" class="form-control"></select>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="">Huyện</label>
+                        <select id="quanHuyen" name="BenhNhan[QuanHuyen]" data-value="<?php echo $itemBN->QuanHuyen;?>" class="form-control"> </select>
+
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="">Xã</label>
+                        <select id="phuongXa" name="BenhNhan[PhuongXa]" data-value="<?php echo $itemBN->PhuongXa;?>" class="form-control"> </select>
+                    </div>
+                    <!-- <div class="col-md-6">
                         <?php $bn->TinhThanh($itemBN->TinhThanh)->renderHtml();  ?>
                     </div>
                     <div class="col-md-6">
@@ -57,7 +70,7 @@ $roleDetail = new Model\Role();
                     </div>
                     <div class="col-md-6">
                         <?php $bn->PhuongXa($itemBN->PhuongXa)->renderHtml();  ?>
-                    </div>
+                    </div> -->
                     <div class="col-md-6">
                         <?php $bn->Phone($itemBN->Phone)->renderHtml();  ?>
                     </div>
@@ -74,3 +87,4 @@ $roleDetail = new Model\Role();
 </div>
 </div>
 </div>
+<script src="/public/TinhThanh/tinhthanh.js"></script>

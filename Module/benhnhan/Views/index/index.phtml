@@ -4,103 +4,102 @@
 </ol>
 
 <div class="container-fluid">
-    <div class="box box-primary">
-        <div class="box-header">
-            <h3 class="box-title">Danh Sách Khách Hàng</h3>
-            <div class="box-tools">
-                <?php
-
-use Model\Locations;
-use Model\OptionsService;
-use Module\benhnhan\Model\BenhNhan;
-
-                Module\benhnhan\Model\btnHtml::btnThemKhachHang();
-                ?>
-            </div>
+    <form method="get" action="/benhnhan/index/index/">
+        <div class="form-group d-flex">
+            <label class="btn btn-default"><input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox"><i class="fa fa-share" aria-hidden="true"></class=></i></label>
+            <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập Vào Tên Khách Hàng Để Tìm Kiếm">
+            <button class="btn btn-primary no-border-radius" name="btnTim" type="submit">
+                <i class="fa fa-search"></i> Tìm Kiếm
+            </button>
         </div>
-        <div class="box-body">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>STT</th>
-                        <th>Mã Bệnh Nhân</th>
-                        <th>Tên Bệnh Nhân</th>
-                        <th>Giới Tính</th>
-                        <th>Ngày Sinh</th>
-                        <th>CMND</th>
-                        <th>Địa Chỉ</th>
-                        <th>Tỉnh/Thành Phố</th>
-                        <th>Quận/Huyện</th>
-                        <th>Phường/Xã</th>
-                        <th>Điện Thoại</th>
-                    </tr>
-                </thead>
-                <tbody>
+    </form>
+    <div class="clearfix">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Danh Sách Khách Hàng</h3>
+                <div class="box-tools">
                     <?php
-                    foreach ($items as $index => $item) {
-                        $_item = new BenhNhan($item);
 
-                        // // Lấy huyện theo mã Id
-                        // $location = new Locations();
-                        // $a = $location->GetByIdParents(78);
-                        // $b = $a[0];
-                        // foreach ($a as $item) {
-                        //     // var_dump($item[1]);
-                        // }
+                    use Model\Locations;
+                    use Model\OptionsService;
+                    use Model\TinhThanh;
+                    use Module\benhnhan\Model\BenhNhan;
 
-                        // // --------------------------------
-
-                        // $c = $location->GetIdParent();
-
-                        // $d = json_encode($c);
-                        // echo $d;
-                        // var_dump($b);
-                        // echo $b["Name"];
+                    Module\benhnhan\Model\btnHtml::btnThemKhachHang();
                     ?>
+                </div>
+            </div>
+            <div class="box-body">
+                <table class="table table-bordered">
+                    <thead>
                         <tr>
-                            <th style="width: 150px;">
-                                <?php
-                                echo Module\benhnhan\Model\btnHtml::btnSuaKhachHang($_item->Id);
-                                echo Module\benhnhan\Model\btnHtml::btnXoaKhachHang($_item->Id);
-                                ?>
-                            </th>
-                            <th><?php echo $index + 1; ?></th>
-                            <th><?php echo $_item->Id; ?></th>
-                            <th><?php echo $_item->Name; ?></th>
-                            <th><?php echo $_item->Gioitinh; ?></th>
-                            <th><?php echo $_item->Ngaysinh; ?></th>
-                            <th><?php echo $_item->CMND; ?></th>
-                            <th><?php echo $_item->Address; ?></th>
-                            <th><?php echo $_item->TinhThanh; ?></th>
-                            <th><?php echo $_item->QuanHuyen; ?></th>
-                            <th><?php echo $_item->PhuongXa; ?></th>
-                            <th><?php echo $_item->Phone; ?></th>
+                            <th></th>
+                            <th>STT</th>
+                            <th>Mã Bệnh Nhân</th>
+                            <th>Tên Bệnh Nhân</th>
+                            <th>Giới Tính</th>
+                            <th>Ngày Sinh</th>
+                            <th>CMND</th>
+                            <th>Địa Chỉ</th>
+                            <th>Tỉnh/Thành Phố</th>
+                            <th>Quận/Huyện</th>
+                            <th>Phường/Xã</th>
+                            <th>Điện Thoại</th>
                         </tr>
-                    <?php
-                    }
-                    ?>
-                </tbody>
-            </table>
-            <div class="box-footer">
-                <div class="d-flex">
-                    <?php
-                    \Model\FormCommon::Select(
-                        "",
-                        "",
-                        [10, 20, 50, 100],
-                        [
-                            "style" => "max-width:150px;",
-                            "class" => "form-control",
-                            "value" => $pageNumber,
-                            "onchange" => "SoDongHienThi(this.value)",
-                        ]
-                    )->render();
-                    ?>
-                    <?php
-                    $linkPhanTrang = "/index.php?module=quanlythuoc&controller=danhmuc&action=index&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
-                    echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
-                    ?>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $locaiton = new Locations();
+                        // $a = $locaiton->GetById(2357);
+                        // var_dump($a);
+                        // echo $a;
+                        foreach ($items as $index => $item) {
+                            $_item = new BenhNhan($item);
+                        ?>
+                            <tr>
+                                <th style="width: 150px;">
+                                    <?php
+                                    echo Module\benhnhan\Model\btnHtml::btnSuaKhachHang($_item->Id);
+                                    echo Module\benhnhan\Model\btnHtml::btnXoaKhachHang($_item->Id);
+                                    ?>
+                                </th>
+                                <th><?php echo $index + 1; ?></th>
+                                <th><?php echo $_item->Id; ?></th>
+                                <th><?php echo $_item->Name; ?></th>
+                                <th><?php echo $_item->Gioitinh; ?></th>
+                                <th><?php echo $_item->Ngaysinh; ?></th>
+                                <th><?php echo $_item->CMND; ?></th>
+                                <th><?php echo $_item->Address; ?></th>
+                                <th><?php echo $_item->TinhThanh ?></th>
+                                <th><?php echo $_item->QuanHuyen ?></th>
+                                <th><?php echo $_item->PhuongXa; ?></th>
+                                <th><?php echo $_item->Phone; ?></th>
+                            </tr>
+                        <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
+                <div class="box-footer">
+                    <div class="d-flex">
+                        <?php
+                        \Model\FormCommon::Select(
+                            "",
+                            "",
+                            [10, 20, 50, 100],
+                            [
+                                "style" => "max-width:150px;",
+                                "class" => "form-control",
+                                "value" => $pageNumber,
+                                "onchange" => "SoDongHienThi(this.value)",
+                            ]
+                        )->render();
+                        ?>
+                        <?php
+                        $linkPhanTrang = "/index.php?module=quanlythuoc&controller=danhmuc&action=index&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
+                        echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
+                        ?>
+                    </div>
                 </div>
             </div>
         </div>

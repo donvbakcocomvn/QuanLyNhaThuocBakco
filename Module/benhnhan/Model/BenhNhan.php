@@ -2,6 +2,7 @@
 
 namespace Module\benhnhan\Model;
 
+use Model\Locations;
 
 class BenhNhan extends \Model\DB implements \Model\IModelService {
 
@@ -39,6 +40,19 @@ class BenhNhan extends \Model\DB implements \Model\IModelService {
         }
     }
 
+    function Province()
+    {
+        return new Locations($this->Province);
+    }
+    function District()
+    {
+        return new Locations($this->District);
+    }
+    function Ward()
+    {
+        return new Locations($this->Ward);
+    }
+
     public function Delete($Id) {
         $DM = new BenhNhan();
         return $DM->DeleteById($Id);
@@ -48,28 +62,28 @@ class BenhNhan extends \Model\DB implements \Model\IModelService {
         return $this->SelectById($Id);
     }
 
-    public function GetItems($params, $indexPage, $pageNumber, &$total) {
-        $where = "`Name` like '%{$params["keyword"]}%'";
-        return $this->SelectPT($where, $indexPage, $pageNumber, $total);
-    }
-
     // public function GetItems($params, $indexPage, $pageNumber, &$total) {
-    //     $name = isset($params["keyword"]) ? $params["keyword"] : '';
-    //     $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
-    //     $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
-    //     $isShowSql = "and `isShow` >= 0 ";
-    //     $danhmucSql = "";
-
-    //     if ($isShow) {
-    //         $isShowSql = "and `isShow` = '{$isShow}' ";
-    //     }
-    //     if ($danhmuc) {
-    //         $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
-    //     }
-
-    //     $where = " `Name` like '%{$name}%' or `Namebietduoc` like '%{$name}%' {$danhmucSql} ";
+    //     $where = "`Name` like '%{$params["keyword"]}%'";
     //     return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     // }
+
+    public function GetItems($params, $indexPage, $pageNumber, &$total) {
+        $name = isset($params["keyword"]) ? $params["keyword"] : '';
+        $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
+        $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
+        $isShowSql = "and `isShow` >= 0 ";
+        $danhmucSql = "";
+
+        if ($isShow) {
+            $isShowSql = "and `isShow` = '{$isShow}' ";
+        }
+        if ($danhmuc) {
+            $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
+        }
+
+        $where = " `Name` like '%{$name}%' {$danhmucSql} ";
+        return $this->SelectPT($where, $indexPage, $pageNumber, $total);
+    }
 
     public function Post($model) {
         return $this->Insert($model);

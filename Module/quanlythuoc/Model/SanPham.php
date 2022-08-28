@@ -30,6 +30,7 @@ class SanPham extends \Model\DB implements \Model\IModelService {
     public $Tacdung; 
     public $Cochetacdung; 
     public $Ghichu; 
+    public $Soluong; 
     public $NhaSX; 
     public $NuocSX; 
 
@@ -55,6 +56,7 @@ class SanPham extends \Model\DB implements \Model\IModelService {
                 $this->Tacdung = isset($sp["Tacdung"]) ? $sp["Tacdung"] : null ;
                 $this->Cochetacdung = isset($sp["Cochetacdung"]) ? $sp["Cochetacdung"] : null ;
                 $this->Ghichu = isset($sp["Ghichu"]) ? $sp["Ghichu"] : null ;
+                $this->Soluong = isset($sp["Soluong"]) ? $sp["Soluong"] : null ;
                 $this->NhaSX = isset($sp["NhaSX"]) ? $sp["NhaSX"] : null ;
                 $this->NuocSX = isset($sp["NuocSX"]) ? $sp["NuocSX"] : null ;
             }
