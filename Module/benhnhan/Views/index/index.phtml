@@ -7,7 +7,7 @@
     <form method="get" action="/benhnhan/index/index/">
         <div class="form-group d-flex">
             <label class="btn btn-default"><input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox"><i class="fa fa-share" aria-hidden="true"></class=></i></label>
-            <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập Vào Tên Khách Hàng Để Tìm Kiếm">
+            <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập tên, số điện thoại hoặc địa chỉ để tìm kiếm">
             <button class="btn btn-primary no-border-radius" name="btnTim" type="submit">
                 <i class="fa fa-search"></i> Tìm Kiếm
             </button>
@@ -30,20 +30,20 @@
                 </div>
             </div>
             <div class="box-body">
-                <table class="table table-bordered">
+                <table class="table table-hover table-bordered">
                     <thead>
                         <tr>
                             <th></th>
                             <th>STT</th>
-                            <th>Mã Bệnh Nhân</th>
+                            <!-- <th>Mã Bệnh Nhân</th> -->
                             <th>Tên Bệnh Nhân</th>
                             <th>Giới Tính</th>
                             <th>Ngày Sinh</th>
                             <th>CMND</th>
                             <th>Địa Chỉ</th>
-                            <th>Tỉnh/Thành Phố</th>
-                            <th>Quận/Huyện</th>
-                            <th>Phường/Xã</th>
+                            <!-- <th>Tỉnh/Thành Phố</th> -->
+                            <!-- <th>Quận/Huyện</th> -->
+                            <!-- <th>Phường/Xã</th> -->
                             <th>Điện Thoại</th>
                         </tr>
                     </thead>
@@ -57,22 +57,23 @@
                             $_item = new BenhNhan($item);
                         ?>
                             <tr>
-                                <th style="width: 150px;">
+                                <th style="width: 200px;">
                                     <?php
                                     echo Module\benhnhan\Model\btnHtml::btnSuaKhachHang($_item->Id);
                                     echo Module\benhnhan\Model\btnHtml::btnXoaKhachHang($_item->Id);
+                                    echo Module\benhnhan\Model\btnHtml::btnchitiet($_item->Id);
                                     ?>
                                 </th>
                                 <th><?php echo $index + 1; ?></th>
-                                <th><?php echo $_item->Id; ?></th>
+                                <!-- <th><?php echo $_item->Id; ?></th> -->
                                 <th><?php echo $_item->Name; ?></th>
                                 <th><?php echo $_item->Gioitinh; ?></th>
                                 <th><?php echo $_item->Ngaysinh; ?></th>
                                 <th><?php echo $_item->CMND; ?></th>
                                 <th><?php echo $_item->Address; ?></th>
-                                <th><?php echo $_item->TinhThanh ?></th>
-                                <th><?php echo $_item->QuanHuyen ?></th>
-                                <th><?php echo $_item->PhuongXa; ?></th>
+                                <!-- <th><?php echo $_item->TinhThanh ?></th> -->
+                                <!-- <th><?php echo $_item->QuanHuyen ?></th> -->
+                                <!-- <th><?php echo $_item->PhuongXa; ?></th> -->
                                 <th><?php echo $_item->Phone; ?></th>
                             </tr>
                         <?php

@@ -1,0 +1,89 @@
+<ol class="breadcrumb">
+    <li><a href="/index.php?controller=backend">Home</a></li>
+    <li><a href="/index.php?module=benhnhan&controller=index&action=index"> Danh Sách Khách Hàng</a></li>
+    <li> Thông Tin Chi Tiết Khách Hàng </li>
+</ol>
+<?php
+
+use Module\benhnhan\Model\BenhNhan\FormBenhNhan;
+use Module\benhnhan\Model\BenhNhan;
+
+$roleDetail = new Model\Role();
+?>
+<div class="container-fluid">
+    <div class="box box-primary">
+        <div class="box-header">
+            <h3 class="box-title">Thông Tin Chi Tiết Khách Hàng</h3>
+        </div>
+        <!-- <div class="box-body"> -->
+        <form action="" method="post" enctype="multipart/form-data">
+            <div class="box-body">
+                <?php
+                $bn = new FormBenhNhan();
+
+                $itemBN = new BenhNhan($data);
+
+                // var_dump($itemBN);
+                ?>
+                <div class="">
+                    <div class="col-md-6">
+                        <label for="">Mã Khách Hàng</label>
+                        <input readonly value="<?php echo $itemBN->Id; ?>" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="">Họ Tên</label>
+                        <input readonly value="<?php echo $itemBN->Name; ?>" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="">Giới Tính</label>
+                        <input readonly value="<?php echo $itemBN->Gioitinh; ?>" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="">Số Điện Thoại</label>
+                        <input readonly value="<?php echo $itemBN->Phone; ?>" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="">Ngày Sinh</label>
+                        <input readonly value="<?php echo $itemBN->Ngaysinh; ?>" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="">CMND</label>
+                        <input readonly value="<?php echo $itemBN->CMND; ?>" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="">Địa Chỉ</label>
+                        <input readonly value="<?php echo $itemBN->Address; ?>" class="form-control">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="">Tỉnh</label>
+                        <select id="tinhThanh" disabled name="BenhNhan[TinhThanh]" data-value="<?php echo $itemBN->TinhThanh; ?>" class="form-control"></select>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="">Huyện</label>
+                        <select id="quanHuyen" disabled name="BenhNhan[QuanHuyen]" data-value="<?php echo $itemBN->QuanHuyen; ?>" class="form-control"> </select>
+
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="">Xã</label>
+                        <select id="phuongXa" disabled name="BenhNhan[PhuongXa]" data-value="<?php echo $itemBN->PhuongXa; ?>" class="form-control"> </select>
+                    </div>
+                    <!-- <div class="col-md-6">
+                        <?php $bn->TinhThanh($itemBN->TinhThanh)->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?php $bn->QuanHuyen($itemBN->QuanHuyen)->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?php $bn->PhuongXa($itemBN->PhuongXa)->renderHtml();  ?>
+                    </div> -->
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</form>
+</div>
+</div>
+</div>
+<script src="/public/TinhThanh/tinhthanh.js"></script>

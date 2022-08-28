@@ -11,6 +11,18 @@ class btnHtml
     {
     }
 
+    public static function btnchitiet($id)
+    {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_BenhNhan_Put]) == false) {
+            return;
+        }
+    ?>
+        <a class="btn btn-warning" href="/index.php?module=benhnhan&controller=index&action=detail&id=<?php echo $id; ?>">
+            Chi tiết
+        </a>
+    <?php
+    }
+
 
     static function btnExportKhachHang()
     {

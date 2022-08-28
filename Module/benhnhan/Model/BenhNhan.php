@@ -40,6 +40,10 @@ class BenhNhan extends \Model\DB implements \Model\IModelService {
         }
     }
 
+    function BenhNhan()
+    {
+        return new BenhNhan($this->Id);
+    }
     function Province()
     {
         return new Locations($this->Province);
@@ -81,7 +85,7 @@ class BenhNhan extends \Model\DB implements \Model\IModelService {
             $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
         }
 
-        $where = " `Name` like '%{$name}%' {$danhmucSql} ";
+        $where = " `Name` like '%{$name}%' or `Phone` like '%{$name}%' or `Address` like '%{$name}%' {$danhmucSql} ";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 

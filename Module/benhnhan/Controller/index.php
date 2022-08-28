@@ -43,6 +43,16 @@ class index extends \Application implements \Controller\IControllerBE
         $this->View($data);
     }
 
+    function detail()
+    {
+        $id = \Model\Request::Get("id", null);
+        if ($id == null) {
+        }
+        $DM = new ModelBenhNhan();
+        $data["data"] = $DM->GetById($id);
+        $this->View($data);
+    }
+
     /**
      *
      * @return mixed
