@@ -16,5 +16,9 @@ interface iFormBenhNhan {
     public function QuanHuyen($val = null );
     public function PhuongXa($val = null );
     public function Phone($val = null);
+    public function CreateRecord($val = null);
+    public function UpdateRecord($val = null);
+    public function isDelete($val = null);
+
 
 }

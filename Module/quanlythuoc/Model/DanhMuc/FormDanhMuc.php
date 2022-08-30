@@ -4,7 +4,6 @@ namespace Module\quanlythuoc\Model\DanhMuc;
 
 use PFBC\Element;
 use Model\FormRender;
-use Module\quanlythuoc\Model\DanhMuc\iFormDanhMuc;
 
 class FormDanhMuc implements iFormDanhMuc
 {

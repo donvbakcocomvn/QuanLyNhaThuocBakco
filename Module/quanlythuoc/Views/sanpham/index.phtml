@@ -35,15 +35,16 @@ use Module\quanlythuoc\Model\SanPham;
                             <th></th>
                             <th>STT</th>
                             <th>Mã Thuốc</th>
-                            <th>Thuộc Loại</th>
                             <th>Tên Thuốc</th>
                             <th>Tên Biệt Dược</th>
+                            <th>Thuộc Loại</th>
                             <th>Số Lượng</th>
+                            <!-- <th>Đơn Vị Quy Đổi</th> -->
                             <th>Giá Niêm Yết</th>
                             <th>Đơn Vị Tính</th>
                             <th>Hạn Dùng</th>
-                            <th>Công dụng</th>
-                            <th>Nhà Sản Xuất</th>
+                            <!-- <th>Công dụng</th> -->
+                            <!-- <th>Nhà Sản Xuất</th> -->
                             <!-- <th>Ghi Chú</th> -->
                         </tr>
                     </thead>
@@ -54,23 +55,25 @@ use Module\quanlythuoc\Model\SanPham;
                             // var_dump($_item);
                         ?>
                             <tr>
-                                <th style="width: 120px;">
+                                <th style="width: 200px;">
                                     <?php
                                     echo Module\quanlythuoc\Model\btnHtml::btnSuaSanPham($_item->Id);
                                     echo Module\quanlythuoc\Model\btnHtml::btnXoaSanPham($_item->Id);
+                                    echo Module\quanlythuoc\Model\btnHtml::btnChiSanPham($_item->Id);
                                     ?>
                                 </th>
                                 <th><?php echo $index + 1; ?></th>
                                 <th><?php echo $_item->Id; ?></th>
-                                <th><?php echo $_item->IdLoaiThuoc()->Name; ?></th>
                                 <th><?php echo $_item->Name; ?></th>
                                 <th><?php echo $_item->Namebietduoc; ?></th>
+                                <th><?php echo $_item->IdLoaiThuoc()->Name; ?></th>
                                 <th><?php echo $_item->Soluong ?></th>
+                                <!-- <th><?php echo $_item->DonViQuyDoi(); ?></th> -->
                                 <th><?php echo Common::ViewPrice($_item->Giaban); ?></th>
-                                <th><?php echo $_item->DVT; ?></th>
+                                <th><?php echo $_item->DonViTinh(); ?></th>
                                 <th><?php echo $_item->HSD; ?></th>
-                                <th><?php echo $_item->Tacdung; ?></th>
-                                <th><?php echo $_item->NhaSX; ?></th>
+                                <!-- <th><?php echo $_item->Tacdung; ?></th> -->
+                                <!-- <th><?php echo $_item->NhaSX; ?></th> -->
                                 <!-- <th><?php echo $_item->Ghichu; ?></th> -->
                             </tr>
                         <?php

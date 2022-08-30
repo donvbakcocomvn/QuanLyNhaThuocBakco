@@ -5,6 +5,7 @@
 </ol>
 <?php
 
+use Module\benhnhan\Model\BenhNhan;
 use Module\benhnhan\Model\BenhNhan\FormBenhNhan;
 
 $roleDetail = new Model\Role();
@@ -24,10 +25,11 @@ $roleDetail = new Model\Role();
             <div class="box-body">
                 <?php
                 $bn = new FormBenhNhan();
+                $benhnhan = new BenhNhan();
                 ?>
                 <div class="">
-                    <div class="col-md-12">
-                        <?php $bn->Id()->renderHTML(); ?>
+                    <div class="col-md-4">
+                        <?php $bn->Id($benhnhan->CreatId())->renderHTML(); ?>
                     </div>
                     <div class="col-md-4">
                         <?php $bn->Name()->renderHTML();  ?>
@@ -38,10 +40,13 @@ $roleDetail = new Model\Role();
                     <div class="col-md-4">
                         <?php $bn->Ngaysinh()->renderHtml();  ?>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <?php $bn->CMND()->renderHtml();  ?>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        <?php $bn->Phone()->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-12">
                         <?php $bn->Address()->renderHtml();  ?>
                     </div>
                     <div class="col-md-4 form-group">
@@ -56,9 +61,6 @@ $roleDetail = new Model\Role();
                     <div class="col-md-4 form-group">
                         <label for="">Xã</label>
                         <select id="phuongXa" name="BenhNhan[PhuongXa]" class="form-control"> </select>
-                    </div>
-                    <div class="col-md-6">
-                        <?php $bn->Phone()->renderHtml();  ?>
                     </div>
                     <div class="col-md-12 ">
                         <button class="btn btn-warning" type="reset">Làm Lại</button>

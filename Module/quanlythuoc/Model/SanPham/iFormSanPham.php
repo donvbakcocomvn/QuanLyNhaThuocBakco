@@ -18,5 +18,6 @@ interface iFormSanPham {
     public function Soluong($val = null); 
     public function NhaSX($val = null); 
     public function NuocSX($val = null); 
+    public function DVQuyDoi($val = null); 
     public function Lang($val = null);
 }

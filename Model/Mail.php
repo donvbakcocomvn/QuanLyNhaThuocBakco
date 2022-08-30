@@ -11,8 +11,10 @@ class Mail {
     static function GetConfig() {
         return [
             "Host" => "smtp.gmail.com",
-            "Username" => "namdong92@gmail.com",
-            "Password" => "polgzebtetoogcip",
+            // "Username" => "namdong92@gmail.com",
+            // "Password" => "polgzebtetoogcip",
+            "Username" => "lthanhphuc99@gmail.com",
+            "Password" => "rnefujzphorfomre",
             "Port" => "465"
         ];
     }
@@ -32,9 +34,8 @@ class Mail {
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
             $mail->Port = self::GetConfig()["Port"];                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
             //Recipients
-            $mail->setFrom(self::GetConfig()["Username"], 'Admin lap1');
+            $mail->setFrom(self::GetConfig()["Username"], 'Admin Quản Lý Thuốc');
             $mail->addAddress($mailTo["Email"], $mailTo["Name"]);     //Add a recipient  
-              
 //            $mail->addCC('cc@example.com');
 //            $mail->addCC('cc@example.com'); 
 //            $mail->addBCC('bcc@example.com'); 
@@ -47,9 +48,9 @@ class Mail {
             $mail->Body = $Body;
             $mail->AltBody = $AltBody;
             $mail->send();
-            echo 'Message has been sent';
-        } catch (Exception $e) {
-            echo "Loi: {$e->getMessage()}";
+            echo "<script>alert('Gửi Mail Thành Công');</script>";
+        } catch (\Exception $e) {
+            echo "Lỗi rồi kìa : {$e->getMessage()}";
         }
     }
 

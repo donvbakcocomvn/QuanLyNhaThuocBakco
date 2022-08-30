@@ -1,3 +1,5 @@
+
+
 <ol class="breadcrumb">
     <li><a href="/index.php?controller=backend">Home</a></li>
     <li><a href="/index.php?module=benhnhan&controller=index&action=index"> Danh Sách Khách Hàng</a></li>
@@ -51,19 +53,27 @@ $roleDetail = new Model\Role();
                         <input readonly value="<?php echo $itemBN->CMND; ?>" class="form-control">
                     </div>
                     <div class="col-md-6">
+                        <label for="">Thời Gian Tạo</label>
+                        <input readonly value="<?php echo $itemBN->CreateRecord; ?>" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="">Ẩn/hiện</label>
+                        <input readonly value="<?php echo $itemBN->isDelete; ?>" class="form-control">
+                    </div>
+                    <div class="col-md-12">
                         <label for="">Địa Chỉ</label>
                         <input readonly value="<?php echo $itemBN->Address; ?>" class="form-control">
                     </div>
-                    <div class="col-md-6 form-group">
+                    <div class="col-md-4 form-group">
                         <label for="">Tỉnh</label>
                         <select id="tinhThanh" disabled name="BenhNhan[TinhThanh]" data-value="<?php echo $itemBN->TinhThanh; ?>" class="form-control"></select>
                     </div>
-                    <div class="col-md-6 form-group">
+                    <div class="col-md-4 form-group">
                         <label for="">Huyện</label>
                         <select id="quanHuyen" disabled name="BenhNhan[QuanHuyen]" data-value="<?php echo $itemBN->QuanHuyen; ?>" class="form-control"> </select>
 
                     </div>
-                    <div class="col-md-6 form-group">
+                    <div class="col-md-4 form-group">
                         <label for="">Xã</label>
                         <select id="phuongXa" disabled name="BenhNhan[PhuongXa]" data-value="<?php echo $itemBN->PhuongXa; ?>" class="form-control"> </select>
                     </div>

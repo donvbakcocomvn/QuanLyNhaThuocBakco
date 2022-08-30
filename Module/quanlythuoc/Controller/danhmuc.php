@@ -2,7 +2,6 @@
 
 namespace Module\quanlythuoc\Controller;
 
-use Module\quanlysanpham\Model\DanhMuc as QuanlysanphamModelDanhMuc;
 use Module\quanlythuoc\Model\DanhMuc as ModelDanhMuc;
 use Module\quanlythuoc\Model\DanhMuc\FormDanhMuc;
 use Module\quanlythuoc\Permission;

@@ -75,7 +75,7 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-danger" title="Bạn có muốn xóa danh mục này?" href="/index.php?module=benhnhan&controller=index&action=delete&id=<?php echo $id; ?>">
+        <a class="btn btn-danger" title="Bạn có muốn xóa danh mục này?" href="/index.php?module=benhnhan&controller=index&action=isdelete&id=<?php echo $id; ?>">
             Xóa
         </a>
 <?php

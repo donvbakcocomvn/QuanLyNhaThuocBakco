@@ -26,26 +26,29 @@ $roleDetail = new Model\Role();
                 $item = new SanPham($items);
                 ?>
                 <div class="">
-                    <div class="col-md-12">
-                        <?php $sp->Id($item->Id)->render(); ?>
+                    <div class="col-md-3">
+                        <?php $sp->Id($item->Id)->renderHtml(); ?>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <?php $sp->Idloaithuoc($item->Idloaithuoc)->renderHtml();  ?>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <?php $sp->Name($item->Name)->renderHtml();  ?>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <?php $sp->Namebietduoc($item->Namebietduoc)->renderHtml();  ?>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <?php $sp->Solo($item->Solo)->renderHtml();  ?>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <?php $sp->Gianhap($item->Gianhap)->renderHtml();  ?>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <?php $sp->Giaban($item->Giaban)->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-3">
+                        <?php $sp->DVQuyDoi($item->DVQuyDoi)->renderHtml();  ?>
                     </div>
                     <div class="col-md-4">
                         <?php $sp->DVT($item->DVT)->renderHtml();  ?>

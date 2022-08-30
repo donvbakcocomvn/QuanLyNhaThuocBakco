@@ -20,9 +20,9 @@ define("LoginPage", "/login");
 global $INI;
 if (FALSE) {
     $INI['host'] = "localhost";
-    $INI['username'] = "nhan_donv";
-    $INI['password'] = "zaq@123Abc456";
-    $INI['DBname'] = "nhan_nhanvien";
+    $INI['username'] = "nhat_phucle";
+    $INI['password'] = "phucle2301";
+    $INI['DBname'] = "nhat_quanlynhathuoc";
 } else {
     $INI['host'] = "localhost";
     $INI['username'] = "root";

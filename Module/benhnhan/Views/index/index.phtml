@@ -35,7 +35,7 @@
                         <tr>
                             <th></th>
                             <th>STT</th>
-                            <!-- <th>Mã Bệnh Nhân</th> -->
+                            <th>Mã Bệnh Nhân</th>
                             <th>Tên Bệnh Nhân</th>
                             <th>Giới Tính</th>
                             <th>Ngày Sinh</th>
@@ -65,9 +65,9 @@
                                     ?>
                                 </th>
                                 <th><?php echo $index + 1; ?></th>
-                                <!-- <th><?php echo $_item->Id; ?></th> -->
+                                <th><?php echo $_item->Id; ?></th>
                                 <th><?php echo $_item->Name; ?></th>
-                                <th><?php echo $_item->Gioitinh; ?></th>
+                                <th><?php echo $_item->Gioitinh(); ?></th>
                                 <th><?php echo $_item->Ngaysinh; ?></th>
                                 <th><?php echo $_item->CMND; ?></th>
                                 <th><?php echo $_item->Address; ?></th>

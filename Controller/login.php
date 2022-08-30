@@ -2,6 +2,9 @@
 
 namespace Controller;
 
+use Model\User;
+use Model\UserService;
+
 class login extends \Application {
 
     public function __construct() {
@@ -96,12 +99,27 @@ class login extends \Application {
      * quyên mật khẩu
      * @param {type} parameter
      */
-    function quenmatkhau() {
-        if (isset($_POST["Email"])) {
-
-            \Model\Mail::SendMail(["Email" => "namdong92@gmail.com", "Name" => "Admin dep trai"], "Reaet passs", "test", "test");
+    function resetpass() {
+        // $user = new UserService();
+        // $a = $user->GetByEmail("tinguyen@gmail.com");
+        // echo $a;
+        if (isset($_POST["sendmail"])) {
+            $mail = $_POST["mail"];
+            $code = rand(100000, 999999);
+            if ($mail === '') {
+                echo "<script>alert('Không được để trống Email');</script>";
+                throw new \Exception("Email Không Được Để Trống!!!");
+            }
+            $content = "Mã xác nhận của bạn là: <span style='color:green'>" . $code . "</span>" . "</br>".
+            "Nhấn <a style='color: violet;' href='/index.php?controller=login&action=verification'>vào đây</a> để đặt lại mật khẩu mới !!!";
+            // \Model\Mail::SendMail(["Email" => "lthanhphuc99@gmail.com", "Name" => "Quản Lý Phòng Khám"], "Reset PassWord",$content , "test");
         }
-        $this->View();
+        $this->PartialView();
+    }
+
+    function verification()
+    {
+        $this->PartialView();
     }
 
 }

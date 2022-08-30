@@ -100,6 +100,25 @@ class options extends \Application implements IControllerBE {
         $this->View($data);
     }
 
+    public function donviquydoi() {
+        $options = new \Model\OptionsService();
+        $params["keyword"] = isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "";
+        $params["GroupsId"] = "donviquydoi";
+        $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
+        $indexPage = max(1, $indexPage);
+        $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;
+        $pageNumber = max(1, $pageNumber);
+        $total = 0;
+        $items = $options->GetItems($params, $indexPage, $pageNumber, $total);
+        $data["Items"] = $items;
+        $data["indexPage"] = $indexPage;
+        $data["pageNumber"] = $pageNumber;
+        $data["params"] = $params;
+        $data["total"] = $total;
+
+        $this->View($data);
+    }
+
     public function tinhtrang() {
         $options = new \Model\OptionsService();
         $params["keyword"] = isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "";

@@ -1,25 +1,10 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of FormSanPham
- *
- * @author MSI
- */
-
 namespace Module\quanlythuoc\Model\SanPham;
 
 use PFBC\Element;
 use Model\FormRender;
 use Model\OptionsService;
-use Module\quanlythuoc\Controller\danhmuc;
-use Module\quanlythuoc\Model\DanhMuc as ModelDanhMuc;
-use PFBC\Element\Date;
 
 class FormSanPham implements iFormSanPham {
 
@@ -146,6 +131,15 @@ class FormSanPham implements iFormSanPham {
 		$option = OptionsService::GetGroupsToSelect("donvitinh");
         return new FormRender(new Element\Select("Đơn vị tính", $name,$option ,$properties));
 	}
+
+	function DVQuyDoi($val = null) {
+		$properties = self::$properties;
+        $properties["value"] = $val;
+        // $properties[FormRender::Required] = "true";
+        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+		$option = OptionsService::GetGroupsToSelect("donviquydoi");
+        return new FormRender(new Element\Select("Đơn vị quy đổi", $name,$option ,$properties));
+	}
 	
 	/**
 	 *
@@ -268,4 +262,11 @@ class FormSanPham implements iFormSanPham {
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
         return new FormRender(new Element\Textbox("Số Lượng", $name, $properties));
 	}
+	/**
+	 *
+	 * @param mixed $val
+	 *
+	 * @return mixed
+	 */
+	
 }

@@ -2,15 +2,11 @@
 
 namespace Module\quanlythuoc\Controller;
 
-use DateTime;
 use Exception;
 use Model\Common;
-use Model\OptionsService;
-use Module\baiviet\Model\Options\Options;
 use Module\quanlythuoc\Model\SanPham as ModelSanPham;
 use Module\quanlythuoc\Model\SanPham\FormSanPham;
 use Module\quanlythuoc\Permission;
-use PFBC\Element\Date;
 
 class sanpham extends \Application implements \Controller\IControllerBE
 {
@@ -45,7 +41,7 @@ class sanpham extends \Application implements \Controller\IControllerBE
                     if ($item[0] != "" and $index > 0) {
                         $item[8] = str_replace("/","-",$item[8]);
                         $item[9] = str_replace("/","-",$item[9]);
-                        echo $item[15];
+                        // echo $item[15];
                         // var_dump($index);
                         // them vào database  
                         $itemInsert["Id"] = $item[0];
@@ -64,6 +60,7 @@ class sanpham extends \Application implements \Controller\IControllerBE
                         $itemInsert["NhaSX"] = $item[13];
                         $itemInsert["NuocSX"] = $item[14];
                         $itemInsert["Soluong"] = $item[15];
+                        $itemInsert["DVQuyDoi"] = $item[16];
                         $sanpham->Post($itemInsert);
                         new \Model\Error(\Model\Error::success, "Import Thành Công");
                     }
@@ -99,6 +96,16 @@ class sanpham extends \Application implements \Controller\IControllerBE
         $this->View($data);
     }
 
+    function detail()
+    {
+        $id = \Model\Request::Get("id", null);
+        if ($id == null) {
+        }
+        $SP = new ModelSanPham();
+        $data["data"] = $SP->GetById($id);
+        $this->View($data);
+    }
+
     /**
      *
      * @return mixed
@@ -108,8 +115,7 @@ class sanpham extends \Application implements \Controller\IControllerBE
         \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Thuoc_Post]);
         try {
             if (\Model\Request::Post(FormSanPham::$ElementsName, null)) {
-                $op = new OptionsService();
-                $nameDVT = $op->GetGroupsToSelect("donvitinh");
+                $sanpham = new ModelSanPham();
 
                 $itemForm = \Model\Request::Post(FormSanPham::$ElementsName, null);
                 $itemForm["Id"] = $itemForm["Id"];
@@ -120,8 +126,8 @@ class sanpham extends \Application implements \Controller\IControllerBE
                 $itemForm["Solo"] = $itemForm["Solo"];
                 $itemForm["Gianhap"] = $itemForm["Gianhap"];
                 $itemForm["Giaban"] = $itemForm["Giaban"];
-                $itemForm["DVT"] = $itemForm["DVT"];
-                $itemForm["DVT"]  = $nameDVT[$itemForm["DVT"]];
+                $itemForm["DVT"] = $itemForm("DVT");
+                $itemForm["DVQuyDoi"]  = $itemForm["DVQuyDoi"];
                 $itemForm["Ngaysx"] = $itemForm["Ngaysx"];
                 $itemForm["HSD"] = $itemForm["HSD"];
                 $itemForm["Tacdung"] = $itemForm["Tacdung"];
@@ -130,8 +136,7 @@ class sanpham extends \Application implements \Controller\IControllerBE
                 $itemForm["Soluong"] = $itemForm["Soluong"];
                 $itemForm["NhaSX"] = $itemForm["NhaSX"];
                 $itemForm["NuocSX"] = $itemForm["NuocSX"];
-                $danhmuc = new ModelSanPham();
-                $danhmuc->Post($itemForm);
+                $sanpham->Post($itemForm);
                 // \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=danhmuc&action=put&id=" . $itemForm["Code"]);
                 Common::ToUrl("/index.php?module=quanlythuoc&controller=sanpham&action=index");
             }
@@ -150,8 +155,6 @@ class sanpham extends \Application implements \Controller\IControllerBE
         \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Thuoc_Put]);
         try {
             if (\Model\Request::Post(FormSanPham::$ElementsName, null)) {
-                $op = new OptionsService();
-                $nameDVT = $op->GetGroupsToSelect("donvitinh");
 
                 $itemHtml = \Model\Request::Post(FormSanPham::$ElementsName, null);
 
@@ -162,7 +165,7 @@ class sanpham extends \Application implements \Controller\IControllerBE
                 $model["Solo"] = $itemHtml["Solo"];
                 $model["Gianhap"] = $itemHtml["Gianhap"];
                 $model["Giaban"] = $itemHtml["Giaban"];
-                $model["DVT"] = $nameDVT[$itemHtml["DVT"]];
+                $model["DVT"] = $itemHtml["DVT"];
                 $model["Ngaysx"] = Date("Y-m-d", strtotime($itemHtml["Ngaysx"]));
                 $model["HSD"] = Date("Y-m-d", strtotime($itemHtml["HSD"]));
                 $model["Tacdung"] = $itemHtml["Tacdung"];
@@ -170,6 +173,7 @@ class sanpham extends \Application implements \Controller\IControllerBE
                 $model["Ghichu"] = $itemHtml["Ghichu"];
                 $model["Soluong"] = $itemHtml["Soluong"];
                 $model["NhaSX"] = $itemHtml["NhaSX"];
+                $model["DVQuyDoi"] = $itemHtml["DVQuyDoi"];
                 $model["NuocSX"] = $itemHtml["NuocSX"];
                 $dm = new ModelSanPham();
                 $dm->Put($model);
@@ -208,11 +212,19 @@ class sanpham extends \Application implements \Controller\IControllerBE
         Common::ToUrl("/index.php?module=quanlythuoc&controller=sanpham&action=index");
     }
 
-    function GetByName()
+    public function isdelete()
     {
-    }
-
-    function GetByNameBietDuoc()
-    {
+        if (\Model\Request::Get("id", [])) {
+            $DSMaSanPham = \Model\Request::Get("id", []);
+            $modelItem = new ModelSanPham();
+            $modelItem->isDelete([$DSMaSanPham]);
+        }
+        if (\Model\Request::Post("SanPham", [])) {
+            $DSMaSanPham = \Model\Request::Post("SanPham", []);
+            $DSMaSanPham = array_keys($DSMaSanPham);
+            $modelItem = new ModelSanPham();
+            $modelItem->isDelete($DSMaSanPham);
+        }
+        \Model\Common::ToUrl($_SERVER["HTTP_REFERER"]);
     }
 }

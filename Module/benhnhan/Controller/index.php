@@ -68,7 +68,7 @@ class index extends \Application implements \Controller\IControllerBE
                 $itemForm = \Model\Request::Post(FormBenhNhan::$ElementsName, null);
                 $itemForm["Id"] = $itemForm["Id"];
                 $itemForm["Name"] = $itemForm["Name"];
-                $itemForm["Gioitinh"] = $nameGioiTinh[$itemForm["Gioitinh"]];
+                $itemForm["Gioitinh"] = $itemForm["Gioitinh"];
                 $itemForm["Ngaysinh"] = $itemForm["Ngaysinh"];
                 $itemForm["CMND"] = $itemForm["CMND"];
                 $itemForm["Address"] = $itemForm["Address"];
@@ -78,8 +78,7 @@ class index extends \Application implements \Controller\IControllerBE
                 $itemForm["Phone"] = $itemForm["Phone"];
                 $benhnhan = new ModelBenhNhan();
                 $benhnhan->Post($itemForm);
-                // \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=danhmuc&action=put&id=" . $itemForm["Code"]);
-                // \Model\Common::ToUrl("/index.php?module=benhnhan&controller=index&action=index");
+                \Model\Common::ToUrl("/index.php?module=benhnhan&controller=index&action=index");
 
             }
         } catch (\Exception $exc) {
@@ -101,13 +100,13 @@ class index extends \Application implements \Controller\IControllerBE
 
                 $itemHtml = \Model\Request::Post(FormBenhNhan::$ElementsName, null);
 
-                $op = new OptionsService();
-                $nameGioiTinh = $op->GetGroupsToSelect("gioitinh");
+                // $op = new OptionsService();
+                // $nameGioiTinh = $op->GetGroupsToSelect("gioitinh");
                 
                 // $model["GhiChu"] = strip_tags($itemHtml["GhiChu"]);
                 $model["Id"] = $itemHtml["Id"];
                 $model["Name"] = $itemHtml["Name"];
-                $model["Gioitinh"] = $nameGioiTinh[$itemHtml["Gioitinh"]];
+                $model["Gioitinh"] = $itemHtml["Gioitinh"];
                 $model["Ngaysinh"] = $itemHtml["Ngaysinh"];
                 $model["CMND"] = $itemHtml["CMND"];
                 $model["Address"] = $itemHtml["Address"];
@@ -147,6 +146,22 @@ class index extends \Application implements \Controller\IControllerBE
             new \Model\Error(\Model\Error::danger, $ex->getMessage());
         }
         \Model\Common::ToUrl("/index.php?module=benhnhan&controller=index&action=index");
+    }
+
+    public function isdelete()
+    {
+        if (\Model\Request::Get("id", [])) {
+            $DSMaBenhNhan = \Model\Request::Get("id", []);
+            $modelItem = new ModelBenhNhan();
+            $modelItem->isDelete([$DSMaBenhNhan]);
+        }
+        if (\Model\Request::Post("SanPham", [])) {
+            $DSMaBenhNhan = \Model\Request::Post("SanPham", []);
+            $DSMaBenhNhan = array_keys($DSMaBenhNhan);
+            $modelItem = new ModelBenhNhan();
+            $modelItem->isDelete($DSMaBenhNhan);
+        }
+        \Model\Common::ToUrl($_SERVER["HTTP_REFERER"]);
     }
 
     function GetByName()

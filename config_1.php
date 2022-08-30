@@ -16,9 +16,9 @@ define("QuanLy", "quanly");
 define("LoginPage", "/index.php?controller=login");
 global $INI;
 $INI['host'] = "localhost";
-$INI['username'] = "root";
-$INI['password'] = "";
-$INI['DBname'] = "lap1";
+$INI['username'] = "nhat_phucle";
+$INI['password'] = "phucle2301";
+$INI['DBname'] = "nhat_quanlynhathuoc";
 //@.rOKU1sh2r*
 //#mbne6Y3&foG
 

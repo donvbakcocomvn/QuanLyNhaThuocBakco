@@ -2,22 +2,29 @@
 
 namespace Module\benhnhan\Model;
 
+use Model\Common;
 use Model\Locations;
+use Model\OptionsService;
 
-class BenhNhan extends \Model\DB implements \Model\IModelService {
+class BenhNhan extends \Model\DB implements \Model\IModelService
+{
 
-    public $Id; 
-    public $Name; 
-    public $Gioitinh; 
-    public $Ngaysinh; 
-    public $CMND; 
-    public $Address; 
-    public $TinhThanh; 
-    public $QuanHuyen; 
-    public $PhuongXa; 
+    public $Id;
+    public $Name;
+    public $Gioitinh;
+    public $Ngaysinh;
+    public $CMND;
+    public $Address;
+    public $TinhThanh;
+    public $QuanHuyen;
+    public $PhuongXa;
     public $Phone;
+    public $CreateRecord;
+    public $UpdateRecord;
+    public $isDelete;
 
-    public function __construct($bn = null) {
+    public function __construct($bn = null)
+    {
         self::$TableName = prefixTable . "benhnhan";
         parent::__construct();
         if ($bn) {
@@ -26,18 +33,65 @@ class BenhNhan extends \Model\DB implements \Model\IModelService {
                 $bn = $this->GetById($id);
             }
             if ($bn) {
-                $this->Id = isset($bn["Id"]) ? $bn["Id"] : null; 
-                $this->Name = isset($bn["Name"]) ? $bn["Name"] : null; 
-                $this->Gioitinh = isset($bn["Gioitinh"]) ? $bn["Gioitinh"] : null; 
-                $this->Ngaysinh = isset($bn["Ngaysinh"]) ? $bn["Ngaysinh"] : null; 
-                $this->CMND = isset($bn["CMND"]) ? $bn["CMND"] : null; 
-                $this->Address = isset($bn["Address"]) ? $bn["Address"] : null; 
-                $this->TinhThanh = isset($bn["TinhThanh"]) ? $bn["TinhThanh"] : null; 
-                $this->QuanHuyen = isset($bn["QuanHuyen"]) ? $bn["QuanHuyen"] : null; 
-                $this->PhuongXa = isset($bn["PhuongXa"]) ? $bn["PhuongXa"] : null; 
-                $this->Phone = isset($bn["Phone"]) ? $bn["Phone"] : null; 
+                $this->Id = isset($bn["Id"]) ? $bn["Id"] : null;
+                $this->Name = isset($bn["Name"]) ? $bn["Name"] : null;
+                $this->Gioitinh = isset($bn["Gioitinh"]) ? $bn["Gioitinh"] : null;
+                $this->Ngaysinh = isset($bn["Ngaysinh"]) ? $bn["Ngaysinh"] : null;
+                $this->CMND = isset($bn["CMND"]) ? $bn["CMND"] : null;
+                $this->Address = isset($bn["Address"]) ? $bn["Address"] : null;
+                $this->TinhThanh = isset($bn["TinhThanh"]) ? $bn["TinhThanh"] : null;
+                $this->QuanHuyen = isset($bn["QuanHuyen"]) ? $bn["QuanHuyen"] : null;
+                $this->PhuongXa = isset($bn["PhuongXa"]) ? $bn["PhuongXa"] : null;
+                $this->Phone = isset($bn["Phone"]) ? $bn["Phone"] : null;
+                $this->CreateRecord = isset($bn["CreateRecord"]) ? $bn["CreateRecord"] : null;
+                $this->UpdateRecord = isset($bn["UpdateRecord"]) ? $bn["UpdateRecord"] : null;
+                $this->isDelete = isset($bn["isDelete"]) ? $bn["isDelete"] : null;
             }
         }
+    }
+
+
+    // Id Bệnh nhân tự động
+    function CreatId()
+    {
+        $date = date("Y-m-d");
+        $sql = " SELECT COUNT(*) AS `Tong` FROM `lap1_benhnhan` WHERE `CreateRecord` LIKE '%{$date}%'";
+        $result = $this->GetRow($sql);
+        $tong = $result["Tong"] + 1;
+        $Id = Common::NumberToStringFomatZero($tong, 4);
+        $Id = "BN" . date("ymd{$Id}");
+        return $Id;
+    }
+
+    // Hàm Xóa tạm thời, không xóa trong DB
+    function isdelete($DSMaSanPham)
+    {
+        $model["isDelete"] = 1;
+        $DSMaSanPham = implode("','", $DSMaSanPham);
+        $where = "`Id` in ('{$DSMaSanPham}') ";
+        $this->Update($model, $where);
+    }
+
+    // public function GetName()
+    // {
+    //     $sql = "SELECT `Name` FROM `lap1_benhnhan` WHERE 1";
+    //     $result = $this->GetRows($sql);
+    //     return $result;
+    // }
+
+    // Lấy Name Opitons Giới Tính
+    public function Gioitinh()
+    {
+        $op = new OptionsService();
+        $nameGioiTinh = $op->GetGroupsToSelect("gioitinh");
+        return $nameGioiTinh[$this->Gioitinh] ?? "Khác";
+    }
+
+    public static function ConvertDateToString($arr)
+    {
+        $krr    = explode('-', $arr);
+        $result = implode("", $krr);
+        return $result;
     }
 
     function BenhNhan()
@@ -57,12 +111,14 @@ class BenhNhan extends \Model\DB implements \Model\IModelService {
         return new Locations($this->Ward);
     }
 
-    public function Delete($Id) {
+    public function Delete($Id)
+    {
         $DM = new BenhNhan();
         return $DM->DeleteById($Id);
     }
 
-    public function GetById($Id) {
+    public function GetById($Id)
+    {
         return $this->SelectById($Id);
     }
 
@@ -71,7 +127,8 @@ class BenhNhan extends \Model\DB implements \Model\IModelService {
     //     return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     // }
 
-    public function GetItems($params, $indexPage, $pageNumber, &$total) {
+    public function GetItems($params, $indexPage, $pageNumber, &$total)
+    {
         $name = isset($params["keyword"]) ? $params["keyword"] : '';
         $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
         $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
@@ -85,15 +142,17 @@ class BenhNhan extends \Model\DB implements \Model\IModelService {
             $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
         }
 
-        $where = " `Name` like '%{$name}%' or `Phone` like '%{$name}%' or `Address` like '%{$name}%' {$danhmucSql} ";
+        $where = " (`Name` like '%{$name}%' or `Phone` like '%{$name}%' or `Address` like '%{$name}%' {$danhmucSql}) and `isDelete` = 0 ";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 
-    public function Post($model) {
+    public function Post($model)
+    {
         return $this->Insert($model);
     }
 
-    public function Put($model) {
+    public function Put($model)
+    {
         return $this->UpdateRow($model);
     }
 

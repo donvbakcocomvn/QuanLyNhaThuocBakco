@@ -1,11 +1,9 @@
 <ol class="breadcrumb">
     <li><a href="/index.php?controller=backend">Home</a></li>
-    <li><a href="index.php?module=quanlythuoc&controller=danhmuc&action=index"> Danh Sách Thuốc</a></li>
+    <li><a href="index.php?module=quanlythuoc&controller=sanpham&action=index"> Danh Sách Thuốc</a></li>
     <li> Thêm Thuốc Mới </li>
 </ol>
 <?php
-
-use Module\quanlythuoc\Model\SanPham\FormSanPham;
 
 $roleDetail = new Model\Role();
 ?>
@@ -23,7 +21,7 @@ $roleDetail = new Model\Role();
         <form action="" method="post" enctype="multipart/form-data">
             <div class="box-body">
                 <?php
-                $sp = new FormSanPham();
+                $sp = new \Module\quanlythuoc\Model\SanPham\FormSanPham();
                 ?>
                 <div class="">
                     <div class="col-md-3">
@@ -38,14 +36,17 @@ $roleDetail = new Model\Role();
                     <div class="col-md-3">
                         <?php $sp->Namebietduoc()->renderHtml();  ?>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <?php $sp->Solo()->renderHtml();  ?>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <?php $sp->Gianhap()->renderHtml();  ?>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <?php $sp->Giaban()->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-3">
+                        <?php $sp->DVQuyDoi()->renderHtml();  ?>
                     </div>
                     <div class="col-md-4">
                         <?php $sp->DVT()->renderHtml();  ?>

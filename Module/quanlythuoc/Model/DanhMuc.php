@@ -34,10 +34,6 @@ class DanhMuc extends \Model\DB implements \Model\IModelService
         $where = "`Name` like '%{$params["keyword"]}%'";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
-    public function GetById($Id)
-    {
-        return $this->SelectById($Id);
-    }
 
 
     public function Delete($Id)
@@ -59,6 +55,11 @@ class DanhMuc extends \Model\DB implements \Model\IModelService
     public function Put($model)
     {
         return $this->UpdateRow($model);
+    }
+
+    public function GetById($Id)
+    {
+        return $this->SelectById($Id);
     }
 
 

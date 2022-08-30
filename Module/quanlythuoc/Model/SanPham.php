@@ -27,12 +27,14 @@ class SanPham extends \Model\DB implements \Model\IModelService {
     public $DVT; 
     public $Ngaysx; 
     public $HSD; 
+    public $DVQuyDoi; 
     public $Tacdung; 
     public $Cochetacdung; 
     public $Ghichu; 
     public $Soluong; 
     public $NhaSX; 
     public $NuocSX; 
+    public $IsDelete; 
 
     public function __construct($sp = null) {
         self::$TableName = prefixTable . "qlthuoc_thuoc";
@@ -53,14 +55,46 @@ class SanPham extends \Model\DB implements \Model\IModelService {
                 $this->DVT = isset($sp["DVT"]) ? $sp["DVT"] : null ;
                 $this->Ngaysx = isset($sp["Ngaysx"]) ? $sp["Ngaysx"] : null ;
                 $this->HSD = isset($sp["HSD"]) ? $sp["HSD"] : null ;
+                $this->DVQuyDoi = isset($sp["DVQuyDoi"]) ? $sp["DVQuyDoi"] : null ;
                 $this->Tacdung = isset($sp["Tacdung"]) ? $sp["Tacdung"] : null ;
                 $this->Cochetacdung = isset($sp["Cochetacdung"]) ? $sp["Cochetacdung"] : null ;
                 $this->Ghichu = isset($sp["Ghichu"]) ? $sp["Ghichu"] : null ;
                 $this->Soluong = isset($sp["Soluong"]) ? $sp["Soluong"] : null ;
                 $this->NhaSX = isset($sp["NhaSX"]) ? $sp["NhaSX"] : null ;
                 $this->NuocSX = isset($sp["NuocSX"]) ? $sp["NuocSX"] : null ;
+                $this->IsDelete = isset($sp["IsDelete"]) ? $sp["IsDelete"] : null ;
             }
         }
+    }
+
+    function isdelete($DSMaSanPham)
+    {
+        $model["IsDelete"] = 1;
+        $DSMaSanPham = implode("','", $DSMaSanPham);
+        $where = "`Id` in ('{$DSMaSanPham}') ";
+        $this->Update($model, $where);
+    }
+
+    static function IsDeleteOption($item)
+    {
+        if ($item = 1) {
+            return "Hiện";
+        }
+        return "Đã Ẩn";
+    }
+
+    public function DonViTinh()
+    {
+        $op = new OptionsService();
+        $nameDVT = $op->GetGroupsToSelect("donvitinh");
+        return $nameDVT[$this->DVT] ?? "Khác";
+    }
+
+    public function DonViQuyDoi()
+    {
+        $op = new OptionsService();
+        $nameDVQD = $op->GetGroupsToSelect("donviquydoi");
+        return $nameDVQD[$this->DVQuyDoi] ?? "Khác";
     }
 
     public function IdLoaiThuoc()
@@ -117,7 +151,7 @@ class SanPham extends \Model\DB implements \Model\IModelService {
             $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
         }
 
-        $where = " `Name` like '%{$name}%' or `Namebietduoc` like '%{$name}%' {$danhmucSql} ";
+        $where = " (`Name` like '%{$name}%' or `Namebietduoc` like '%{$name}%' {$danhmucSql}) and `isDelete` = 0 ";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 

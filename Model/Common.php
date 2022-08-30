@@ -8,6 +8,11 @@ class Common {
 
     }
 
+    public static function NumberToStringFomatZero($value, $numString = 6)
+    {
+        return str_pad($value, $numString, '0', STR_PAD_LEFT);
+    }
+
     public static function ToUrl($url) {
         header("Location: " . $url);
         exit();

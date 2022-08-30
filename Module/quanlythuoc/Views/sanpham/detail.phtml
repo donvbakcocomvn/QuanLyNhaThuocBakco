@@ -1,0 +1,112 @@
+<ol class="breadcrumb">
+    <li><a href="/index.php?controller=backend">Home</a></li>
+    <li><a href="/index.php?module=quanlythuoc&controller=sanpham&action=index"> Danh Sách Thuốc</a></li>
+    <li> Thông Tin Chi Tiết Của Thuốc </li>
+</ol>
+<?php
+
+use Model\Common;
+use Module\benhnhan\Model\BenhNhan\FormBenhNhan;
+use Module\quanlythuoc\Model\SanPham;
+use Module\quanlythuoc\Model\SanPham\FormSanPham;
+
+$roleDetail = new Model\Role();
+?>
+<div class="container-fluid">
+    <div class="box box-primary">
+        <div class="box-header">
+            <h3 class="box-title">Thông Tin Chi Tiết Thuốc</h3>
+        </div>
+        <!-- <div class="box-body"> -->
+        <form action="" method="post" enctype="multipart/form-data">
+            <div class="box-body">
+                <?php
+
+                $itemSP = new SanPham($data);
+
+                // var_dump($itemSP);
+                ?>
+                <div class="">
+                    <div class="col-md-4">
+                        <label for="">Mã Thuốc</label>
+                        <input readonly value="<?php echo $itemSP->Id; ?>" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">Tên Thuốc</label>
+                        <input readonly value="<?php echo $itemSP->Name; ?>" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">Mã Loại Thuốc</label>
+                        <input readonly value="<?php echo $itemSP->IdLoaiThuoc()->Name; ?>" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">Tên Biệt Dược</label>
+                        <input readonly value="<?php echo $itemSP->Namebietduoc; ?>" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">Số Lô</label>
+                        <input readonly value="<?php echo $itemSP->Solo; ?>" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">Số Lượng</label>
+                        <input readonly value="<?php echo $itemSP->Soluong; ?>" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">Đơn Vị Tính</label>
+                        <input readonly value="<?php echo $itemSP->DonViTinh(); ?>" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">Giá Nhập</label>
+                        <input readonly value="<?php echo Common::ViewPrice($itemSP->Gianhap); ?>" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">Giá Bán</label>
+                        <input readonly value="<?php echo Common::ViewPrice($itemSP->Giaban); ?>" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">Nhà Sản Xuất</label>
+                        <input readonly value="<?php echo $itemSP->NhaSX; ?>" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">Nước Sản Xuất</label>
+                        <input readonly value="<?php echo $itemSP->NuocSX; ?>" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">Đơn Vị Quy Đổi</label>
+                        <input readonly value="<?php echo $itemSP->DonViQuyDoi(); ?>" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">Ngày Sản Xuất</label>
+                        <input readonly value="<?php echo $itemSP->Ngaysx; ?>" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">Hạn Sử Dụng</label>
+                        <input readonly value="<?php echo $itemSP->HSD; ?>" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">Ẩn/hiện</label>
+                        <input readonly value="<?php echo SanPham::IsDeleteOption($itemSP->IsDelete); ?>" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">Tác Dụng</label>
+                        <textarea rows="5" readonly class="form-control"><?php echo $itemSP->Tacdung; ?></textarea>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">Cơ Chế Tác Dụng</label>
+                        <textarea rows="5" readonly  class="form-control"><?php echo $itemSP->Cochetacdung; ?></textarea>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">Ghi Chú</label>
+                        <textarea rows="5" readonly class="form-control"><?php echo $itemSP->Ghichu; ?></textarea>
+                    </div>
+                    
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</form>
+</div>
+</div>
+</div>
+<script src="/public/TinhThanh/tinhthanh.js"></script>

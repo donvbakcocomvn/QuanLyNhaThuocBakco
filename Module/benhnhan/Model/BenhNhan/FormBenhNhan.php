@@ -21,14 +21,15 @@ class FormBenhNhan implements iFormBenhNhan
 
         function Id($val = null)
         {
-                $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-                return new FormRender(new Element\Hidden($name, $val));
-
-                // $properties = self::$properties;
-                // $properties["value"] = $val;
-                // $properties[FormRender::Required] = "true";
                 // $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-                // return new FormRender(new Element\Textbox("Mã Khách Hàng", $name, $properties));
+                // return new FormRender(new Element\Hidden($name, $val));
+
+                $properties = self::$properties;
+                $properties["value"] = $val;
+                $properties["readonly"] = $val;
+                $properties[FormRender::Required] = "true";
+                $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+                return new FormRender(new Element\Textbox("Mã Khách Hàng", $name, $properties));
         }
 
         /**
@@ -187,4 +188,30 @@ class FormBenhNhan implements iFormBenhNhan
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
                 return new FormRender(new Element\Select("Phường Xã" ,$name ,  $properties));
         }
+	/**
+	 *
+	 * @param mixed $val
+	 *
+	 * @return mixed
+	 */
+	function CreateRecord($val = null) {
+	}
+	
+	/**
+	 *
+	 * @param mixed $val
+	 *
+	 * @return mixed
+	 */
+	function UpdateRecord($val = null) {
+	}
+	
+	/**
+	 *
+	 * @param mixed $val
+	 *
+	 * @return mixed
+	 */
+	function isDelete($val = null) {
+	}
 }
