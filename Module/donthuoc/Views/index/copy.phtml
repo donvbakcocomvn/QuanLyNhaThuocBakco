@@ -24,10 +24,17 @@ $donthuoc  = new DonThuoc($donthuoc);
         </div>
         <div class="box-body">
             <form action="" method="post" enctype="multipart/form-data">
-                <div class="col-md-3">
-                    <?php
-                    ?>
+                <div class="col-md-4">
                     <?php echo $form->TongNgayDung($donthuoc->TongNgayDung)->renderHTML(); ?>
+                </div>
+                <div class="col-md-6">
+                    </br>
+                    <div class="form-group" style="margin-top: 5px;">
+                        <?php btnHtml::btnCapNhatNgayDung(); ?>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <?php echo $form->ThoiGianKham($donthuoc->ThoiGianKham)->renderHTML(); ?>
                 </div>
                 <div class="col-md-3">
                     <?php echo $form->ThuocLoaiDon($donthuoc->ThuocLoaiDon)->renderHTML(); ?>
@@ -39,12 +46,7 @@ $donthuoc  = new DonThuoc($donthuoc);
                     <?php echo $form->ChanDoanBenh($donthuoc->ChanDoanBenh)->renderHTML(); ?>
                 </div>
 
-                <div class="col-md-1">
-                    </br>
-                    <div class="form-group" style="margin-top: 5px;">
-                        <?php btnHtml::btnCapNhatNgayDung(); ?>
-                    </div>
-                </div>
+
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -256,7 +258,7 @@ $donthuoc  = new DonThuoc($donthuoc);
                 <div class="col-md-12 ">
                     <button class="btn btn-warning" type="reset">Làm Lại</button>
                     <!-- <button class="btn btn-success">Lưu</button> -->
-                    <button class="btn btn-success" name="LuuThoat">Lưu Toa Thuốc</button>
+                    <button class="btn btn-success" name="LuuThoat">Copy Đơn Thuốc</button>
                 </div>
         </div>
         </form>

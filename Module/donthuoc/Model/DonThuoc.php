@@ -44,6 +44,14 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
         }
     }
 
+    public static function GetNameLoaiDonThuoc($val)
+    {
+        $dt = new DonThuoc();
+        $sql = "SELECT `Name` FROM `lap1_options` WHERE `Val` = $val and `GroupsId` = 'optiondonthuoc'";
+        $result = $dt->GetRow($sql);
+        return $result["Name"];
+    }
+
     // Lấy Id Danh Mục by Name
     public function GetIdDM($Name)
     {
@@ -109,10 +117,17 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
     // Lấy Name Opitons Giới Tính
     public function Gioitinh()
     {
-        $donthuoc = new DonThuoc();
         $op = new OptionsService();
         $nameGioiTinh = $op->GetGroupsToSelect("gioitinh");
-        return $nameGioiTinh[$donthuoc->GioiTinh] ?? "Khác";
+        // echo $nameGioiTinh[$this->GioiTinh];
+        return $nameGioiTinh[$this->GioiTinh] ?? "Khác";
+    }
+
+    public function ThuocLoaiDon()
+    {
+        $op = new OptionsService();
+        $nameGioiTinh = $op->GetGroupsToSelect("optiondonthuoc");
+        return $nameGioiTinh[$this->ThuocLoaiDon] ?? "Khác";
     }
 
     public function IdLoaiThuoc()

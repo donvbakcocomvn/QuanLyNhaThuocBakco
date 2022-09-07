@@ -16,6 +16,7 @@ use Module\quanlythuoc\Model\SanPham;
 $roleDetail = new Model\Role();
 $form = new FormDonThuoc();
 $donthuoc  = new DonThuoc($donthuoc);
+// var_dump($donthuoc);
 ?>
 <div class="container-fluid">
     <div class="box box-primary">
@@ -24,10 +25,17 @@ $donthuoc  = new DonThuoc($donthuoc);
         </div>
         <div class="box-body">
             <form action="" method="post" enctype="multipart/form-data">
+                <div class="col-md-4">
+                    <?php echo $form->TongNgayDung($_SESSION["SoNgaySDThuoc"] ?? 0)->renderHTML(); ?>
+                </div>
+                <div class="col-md-6">
+                    </br>
+                    <div class="form-group" style="margin-top: 5px;">
+                        <?php btnHtml::btnCapNhatNgayDung(); ?>
+                    </div>
+                </div>
                 <div class="col-md-3">
-                    <?php
-                    ?>
-                    <?php echo $form->TongNgayDung($donthuoc->TongNgayDung)->renderHTML(); ?>
+                    <?php echo $form->ThoiGianKham($donthuoc->ThoiGianKham)->renderHTML(); ?>
                 </div>
                 <div class="col-md-3">
                     <?php echo $form->ThuocLoaiDon($donthuoc->ThuocLoaiDon)->renderHTML(); ?>
@@ -37,13 +45,6 @@ $donthuoc  = new DonThuoc($donthuoc);
                 </div>
                 <div class="col-md-3">
                     <?php echo $form->ChanDoanBenh($donthuoc->ChanDoanBenh)->renderHTML(); ?>
-                </div>
-
-                <div class="col-md-1">
-                    </br>
-                    <div class="form-group" style="margin-top: 5px;">
-                        <?php btnHtml::btnCapNhatNgayDung(); ?>
-                    </div>
                 </div>
                 <table class="table table-bordered">
                     <thead>
@@ -66,7 +67,7 @@ $donthuoc  = new DonThuoc($donthuoc);
                         $i = 0;
                         foreach (DonThuocDetail::DsThuoc() as $mathuoc => $thuoc) {
 
-                            var_dump($thuoc);
+                            // var_dump($thuoc);
                             $sanPham = new SanPham($thuoc["Id"] ?? null);
                             // var_dump($sanPham);
                         ?>
@@ -84,7 +85,7 @@ $donthuoc  = new DonThuoc($donthuoc);
                                     <?php echo $form->SoNgaySDThuoc($thuoc["SoNgaySDThuoc"] ?? "", "SoNgaySD" . $i, $i)->render(); ?>
                                 </th>
                                 <th style="width: 150px;">
-                                    <?php echo $form->CachDung($sanPham->CachDung, "cachdungthuoc" . $i, $i)->render(); ?>
+                                    <?php echo $form->CachDung($sanPham->CachDungThuoc(), "cachdungthuoc" . $i, $i)->render(); ?>
                                 </th>
                                 <th style="width: 100px;">
                                     <?php echo $form->DVT($sanPham->DonViTinh(), "dvt" . $i, $i)->render(); ?>
@@ -105,10 +106,9 @@ $donthuoc  = new DonThuoc($donthuoc);
                                     <?php echo $form->GiaBan($sanPham->Giaban ?? null, "giaban" . $i, $i)->render(); ?>
                                 </th> -->
                                 <th>
-                                    <?php echo $form->GhiChu($thuoc["Ghichu"] ?? "", "ghichu" . $i, $i)->render(); ?>
+                                    <?php echo $form->GhiChu($sanPham->Ghichu, "ghichu" . $i, $i)->render(); ?>
                                 </th>
                             </tr>
-
                         <?php
                             $i++;
                         }
@@ -212,6 +212,8 @@ $donthuoc  = new DonThuoc($donthuoc);
                                 var idSoLuong = "#soluong" + $("#" + $(this).attr("id")).attr("index");
                                 var idGiaBan = "#giaban" + $("#" + $(this).attr("id")).attr("index");
                                 var idCachDungThuoc = "#cachdungthuoc" + $("#" + $(this).attr("id")).attr("index");
+                                var idGhiChu = "#ghichu" + $("#" + $(this).attr("id")).attr("index");
+
 
                                 console.log(idDVT);
                                 console.log(index);
@@ -244,6 +246,7 @@ $donthuoc  = new DonThuoc($donthuoc);
                                         $(idSoNgaySD).val(response.SoNgaySDThuoc);
                                         $(idSoLuong).val(response.Soluong);
                                         $(idCachDungThuoc).val(response.CachDung);
+                                        $(idGhiChu).val(response.Ghichu);
                                     },
                                     complete: function() {
                                         //spinner.close();

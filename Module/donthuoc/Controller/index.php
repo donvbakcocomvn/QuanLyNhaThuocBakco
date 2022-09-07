@@ -120,20 +120,24 @@ class index extends \Application implements \Controller\IControllerBE
      */
     function post()
     {
+        // $isnew = \Model\Request::Get("isnew", null);
+        // if ($isnew != null) {
+        //     DonThuocDetail::ClearSession();
+        // }
         \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DonThuoc_Post]);
         try {
             if (\Model\Request::Post(FormDonThuoc::$ElementsName, null)) {
                 $itemForm = \Model\Request::Post(FormDonThuoc::$ElementsName, null);
                 $donthuoc = new DonThuoc();
 
-                echo $item["Id"] = $donthuoc->CreatId();
+                $item["Id"] = $donthuoc->CreatId();
                 $item["IdBenhNhan"] = $itemForm["IdBenhNhan"];
                 $item["NameBN"] = $donthuoc->GetNameById($itemForm["IdBenhNhan"]);
                 $item["Ngaysinh"] = Common::ForMatDMY($donthuoc->GetNgaySinhById($itemForm["IdBenhNhan"]));
                 $item["Gioitinh"] = $donthuoc->GetGioiTinhById($itemForm["IdBenhNhan"]);
-                $item["ThoiGianKham"] = Common::ForMatDMY($itemForm["ThoiGianKham"]);
+                // $item["ThoiGianKham"] = Common::ForMatDMY($itemForm["ThoiGianKham"]);
                 $item["ChanDoanBenh"] = $itemForm["ChanDoanBenh"];
-                // $item["ThuocLoaiDon"] = $donthuoc->GetNameLoaiDon($itemForm["ThuocLoaiDon"]);
+                $item["ThuocLoaiDon"] = $itemForm["ThuocLoaiDon"];
                 $item["TongNgayDung"] = $itemForm["TongNgayDung"];
                 $donthuoc->Post($item);
                 // var_dump($item);
@@ -159,10 +163,14 @@ class index extends \Application implements \Controller\IControllerBE
                     DonThuocDetail::ClearSession();
                 }
                 new \Model\Error(\Model\Error::success, "Đã Thêm Toa Thuốc");
-                // \Model\Common::ToUrl("/index.php?module=donthuoc&controller=index&action=index");
+                \Model\Common::ToUrl("/index.php?module=donthuoc&controller=index&action=index");
             }
         } catch (\Exception $exc) {
             echo $exc->getMessage();
+        }
+        $isnew = \Model\Request::Get("isnew", null);
+        if ($isnew != null) {
+            DonThuocDetail::ClearSession();
         }
         $this->View();
     }
@@ -176,13 +184,15 @@ class index extends \Application implements \Controller\IControllerBE
                 $donthuoc = new DonThuoc();
                 $item["Id"] = $_GET["id"]; // Lấy được Id đơn thuốc
                 $a = $donthuoc->GetById($item["Id"]); // Lấy ra đơn thuốc theo Id
+                // var_dump($a);
                 $item["IdBenhNhan"] = $itemForm["IdBenhNhan"];
                 $item["NameBN"] = $donthuoc->GetNameById($itemForm["IdBenhNhan"]);
                 $item["Ngaysinh"] = Common::ForMatDMY($donthuoc->GetNgaySinhById($itemForm["IdBenhNhan"]));
                 $item["Gioitinh"] = $donthuoc->GetGioiTinhById($itemForm["IdBenhNhan"]);
                 $item["ChanDoanBenh"] = $itemForm["ChanDoanBenh"];
-                // $item["ThuocLoaiDon"] = $donthuoc->GetNameLoaiDon($itemForm["ThuocLoaiDon"]);
+                $item["ThuocLoaiDon"] = $itemForm["ThuocLoaiDon"];
                 $item["TongNgayDung"] = $itemForm["TongNgayDung"];
+                $item["ThoiGianKham"] = $a["ThoiGianKham"];
                 $donthuoc->Put($item);
                 $detail = new DonThuocDetail();
 
@@ -248,10 +258,10 @@ class index extends \Application implements \Controller\IControllerBE
                 $item["IdBenhNhan"] = $itemForm["IdBenhNhan"];
                 $item["NameBN"] = $donthuoc->GetNameById($itemForm["IdBenhNhan"]);
                 $item["Ngaysinh"] = Common::ForMatDMY($donthuoc->GetNgaySinhById($itemForm["IdBenhNhan"]));
+                // $item["ThoiGianKham"] = Common::ForMatDMY($itemForm["ThoiGianKham"]);
                 $item["Gioitinh"] = $donthuoc->GetGioiTinhById($itemForm["IdBenhNhan"]);
-                // echo $item["ThoiGianKham"] = Common::ForMatDMY($itemForm["ThoiGianKham"]);
                 $item["ChanDoanBenh"] = $itemForm["ChanDoanBenh"];
-                // $item["ThuocLoaiDon"] = $donthuoc->GetNameLoaiDon($itemForm["ThuocLoaiDon"]);
+                $item["ThuocLoaiDon"] = $itemForm["ThuocLoaiDon"];
                 $item["TongNgayDung"] = $itemForm["TongNgayDung"];
                 $donthuoc->Post($item);
                 // var_dump($item);

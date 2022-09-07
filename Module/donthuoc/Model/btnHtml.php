@@ -40,7 +40,7 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-success" href="/index.php?module=donthuoc&controller=index&action=post">
+        <a class="btn btn-info" href="/index.php?module=donthuoc&controller=index&action=post&isnew=1">
             <i class="fa fa-plus"></i> Thêm Toa Thuốc Mới</a>
     <?php
     }
@@ -64,7 +64,7 @@ class btnHtml
         }
     ?>
         <a class="btn btn-success" href="/index.php?module=donthuoc&controller=index&action=put&id=<?php echo $id; ?>">
-            Sửa Đơn Thuốc
+            Sửa
         </a>
     <?php
     }
@@ -76,7 +76,7 @@ class btnHtml
         }
     ?>
         <a class="btn btn-warning" href="/index.php?module=donthuoc&controller=index&action=copy&id=<?php echo $id; ?>">
-            Copy Đơn Thuốc
+            Copy
         </a>
     <?php
     }
@@ -88,7 +88,7 @@ class btnHtml
         }
     ?>
         <a class="btn btn-danger" title="Bạn có muốn xóa danh mục này?" href="/index.php?module=donthuoc&controller=index&action=delete&id=<?php echo $id; ?>">
-            Xóa Đơn
+            Xóa
         </a>
 <?php
     }

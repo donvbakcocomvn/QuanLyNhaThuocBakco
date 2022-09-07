@@ -21,10 +21,20 @@ $roleDetail = new Model\Role();
         </div>
         <div class="box-body">
             <form action="" method="post" enctype="multipart/form-data">
+                <?php
+                $form = new FormDonThuoc();
+                ?>
+                <div class="col-md-4">
+                    <?php echo $form->TongNgayDung($_SESSION["SoNgaySDThuoc"] ?? 0)->renderHTML(); ?>
+                </div>
+                <div class="col-md-6">
+                    </br>
+                    <div class="form-group" style="margin-top: 5px;">
+                        <?php btnHtml::btnCapNhatNgayDung(); ?>
+                    </div>
+                </div>
+
                 <div class="col-md-3">
-                    <?php
-                    $form = new FormDonThuoc();
-                    ?>
                     <?php echo $form->ThoiGianKham()->renderHTML(); ?>
                 </div>
                 <div class="col-md-3">
@@ -35,15 +45,6 @@ $roleDetail = new Model\Role();
                 </div>
                 <div class="col-md-3">
                     <?php echo $form->ChanDoanBenh()->renderHTML(); ?>
-                </div>
-                <div class="col-md-2">
-                    <?php echo $form->TongNgayDung($_SESSION["SoNgaySDThuoc"] ?? 0)->renderHTML(); ?>
-                </div>
-                <div class="col-md-1">
-                    </br>
-                    <div class="form-group" style="margin-top: 5px;">
-                        <?php btnHtml::btnCapNhatNgayDung(); ?>
-                    </div>
                 </div>
                 <table class="table table-bordered">
                     <thead>

@@ -355,6 +355,7 @@ class Functions
                                 <li><a href="/options/hinhthuchd/"><i class="fa fa-circle-o"></i> Hình Thức Hợp Đồng</a></li> -->
                                 <li><a href="/options/gioitinh/"><i class="fa fa-circle-o"></i> Giới Tính</a></li><li><a href="/options/cachdungthuoc/"><i class="fa fa-circle-o"></i> Cách Dùng Thuốc</a></li>
                                 <li><a href="/options/donviquydoi/"><i class="fa fa-circle-o"></i> Đơn vị quy đổi</a></li>
+                                <li><a href="/options/optiondonthuoc/"><i class="fa fa-circle-o"></i> Cài Đặt Loại Đơn </a></li>
                                 <!-- <li><a href="/options/chucvu/"><i class="fa fa-circle-o"></i> Chức Vụ</a></li>
                                 <li><a href="/options/index/NameFunction/"><i class="fa fa-circle-o"></i> Module</a></li> -->
                             </ul>

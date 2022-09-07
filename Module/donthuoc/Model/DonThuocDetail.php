@@ -65,7 +65,6 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
     public static function ClearSession()
     {
         $_SESSION["DetailThuoc"] = [];
-        $_SESSION["SoNgaySDThuoc"] = [];
     }
 
     public static function DsThuoc()
@@ -133,15 +132,20 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
 
     public function CapNhatThuoc($detailThuoc, $index)
     {
+        $item = $_SESSION["DetailThuoc"][$index];
+        $sang = $item["Sang"] ?? 0;
+        $chieu = $item["Chieu"] ?? 0;
+        $trua = $item["Trua"] ?? 0;
+
         $sp = new ModelSanPham($detailThuoc);
         $detailThuoc["Id"] = $detailThuoc["Id"];
         $detailThuoc["IdThuoc"] = $detailThuoc["Id"];
         $detailThuoc["DVT"] = $sp->DVT;
         $detailThuoc["DVTTitle"] = $sp->DonViTinh();
         $detailThuoc["SoNgaySDThuoc"] = $detailThuoc["SoNgaySDThuoc"];
-        $detailThuoc["Sang"] = $detailThuoc["Sang"] ?? 0;
-        $detailThuoc["Trua"] = $detailThuoc["Trua"] ?? 0;
-        $detailThuoc["Chieu"] = $detailThuoc["Chieu"] ?? 0;
+        $detailThuoc["Sang"] = $detailThuoc["Sang"] ?? $sang;
+        $detailThuoc["Trua"] = $detailThuoc["Trua"] ?? $trua;
+        $detailThuoc["Chieu"] = $detailThuoc["Chieu"] ?? $chieu;
         $detailThuoc["Giaban"] = $detailThuoc["Giaban"];
         $detailThuoc["Ghichu"] = $detailThuoc["Ghichu"] ?? "";
         $detailThuoc["CachDung"] = $sp->CachDungThuoc();
@@ -162,16 +166,23 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
     }
 
 
-    // Id Bệnh nhân tự động
     static function CreatIdDetail()
     {
-        $detail = new DonThuocDetail();
-        $sql = " SELECT COUNT(*) AS `Tong` FROM `lap1_toathuoc_detail` WHERE 1";
-        $result = $detail->GetRow($sql);
-        $tong = $result["Tong"] + 1;
-        $Id = Common::NumberToStringFomatZero($tong, 4);
-        // $Id = "BN" . date("ymd{$Id}");
-        return $Id;
+        $namespace = rand(11111, 99999);
+        $guid = hash("sha256", time() . $namespace);
+        $uid = uniqid(time(), true);
+        $data = $namespace;
+        $data .= $_SERVER['REQUEST_TIME'];
+        $data .= $_SERVER['HTTP_USER_AGENT'];
+        $data .= $_SERVER['REMOTE_ADDR'];
+        $data .= $_SERVER['REMOTE_PORT'];
+        $hash = strtoupper(hash('ripemd128', $uid . $guid . md5($data)));
+        $guid = substr($hash,  0,  8) . '-' .
+            substr($hash,  8,  4) . '-' .
+            substr($hash, 12,  4) . '-' .
+            substr($hash, 16,  4) . '-' .
+            substr($hash, 20, 12);  
+        return $guid;
     }
 
     // Hàm Xóa tạm thời, không xóa trong DB

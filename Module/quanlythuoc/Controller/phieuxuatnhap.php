@@ -123,7 +123,7 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
                 $itemForm["GhiChu"] = $itemHtml["GhiChu"];
                 $itemForm["NgayNhap"] = $itemHtml["NgayNhap"];
                 $phieu->Put($itemForm);
-                // new \Model\Error(\Model\Error::success, "Đã Sửa Phiếu");
+                new \Model\Error(\Model\Error::success, "Đã Sửa Phiếu");
                 // \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=danhmuc&action=index");
             }
         } catch (\Exception $exc) {
