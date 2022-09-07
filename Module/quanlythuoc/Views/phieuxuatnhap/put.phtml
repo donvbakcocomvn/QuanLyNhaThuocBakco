@@ -7,6 +7,7 @@
 
 use Module\quanlythuoc\Model\DanhMuc;
 use Module\quanlythuoc\Model\DanhMuc\FormDanhMuc;
+use Module\quanlythuoc\Model\PhieuXuatNhap;
 use Module\quanlythuoc\Model\PhieuXuatNhap\FormPhieuXuatNhap;
 
 $roleDetail = new Model\Role();
@@ -25,48 +26,47 @@ $roleDetail = new Model\Role();
             <div class="box-body">
                 <?php
                 $phieu = new FormPhieuXuatNhap();
-                $_item = new DanhMuc($data);
-                // var_dump($data);
+                $_item = new PhieuXuatNhap($data);
                 ?>
                 <div class="">
-                    <div class="col-md-4">
-                        <?php $phieu->IdPhieu($data["IdPhieu"])->renderHtml(); ?>
-                    </div>
-                    <div class="col-md-4">
-                        <?php $phieu->IdThuoc($data["IdThuoc"])->renderHtml();  ?>
-                    </div>
-                    <div class="col-md-4">
-                        <?php $phieu->NgayNhap($data["NgayNhap"])->renderHtml();  ?>
-                    </div>
-                    <div class="col-md-4">
-                        <?php $phieu->XuatNhap($data["XuatNhap"])->renderHtml();  ?>
-                    </div>
-                    <div class="col-md-4">
-                        <?php $phieu->SoLuong($data["SoLuong"])->renderHtml();  ?>
-                    </div>
-                    <div class="col-md-4">
-                        <?php $phieu->SoLo($data["SoLo"])->renderHtml();  ?>
-                    </div>
-                    <div class="col-md-4">
-                        <?php $phieu->NhaSanXuat($data["NhaSanXuat"])->renderHtml();  ?>
-                    </div>
-                    <div class="col-md-4">
-                        <?php $phieu->NuocSanXuat($data["NuocSanXuat"])->renderHtml();  ?>
-                    </div>
-                    <div class="col-md-4">
-                        <?php $phieu->Price($data["Price"])->renderHtml();  ?>
+                    <div class="col-12">
+                        <?php $phieu->Id($_item->Id)->render();  ?>
                     </div>
                     <div class="col-md-6">
-                        <?php $phieu->NoiDungPhieu($data["NoiDungPhieu"])->renderHtml();  ?>
+                        <?php $phieu->IdThuoc($_item->IdThuoc)->renderHtml();  ?>
                     </div>
                     <div class="col-md-6">
-                        <?php $phieu->GhiChu($data["GhiChu"])->renderHtml();  ?>
+                        <?php $phieu->NgayNhap($_item->NgayNhap)->renderHtml();  ?>
                     </div>
-                    
+                    <div class="col-md-6">
+                        <?php $phieu->XuatNhap($_item->XuatNhap)->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?php $phieu->SoLuong($_item->SoLuong)->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?php $phieu->SoLo($_item->SoLo)->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?php $phieu->NhaSanXuat($_item->NhaSanXuat)->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?php $phieu->NuocSanXuat($_item->NuocSanXuat)->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?php $phieu->Price($_item->Price)->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?php $phieu->NoiDungPhieu($_item->NoiDungPhieu)->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?php $phieu->GhiChu($_item->GhiChu)->renderHtml();  ?>
+                    </div>
+
                     <div class="col-md-12 ">
                         <button class="btn btn-warning" type="reset">Làm Lại</button>
                         <!-- <button class="btn btn-success">Lưu</button> -->
-                        <button class="btn btn-success" name="LuuThoat">Thêm Mới</button>
+                        <button class="btn btn-success" name="LuuThoat">Sửa Phiếu</button>
                     </div>
                 </div>
         </form>

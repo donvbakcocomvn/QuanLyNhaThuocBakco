@@ -20,7 +20,8 @@
                 <div class="box-tools">
                     <?php
 
-                    use Module\quanlythuoc\Model\PhieuXuatNhap;;
+use Model\Common;
+use Module\quanlythuoc\Model\PhieuXuatNhap;;
 
                     Module\quanlythuoc\Model\btnHtml::btnThemPhieuXuatNhap();
                     ?>
@@ -36,8 +37,8 @@
                             <th>Mã Thuốc</th>
                             <th>Số Lượng</th>
                             <th>Giá</th>
-                            <th>Nội Dung Phiếu</th>
                             <th>Ngày Nhập Phiếu</th>
+                            <th>Nội Dung Phiếu</th>
                             <th>Ghi Chú</th>
                         </tr>
                     </thead>
@@ -59,10 +60,10 @@
                                 <td><?php echo $index + 1; ?></td>
                                 <td><?php echo $_item->IdPhieu; ?></td>
                                 <td><?php echo $_item->IdThuoc; ?></td>
-                                <td><?php echo $_item->SoLuong; ?></td>
-                                <td><?php echo $_item->Price; ?></td>
+                                <td><?php echo Common::ViewNumber($_item->SoLuong); ?></td>
+                                <td><?php echo Common::ViewPrice($_item->Price); ?></td>
+                                <td><?php echo Common::ForMatDMY($_item->NgayNhap); ?></td>
                                 <td><?php echo $_item->NoiDungPhieu; ?></td>
-                                <td><?php echo $_item->NgayNhap; ?></td>
                                 <td><?php echo $_item->GhiChu; ?></td>
                             </tr>
                         <?php

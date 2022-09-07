@@ -20,13 +20,13 @@ class FormPhieuXuatNhap implements iFormPhieuXuatNhap
     
     function Id($val = null)
     {
-        // $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        // return new FormRender(new Element\Hidden($name, $val));
-        $properties = self::$properties;
-        $properties["value"] = $val;
-        $properties[FormRender::Required] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        return new FormRender(new Element\Textbox("Mã Danh Mục", $name, $properties));
+        return new FormRender(new Element\Hidden($name, $val));
+        // $properties = self::$properties;
+        // $properties["value"] = $val;
+        // $properties[FormRender::Required] = "true";
+        // $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+        // return new FormRender(new Element\Hidden("Mã Phiếu", $name, $properties));
     }
 	
 	function IdPhieu($val = null) {
@@ -34,7 +34,7 @@ class FormPhieuXuatNhap implements iFormPhieuXuatNhap
         $properties["value"] = $val;
         $properties[FormRender::Required] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        $options = ['Phiếu Xuất','Phiếu Nhập'];
+        $options = ['PX' => 'Phiếu Xuất', 'PN' => 'Phiếu Nhập'];
         return new FormRender(new Element\Select("Loại Phiếu", $name, $options, $properties));
 	}
 	
@@ -134,7 +134,7 @@ class FormPhieuXuatNhap implements iFormPhieuXuatNhap
         $properties["value"] = $val;
         $properties[FormRender::Required] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        $options = ['1','-1'];
+        $options = [1 => "Nhập", -1 => "Xuất"];
         return new FormRender(new Element\Select("Xuất/Nhập", $name, $options, $properties));
 	}
 	
@@ -182,7 +182,7 @@ class FormPhieuXuatNhap implements iFormPhieuXuatNhap
         // $properties[FormRender::Required] = "true";
 		$properties["type"] = "date";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        return new FormRender(new Element\DateTime("Ngày Nhập Phiếu", $name, $properties));
+        return new FormRender(new Element\DateTime("Ngày Nhập/Xuất", $name, $properties));
 	}
 	
 	/**

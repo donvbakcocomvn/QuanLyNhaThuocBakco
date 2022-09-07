@@ -162,6 +162,10 @@ class Common {
     public static function ViewPrice($number) {
         return number_format($number, 0, ".", ".") . " VND";
     }
+
+    public static function ViewNumber($number) {
+        return number_format($number, 0, ".", ".");
+    }
     
     public static function CheckName($param) {
         return strip_tags($param);

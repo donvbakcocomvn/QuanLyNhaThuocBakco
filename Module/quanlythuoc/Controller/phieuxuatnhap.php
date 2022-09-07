@@ -2,8 +2,7 @@
 
 namespace Module\quanlythuoc\Controller;
 
-use Module\quanlythuoc\Model\DanhMuc as ModelDanhMuc;
-use Module\quanlythuoc\Model\DanhMuc\FormDanhMuc;
+use Model\Common;
 use Module\quanlythuoc\Model\PhieuXuatNhap\FormPhieuXuatNhap;
 use Module\quanlythuoc\Permission;
 
@@ -76,21 +75,27 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
         try {
             if (\Model\Request::Post(FormPhieuXuatNhap::$ElementsName, null)) {
                 $itemForm = \Model\Request::Post(FormPhieuXuatNhap::$ElementsName, null);
-                $itemForm["Id"] = $itemForm["Id"];
-                $itemForm["Name"] = $itemForm["Name"];
-                $itemForm["Link"] = $itemForm["Link"];
+                $phieu = new \Module\quanlythuoc\Model\PhieuXuatNhap();
+                $itemForm["IdPhieu"] = $phieu->CreatIdPhieu($itemForm["IdPhieu"]);
+                $itemForm["IdThuoc"] = $itemForm["IdThuoc"];
+                $itemForm["SoLuong"] = $itemForm["SoLuong"];
+                $itemForm["SoLo"] = $itemForm["SoLo"];
+                $itemForm["NhaSanXuat"] = $itemForm["NhaSanXuat"];
+                $itemForm["NuocSanXuat"] = $itemForm["NuocSanXuat"];
+                $itemForm["Price"] = $itemForm["Price"];
+                $itemForm["XuatNhap"] = $itemForm["XuatNhap"];
+                $itemForm["NoiDungPhieu"] = $itemForm["NoiDungPhieu"];
                 $itemForm["GhiChu"] = $itemForm["GhiChu"];
-
-                $danhmuc = new \Module\quanlythuoc\Model\PhieuXuatNhap();
-                $danhmuc->Post($itemForm);
-                // \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=danhmuc&action=put&id=" . $itemForm["Code"]);
+                $itemForm["NgayNhap"] = Date("Y-m-d", strtotime($itemForm["NgayNhap"]));
+                $phieu->Post($itemForm);
+                new \Model\Error(\Model\Error::success, "Đã Thêm Phiếu");
                 \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=index");
 
             }
         } catch (\Exception $exc) {
             echo $exc->getMessage();
         }
-        $this->View();
+        $this->View();   
     }
 
     /**
@@ -105,15 +110,20 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
             if (\Model\Request::Post(FormPhieuXuatNhap::$ElementsName, null)) {
 
                 $itemHtml = \Model\Request::Post(FormPhieuXuatNhap::$ElementsName, null);
-
-                $model["Id"] = $itemHtml["Id"]; 
-                $model["Name"] = $itemHtml["Name"];
-                $model["Link"] = $itemHtml["Link"];
-                $model["GhiChu"] = strip_tags($itemHtml["GhiChu"]);
-
-                $dm = new \Module\quanlythuoc\Model\PhieuXuatNhap();
-                $dm->Put($model);
-                new \Model\Error(\Model\Error::success, "Đã Sửa Danh Mục");
+                $phieu = new \Module\quanlythuoc\Model\PhieuXuatNhap();
+                $itemForm["Id"] = $itemHtml["Id"];
+                $itemForm["IdThuoc"] = $itemHtml["IdThuoc"];
+                $itemForm["SoLuong"] = $itemHtml["SoLuong"];
+                $itemForm["SoLo"] = $itemHtml["SoLo"];
+                $itemForm["NhaSanXuat"] = $itemHtml["NhaSanXuat"];
+                $itemForm["NuocSanXuat"] = $itemHtml["NuocSanXuat"];
+                $itemForm["Price"] = $itemHtml["Price"];
+                $itemForm["XuatNhap"] = $itemHtml["XuatNhap"];
+                $itemForm["NoiDungPhieu"] = $itemHtml["NoiDungPhieu"];
+                $itemForm["GhiChu"] = $itemHtml["GhiChu"];
+                $itemForm["NgayNhap"] = $itemHtml["NgayNhap"];
+                $phieu->Put($itemForm);
+                // new \Model\Error(\Model\Error::success, "Đã Sửa Phiếu");
                 // \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=danhmuc&action=index");
             }
         } catch (\Exception $exc) {

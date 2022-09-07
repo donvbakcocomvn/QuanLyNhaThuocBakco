@@ -1,6 +1,7 @@
 <?php
 
 namespace Module\quanlythuoc\Model;
+use Model\Common;
 
 class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
 {
@@ -50,6 +51,22 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
                 $this->IsDelete = isset($dm["IsDelete"]) ? $dm["IsDelete"] : null;
             }
         }
+    }
+
+    public function NgayNhap($id)
+    {
+        return $this->NgayNhap;
+    }
+
+    function CreatIdPhieu($IdPhieu)
+    {
+        $date = date("Y-m-d");
+        $sql = " SELECT COUNT(*) AS `Tong` FROM `lap1_qlthuoc_phieuxuatnhap` WHERE `CreateRecord` LIKE '%{$date}%'";
+        $result = $this->GetRow($sql);
+        $tong = $result["Tong"] + 1;
+        $Id = Common::NumberToStringFomatZero($tong, 3);
+        $Id = $IdPhieu . date("dmy{$Id}");
+        return $Id;
     }
 
     // Hàm Xóa Tạm Thời

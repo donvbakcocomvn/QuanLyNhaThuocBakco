@@ -254,6 +254,11 @@ class Functions
                                 ?>
                                     <li><a href="/index.php?module=quanlythuoc&controller=sanpham&action=index"><i class="fa fa-circle-o"></i> Danh sách thuốc</a></li>
                                 <?php  } ?>
+                                <?php
+                                if (\Model\Permission::CheckPremision([User::Admin, Permission::QLT_Thuoc_Post], []) == true) {
+                                ?>
+                                    <li><a href="/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=index"><i class="fa fa-circle-o"></i> Danh Sách Phiếu</a></li>
+                                <?php  } ?>
                             </ul>
                         </li>
                     <?php
