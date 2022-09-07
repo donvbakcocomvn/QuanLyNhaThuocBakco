@@ -43,6 +43,13 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
         $this->View($data);
     }
 
+    public function ThemSanPham()
+    {
+        $MaSP = \Model\Request::Get("id", []);
+        $index = \Model\Request::Get("index", []);
+
+    }
+
     public function isdelete()
     {
         if (\Model\Request::Get("id", [])) {

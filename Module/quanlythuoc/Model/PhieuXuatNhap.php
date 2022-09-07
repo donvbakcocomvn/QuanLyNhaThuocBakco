@@ -53,6 +53,17 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
         }
     }
 
+    public static function DSThuocPhieuNhap()
+    {
+        return $_SESSION["DSThuocPhieuNhap"];
+    }
+
+    public static function ThemDSThuocPhieuNhap($phieu,$index)
+    {
+        $_SESSION["DSThuocPhieuNhap"][$index] = $phieu;
+    }
+    
+
     public function NgayNhap($id)
     {
         return $this->NgayNhap;

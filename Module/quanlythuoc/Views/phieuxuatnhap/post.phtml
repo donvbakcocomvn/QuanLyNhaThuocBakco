@@ -31,28 +31,10 @@ $roleDetail = new Model\Role();
                         <?php $phieu->IdPhieu()->renderHtml(); ?>
                     </div>
                     <div class="col-md-4">
-                        <?php $phieu->IdThuoc()->renderHtml();  ?>
-                    </div>
-                    <div class="col-md-4">
-                        <?php $phieu->XuatNhap()->renderHtml();  ?>
+                        <?php $phieu->XuatNhap()->renderHtml(); ?>
                     </div>
                     <div class="col-md-4">
                         <?php $phieu->NgayNhap()->renderHtml();  ?>
-                    </div>
-                    <div class="col-md-4">
-                        <?php $phieu->SoLuong()->renderHtml();  ?>
-                    </div>
-                    <div class="col-md-4">
-                        <?php $phieu->SoLo()->renderHtml();  ?>
-                    </div>
-                    <div class="col-md-4">
-                        <?php $phieu->NhaSanXuat()->renderHtml();  ?>
-                    </div>
-                    <div class="col-md-4">
-                        <?php $phieu->NuocSanXuat()->renderHtml();  ?>
-                    </div>
-                    <div class="col-md-4">
-                        <?php $phieu->Price()->renderHtml();  ?>
                     </div>
                     <div class="col-md-6">
                         <?php $phieu->NoiDungPhieu()->renderHtml();  ?>
@@ -60,7 +42,64 @@ $roleDetail = new Model\Role();
                     <div class="col-md-6">
                         <?php $phieu->GhiChu()->renderHtml();  ?>
                     </div>
-                    
+                    <div class="col-md-12">
+                        <fieldset>
+                            <legend>Danh Sách Thuốc</legend>
+                            <div>
+                                <button class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                            </div>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Mã Thuốc</th>
+                                        <th>Số Lượng</th>
+                                        <th>Số Lô</th>
+                                        <th>Nhà Sản Xuất</th>
+                                        <th>Nước Sản Xuất</th>
+                                        <th>Giá</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-thuoc">
+                                    <?php
+                                    $i = 0;
+                                    foreach (DonThuocDetail::DsThuoc() as $mathuoc => $thuoc) {
+                                        // var_dump($thuoc);
+                                        $sanPham = new SanPham($thuoc["Id"] ?? null);
+                                        // var_dump($sanPham);
+                                    ?>
+                                        <tr>
+                                            <th>
+                                                <button class="btn btn-danger"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                                            </th>
+                                            <th>
+                                                <?php
+                                                echo $phieu->IdThuoc()->render() ?>
+                                            </th>
+                                            <th>
+                                                <?php echo $phieu->SoLuong()->render(); ?>
+                                            </th>
+                                            <th>
+                                                <?php echo $phieu->SoLo()->render(); ?>
+                                            </th>
+                                            <th>
+                                                <?php echo $phieu->NhaSanXuat()->render(); ?>
+                                            </th>
+                                            <th>
+                                                <?php echo $phieu->NuocSanXuat()->render(); ?>
+                                            </th>
+                                            <th>
+                                                <?php echo $phieu->Price()->render(); ?>
+                                            </th>
+                                        </tr>
+                                    <?php
+                                        $i++;
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </fieldset>
+                    </div>
                     <div class="col-md-12 ">
                         <button class="btn btn-warning" type="reset">Làm Lại</button>
                         <!-- <button class="btn btn-success">Lưu</button> -->
