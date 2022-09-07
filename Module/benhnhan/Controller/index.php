@@ -44,7 +44,7 @@ class index extends \Application implements \Controller\IControllerBE
     }
 
     function detail()
-    {
+    { 
         $id = \Model\Request::Get("id", null);
         if ($id == null) {
         }
@@ -79,7 +79,7 @@ class index extends \Application implements \Controller\IControllerBE
                 $benhnhan = new ModelBenhNhan();
                 $benhnhan->Post($itemForm);
                 \Model\Common::ToUrl("/index.php?module=benhnhan&controller=index&action=index");
-
+                
             }
         } catch (\Exception $exc) {
             echo $exc->getMessage();
@@ -135,7 +135,7 @@ class index extends \Application implements \Controller\IControllerBE
     public function delete()
     {
         try {
-            \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_BenhNhan_Delete]);
+            \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy]);
             $Id = \Model\Request::Get("id", null);
             if ($Id) {
                 $DanhMuc = new ModelBenhNhan();

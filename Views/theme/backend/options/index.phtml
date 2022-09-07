@@ -64,7 +64,7 @@ $item = new \Model\OptionsService($item);
                 )->render();
                 ?>
                 <?php
-                $linkPhanTrang = "/locations/index/?keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
+                $linkPhanTrang = "/options/index/?keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
                 echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
                 ?>
             </div>
@@ -73,7 +73,7 @@ $item = new \Model\OptionsService($item);
 </div>
 <script type="text/javascript" >
     var SoDongHienThi = function(evalue) {
-        var linkPhanTrang = '/locations/index/?keyword=&indexPage=1&pageNumber=[j]';
+        var linkPhanTrang = '/options/index/?keyword=&indexPage=1&pageNumber=[j]';
         linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
         window.location.href = linkPhanTrang;
     }

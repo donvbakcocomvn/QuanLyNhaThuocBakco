@@ -9,6 +9,7 @@ use Model\Common;
 use Module\benhnhan\Model\BenhNhan\FormBenhNhan;
 use Module\quanlythuoc\Model\SanPham;
 use Module\quanlythuoc\Model\SanPham\FormSanPham;
+use Model\OptionsService;
 
 $roleDetail = new Model\Role();
 ?>
@@ -23,67 +24,70 @@ $roleDetail = new Model\Role();
                 <?php
 
                 $itemSP = new SanPham($data);
-
-                // var_dump($itemSP);
+                
                 ?>
                 <div class="">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="">Mã Thuốc</label>
                         <input readonly value="<?php echo $itemSP->Id; ?>" class="form-control">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="">Tên Thuốc</label>
                         <input readonly value="<?php echo $itemSP->Name; ?>" class="form-control">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="">Mã Loại Thuốc</label>
                         <input readonly value="<?php echo $itemSP->IdLoaiThuoc()->Name; ?>" class="form-control">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="">Tên Biệt Dược</label>
                         <input readonly value="<?php echo $itemSP->Namebietduoc; ?>" class="form-control">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+                        <label for="">Cách Dùng Thuốc</label>
+                        <input readonly value="<?php echo $itemSP->CachDungThuoc(); ?>" class="form-control">
+                    </div>
+                    <div class="col-md-3">
                         <label for="">Số Lô</label>
                         <input readonly value="<?php echo $itemSP->Solo; ?>" class="form-control">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="">Số Lượng</label>
                         <input readonly value="<?php echo $itemSP->Soluong; ?>" class="form-control">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="">Đơn Vị Tính</label>
                         <input readonly value="<?php echo $itemSP->DonViTinh(); ?>" class="form-control">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="">Giá Nhập</label>
                         <input readonly value="<?php echo Common::ViewPrice($itemSP->Gianhap); ?>" class="form-control">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="">Giá Bán</label>
                         <input readonly value="<?php echo Common::ViewPrice($itemSP->Giaban); ?>" class="form-control">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="">Nhà Sản Xuất</label>
                         <input readonly value="<?php echo $itemSP->NhaSX; ?>" class="form-control">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="">Nước Sản Xuất</label>
                         <input readonly value="<?php echo $itemSP->NuocSX; ?>" class="form-control">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="">Đơn Vị Quy Đổi</label>
                         <input readonly value="<?php echo $itemSP->DonViQuyDoi(); ?>" class="form-control">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="">Ngày Sản Xuất</label>
-                        <input readonly value="<?php echo $itemSP->Ngaysx; ?>" class="form-control">
+                        <input readonly value="<?php echo Common::ForMatDMY($itemSP->Ngaysx); ?>" class="form-control">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="">Hạn Sử Dụng</label>
-                        <input readonly value="<?php echo $itemSP->HSD; ?>" class="form-control">
+                        <input readonly value="<?php echo Common::ForMatDMY($itemSP->HSD); ?>" class="form-control">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="">Ẩn/hiện</label>
                         <input readonly value="<?php echo SanPham::IsDeleteOption($itemSP->IsDelete); ?>" class="form-control">
                     </div>

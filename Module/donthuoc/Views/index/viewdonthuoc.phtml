@@ -1,0 +1,214 @@
+<?php
+
+use Module\cart\Model\Order;
+use PhpOffice\PhpSpreadsheet\Calculation\DateTimeExcel\Days;
+use Common\Common;
+use Model\Products;
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<style>
+    @media print {
+
+        .no-print,
+        .no-print * {
+            display: none !important;
+        }
+    }
+
+    .main {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        border: 1px solid #000;
+    }
+
+    .salesslip {
+        width: 500px;
+        margin: auto;
+    }
+
+    .shop {
+        text-align: center;
+    }
+
+    /* ------------------------------ */
+    .temporary {
+        margin: 0 25px;
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 15px;
+    }
+
+    td.temporary-title{
+        padding-right: 7px;
+    }
+    /* ------------------------------ */
+    .content {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: unset;
+    }
+
+    /* ------------------------------ */
+    .total-order {
+        display: flex;
+        flex-basis: 50%;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+
+    .total-order p {
+        font-size: 17px;
+        margin: 5px 0;
+    }
+
+    /* ------------------------------ */
+    .footer {
+        text-align: center;
+    }
+
+    .btn {
+        margin-left: 50%;
+        padding: 5px 30px;
+        transform: translateX(-50%);
+        border-radius: 10px;
+        border: 1px solid #9e9e9e;
+        margin-bottom: 10px;
+    }
+
+    .btn:hover {
+        color: #000;
+        cursor: pointer;
+        background-color: #6b6565ba;
+    }
+</style>
+
+<body>
+    <div class="main">
+        <div class="salesslip">
+            <div class="shop">
+                <h2>PHÒNG KHÁM PHƯƠNG UYÊN</h2>
+                <h5>ĐC: 176 đường số 18,Bình Hưng Hòa,Bình Tân</h5>
+                <h5>Giờ làm việc: Sáng 7h30 - 11h, Chiều 17h - 20h30 (Nghỉ thứ 7)</h5>
+                <h3>ĐƠN THUỐC</h3>
+                <h4 style=" font-weight: 300; margin: 10px 0;">
+                    <?php $date = getdate();
+                    echo $date['weekday'] . ", ";
+                    echo "Ngày " . $date['mday'] . " ";
+                    echo "Tháng " . $date['mon'] . " ";
+                    echo "Năm " . $date['year'] . " ";
+                    ?>
+                </h4>
+                <h5 style="font-style: italic ;font-weight: 300; margin: 10px 0;">
+                    <?php $date = getdate();
+                    echo $date['hours'] . " " . "giờ" . " ";
+                    echo $date['minutes'] . " " . " phút" . " ";
+                    echo $date['seconds'] . " " . " giây" . " ";
+                    ?>
+                </h5>
+            </div>
+            <!---------------------------------->
+            <div class="temporary">
+                <table>
+                    <tr>
+                        <td class="temporary-title">Mã đơn hàng :</td>
+                    </tr>
+                    <tr>
+                        <td class="temporary-title">Khách hàng:</td>
+                    </tr>
+                    <tr>
+                        <td class="temporary-title">Số điện thoại:</td>
+                    </tr>
+                    <tr>
+                        <td class="temporary-title">Địa chỉ :</td>
+                    </tr>
+                    <tr>
+                        <td class="temporary-title">Thời gian mua hàng :</td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td><?php echo $order->CodeOrder ?></td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $order->Name; ?></td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $order->Phone; ?></td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $order->Address; ?></td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $order->NgayTao; ?></td>
+                    </tr>
+
+                </table>
+            </div>
+            <div class="content" style="padding: 0 10px;">
+                <table style="width: 100%; border-top: 1px dashed;border-bottom: 1px dashed">
+                    <tr>
+                        <td class="temporary-title">Mã hàng</td>
+                        <td style="text-align: center;">Tên hàng hóa</td>
+                        <td style="padding-left: 7px;">SL</td>
+                        <td style="text-align: center;padding: 0 10px;">Giá</td>
+                        <td style="text-align: center;">ThànhTiền</td>
+                    </tr>
+                    <?php
+                    $orderdetails = $order->orderDetailbyid($order->CodeOrder);
+                    foreach ($orderdetails as $orderdetail) {
+                        $total = 0;
+                        $total += ($orderdetail["Price"] * $orderdetail["Number"]);
+                        $item_detail = $orderdetail["IdProduct"];
+                        $products = new Products();
+                        $product = $products->ProductsByID($item_detail);
+                    ?>
+                        <tr>
+                            <td class="temporary-title"><?php echo $product->Code; ?></td>
+                            <td><?php echo $product->nameProduct; ?></td>
+                            <td style="padding-left: 7px;"><?php echo $orderdetail["Number"]; ?></td>
+                            <td style="padding: 0 10px;"><?php echo Common::NumberFomat($orderdetail["Price"]); ?></td>
+                            <td style="padding-left: 12px;"><?php echo Common::NumberFomat($total); ?></td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
+
+
+                </table>
+            </div>
+            <div class="total-order" style="padding: 0 10px;">
+                <div class="total-order-title">
+                    <p>Tổng tiền: </p>
+                    <p>Tổng tiền bằng chữ: </p>
+                    <p>Số tiền còn lại trong thẻ bằng số: </p>
+                </div>
+                <div class="total-order-number">
+                    <p style="text-align: center;"><?php echo Common::NumberFomat($order->TotalPrice); ?></p>
+                    <p>
+                        <?php
+                        $a = new Common;
+                        $b = $a->convert_number_to_words($order->TotalPrice);
+                        echo $b;
+                        ?>
+                    </p>
+                    <p style="text-align: center;">Không biết</p>
+                </div>
+            </div>
+            <div class="footer">
+                <p style="margin: 10px 0;">Cảm ơn và chúc các bạn một ngày tuyệt vời !</p>
+            </div>
+            <button type="submit" onclick="window.print()" class="no-print btn">
+                Print
+            </button>
+        </div>
+</body>

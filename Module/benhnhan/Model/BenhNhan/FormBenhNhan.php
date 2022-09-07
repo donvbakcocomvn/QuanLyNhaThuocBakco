@@ -106,7 +106,7 @@ class FormBenhNhan implements iFormBenhNhan
                 $properties["value"] = $val;
                 $properties[FormRender::Required] = "true";
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-                return new FormRender(new Element\Textbox("Chỗ Ở Hiện Nay", $name, $properties));
+                return new FormRender(new Element\Textbox("Địa Chỉ", $name, $properties));
         }
 
         /**

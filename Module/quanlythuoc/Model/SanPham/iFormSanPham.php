@@ -20,4 +20,5 @@ interface iFormSanPham {
     public function NuocSX($val = null); 
     public function DVQuyDoi($val = null); 
     public function Lang($val = null);
+    public function CachDung($val = null);
 }

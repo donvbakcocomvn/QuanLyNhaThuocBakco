@@ -57,24 +57,24 @@
                             $_item = new BenhNhan($item);
                         ?>
                             <tr>
-                                <th style="width: 200px;">
+                                <td style="width: 200px;">
                                     <?php
                                     echo Module\benhnhan\Model\btnHtml::btnSuaKhachHang($_item->Id);
                                     echo Module\benhnhan\Model\btnHtml::btnXoaKhachHang($_item->Id);
                                     echo Module\benhnhan\Model\btnHtml::btnchitiet($_item->Id);
                                     ?>
-                                </th>
-                                <th><?php echo $index + 1; ?></th>
-                                <th><?php echo $_item->Id; ?></th>
-                                <th><?php echo $_item->Name; ?></th>
-                                <th><?php echo $_item->Gioitinh(); ?></th>
-                                <th><?php echo $_item->Ngaysinh; ?></th>
-                                <th><?php echo $_item->CMND; ?></th>
-                                <th><?php echo $_item->Address; ?></th>
+                                </td>
+                                <td><?php echo $index + 1; ?></td>
+                                <td><?php echo $_item->Id; ?></td>
+                                <td><?php echo $_item->Name; ?></td>
+                                <td><?php echo $_item->Gioitinh(); ?></td>
+                                <td><?php echo $_item->Ngaysinh; ?></td>
+                                <td><?php echo $_item->CMND; ?></td>
+                                <td><?php echo $_item->Address; ?></td>
                                 <!-- <th><?php echo $_item->TinhThanh ?></th> -->
                                 <!-- <th><?php echo $_item->QuanHuyen ?></th> -->
                                 <!-- <th><?php echo $_item->PhuongXa; ?></th> -->
-                                <th><?php echo $_item->Phone; ?></th>
+                                <td><?php echo $_item->Phone; ?></td>
                             </tr>
                         <?php
                         }

@@ -58,7 +58,7 @@ $roleDetail = new Model\Role();
                     </div>
                     <div class="col-md-6">
                         <label for="">Ẩn/hiện</label>
-                        <input readonly value="<?php echo $itemBN->isDelete; ?>" class="form-control">
+                        <input readonly value="<?php echo $itemBN->isDelete ? "Ẩn" : "Hiện" ; ?>" class="form-control">
                     </div>
                     <div class="col-md-12">
                         <label for="">Địa Chỉ</label>

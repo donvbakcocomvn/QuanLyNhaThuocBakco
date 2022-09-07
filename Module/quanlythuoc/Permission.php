@@ -21,6 +21,12 @@ class Permission
     const QLT_Thuoc_Import = "QLT_Thuoc_Import";
     const QLT_Thuoc_Export = "QLT_Thuoc_Export";
 
+    const QLT_Phieu_DS = "QLT_Phieu_DS";
+    const QLT_Phieu_Post = "QLT_Phieu_Post";
+    const QLT_Phieu_Put = "QLT_Phieu_Putt";
+    const QLT_Phieu_Delete = "QLT_Phieu_Delete";
+    const QLT_Phieu_Detail = "QLT_Phieu_Detail";
+
     public function __construct()
     {
     }
@@ -100,6 +106,37 @@ class Permission
                 "Id" => self::QLT_DanhMuc_Import,
                 "Name" => "Import Loại Thuốc",
                 "Des" => "Import Loại Thuốc",
+                "IsNotDelete" => 0,
+            ],
+
+            self::QLT_Phieu_DS => [
+                "Id" => self::QLT_Phieu_DS,
+                "Name" => "Danh Sách Phiếu Xuất Nhập",
+                "Des" => "Danh Sách Phiếu Xuất Nhập",
+                "IsNotDelete" => 0,
+            ],
+            self::QLT_Phieu_Post => [
+                "Id" => self::QLT_Phieu_Post,
+                "Name" => "Thêm Phiếu",
+                "Des" => "Thêm Phiếu",
+                "IsNotDelete" => 0,
+            ],
+            self::QLT_Phieu_Put => [
+                "Id" => self::QLT_Phieu_Put,
+                "Name" => "Sửa Phiếu",
+                "Des" => "Sửa Phiếu",
+                "IsNotDelete" => 0,
+            ],
+            self::QLT_Phieu_Delete => [
+                "Id" => self::QLT_Phieu_Delete,
+                "Name" => "Xoá Phiếu",
+                "Des" => "Xoá Phiếu",
+                "IsNotDelete" => 0,
+            ],
+            self::QLT_Phieu_Detail => [
+                "Id" => self::QLT_Phieu_Detail,
+                "Name" => "Chi Tiết Phiếu",
+                "Des" => "Chi Tiết Phiếu",
                 "IsNotDelete" => 0,
             ],
         ];

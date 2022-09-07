@@ -1,0 +1,75 @@
+<ol class="breadcrumb">
+    <li><a href="/index.php?controller=backend">Home</a></li>
+    <li><a href="index.php?module=quanlythuoc&controller=phieuxuatnhap&action=index"> Danh Sách Phiếu</a></li>
+    <li> Thêm Phiếu </li>
+</ol>
+<?php
+
+use Module\quanlythuoc\Model\DanhMuc;
+use Module\quanlythuoc\Model\DanhMuc\FormDanhMuc;
+use Module\quanlythuoc\Model\PhieuXuatNhap\FormPhieuXuatNhap;
+
+$roleDetail = new Model\Role();
+?>
+<div class="container-fluid">
+    <div class="box box-primary">
+        <div class="box-header">
+            <h3 class="box-title">Thêm Phiếu</h3>
+            <!-- <div class="box-tools">
+                <?php
+                Module\quanlythuoc\Model\btnHtml::btnViewDanhMuc();
+                ?>
+            </div> -->
+        </div>
+        <form action="" method="post" enctype="multipart/form-data">
+            <div class="box-body">
+                <?php
+                $phieu = new FormPhieuXuatNhap();
+                $_item = new DanhMuc($data);
+                // var_dump($data);
+                ?>
+                <div class="">
+                    <div class="col-md-4">
+                        <?php $phieu->IdPhieu($data["IdPhieu"])->renderHtml(); ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php $phieu->IdThuoc($data["IdThuoc"])->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php $phieu->NgayNhap($data["NgayNhap"])->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php $phieu->XuatNhap($data["XuatNhap"])->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php $phieu->SoLuong($data["SoLuong"])->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php $phieu->SoLo($data["SoLo"])->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php $phieu->NhaSanXuat($data["NhaSanXuat"])->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php $phieu->NuocSanXuat($data["NuocSanXuat"])->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php $phieu->Price($data["Price"])->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?php $phieu->NoiDungPhieu($data["NoiDungPhieu"])->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?php $phieu->GhiChu($data["GhiChu"])->renderHtml();  ?>
+                    </div>
+                    
+                    <div class="col-md-12 ">
+                        <button class="btn btn-warning" type="reset">Làm Lại</button>
+                        <!-- <button class="btn btn-success">Lưu</button> -->
+                        <button class="btn btn-success" name="LuuThoat">Thêm Mới</button>
+                    </div>
+                </div>
+        </form>
+    </div>
+</div>
+</div>

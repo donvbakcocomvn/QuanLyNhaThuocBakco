@@ -46,17 +46,17 @@
                             // echo $_item->Id;
                         ?>
                             <tr>
-                                <th style="width: 150px;">
+                                <td style="width: 150px;">
                                     <?php
                                     echo Module\quanlythuoc\Model\btnHtml::btnSuaDanhMuc($_item->Id);
                                     echo Module\quanlythuoc\Model\btnHtml::btnXoaDanhMuc($_item->Id);
                                     ?>
-                                </th>
-                                <th><?php echo $index + 1; ?></th>
-                                <th><?php echo $_item->Id; ?></th>
-                                <th><?php echo $_item->Name; ?></th>
-                                <th><?php echo $_item->Link; ?></th>
-                                <th><?php echo $_item->GhiChu; ?></th>
+                                </td>
+                                <td><?php echo $index + 1; ?></td>
+                                <td><?php echo $_item->Id; ?></td>
+                                <td><?php echo $_item->Name; ?></td>
+                                <td><?php echo $_item->Link; ?></td>
+                                <td><?php echo $_item->GhiChu; ?></td>
                             </tr>
                         <?php
                         }

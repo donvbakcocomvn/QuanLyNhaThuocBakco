@@ -74,7 +74,7 @@ use Module\quanlythuoc\Model\DanhMuc;
                 )->render();
                 ?>
                 <?php
-                $linkPhanTrang = "/locations/index/?keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
+                $linkPhanTrang = "/options/donvitinh/?keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
                 echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
                 ?>
             </div>
@@ -83,7 +83,7 @@ use Module\quanlythuoc\Model\DanhMuc;
 </div>
 <script type="text/javascript">
     var SoDongHienThi = function(evalue) {
-        var linkPhanTrang = '/locations/index/?keyword=&indexPage=1&pageNumber=[j]';
+        var linkPhanTrang = '/options/donvitinh/?keyword=&indexPage=1&pageNumber=[j]';
         linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
         window.location.href = linkPhanTrang;
     }

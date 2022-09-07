@@ -9,6 +9,7 @@ namespace Module\quanlythuoc\Model;
 
 use Model\OptionsService;
 use Module\quanlythuoc\Permission;
+use Model\Common;
 
 /**
  * Description of SanPham
@@ -35,6 +36,7 @@ class SanPham extends \Model\DB implements \Model\IModelService {
     public $NhaSX; 
     public $NuocSX; 
     public $IsDelete; 
+    public $CachDung; 
 
     public function __construct($sp = null) {
         self::$TableName = prefixTable . "qlthuoc_thuoc";
@@ -63,8 +65,54 @@ class SanPham extends \Model\DB implements \Model\IModelService {
                 $this->NhaSX = isset($sp["NhaSX"]) ? $sp["NhaSX"] : null ;
                 $this->NuocSX = isset($sp["NuocSX"]) ? $sp["NuocSX"] : null ;
                 $this->IsDelete = isset($sp["IsDelete"]) ? $sp["IsDelete"] : null ;
+                $this->CachDung = isset($sp["CachDung"]) ? $sp["CachDung"] : null ;
             }
         }
+    }
+
+    public function GetCDTById($id)
+    {
+        $sql = "SELECT `CachDung` FROM `lap1_qlthuoc_thuoc` WHERE `Id` = '$id'";
+        $result = $this->GetRow($sql);
+        $a = $result["CachDung"];
+        $b = $this->GetNameCDT($a); 
+        return $b;
+    }
+
+    public function GetValByDesDVT($des)
+    {
+        $sql = "SELECT `Val` FROM `lap1_options` WHERE `Des` = '$des' and `GroupsId` = 'donvitinh'";
+        $result = $this->GetRow($sql);
+        return $result;
+    }
+
+    public function GetValByDesCachDung($des)
+    {
+        $sql = "SELECT `Val` FROM `lap1_options` WHERE `Des` = '$des' and `GroupsId` = 'cachdungthuoc'";
+        $result = $this->GetRow($sql);
+        return $result;
+    }
+
+    // Tạo Mã Thuốc
+    function CreatId()
+    {
+        $sql = " SELECT COUNT(*) AS `Tong` FROM `lap1_qlthuoc_thuoc` WHERE 1";
+        $result = $this->GetRow($sql);
+        $tong = $result["Tong"] + 1;
+        $Id = Common::NumberToStringFomatZero($tong, 4);
+        $IdCreate = "MT" . $Id;
+        return $IdCreate;
+    }
+
+    public static function CapChaTpOptions($dungTatCa = false)
+    {
+        $dm = new SanPham();
+        $where = "`Name` != '' or `Name` is null or `IsDelete` = 0 ";
+        $a = $dm->SelectToOptions($where, ["Id", "Name"]);
+        if ($dungTatCa == true) {
+            $a = ["" => "Tất Cả"] + $a;
+        }
+        return $a;
     }
 
     function isdelete($DSMaSanPham)
@@ -87,7 +135,21 @@ class SanPham extends \Model\DB implements \Model\IModelService {
     {
         $op = new OptionsService();
         $nameDVT = $op->GetGroupsToSelect("donvitinh");
-        return $nameDVT[$this->DVT] ?? "Khác";
+        return $nameDVT[$this->DVT] ?? "";
+    }
+
+    public function CachDungThuoc()
+    {
+        $op = new OptionsService();
+        $nameDVT = $op->GetGroupsToSelect("cachdungthuoc");
+        return $nameDVT[$this->CachDung] ?? "";
+    }
+
+    public function GetNameCDT($id)
+    {
+        $sql = "SELECT `Name` FROM `lap1_options` WHERE `Val` = $id and `GroupsId` = 'cachdungthuoc'";
+        $result = $this->GetRow($sql);
+        return $result["Name"];
     }
 
     public function DonViQuyDoi()

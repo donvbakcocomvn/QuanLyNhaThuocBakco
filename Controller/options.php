@@ -3,13 +3,16 @@
 namespace Controller;
 
 
-class options extends \Application implements IControllerBE {
+class options extends \Application implements IControllerBE
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         new backend();
     }
 
-    public function delete() {
+    public function delete()
+    {
         try {
             $Id = \Model\Request::Get("id", null);
             if ($Id) {
@@ -21,10 +24,10 @@ class options extends \Application implements IControllerBE {
             new \Model\Error(\Model\Error::danger, $ex->getMessage());
         }
         \Model\Common::ToUrl("/options/donvitinh");
-
     }
 
-    public function congty() {
+    public function congty()
+    {
         $options = new \Model\OptionsService();
         $params["keyword"] = isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "";
         $params["GroupsId"] = "congty";
@@ -43,7 +46,8 @@ class options extends \Application implements IControllerBE {
         $this->View($data);
     }
 
-    public function timkiemtheoboloc() {
+    public function timkiemtheoboloc()
+    {
         $options = new \Model\OptionsService();
         $params["keyword"] = isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "";
         $params["GroupsId"] = "timkiemtheoboloc";
@@ -62,7 +66,8 @@ class options extends \Application implements IControllerBE {
         $this->View($data);
     }
 
-    public function hopdong() {
+    public function hopdong()
+    {
         $options = new \Model\OptionsService();
         $params["keyword"] = isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "";
         $params["GroupsId"] = "hopdong";
@@ -81,7 +86,8 @@ class options extends \Application implements IControllerBE {
         $this->View($data);
     }
 
-    public function donvitinh() {
+    public function donvitinh()
+    {
         $options = new \Model\OptionsService();
         $params["keyword"] = isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "";
         $params["GroupsId"] = "donvitinh";
@@ -100,7 +106,46 @@ class options extends \Application implements IControllerBE {
         $this->View($data);
     }
 
-    public function donviquydoi() {
+    public function optiontoathuoc()
+    {
+        $options = new \Model\OptionsService();
+        $params["keyword"] = isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "";
+        $params["GroupsId"] = "optiontoathuoc";
+        $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
+        $indexPage = max(1, $indexPage);
+        $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;
+        $pageNumber = max(1, $pageNumber);
+        $total = 0;
+        $items = $options->GetItems($params, $indexPage, $pageNumber, $total);
+        $data["Items"] = $items;
+        $data["indexPage"] = $indexPage;
+        $data["pageNumber"] = $pageNumber;
+        $data["params"] = $params;
+        $data["total"] = $total;
+
+        $this->View($data);
+    }
+    public function donviquydoi()
+    {
+        $options = new \Model\OptionsService();
+        $params["keyword"] = isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "";
+        $params["GroupsId"] = "donviquydoi";
+        $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
+        $indexPage = max(1, $indexPage);
+        $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;
+        $pageNumber = max(1, $pageNumber);
+        $total = 0;
+        $items = $options->GetItems($params, $indexPage, $pageNumber, $total);
+        $data["Items"] = $items;
+        $data["indexPage"] = $indexPage;
+        $data["pageNumber"] = $pageNumber;
+        $data["params"] = $params;
+        $data["total"] = $total;
+
+        $this->View($data);
+    }
+    public function cachdungthuoc()
+    {
         $options = new \Model\OptionsService();
         $params["keyword"] = isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "";
         $params["GroupsId"] = "donviquydoi";
@@ -119,7 +164,28 @@ class options extends \Application implements IControllerBE {
         $this->View($data);
     }
 
-    public function tinhtrang() {
+    public function optiondonthuoc()
+    {
+        $options = new \Model\OptionsService();
+        $params["keyword"] = isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "";
+        $params["GroupsId"] = "optiondonthuoc";
+        $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
+        $indexPage = max(1, $indexPage);
+        $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;
+        $pageNumber = max(1, $pageNumber);
+        $total = 0;
+        $items = $options->GetItems($params, $indexPage, $pageNumber, $total);
+        $data["Items"] = $items;
+        $data["indexPage"] = $indexPage;
+        $data["pageNumber"] = $pageNumber;
+        $data["params"] = $params;
+        $data["total"] = $total;
+
+        $this->View($data);
+    }
+
+    public function tinhtrang()
+    {
         $options = new \Model\OptionsService();
         $params["keyword"] = isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "";
         $params["GroupsId"] = __FUNCTION__;
@@ -138,7 +204,8 @@ class options extends \Application implements IControllerBE {
         $this->View($data);
     }
 
-    public function chucvu() {
+    public function chucvu()
+    {
         $options = new \Model\OptionsService();
         $params["keyword"] = isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "";
         $params["GroupsId"] = __FUNCTION__;
@@ -158,7 +225,8 @@ class options extends \Application implements IControllerBE {
         $this->View($data);
     }
 
-    public function hinhthuchd() {
+    public function hinhthuchd()
+    {
         $options = new \Model\OptionsService();
         $params["keyword"] = isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "";
         $params["GroupsId"] = __FUNCTION__;
@@ -177,7 +245,8 @@ class options extends \Application implements IControllerBE {
         $this->View($data);
     }
 
-    public function gioitinh() {
+    public function gioitinh()
+    {
         $options = new \Model\OptionsService();
         $params["keyword"] = isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "";
         $params["GroupsId"] = "gioitinh";
@@ -196,7 +265,8 @@ class options extends \Application implements IControllerBE {
         $this->View($data);
     }
 
-    public function index() {
+    public function index()
+    {
 
         if (\Model\Request::Post('op', [])) {
             try {
@@ -226,7 +296,8 @@ class options extends \Application implements IControllerBE {
         $this->View($data);
     }
 
-    public function post() {
+    public function post()
+    {
         if (\Model\Request::Post('op', [])) {
             $opPost = \Model\Request::Post('op', []);
             $options = new \Model\OptionsService();
@@ -235,7 +306,8 @@ class options extends \Application implements IControllerBE {
         $this->View();
     }
 
-    public function put() {
+    public function put()
+    {
 
         if (\Model\Request::Post('op', [])) {
             $opPost = \Model\Request::Post('op', []);
@@ -245,5 +317,4 @@ class options extends \Application implements IControllerBE {
         }
         $this->View(["item" => $this->getParams(0)]);
     }
-
 }

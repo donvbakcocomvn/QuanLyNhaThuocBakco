@@ -70,7 +70,7 @@ class OptionsService extends DB implements IModelService, IModelToOptions {
 
     public static function GetGroupsToSelect($idGroups) {
         $op = new OptionsService();
-        return $op->SelectToOptions("`GroupsId`= '{$idGroups}' ", ["Val", "Name"]);
+        return $op->SelectToOptions("`GroupsId`= '{$idGroups}' order by `Val` DESC ", ["Val", "Name"]);
     }
 
     public static function ToSelect() {

@@ -39,6 +39,18 @@ $roleDetail = new Model\Role();
                         <?php $sp->Namebietduoc($item->Namebietduoc)->renderHtml();  ?>
                     </div>
                     <div class="col-md-3">
+                        <?php $sp->CachDung($item->CachDung)->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-3">
+                        <?php $sp->Soluong($item->Soluong)->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-3">
+                        <?php $sp->NhaSX($item->NhaSX)->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-3">
+                        <?php $sp->NuocSX($item->NuocSX)->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-3">
                         <?php $sp->Solo($item->Solo)->renderHtml();  ?>
                     </div>
                     <div class="col-md-3">
@@ -70,15 +82,6 @@ $roleDetail = new Model\Role();
                     </div>
                     <div class="col-md-4">
                         <?php $sp->Ghichu($item->Ghichu)->renderHtml();  ?>
-                    </div>
-                    <div class="col-md-4">
-                        <?php $sp->Soluong($item->Soluong)->renderHtml();  ?>
-                    </div>
-                    <div class="col-md-4">
-                        <?php $sp->NhaSX($item->NhaSX)->renderHtml();  ?>
-                    </div>
-                    <div class="col-md-4">
-                        <?php $sp->NuocSX($item->NuocSX)->renderHtml();  ?>
                     </div>
                     <div class="col-md-12 ">
                         <button class="btn btn-warning" type="reset">Làm Lại</button>

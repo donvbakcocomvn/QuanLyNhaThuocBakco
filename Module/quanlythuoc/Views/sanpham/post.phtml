@@ -25,16 +25,25 @@ $roleDetail = new Model\Role();
                 ?>
                 <div class="">
                     <div class="col-md-3">
-                        <?php $sp->Id()->renderHtml(); ?>
+                        <?php $sp->Name()->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-3">
+                        <?php $sp->Namebietduoc()->renderHtml();  ?>
                     </div>
                     <div class="col-md-3">
                         <?php $sp->Idloaithuoc()->renderHtml();  ?>
                     </div>
                     <div class="col-md-3">
-                        <?php $sp->Name()->renderHtml();  ?>
+                        <?php $sp->CachDung()->renderHtml();  ?>
                     </div>
                     <div class="col-md-3">
-                        <?php $sp->Namebietduoc()->renderHtml();  ?>
+                        <?php $sp->Soluong()->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-3">
+                        <?php $sp->NhaSX()->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-3">
+                        <?php $sp->NuocSX()->renderHtml();  ?>
                     </div>
                     <div class="col-md-3">
                         <?php $sp->Solo()->renderHtml();  ?>
@@ -48,13 +57,13 @@ $roleDetail = new Model\Role();
                     <div class="col-md-3">
                         <?php $sp->DVQuyDoi()->renderHtml();  ?>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <?php $sp->DVT()->renderHtml();  ?>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <?php $sp->Ngaysx()->renderHtml();  ?>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <?php $sp->HSD()->renderHtml();  ?>
                     </div>
                     <div class="col-md-4">
@@ -66,15 +75,6 @@ $roleDetail = new Model\Role();
                     <div class="col-md-4">
                         <?php $sp->Ghichu()->renderHtml();  ?>
                     </div>
-                    <div class="col-md-4">
-                        <?php $sp->Soluong()->renderHtml();  ?>
-                    </div>
-                    <div class="col-md-4">
-                        <?php $sp->NhaSX()->renderHtml();  ?>
-                    </div>
-                    <div class="col-md-4">
-                        <?php $sp->NuocSX()->renderHtml();  ?>
-                    </div>
                     <div class="col-md-12 ">
                         <button class="btn btn-warning" type="reset">Làm Lại</button>
                         <!-- <button class="btn btn-success">Lưu</button> -->
@@ -83,7 +83,5 @@ $roleDetail = new Model\Role();
                 </div>
         </form>
     </div>
-</div>
-
 </div>
 </div>

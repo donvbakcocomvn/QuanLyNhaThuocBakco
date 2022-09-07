@@ -1,12 +1,12 @@
 <?php
 $error = \Model\Error::GetError();
 if ($error != null) {
-    ?>
+?>
     <div class="alert alert-<?php echo $error["Type"]; ?> alert-dismissible">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <?php echo $error["Content"]; ?>
     </div>
-    <?php
+<?php
 }
 $isCheck = isset($_COOKIE["GhiNhoMatKhau"]) ? "checked" : "";
 $taiKhoan = isset($_COOKIE["TaiKhoan"]) ? $_COOKIE["TaiKhoan"] : "";
@@ -27,7 +27,7 @@ $taiKhoan = isset($_COOKIE["TaiKhoan"]) ? $_COOKIE["TaiKhoan"] : "";
         <div class="col-xs-12">
             <div class="checkbox icheck">
                 <label>
-                    <input <?php echo $isCheck; ?> type="checkbox" name="GhiNhoMatKhau" value="1" > Ghi Nhớ Mật Khẩu
+                    <input <?php echo $isCheck; ?> type="checkbox" name="GhiNhoMatKhau" value="1"> Ghi Nhớ Mật Khẩu
                 </label>
             </div>
         </div>
@@ -36,6 +36,8 @@ $taiKhoan = isset($_COOKIE["TaiKhoan"]) ? $_COOKIE["TaiKhoan"] : "";
         </div>
     </div>
 </form>
-
-<div class="clearfix" ></div>
-<a style="padding-top: 20px;" href="/index.php?controller=login&action=resetpass">Quên Mật Khẩu</a><br>
+</br>
+<div class="clearfix"></div>
+<summary class="form-text text-muted text-center ">
+    <a href="/index.php?controller=login&action=resetpass">Quên Mật Khẩu</a>
+</summary>

@@ -74,7 +74,7 @@ echo $params["GroupsId"]; ?>/" class="btn btn-primary"><i class="fa fa-plus"></i
                 )->render();
                 ?>
                 <?php
-                $linkPhanTrang = "/locations/index/?keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
+                $linkPhanTrang = "/options/donviquydoi/?keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
                 echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
                 ?>
             </div>
@@ -83,7 +83,7 @@ echo $params["GroupsId"]; ?>/" class="btn btn-primary"><i class="fa fa-plus"></i
 </div>
 <script type="text/javascript">
     var SoDongHienThi = function(evalue) {
-        var linkPhanTrang = '/locations/index/?keyword=&indexPage=1&pageNumber=[j]';
+        var linkPhanTrang = '/options/donviquydoi/?keyword=&indexPage=1&pageNumber=[j]';
         linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
         window.location.href = linkPhanTrang;
     }

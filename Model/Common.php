@@ -63,6 +63,10 @@ class Common {
         return date(\Model\Common::DateFomatDatabase(), strtotime($strdate));
     }
 
+    public static function ForMatDMY($strdate) {
+        return date(\Model\Common::DateFomatView(), strtotime($strdate));
+    }
+
     public static function DateFomatView() {
         return "d-m-Y";
     }
@@ -156,7 +160,7 @@ class Common {
     }
 
     public static function ViewPrice($number) {
-        return number_format($number, 0, ".", ",") . " vnđ";
+        return number_format($number, 0, ".", ".") . " VND";
     }
     
     public static function CheckName($param) {

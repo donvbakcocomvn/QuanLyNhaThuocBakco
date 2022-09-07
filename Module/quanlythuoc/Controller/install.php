@@ -22,11 +22,11 @@ class install extends \Application  {
 
     function install() {
         Permission::install();
-        Common::ToUrl("/quanlythuoc/sanpham");
+        Common::ToUrl("/quanlythuoc/phieuxuatnhap");
 
     }
     function uninstall() {
         Permission::uninstall();
-        Common::ToUrl("/quanlythuoc/sanpham");
+        Common::ToUrl("/quanlythuoc/phieuxuatnhap");
     }
 }

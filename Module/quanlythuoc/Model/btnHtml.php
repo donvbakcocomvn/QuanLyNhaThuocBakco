@@ -121,9 +121,56 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-danger" title="Bạn có muốn xóa danh mục này?" href="/index.php?module=quanlythuoc&controller=danhmuc&action=delete&id=<?php echo $id; ?>">
+        <a class="btn btn-danger" title="Bạn có muốn xóa danh mục này?" href="/index.php?module=quanlythuoc&controller=danhmuc&action=isdelete&id=<?php echo $id; ?>">
             Xóa
         </a>
 <?php
+    }
+
+    public static function btnThemPhieuXuatNhap()
+    {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_DanhMuc_Post]) == false) {
+            return;
+        }
+    ?>
+        <a class="btn btn-success" href="/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=post">
+            <i class="fa fa-plus"></i> Thêm Phiếu Mới</a>
+    <?php
+    }
+
+    public static function btnSuaPhieuXuatNhap($id)
+    {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_DanhMuc_Put]) == false) {
+            return;
+        }
+    ?>
+        <a class="btn btn-success" href="/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=put&id=<?php echo $id; ?>">
+            Sửa
+        </a>
+    <?php
+    }
+
+    public static function btnXoaPhieuXuatNhap($id)
+    {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_DanhMuc_Delete]) == false) {
+            return;
+        }
+    ?>
+        <a class="btn btn-danger" title="Bạn có muốn xóa danh mục này?" href="/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=isdelete&id=<?php echo $id; ?>">
+            Xóa
+        </a>
+<?php
+    }
+
+    public static function btnChiTietPhieuXuatNhap($id)
+    {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_Thuoc_Put]) == false) {
+            return;
+        }
+    ?>
+        <a class="btn btn-warning" href="/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=detail&id=<?php echo $id; ?>">
+            Chi Tiết
+        </a>
+    <?php
     }
 }

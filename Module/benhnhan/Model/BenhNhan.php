@@ -50,6 +50,18 @@ class BenhNhan extends \Model\DB implements \Model\IModelService
         }
     }
 
+    function asdasd()
+    {
+        # code...
+    }
+
+    public function GetName()
+    {
+        echo $sql = "SELECT `Name` FROM `lap1_benhnhan` WHERE 1";
+        $result = $this->GetRows($sql);
+        return $result;
+    }
+
 
     // Id Bệnh nhân tự động
     function CreatId()
@@ -72,13 +84,6 @@ class BenhNhan extends \Model\DB implements \Model\IModelService
         $this->Update($model, $where);
     }
 
-    // public function GetName()
-    // {
-    //     $sql = "SELECT `Name` FROM `lap1_benhnhan` WHERE 1";
-    //     $result = $this->GetRows($sql);
-    //     return $result;
-    // }
-
     // Lấy Name Opitons Giới Tính
     public function Gioitinh()
     {
@@ -94,21 +99,15 @@ class BenhNhan extends \Model\DB implements \Model\IModelService
         return $result;
     }
 
-    function BenhNhan()
+    public static function CapChaTpOptions($dungTatCa = false)
     {
-        return new BenhNhan($this->Id);
-    }
-    function Province()
-    {
-        return new Locations($this->Province);
-    }
-    function District()
-    {
-        return new Locations($this->District);
-    }
-    function Ward()
-    {
-        return new Locations($this->Ward);
+        $dm = new BenhNhan();
+        $where = "`Name` != '' or `Name` ";
+        $a = $dm->SelectToOptions($where, ["Id", "Name"]);
+        if ($dungTatCa == true) {
+            $a = ["" => "Tất Cả"] + $a;
+        }
+        return $a;
     }
 
     public function Delete($Id)

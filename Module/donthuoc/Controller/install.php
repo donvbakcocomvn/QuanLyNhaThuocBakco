@@ -1,9 +1,9 @@
 <?php
 
-namespace Module\toathuoc\Controller;
+namespace Module\donthuoc\Controller;
 
 use Model\Common;
-use Module\toathuoc\Permission;
+use Module\donthuoc\Permission;
 
 class install extends \Application  {
 
@@ -21,11 +21,11 @@ class install extends \Application  {
 
     function install() {
         Permission::install();
-        Common::ToUrl("/toathuoc/index");
+        Common::ToUrl("/donthuoc/index");
 
     }
     function uninstall() {
         Permission::uninstall();
-        Common::ToUrl("/toathuoc/index");
+        Common::ToUrl("/donthuoc/index");
     }
 }
