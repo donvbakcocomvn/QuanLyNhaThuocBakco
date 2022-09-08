@@ -162,8 +162,8 @@ class index extends \Application implements \Controller\IControllerBE
                     }
                     DonThuocDetail::ClearSession();
                 }
-                new \Model\Error(\Model\Error::success, "Đã Thêm Toa Thuốc");
-                \Model\Common::ToUrl("/index.php?module=donthuoc&controller=index&action=index");
+                // new \Model\Error(\Model\Error::success, "Đã Thêm Toa Thuốc");
+                // \Model\Common::ToUrl("/index.php?module=donthuoc&controller=index&action=index");
             }
         } catch (\Exception $exc) {
             echo $exc->getMessage();

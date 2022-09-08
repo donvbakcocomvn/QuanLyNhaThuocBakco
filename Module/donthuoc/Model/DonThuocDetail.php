@@ -102,6 +102,7 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
             $item["Sang"] = floatval($thuoc["Sang"]);
             $item["Trua"] = floatval($thuoc["Trua"]);
             $item["Chieu"] = floatval($thuoc["Chieu"]);
+            
             $detail->CapNhatThuoc($item, $key);
         }
     }
@@ -132,10 +133,10 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
 
     public function CapNhatThuoc($detailThuoc, $index)
     {
-        $item = $_SESSION["DetailThuoc"][$index];
-        $sang = $item["Sang"] ?? 0;
-        $chieu = $item["Chieu"] ?? 0;
-        $trua = $item["Trua"] ?? 0;
+        // $item = $_SESSION["DetailThuoc"][$index];
+        // $sang = $item["Sang"] ?? 0;
+        // $chieu = $item["Chieu"] ?? 0;
+        // $trua = $item["Trua"] ?? 0;
 
         $sp = new ModelSanPham($detailThuoc);
         $detailThuoc["Id"] = $detailThuoc["Id"];
@@ -143,9 +144,9 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
         $detailThuoc["DVT"] = $sp->DVT;
         $detailThuoc["DVTTitle"] = $sp->DonViTinh();
         $detailThuoc["SoNgaySDThuoc"] = $detailThuoc["SoNgaySDThuoc"];
-        $detailThuoc["Sang"] = $detailThuoc["Sang"] ?? $sang;
-        $detailThuoc["Trua"] = $detailThuoc["Trua"] ?? $trua;
-        $detailThuoc["Chieu"] = $detailThuoc["Chieu"] ?? $chieu;
+        $detailThuoc["Sang"] = $detailThuoc["Sang"] ?? "";
+        $detailThuoc["Trua"] = $detailThuoc["Trua"] ?? "";
+        $detailThuoc["Chieu"] = $detailThuoc["Chieu"] ?? "";
         $detailThuoc["Giaban"] = $detailThuoc["Giaban"];
         $detailThuoc["Ghichu"] = $detailThuoc["Ghichu"] ?? "";
         $detailThuoc["CachDung"] = $sp->CachDungThuoc();
@@ -235,11 +236,6 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
     {
         return $this->SelectById($Id);
     }
-
-    // public function GetItems($params, $indexPage, $pageNumber, &$total) {
-    //     $where = "`Name` like '%{$params["keyword"]}%'";
-    //     return $this->SelectPT($where, $indexPage, $pageNumber, $total);
-    // }
 
     public function GetItems($params, $indexPage, $pageNumber, &$total)
     {

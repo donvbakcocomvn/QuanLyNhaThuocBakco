@@ -53,9 +53,54 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
         }
     }
 
+    public function checkDsThuoc($detailThuoc)
+    {
+        $sp = new SanPham($detailThuoc);
+
+        $DSThuoc = $_SESSION["DSThuocPhieuNhap"];
+        foreach ($DSThuoc as $key => $value) {
+            // var_dump($value);
+            // var_dump($detailThuoc);
+            $value["Id"] = $value["Id"] ?? null;
+            if ($value["Id"] == $sp->Id) {
+                return null;
+            }
+
+            // var_dump($value);
+            // var_dump($detailThuoc);
+        }
+        return true;
+    }
+
+    public function CapNhatSanPham($detail, $index)
+    {
+        // $item = $_SESSION["DetailThuoc"][$index];
+        // $sang = $item["Sang"] ?? 0;
+        // $chieu = $item["Chieu"] ?? 0;
+        // $trua = $item["Trua"] ?? 0;
+
+        $sp = new SanPham($detail);
+        $detail["SoLuong"] = $detail["SoLuong"] ?? "";
+        $detail["SoLo"] = $detail["SoLo"] ?? "";
+        $detail["NhaSanXuat"] = $detail["NhaSanXuat"] ?? "";
+        $detail["NuocSanXuat"] = $detail["NuocSanXuat"] ?? "";
+        $detail["Price"] = $detail["Price"] ?? "";
+        return $_SESSION["DSThuocPhieuNhap"][$index] = $detail;
+    }
+
     public static function DSThuocPhieuNhap()
     {
         return $_SESSION["DSThuocPhieuNhap"];
+    }
+
+    public static function DeleteAllThuocPhieuNhap()
+    {
+        return $_SESSION["DSThuocPhieuNhap"] = [];
+    }
+
+    public static function DeletePhieuNhap($index)
+    {
+        $_SESSION["DSThuocPhieuNhap"][$index] = [];
     }
 
     public static function ThemDSThuocPhieuNhap($phieu,$index)
@@ -63,11 +108,6 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
         $_SESSION["DSThuocPhieuNhap"][$index] = $phieu;
     }
     
-
-    public function NgayNhap($id)
-    {
-        return $this->NgayNhap;
-    }
 
     function CreatIdPhieu($IdPhieu)
     {

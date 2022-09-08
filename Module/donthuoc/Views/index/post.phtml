@@ -68,7 +68,7 @@ $roleDetail = new Model\Role();
                         $i = 0;
                         foreach (DonThuocDetail::DsThuoc() as $mathuoc => $thuoc) {
 
-                            // var_dump($thuoc);
+                            var_dump($thuoc);
                             $sanPham = new SanPham($thuoc["Id"] ?? null);
                             // var_dump($sanPham);
                         ?>
@@ -239,14 +239,14 @@ $roleDetail = new Model\Role();
                                             return;
                                         }
                                         console.log(response);
-                                        $(idGiaBan).val(response.Giaban);
-                                        $(idDVT).val(response.DVTTitle);
-                                        $(idSang).val(response.Sang);
-                                        $(idTrua).val(response.Trua);
-                                        $(idChieu).val(response.Chieu);
-                                        $(idSoNgaySD).val(response.SoNgaySDThuoc);
-                                        $(idSoLuong).val(response.Soluong);
-                                        $(idCachDungThuoc).val(response.CachDung);
+                                        // $(idGiaBan).val(response.Giaban);
+                                        // $(idDVT).val(response.DVTTitle);
+                                        // $(idSang).val(response.Sang);
+                                        // $(idTrua).val(response.Trua);
+                                        // $(idChieu).val(response.Chieu);
+                                        // $(idSoNgaySD).val(response.SoNgaySDThuoc);
+                                        // $(idSoLuong).val(response.Soluong);
+                                        // $(idCachDungThuoc).val(response.CachDung);
                                         $(idGhiChu).val(response.Ghichu);
                                     },
                                     complete: function() {

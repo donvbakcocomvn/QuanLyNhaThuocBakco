@@ -3,7 +3,9 @@
 namespace Module\quanlythuoc\Controller;
 
 use Model\Common;
+use Module\quanlythuoc\Model\PhieuXuatNhap as ModelPhieuXuatNhap;
 use Module\quanlythuoc\Model\PhieuXuatNhap\FormPhieuXuatNhap;
+use Module\quanlythuoc\Model\SanPham;
 use Module\quanlythuoc\Permission;
 
 
@@ -43,11 +45,46 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
         $this->View($data);
     }
 
+    public function capnhatdanhsachsanpham()
+    {
+        header('Content-Type: application/json; charset=utf-8');
+        $id = $this->getParams(0);
+        $index = $this->getParams(1);
+        $donthuocdetail = new \Module\quanlythuoc\Model\PhieuXuatNhap();
+        $sanpham = new SanPham($id);
+        // cap nhat don thuoc
+        $_sanpham = $sanpham->GetById($id);
+        // var_dump($_sanpham);
+        $_sanpham["SoNgaySDThuoc"] = $_SESSION["SoNgaySDThuoc"] ?? 0;
+        $result = $donthuocdetail->checkDsThuoc($_sanpham);
+        if ($result == null) {
+            echo json_encode(new \Module\quanlythuoc\Model\PhieuXuatNhap());
+            return;
+        }
+        $donthuocdetail->CapNhatSanPham($_sanpham, $index);
+        // echo $sanpham->DonViTinh();
+        echo json_encode(\Module\quanlythuoc\Model\PhieuXuatNhap::DSThuocPhieuNhap()[$index], JSON_UNESCAPED_UNICODE);
+    }
+
+
     public function ThemSanPham()
     {
-        $MaSP = \Model\Request::Get("id", []);
-        $index = \Model\Request::Get("index", []);
+        // $MaSP = \Model\Request::Get("id", []);
+        // $index = \Model\Request::Get("index", []);
+        for ($i=0; $i < 1 ; $i++) { 
+            $_SESSION["DSThuocPhieuNhap"][] = [];
+        }
+        return $_SESSION["DSThuocPhieuNhap"];
+        
+    }
+    
 
+    public function DeleteSP()
+    {
+        $index = $this->getParams(0);
+        // echo $index;
+        unset($_SESSION["DSThuocPhieuNhap"][$index]);
+        return $_SESSION["DSThuocPhieuNhap"];
     }
 
     public function isdelete()
@@ -84,19 +121,26 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
                 $itemForm = \Model\Request::Post(FormPhieuXuatNhap::$ElementsName, null);
                 $phieu = new \Module\quanlythuoc\Model\PhieuXuatNhap();
                 $itemForm["IdPhieu"] = $phieu->CreatIdPhieu($itemForm["IdPhieu"]);
-                $itemForm["IdThuoc"] = $itemForm["IdThuoc"];
-                $itemForm["SoLuong"] = $itemForm["SoLuong"];
-                $itemForm["SoLo"] = $itemForm["SoLo"];
-                $itemForm["NhaSanXuat"] = $itemForm["NhaSanXuat"];
-                $itemForm["NuocSanXuat"] = $itemForm["NuocSanXuat"];
-                $itemForm["Price"] = $itemForm["Price"];
                 $itemForm["XuatNhap"] = $itemForm["XuatNhap"];
                 $itemForm["NoiDungPhieu"] = $itemForm["NoiDungPhieu"];
                 $itemForm["GhiChu"] = $itemForm["GhiChu"];
                 $itemForm["NgayNhap"] = Date("Y-m-d", strtotime($itemForm["NgayNhap"]));
-                $phieu->Post($itemForm);
-                new \Model\Error(\Model\Error::success, "Đã Thêm Phiếu");
-                \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=index");
+                foreach (ModelPhieuXuatNhap::DSThuocPhieuNhap() as $maphieu => $phieu) {
+                    $sp = new \Module\quanlythuoc\Model\PhieuXuatNhap();
+                    if (isset($phieu["Id"]) == true) {
+                        $itemForm["IdThuoc"] = $phieu["IdThuoc"];
+                        echo $itemForm["SoLuong"] = $phieu["SoLuong"];
+                        echo $itemForm["SoLo"] = $phieu["SoLo"];
+                        echo $itemForm["NhaSanXuat"] = $phieu["NhaSanXuat"];
+                        echo $itemForm["NuocSanXuat"] = $phieu["NuocSanXuat"] ?? "";
+                        echo $itemForm["Price"] = $phieu["Price"] ?? "";
+                        // $detail = new DonThuocDetail();
+                        var_dump($phieu);
+                    }
+                }
+                // $phieu->Post($itemForm);
+                // new \Model\Error(\Model\Error::success, "Đã Thêm Phiếu");
+                // \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=index");
 
             }
         } catch (\Exception $exc) {
