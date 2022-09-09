@@ -54,7 +54,7 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
         $sanpham = new SanPham($id);
         // cap nhat don thuoc
         $_sanpham = $sanpham->GetById($id);
-        // var_dump($_sanpham);
+        var_dump($_sanpham);
         $_sanpham["SoNgaySDThuoc"] = $_SESSION["SoNgaySDThuoc"] ?? 0;
         $result = $donthuocdetail->checkDsThuoc($_sanpham);
         if ($result == null) {
@@ -128,14 +128,14 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
                 foreach (ModelPhieuXuatNhap::DSThuocPhieuNhap() as $maphieu => $phieu) {
                     $sp = new \Module\quanlythuoc\Model\PhieuXuatNhap();
                     if (isset($phieu["Id"]) == true) {
-                        $itemForm["IdThuoc"] = $phieu["IdThuoc"];
-                        echo $itemForm["SoLuong"] = $phieu["SoLuong"];
-                        echo $itemForm["SoLo"] = $phieu["SoLo"];
-                        echo $itemForm["NhaSanXuat"] = $phieu["NhaSanXuat"];
-                        echo $itemForm["NuocSanXuat"] = $phieu["NuocSanXuat"] ?? "";
-                        echo $itemForm["Price"] = $phieu["Price"] ?? "";
+                        $itemForm["IdThuoc"] = $phieu["Id"];
+                        $itemForm["SoLuong"] = $phieu["SoLuong"];
+                        $itemForm["SoLo"] = $phieu["SoLo"];
+                        $itemForm["NhaSanXuat"] = $phieu["NhaSanXuat"];
+                        $itemForm["NuocSanXuat"] = $phieu["NuocSanXuat"] ?? "";
+                        $itemForm["Price"] = $phieu["Price"] ?? "";
                         // $detail = new DonThuocDetail();
-                        var_dump($phieu);
+                        // var_dump($phieu);
                     }
                 }
                 // $phieu->Post($itemForm);

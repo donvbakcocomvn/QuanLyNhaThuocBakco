@@ -47,13 +47,14 @@ class FormPhieuXuatNhap implements iFormPhieuXuatNhap
 	function IdThuoc($val = null, $id = null, $index = null) {
         $properties = self::$properties;
         $properties["value"] = $val;
+        $option = ModelSanPham::CapChaTpOptions();
+		$option = ["" => ""] + $option;
 		$properties["id"] = $id;
 		$properties["index"] = $index;
 		$properties["class"] = "select2 form-control changename ";
         $properties[FormRender::Required] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        $options = ModelSanPham::CapChaTpOptions();
-        return new FormRender(new Element\Select("Mã Thuốc", $name, $options, $properties));
+        return new FormRender(new Element\Select("Mã Thuốc", $name, $option, $properties));
 	}
 	
 	/**

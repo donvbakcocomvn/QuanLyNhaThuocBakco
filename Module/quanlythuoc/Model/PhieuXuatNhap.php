@@ -60,7 +60,7 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
         $DSThuoc = $_SESSION["DSThuocPhieuNhap"];
         foreach ($DSThuoc as $key => $value) {
             // var_dump($value);
-            // var_dump($detailThuoc);
+            var_dump($detailThuoc);
             $value["Id"] = $value["Id"] ?? null;
             if ($value["Id"] == $sp->Id) {
                 return null;
