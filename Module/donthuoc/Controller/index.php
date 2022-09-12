@@ -253,7 +253,6 @@ class index extends \Application implements \Controller\IControllerBE
             if (\Model\Request::Post(FormDonThuoc::$ElementsName, null)) {
                 $itemForm = \Model\Request::Post(FormDonThuoc::$ElementsName, null);
                 $donthuoc = new DonThuoc();
-
                 $item["Id"] = $donthuoc->CreatId();
                 $item["IdBenhNhan"] = $itemForm["IdBenhNhan"];
                 $item["NameBN"] = $donthuoc->GetNameById($itemForm["IdBenhNhan"]);
@@ -287,7 +286,9 @@ class index extends \Application implements \Controller\IControllerBE
                     DonThuocDetail::ClearSession();
                 }
                 new \Model\Error(\Model\Error::success, "Copy Đơn Thuốc Thành Công");
-                \Model\Common::ToUrl("/index.php?module=donthuoc&controller=index&action=index");
+                $idToaThuoc = $_GET['id'];
+                $IdBn = $donthuoc->GetIdBnById($idToaThuoc);
+                \Model\Common::ToUrl("/index.php?module=benhnhan&controller=index&action=detail&id=$IdBn");
             }
         } catch (\Exception $exc) {
             echo $exc->getMessage();

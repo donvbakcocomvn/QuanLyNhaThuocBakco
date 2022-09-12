@@ -1,5 +1,3 @@
-
-
 <ol class="breadcrumb">
     <li><a href="/index.php?controller=backend">Home</a></li>
     <li><a href="/index.php?module=benhnhan&controller=index&action=index"> Danh Sách Khách Hàng</a></li>
@@ -7,93 +5,174 @@
 </ol>
 <?php
 
+use Model\Common;
 use Module\benhnhan\Model\BenhNhan\FormBenhNhan;
 use Module\benhnhan\Model\BenhNhan;
+use Module\donthuoc\Model\DonThuoc;
 
 $roleDetail = new Model\Role();
+$itemBN = new BenhNhan($data);
+
 ?>
 <div class="container-fluid">
-    <div class="box box-primary">
-        <div class="box-header">
-            <h3 class="box-title">Thông Tin Chi Tiết Khách Hàng</h3>
-        </div>
-        <!-- <div class="box-body"> -->
-        <form action="" method="post" enctype="multipart/form-data">
-            <div class="box-body">
-                <?php
-                $bn = new FormBenhNhan();
+    <!-- <div class="box box-basic"> -->
+        <section class="content">
 
-                $itemBN = new BenhNhan($data);
+            <div class="row">
+                <div class="col-md-3">
 
-                // var_dump($itemBN);
-                ?>
-                <div class="">
-                    <div class="col-md-6">
-                        <label for="">Mã Khách Hàng</label>
-                        <input readonly value="<?php echo $itemBN->Id; ?>" class="form-control">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="">Họ Tên</label>
-                        <input readonly value="<?php echo $itemBN->Name; ?>" class="form-control">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="">Giới Tính</label>
-                        <input readonly value="<?php echo $itemBN->Gioitinh; ?>" class="form-control">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="">Số Điện Thoại</label>
-                        <input readonly value="<?php echo $itemBN->Phone; ?>" class="form-control">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="">Ngày Sinh</label>
-                        <input readonly value="<?php echo $itemBN->Ngaysinh; ?>" class="form-control">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="">CMND</label>
-                        <input readonly value="<?php echo $itemBN->CMND; ?>" class="form-control">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="">Thời Gian Tạo</label>
-                        <input readonly value="<?php echo $itemBN->CreateRecord; ?>" class="form-control">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="">Ẩn/hiện</label>
-                        <input readonly value="<?php echo $itemBN->isDelete ? "Ẩn" : "Hiện" ; ?>" class="form-control">
-                    </div>
-                    <div class="col-md-12">
-                        <label for="">Địa Chỉ</label>
-                        <input readonly value="<?php echo $itemBN->Address; ?>" class="form-control">
-                    </div>
-                    <div class="col-md-4 form-group">
-                        <label for="">Tỉnh</label>
-                        <select id="tinhThanh" disabled name="BenhNhan[TinhThanh]" data-value="<?php echo $itemBN->TinhThanh; ?>" class="form-control"></select>
-                    </div>
-                    <div class="col-md-4 form-group">
-                        <label for="">Huyện</label>
-                        <select id="quanHuyen" disabled name="BenhNhan[QuanHuyen]" data-value="<?php echo $itemBN->QuanHuyen; ?>" class="form-control"> </select>
+                    <!-- Profile Image -->
+                    <div class="box box-primary">
+                        <div class="box-body box-profile">
+                            <h3 class="profile-username text-center"><?php echo $itemBN->Name; ?></h3>
+                            <p class="text-muted text-center"><?php echo $itemBN->Id ?></p>
 
-                    </div>
-                    <div class="col-md-4 form-group">
-                        <label for="">Xã</label>
-                        <select id="phuongXa" disabled name="BenhNhan[PhuongXa]" data-value="<?php echo $itemBN->PhuongXa; ?>" class="form-control"> </select>
-                    </div>
-                    <!-- <div class="col-md-6">
-                        <?php $bn->TinhThanh($itemBN->TinhThanh)->renderHtml();  ?>
-                    </div>
-                    <div class="col-md-6">
-                        <?php $bn->QuanHuyen($itemBN->QuanHuyen)->renderHtml();  ?>
-                    </div>
-                    <div class="col-md-6">
-                        <?php $bn->PhuongXa($itemBN->PhuongXa)->renderHtml();  ?>
-                    </div> -->
+                            <ul class="list-group list-group-unbordered">
+                                <li class="list-group-item">
+                                    <b>Giới Tính</b> <a class="pull-right"><?php echo $itemBN->Gioitinh() ?></a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>CMND/CCCD</b> <a class="pull-right"><?php echo $itemBN->CMND ?></a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Số Điện Thoại</b> <a class="pull-right"><?php echo $itemBN->Phone ?></a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Sinh Ngày</b> <a class="pull-right"><?php echo Common::ForMatDMY($itemBN->Ngaysinh) ?></a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Ngày Tạo</b> <a class="pull-right"><?php echo Common::ForMatDMYHIS($itemBN->CreateRecord) ?></a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Ngày Cập Nhật</b> <a class="pull-right"><?php echo Common::ForMatDMYHIS($itemBN->UpdateRecord) ?></a>
+                                </li>
+                            </ul>
 
+                            <!-- <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> -->
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+
+                </div><!-- /.col -->
+                <div class="col-md-9">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#infomation" data-toggle="tab" aria-expanded="true">Thông Tin Khách Hàng</a></li>
+                            <li class=""><a href="#donthuoc" data-toggle="tab" aria-expanded="false">Đơn Thuốc</a></li>
+                        </ul>
+                        <div class="tab-content">
+
+                            <div class="tab-pane" id="infomation">
+                                <form action="" method="post" enctype="multipart/form-data">
+                                    <div class="box-body">
+                                        <?php
+                                        $bn = new FormBenhNhan();
+
+                                        $itemBN = new BenhNhan($data);
+
+                                        // var_dump($itemBN);
+                                        ?>
+                                        <div class="">
+                                            <div class="col-md-4">
+                                                <?php $bn->Id($itemBN->Id)->renderHTML(); ?>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <?php $bn->Name($itemBN->Name)->renderHTML();  ?>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <?php
+                                                $bn->Gioitinh($itemBN->Gioitinh)->renderHtml();  ?>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <?php $bn->Ngaysinh($itemBN->Ngaysinh)->renderHtml();  ?>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <?php $bn->CMND($itemBN->CMND)->renderHtml();  ?>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <?php $bn->Phone($itemBN->Phone)->renderHtml();  ?>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <?php $bn->Address($itemBN->Address)->renderHtml();  ?>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label for="">Tỉnh</label>
+                                                <select id="tinhThanh" name="BenhNhan[TinhThanh]" data-value="<?php echo $itemBN->TinhThanh; ?>" class="form-control"></select>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label for="">Huyện</label>
+                                                <select id="quanHuyen" name="BenhNhan[QuanHuyen]" data-value="<?php echo $itemBN->QuanHuyen; ?>" class="form-control"> </select>
+
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label for="">Xã</label>
+                                                <select id="phuongXa" name="BenhNhan[PhuongXa]" data-value="<?php echo $itemBN->PhuongXa; ?>" class="form-control"> </select>
+                                            </div>
+                                            <div class="col-md-12 ">
+                                                <!-- <button class="btn btn-success">Lưu</button> -->
+                                                <button class="btn btn-success" name="LuuThoat">Cập Nhật Khách Hàng</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+
+                            </div>
+                            <div class="tab-pane active" id="donthuoc">
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>STT</th>
+                                            <th>Mã Đơn Thuốc</th>
+                                            <th>Tên Khách Hàng</th>
+                                            <th>Giới Tính</th>
+                                            <th>Ngày Sinh</th>
+                                            <th>Chẩn Đoán</th>
+                                            <th>Số Ngày Dùng</th>
+                                            <th>Thuộc Loại Đơn</th>
+                                            <!-- <th>Quận/Huyện</th> -->
+                                            <!-- <th>Phường/Xã</th> -->
+                                            <!-- <th>Điện Thoại</th> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $id = $_GET['id'];
+                                        $_item = new DonThuoc();
+                                        $result = $_item->GetDonThuocByIdBN($id);
+                                        // var_dump($result);
+                                        foreach ($result as $index => $item) {
+                                            $nameBN = $_item->GetNameById($item['IdBenhNhan']);
+                                            // var_dump($item);
+                                        ?>
+                                            <tr>
+                                                <td style="width: 1px;">
+                                                    <?php
+                                                    echo Module\donthuoc\Model\btnHtml::btnCopyDonThuoc($item['Id']);
+                                                    ?>
+                                                </td>
+                                                <td><?php echo $index + 1; ?></td>
+                                                <td><?php echo $item[0]; ?></td>
+                                                <!-- <td><?php echo $_item->IdBenhNhan; ?></td> -->
+                                                <td><?php echo $nameBN; ?></td>
+                                                <td><?php echo $_item->GetNameOptionByValAndGroupId($item['GioiTinh'], 'gioitinh'); ?></td>
+                                                <td><?php echo Common::ForMatDMY($item['NgaySinh']); ?></td>
+                                                <td><?php echo $item['ChanDoanBenh'] ?></td>
+                                                <td><?php echo $item['TongNgayDung'] ?></td>
+                                                <td><?php echo $_item->GetNameOptionByValAndGroupId($item['ThuocLoaiDon'], 'optiondonthuoc') ?></td>
+                                            </tr>
+                                        <?php
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </form>
-    </div>
+        </section>
+    <!-- </div> -->
 </div>
-</form>
-</div>
-</div>
-</div>
+
 <script src="/public/TinhThanh/tinhthanh.js"></script>

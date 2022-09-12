@@ -56,6 +56,10 @@ class Common
     {
         return "Y-m-d H:i:s";
     }
+    public static function DateTimeFomat()
+    {
+        return "d-m-Y H:i:s";
+    }
 
     public static function DateTimeFomatView()
     {
@@ -75,6 +79,11 @@ class Common
     public static function ForMatDMY($strdate)
     {
         return date(\Model\Common::DateFomatView(), strtotime($strdate));
+    }
+
+    public static function ForMatDMYHIS($strdate)
+    {
+        return date(\Model\Common::DateTimeFomat(), strtotime($strdate));
     }
 
     public static function DateFomatView()

@@ -44,7 +44,33 @@ class index extends \Application implements \Controller\IControllerBE
     }
 
     function detail()
-    { 
+    {
+        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_BenhNhan_Put]);
+
+        try {
+            if (\Model\Request::Post(FormBenhNhan::$ElementsName, null)) {
+
+                $itemHtml = \Model\Request::Post(FormBenhNhan::$ElementsName, null);
+                $model["Id"] = $_GET['id'];
+                $model["Name"] = $itemHtml["Name"];
+                $model["Gioitinh"] = $itemHtml["Gioitinh"];
+                $model["Ngaysinh"] = $itemHtml["Ngaysinh"];
+                $model["CMND"] = $itemHtml["CMND"];
+                $model["Address"] = $itemHtml["Address"];
+                $model["TinhThanh"] = $itemHtml["TinhThanh"];
+                $model["QuanHuyen"] = $itemHtml["QuanHuyen"];
+                $model["PhuongXa"] = $itemHtml["PhuongXa"];
+                $model["Phone"] = $itemHtml["Phone"];
+                $model["UpdateRecord"] = date("Y-m-d H:i:s", time());
+                // phpinfo();
+                $benhnhan = new ModelBenhNhan();
+                $benhnhan->Put($model);
+                new \Model\Error(\Model\Error::success, "Đã cập nhật thông tin khách hàng");
+                // \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=danhmuc&action=index");
+            }
+        } catch (\Exception $exc) {
+            echo $exc->getMessage();
+        }
         $id = \Model\Request::Get("id", null);
         if ($id == null) {
         }
@@ -78,6 +104,7 @@ class index extends \Application implements \Controller\IControllerBE
                 $itemForm["Phone"] = $itemForm["Phone"];
                 $benhnhan = new ModelBenhNhan();
                 $benhnhan->Post($itemForm);
+                new \Model\Error(\Model\Error::success, "Thêm Thông Tin Khách Hàng Thành Công");
                 \Model\Common::ToUrl("/index.php?module=benhnhan&controller=index&action=index");
                 
             }
@@ -113,10 +140,11 @@ class index extends \Application implements \Controller\IControllerBE
                 $model["TinhThanh"] = $itemHtml["TinhThanh"];
                 $model["QuanHuyen"] = $itemHtml["QuanHuyen"];
                 $model["PhuongXa"] = $itemHtml["PhuongXa"];
+                $model["UpdateRecord"] = date("Y-m-d H:i:s", time());
                 $model["Phone"] = $itemHtml["Phone"];
                 $benhnhan = new ModelBenhNhan();
                 $benhnhan->Put($model);
-                new \Model\Error(\Model\Error::success, "Đã Sửa Danh Mục");
+                new \Model\Error(\Model\Error::success, "Đã Sửa Thông Tin");
                 // \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=danhmuc&action=index");
             }
         } catch (\Exception $exc) {
