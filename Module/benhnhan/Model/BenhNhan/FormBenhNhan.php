@@ -75,6 +75,7 @@ class FormBenhNhan implements iFormBenhNhan
                 $properties["value"] = $val != null ? Date("Y-m-d", strtotime($val)) : "";
                 // $properties[FormRender::Required] = "true";
                 $properties["type"] = "date";
+		$properties["max"] = date("Y-m-d", time());
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
                 return new FormRender(new Element\DateTime("Ngày Sinh", $name, $properties));
         }
@@ -89,6 +90,7 @@ class FormBenhNhan implements iFormBenhNhan
         {
                 $properties = self::$properties;
                 $properties["value"] = $val;
+                // $properties[FormRender::Required] = "true";
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
                 return new FormRender(new Element\Textbox("CMND/CCCD", $name, $properties));
         }
@@ -136,7 +138,7 @@ class FormBenhNhan implements iFormBenhNhan
                 $properties = self::$properties;
                 $properties["value"] = $val;
                 $properties["type"] = "tel";
-                $properties[FormRender::Required] = "true";
+                // $properties[FormRender::Required] = "true";
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
                 return new FormRender(new Element\Textbox("Số Điện Thoại", $name, $properties));
         }

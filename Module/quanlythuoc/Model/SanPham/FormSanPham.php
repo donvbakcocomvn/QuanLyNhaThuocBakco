@@ -41,7 +41,7 @@ class FormSanPham implements iFormSanPham {
 		// $dm = new ModelDanhMuc();
 		$properties = self::$properties;
         $properties["value"] = $val;
-        // $properties[FormRender::Required] = "true";
+        $properties[FormRender::Required] = "true";
 		$option = \Module\quanlythuoc\Model\DanhMuc::CapChaTpOptions();
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
         return new FormRender(new Element\Select("Thuộc Danh Mục", $name, $option,$properties));
@@ -56,7 +56,7 @@ class FormSanPham implements iFormSanPham {
 	function Name($val = null) {
 		$properties = self::$properties;
         $properties["value"] = $val;
-        // $properties[FormRender::Required] = "true";
+        $properties[FormRender::Required] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
         return new FormRender(new Element\Textbox("Tên Thuốc", $name, $properties));
 	}
@@ -70,7 +70,7 @@ class FormSanPham implements iFormSanPham {
 	function Namebietduoc($val = null) {
 		$properties = self::$properties;
         $properties["value"] = $val;
-        // $properties[FormRender::Required] = "true";
+        $properties[FormRender::Required] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
         return new FormRender(new Element\Textbox("Tên Biệt Dược", $name, $properties));
 	}
@@ -98,7 +98,7 @@ class FormSanPham implements iFormSanPham {
 	function Gianhap($val = null) {
 		$properties = self::$properties;
         $properties["value"] = $val;
-        // $properties[FormRender::Required] = "true";
+        $properties[FormRender::Required] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
         return new FormRender(new Element\Textbox("Giá Nhập", $name, $properties));
 	}
@@ -112,7 +112,7 @@ class FormSanPham implements iFormSanPham {
 	function Giaban($val = null) {
 		$properties = self::$properties;
         $properties["value"] = $val;
-        // $properties[FormRender::Required] = "true";
+        $properties[FormRender::Required] = "DVQ";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
         return new FormRender(new Element\Textbox("Giá Bán", $name, $properties));
 	}
@@ -152,6 +152,7 @@ class FormSanPham implements iFormSanPham {
         $properties["value"] = $val != null ? Date("Y-m-d", strtotime($val)):"";
         // $properties[FormRender::Required] = "true";
 		$properties["type"] = "date";
+		$properties["max"] = date("Y-m-d", time());
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
         return new FormRender(new Element\DateTime("Ngày Sản Xuất", $name, $properties));
 	}
@@ -167,6 +168,7 @@ class FormSanPham implements iFormSanPham {
         $properties["value"] = $val != null ? Date("Y-m-d", strtotime($val)):"";
         // $properties[FormRender::Required] = "true";
 		$properties["type"] = "date";
+		$properties["min"] = date("Y-m-d", time());
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
         return new FormRender(new Element\DateTime("Hạn Dùng", $name, $properties));
 	}
@@ -278,7 +280,7 @@ class FormSanPham implements iFormSanPham {
 	function CachDung($val = null) {
 		$properties = self::$properties;
         $properties["value"] = $val;
-        // $properties[FormRender::Required] = "true";
+        $properties[FormRender::Required] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
 		$option = OptionsService::GetGroupsToSelect("cachdungthuoc");
         return new FormRender(new Element\Select("Cách Dùng Thuốc", $name,$option ,$properties));

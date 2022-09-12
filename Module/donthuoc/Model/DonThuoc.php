@@ -44,6 +44,28 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
         }
     }
 
+    // Lấy Id bệnh nhân bằng Id toa thuốc
+    public function GetIdBnById($IdTT)
+    {
+        $sql = "SELECT `IdBenhNhan` FROM `lap1_toathuoc` WHERE `Id` = '$IdTT';";
+        $result = $this->GetRow($sql);
+        return $result["IdBenhNhan"];
+    }
+
+    public function GetNameOptionByValAndGroupId($val, $group)
+    {
+        $sql = "SELECT `Name` FROM `lap1_options` WHERE `Val` = '$val' and `GroupsId` = '$group'";
+        $result = $this->GetRow($sql);
+        return $result['Name'];
+    }
+
+    public function GetDonThuocByIdBN($idBN)
+    {
+        $sql = "SELECT * FROM `lap1_toathuoc` WHERE `IdBenhNhan` = '$idBN';";
+        $result = $this->GetRows($sql);
+        return $result;
+    }
+
     public static function GetNameLoaiDonThuoc($val)
     {
         $dt = new DonThuoc();
