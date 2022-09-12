@@ -54,13 +54,20 @@ class index extends \Application implements \Controller\IControllerBE
         // var_dump($data);
         $donthuocdetail = new DonThuocDetail();
         $thuoc = DonThuocDetail::DsThuoc()[$data["index"]];
+  
         $thuoc["Sang"] = floatval($data["sang"]);
         $thuoc["Trua"] = floatval($data["trua"]);
         $thuoc["Chieu"] = floatval($data["chieu"]);
         $thuoc["SoNgaySDThuoc"] = $data["ngaydungthuoc"];
         // $thuoc["GhiChu"] = $data["Ghichu"];
+        // var_dump($thuoc["Sang"]);
+        // var_dump($thuoc["Trua"]);
+        // var_dump($thuoc["Chieu"]);
+        // die();
         $donthuocdetail->CapNhatThuoc($thuoc, $data["index"]);
-        echo json_encode(DonThuocDetail::DsThuoc()[$data["index"]], JSON_UNESCAPED_UNICODE);
+        $thuoc = DonThuocDetail::DsThuoc()[$data["index"]];
+        
+        echo json_encode($thuoc, JSON_UNESCAPED_UNICODE);
     }
 
     public function capnhatngaydungthuoc()
@@ -174,7 +181,6 @@ class index extends \Application implements \Controller\IControllerBE
         }
         $this->View();
     }
-
     function put()
     {
         \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DonThuoc_Put]);

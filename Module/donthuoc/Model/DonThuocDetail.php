@@ -51,7 +51,8 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
         }
     }
 
-    public function DeleteDetail($iddonthuoc) {
+    public function DeleteDetail($iddonthuoc)
+    {
         $where = " `IdDonThuoc` = '{$iddonthuoc}' ";
         $this->DeleteDB($where);
     }
@@ -102,7 +103,7 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
             $item["Sang"] = floatval($thuoc["Sang"]);
             $item["Trua"] = floatval($thuoc["Trua"]);
             $item["Chieu"] = floatval($thuoc["Chieu"]);
-            
+
             $detail->CapNhatThuoc($item, $key);
         }
     }
@@ -143,17 +144,29 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
         $detailThuoc["IdThuoc"] = $detailThuoc["Id"];
         $detailThuoc["DVT"] = $sp->DVT;
         $detailThuoc["DVTTitle"] = $sp->DonViTinh();
-        $detailThuoc["SoNgaySDThuoc"] = $detailThuoc["SoNgaySDThuoc"];
-        $detailThuoc["Sang"] = $detailThuoc["Sang"] ?? "";
-        $detailThuoc["Trua"] = $detailThuoc["Trua"] ?? "";
-        $detailThuoc["Chieu"] = $detailThuoc["Chieu"] ?? "";
+        $detailThuoc["SoNgaySDThuoc"] = intval($detailThuoc["SoNgaySDThuoc"]);
+        $detailThuoc["Sang"] = $detailThuoc["Sang"] ?? 0;
+        $detailThuoc["Trua"] = $detailThuoc["Trua"] ?? 0;
+        $detailThuoc["Chieu"] = $detailThuoc["Chieu"] ?? 0;
         $detailThuoc["Giaban"] = $detailThuoc["Giaban"];
         $detailThuoc["Ghichu"] = $detailThuoc["Ghichu"] ?? "";
         $detailThuoc["CachDung"] = $sp->CachDungThuoc();
         // echo $sp->DVQuyDoi;
-        $Sang = max($detailThuoc["Sang"], $sp->DVQuyDoi);
-        $Chieu = max($detailThuoc["Chieu"], $sp->DVQuyDoi);
-        $Trua = max($detailThuoc["Trua"], $sp->DVQuyDoi);
+        $Sang = $detailThuoc["Sang"];
+        $Trua = $detailThuoc["Trua"];
+        $Chieu = $detailThuoc["Chieu"];
+        if ($detailThuoc["Sang"] != 0) {
+            $Sang = max($detailThuoc["Sang"], floatval($sp->DVQuyDoi));
+        }
+        if ($detailThuoc["Trua"] != 0) {
+            $Trua = max($detailThuoc["Trua"], floatval($sp->DVQuyDoi));
+        }
+        if ($detailThuoc["Chieu"] != 0) {
+            $Chieu = max($detailThuoc["Chieu"], floatval($sp->DVQuyDoi));
+        }
+        // var_dump($Sang);
+        // var_dump($Chieu);
+        // var_dump($Trua);
         $detailThuoc["Soluong"] = ceil(($Sang + $Chieu + $Trua) * $detailThuoc["SoNgaySDThuoc"]);
 
         return $_SESSION["DetailThuoc"][$index] = $detailThuoc;
@@ -182,7 +195,7 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
             substr($hash,  8,  4) . '-' .
             substr($hash, 12,  4) . '-' .
             substr($hash, 16,  4) . '-' .
-            substr($hash, 20, 12);  
+            substr($hash, 20, 12);
         return $guid;
     }
 
