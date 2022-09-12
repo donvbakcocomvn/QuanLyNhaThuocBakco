@@ -7,9 +7,9 @@
     <form method="get" action="/quanlythuoc/sanpham/index/">
         <div class="form-group d-flex">
             <label class="btn btn-default"><input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox"><i class="fa fa-share" aria-hidden="true"></class=></i></label>
-            <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ?\Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập Vào Tên Thuốc Hoặc Tên Biệt Dược Để Tìm Kiếm">
+            <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập Vào Tên Thuốc Hoặc Tên Biệt Dược Để Tìm Kiếm">
             <button class="btn btn-primary no-border-radius" name="btnTim" type="submit">
-                <i class="fa fa-search"></i> Tìm Kiếm    
+                <i class="fa fa-search"></i> Tìm Kiếm
             </button>
         </div>
     </form>
@@ -18,12 +18,10 @@
             <div class="box-header">
                 <h3 class="box-title">Danh Sách Thuốc</h3>
                 <div class="box-tools">
-                    <?php
-
-use Model\Common;
-use Module\quanlythuoc\Model\SanPham;
-                    Module\quanlythuoc\Model\btnHtml::btnImportSanPham();
-
+                    <?php 
+                    use Model\Common;
+                    use Module\quanlythuoc\Model\SanPham; 
+                    Module\quanlythuoc\Model\btnHtml::btnImportSanPham(); 
                     Module\quanlythuoc\Model\btnHtml::btnThemSanPham();
                     ?>
                 </div>

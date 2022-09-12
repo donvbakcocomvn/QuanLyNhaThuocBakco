@@ -2,14 +2,16 @@
 
 namespace Model;
 
-class DB {
+class DB
+{
 
     public static $TableName;
     public static $Debug;
     private static $Connect;
     // static protected $_Query = "";
 
-    public function __construct() {
+    public function __construct()
+    {
         if (self::$Connect == null) {
             global $INI;
             $_conn = mysqli_connect($INI['host'], $INI['username'], $INI['password'], $INI['DBname']) or mysqli_errno("Can't connect database");
@@ -18,7 +20,8 @@ class DB {
         }
     }
 
-    protected function GetRows($sql) {
+    protected function GetRows($sql)
+    {
         if (self::$Debug)
             echo $sql;
 
@@ -32,7 +35,8 @@ class DB {
         return $a;
     }
 
-    protected function GetRow($sql) {
+    protected function GetRow($sql)
+    {
         if (self::$Debug)
             echo $sql;
         $res = self::$Connect->query($sql);
@@ -43,7 +47,8 @@ class DB {
     }
 
     // đém so dòng
-    protected function SelectCount($where) {
+    protected function SelectCount($where)
+    {
         $TableName = self::$TableName;
         $sql = "SELECT COUNT(*) as `Total` FROM `{$TableName}` WHERE {$where}";
         $res = $this->GetRow($sql);
@@ -51,7 +56,8 @@ class DB {
     }
 
     // Phan Trang
-    protected function SelectPT($where, $indexPage, $pageNumber = 10, &$total = 0) {
+    protected function SelectPT($where, $indexPage, $pageNumber = 10, &$total = 0)
+    {
         $indexPage = ($indexPage - 1) * $pageNumber;
         $indexPage = max($indexPage, 0);
         $total = $this->SelectCount($where);
@@ -60,7 +66,8 @@ class DB {
     }
 
     // lấy 1 dòng
-    public function SelectRow($where, $col = []) {
+    public function SelectRow($where, $col = [])
+    {
 
         $TableName = self::$TableName;
         $sql = "SELECT * FROM `{$TableName}` WHERE {$where}";
@@ -71,12 +78,14 @@ class DB {
         return $this->GetRow($sql);
     }
 
-    public function SelectById($Id, $col = []) {
+    public function SelectById($Id, $col = [])
+    {
         $where = "`Id` = '{$Id}'";
         return $this->SelectRow($where, $col);
     }
 
-    public function GetToSelect($where, $col) {
+    public function GetToSelect($where, $col)
+    {
         $TableName = self::$TableName;
         $sql = "SELECT * FROM `{$TableName}` WHERE {$where}";
         if ($col) {
@@ -87,7 +96,8 @@ class DB {
     }
 
     // lấy nhiều dòng
-    public function Select($where, $col = []) {
+    public function Select($where, $col = [])
+    {
         $TableName = self::$TableName;
         $sql = "SELECT * FROM `{$TableName}` WHERE {$where}";
         if ($col) {
@@ -97,7 +107,8 @@ class DB {
         return $this->GetRows($sql);
     }
 
-    public function SelectIdParent($where, $col = []) {
+    public function SelectIdParent($where, $col = [])
+    {
         $TableName = self::$TableName;
         $sql = "SELECT DISTINCT `ParentsId` FROM `{$TableName}` WHERE {$where}";
         if ($col) {
@@ -113,7 +124,8 @@ class DB {
      * sửa dữ liệu trong databse
      * @param {type} parameter
      */
-    public function Update($model, $where) {
+    public function Update($model, $where)
+    {
         $TableName = self::$TableName;
         $strsql = "";
         foreach ($model as $col => $val) {
@@ -133,14 +145,16 @@ class DB {
         return self::$Connect;
     }
 
-    function UpdateRow($model) {
+    function UpdateRow($model)
+    {
         $where = " `Id` = '{$model["Id"]}' ";
         return $this->Update($model, $where);
     }
 
     // xóa data base
 
-    public function DeleteDB($where) {
+    public function DeleteDB($where)
+    {
         $TableName = self::$TableName;
         $sql = "DELETE FROM `{$TableName}` WHERE {$where}";
         if (self::$Debug == TRUE)
@@ -149,14 +163,16 @@ class DB {
         return self::$Connect;
     }
 
-    public function DeleteById($id) {
+    public function DeleteById($id)
+    {
 
         $where = " `Id` = '{$id}' ";
         $this->DeleteDB($where);
     }
 
     //  Them6
-    public function Insert($model) {
+    public function Insert($model)
+    {
         $col = array_keys($model);
         $val = array_values($model);
         $colstr = implode("`,`", $col);
@@ -174,7 +190,8 @@ class DB {
         return self::$Connect;
     }
 
-    public function GetRowsToSelect($sql, $col) {
+    public function GetRowsToSelect($sql, $col)
+    {
         if (self::$Debug) {
             var_dump($col);
             echo $sql;
@@ -193,7 +210,8 @@ class DB {
         return $a;
     }
 
-    public function SelectToOptions($where, $columns) {
+    public function SelectToOptions($where, $columns)
+    {
         $a = (array) $this->Select($where, $columns);
         $d = [];
         foreach ($a as $value) {
@@ -205,5 +223,4 @@ class DB {
         }
         return $d;
     }
-
 }

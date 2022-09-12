@@ -40,8 +40,8 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-success" href="/index.php?module=quanlythuoc&controller=sanpham&action=index">
-            <i class="fa fa-plus"></i> Xem danh sách thuốc</a>
+        <a class="btn btn-sm btn-success" href="/index.php?module=quanlythuoc&controller=sanpham&action=index">
+            <i class="fa fa-list"></i> Xem danh sách thuốc</a>
     <?php
     }
 
@@ -51,7 +51,7 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-success" href="/index.php?module=quanlythuoc&controller=sanpham&action=put&id=<?php echo $id; ?>">
+        <a class="btn btn-sm btn-success" href="/index.php?module=quanlythuoc&controller=sanpham&action=put&id=<?php echo $id; ?>">
             Sửa
         </a>
     <?php
@@ -63,7 +63,7 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-warning" href="/index.php?module=quanlythuoc&controller=sanpham&action=detail&id=<?php echo $id; ?>">
+        <a class="btn btn-sm btn-warning" href="/index.php?module=quanlythuoc&controller=sanpham&action=detail&id=<?php echo $id; ?>">
             Chi Tiết
         </a>
     <?php
@@ -75,7 +75,7 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-danger" title="Bạn có muốn xóa danh mục này?" href="/index.php?module=quanlythuoc&controller=sanpham&action=isdelete&id=<?php echo $id; ?>">
+        <a class="btn btn-sm btn-danger" title="Bạn có muốn xóa danh mục này?" href="/index.php?module=quanlythuoc&controller=sanpham&action=isdelete&id=<?php echo $id; ?>">
             Xóa
         </a>
     <?php

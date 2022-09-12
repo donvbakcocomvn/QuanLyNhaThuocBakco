@@ -23,8 +23,7 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
     }
 
     function index()
-    {
-
+    { 
         \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Phieu_DS]);
         $modelItem = new \Module\quanlythuoc\Model\PhieuXuatNhap();
         $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
@@ -36,12 +35,12 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
         $pageNumber = max(1, $pageNumber);
         $total = 0;
         $DanhSachTaiKhoan = $modelItem->GetItems($params, $indexPage, $pageNumber, $total);
+         
         $data["items"] = $DanhSachTaiKhoan;
         $data["indexPage"] = $indexPage;
         $data["pageNumber"] = $pageNumber;
         $data["params"] = $params;
-        $data["total"] = $total;
-
+        $data["total"] = $total; 
         $this->View($data);
     }
 

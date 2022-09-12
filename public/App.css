@@ -1,18 +1,41 @@
-.system-alert{
+.system-alert {
     position: fixed;
     right: 0px;
     width: 250px;
     top: 25%;
     z-index: 9999;
 }
-.d-flex{
+
+.d-flex {
     display: flex;
 }
-.no-border-radius{
+
+.no-border-radius {
     border-radius: 0px;
 }
 
-.table-thuoc .form-group{
+.table-thuoc .form-group {
     /* margin-top: -20px; */
     margin-bottom: 0;
+}
+
+fieldset {
+    display: block;
+    margin-left: 2px;
+    margin-right: 2px;
+    padding-top: 0.35em;
+    padding-bottom: 0.625em;
+    padding-left: 0.75em;
+    padding-right: 0.75em;
+    border: 1px solid #000;
+    margin-bottom: 10px;
+}
+
+legend {
+    display: inline-block;
+    padding-left: 2px;
+    padding-right: 2px;
+    border: none;
+    width: auto;
+    font-size: 14px;
 }

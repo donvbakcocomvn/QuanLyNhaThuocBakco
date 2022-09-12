@@ -2,10 +2,11 @@
 
 namespace Model;
 
-class Common {
+class Common
+{
 
-    public function __construct() {
-
+    public function __construct()
+    {
     }
 
     public static function NumberToStringFomatZero($value, $numString = 6)
@@ -13,65 +14,76 @@ class Common {
         return str_pad($value, $numString, '0', STR_PAD_LEFT);
     }
 
-    public static function ToUrl($url) {
+    public static function ToUrl($url)
+    {
         header("Location: " . $url);
         exit();
     }
 
-    public static function TextInput($text) {
+    public static function TextInput($text)
+    {
         $text = trim($text);
         $text = htmlspecialchars($text);
         $text = addslashes($text);
         return $text;
     }
 
-    public static function uuid() {
-        return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
-                // 32 bits for "time_low"
-                mt_rand(0, 0xffff), mt_rand(0, 0xffff),
-                // 16 bits for "time_mid"
-                mt_rand(0, 0xffff),
-                // 16 bits for "time_hi_and_version",
-                // four most significant bits holds version number 4
-                mt_rand(0, 0x0fff) | 0x4000,
-                // 16 bits, 8 bits for "clk_seq_hi_res",
-                // 8 bits for "clk_seq_low",
-                // two most significant bits holds zero and one for variant DCE1.1
-                mt_rand(0, 0x3fff) | 0x8000,
-                // 48 bits for "node"
-                mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
-        );
+    public static function uuid()
+    {
+        $namespace = rand(11111, 99999);
+        $guid = hash("sha256", time() . $namespace);
+        $uid = uniqid(time(), true);
+        $data = $namespace;
+        $data .= $_SERVER['REQUEST_TIME'];
+        $data .= $_SERVER['HTTP_USER_AGENT'];
+        $data .= $_SERVER['REMOTE_ADDR'];
+        $data .= $_SERVER['REMOTE_PORT'];
+        $hash = strtoupper(hash('ripemd128', $uid . $guid . md5($data)));
+        $guid = substr($hash,  0,  8) . '-' .
+            substr($hash,  8,  4) . '-' .
+            substr($hash, 12,  4) . '-' .
+            substr($hash, 16,  4) . '-' .
+            substr($hash, 20, 12);
+        return $guid;
     }
 
-    public static function IsEmail($email) {
+    public static function IsEmail($email)
+    {
         return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 
-    public static function DateTimeFomatDatabase() {
+    public static function DateTimeFomatDatabase()
+    {
         return "Y-m-d H:i:s";
     }
 
-    public static function DateTimeFomatView() {
+    public static function DateTimeFomatView()
+    {
         return "d-m-Y";
     }
 
-    public static function DateFomatDatabase() {
+    public static function DateFomatDatabase()
+    {
         return "Y-m-d";
     }
 
-    public static function StrToDateDB($strdate) {
+    public static function StrToDateDB($strdate)
+    {
         return date(\Model\Common::DateFomatDatabase(), strtotime($strdate));
     }
 
-    public static function ForMatDMY($strdate) {
+    public static function ForMatDMY($strdate)
+    {
         return date(\Model\Common::DateFomatView(), strtotime($strdate));
     }
 
-    public static function DateFomatView() {
+    public static function DateFomatView()
+    {
         return "d-m-Y";
     }
 
-    public static function PhanTrang($TongSoDong, $TrangThuBaoNhieu, $SoDong, $LinkPhanTrang) {
+    public static function PhanTrang($TongSoDong, $TrangThuBaoNhieu, $SoDong, $LinkPhanTrang)
+    {
         $SoDong = max(1, intval($SoDong));
         $TrangThuBaoNhieu = max(1, intval($TrangThuBaoNhieu));
         $SoTrang = ceil($TongSoDong / $SoDong);
@@ -99,32 +111,33 @@ class Common {
 
 
         ob_start();
-        ?>
+?>
         <ul class="pagination pagination-md no-margin">
-            <li><a ><?php echo $TrangThuBaoNhieu . "/" . $SoTrang; ?></a></li>
-            <li><a href="<?php echo $_linkTrangDau ?>"><i class="fa fa-angle-double-left" ></i></a></li>
-            <li><a href="<?php echo $_linkTrangTrai ?>"><i class="fa fa-angle-left" ></i></a></li>
-            <li class="hidden-xs" ><a href="<?php echo $_linkTrangTraiCham ?>">...</a></li>
+            <li><a><?php echo $TrangThuBaoNhieu . "/" . $SoTrang; ?></a></li>
+            <li><a href="<?php echo $_linkTrangDau ?>"><i class="fa fa-angle-double-left"></i></a></li>
+            <li><a href="<?php echo $_linkTrangTrai ?>"><i class="fa fa-angle-left"></i></a></li>
+            <li class="hidden-xs"><a href="<?php echo $_linkTrangTraiCham ?>">...</a></li>
             <?php
             for ($index = $TrangMin; $index <= $TrangMax; $index++) {
                 $_link = str_replace("[i]", $index, $LinkPhanTrang);
-                ?>
-                <li class="<?php echo $TrangThuBaoNhieu == $index ? 'active' : ''; ?>" >
+            ?>
+                <li class="<?php echo $TrangThuBaoNhieu == $index ? 'active' : ''; ?>">
                     <a href="<?php echo $_link; ?>"><?php echo $index; ?></a>
                 </li>
-                <?php
+            <?php
             }
             ?>
-            <li class="hidden-xs" ><a href="<?php echo $_linkTrangPhaiCham ?>">...</a></li>
-            <li><a href="<?php echo $_linkTrangPhai ?>"><i class="fa fa-angle-right" ></i></a></li>
-            <li><a href="<?php echo $_linkTrangCuoi ?>"><i class="fa fa-angle-double-right" ></i></a></li>
+            <li class="hidden-xs"><a href="<?php echo $_linkTrangPhaiCham ?>">...</a></li>
+            <li><a href="<?php echo $_linkTrangPhai ?>"><i class="fa fa-angle-right"></i></a></li>
+            <li><a href="<?php echo $_linkTrangCuoi ?>"><i class="fa fa-angle-double-right"></i></a></li>
         </ul>
-        <?php
+<?php
         $str = ob_get_clean();
         return $str;
     }
 
-    public static function BoDauTienViet($str) {
+    public static function BoDauTienViet($str)
+    {
         if (!$str)
             return false;
 
@@ -159,38 +172,46 @@ class Common {
         return $str;
     }
 
-    public static function ViewPrice($number) {
+    public static function ViewPrice($number)
+    {
         return number_format($number, 0, ".", ".") . " VND";
     }
 
-    public static function ViewNumber($number) {
+    public static function ViewNumber($number)
+    {
         return number_format($number, 0, ".", ".");
     }
-    
-    public static function CheckName($param) {
+
+    public static function CheckName($param)
+    {
         return strip_tags($param);
     }
 
-    public static function DateTime() {
+    public static function DateTime()
+    {
         return date("Y-m-d H:i:s", time());
     }
 
-    public static function TextInputNoHtml($text) {
+    public static function TextInputNoHtml($text)
+    {
         $text = strip_tags($text);
         $text = trim($text);
         $text = addslashes($text);
         return $text;
     }
 
-    public static function Index($index, $indexPage, $pageNumber) {
+    public static function Index($index, $indexPage, $pageNumber)
+    {
         return ($indexPage - 1) * $pageNumber + $index + 1;
     }
 
-    public static function DaysInMonth($month, $year) {
+    public static function DaysInMonth($month, $year)
+    {
         return $month == 2 ? ($year % 4 ? 28 : ($year % 100 ? 29 : ($year % 400 ? 28 : 29))) : (($month - 1) % 7 % 2 ? 30 : 31);
     }
 
-    public static function NameDateByDate($ngayThanhNam, $isvalue = false) {
+    public static function NameDateByDate($ngayThanhNam, $isvalue = false)
+    {
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $weekday = date("l", strtotime($ngayThanhNam));
         $weekday = strtolower($weekday);
@@ -209,7 +230,8 @@ class Common {
         return $weekday;
     }
 
-    public static function FromDateToDateToList($begin, $end) {
+    public static function FromDateToDateToList($begin, $end)
+    {
         $begin = new \DateTime($begin);
         $end = new \DateTime($end);
         $end->setTime(0, 0, 1);
@@ -222,7 +244,8 @@ class Common {
         return $dateList;
     }
 
-    public static function NgayTrongTuan() {
+    public static function NgayTrongTuan()
+    {
         $a = [
             "monday" => "Thứ Hai",
             "tuesday" => "Thứ ba",
@@ -234,5 +257,4 @@ class Common {
         ];
         return $a;
     }
-
 }

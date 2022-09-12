@@ -1,6 +1,7 @@
 <?php
 
 namespace Module\quanlythuoc\Model;
+
 use Model\Common;
 
 class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
@@ -8,18 +9,14 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
 
     public $Id;
     public $IdPhieu;
-    public $IdThuoc;
-    public $SoLuong;
-    public $SoLo;
-    public $NhaSanXuat;
-    public $NuocSanXuat;
-    public $Price;
+    public $TongTien;
+    public $DoViCungCap;
     public $XuatNhap;
-    public $CreateRecord;
-    public $UpdateRecord;
     public $NoiDungPhieu;
     public $GhiChu;
     public $NgayNhap;
+    public $CreateRecord;
+    public $UpdateRecord;
     public $IsDelete;
 
 
@@ -34,21 +31,17 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
             }
             if ($dm) {
 
-                $this->Id = isset($dm["Id"]) ? $dm["Id"] : null;
-                $this->IdPhieu = isset($dm["IdPhieu"]) ? $dm["IdPhieu"] : null;
-                $this->IdThuoc = isset($dm["IdThuoc"]) ? $dm["IdThuoc"] : null;
-                $this->SoLuong = isset($dm["SoLuong"]) ? $dm["SoLuong"] : null;
-                $this->SoLo = isset($dm["SoLo"]) ? $dm["SoLo"] : null;
-                $this->NhaSanXuat = isset($dm["NhaSanXuat"]) ? $dm["NhaSanXuat"] : null;
-                $this->NuocSanXuat = isset($dm["NuocSanXuat"]) ? $dm["NuocSanXuat"] : null;
-                $this->Price = isset($dm["Price"]) ? $dm["Price"] : null;
-                $this->XuatNhap = isset($dm["XuatNhap"]) ? $dm["XuatNhap"] : null;
-                $this->CreateRecord = isset($dm["CreateRecord"]) ? $dm["CreateRecord"] : null;
-                $this->UpdateRecord = isset($dm["UpdateRecord"]) ? $dm["UpdateRecord"] : null;
-                $this->NoiDungPhieu = isset($dm["NoiDungPhieu"]) ? $dm["NoiDungPhieu"] : null;
-                $this->GhiChu = isset($dm["GhiChu"]) ? $dm["GhiChu"] : null;
-                $this->NgayNhap = isset($dm["NgayNhap"]) ? $dm["NgayNhap"] : null;
-                $this->IsDelete = isset($dm["IsDelete"]) ? $dm["IsDelete"] : null;
+                $this->Id = $dm["Id"] ?? null;
+                $this->IdPhieu = $dm["IdPhieu"] ?? null;
+                $this->TongTien = $dm["TongTien"] ?? null;
+                $this->DoViCungCap = $dm["DoViCungCap"] ?? null;
+                $this->XuatNhap = $dm["XuatNhap"] ?? null;
+                $this->NoiDungPhieu = $dm["NoiDungPhieu"] ?? null;
+                $this->GhiChu = $dm["GhiChu"] ?? null;
+                $this->NgayNhap = $dm["NgayNhap"] ?? null;
+                $this->CreateRecord = $dm["CreateRecord"] ?? null;
+                $this->UpdateRecord = $dm["UpdateRecord"] ?? null;
+                $this->IsDelete = $dm["IsDelete"] ?? null;
             }
         }
     }
@@ -103,21 +96,16 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
         $_SESSION["DSThuocPhieuNhap"][$index] = [];
     }
 
-    public static function ThemDSThuocPhieuNhap($phieu,$index)
+    public static function ThemDSThuocPhieuNhap($phieu, $index)
     {
         $_SESSION["DSThuocPhieuNhap"][$index] = $phieu;
     }
-    
 
-    function CreatIdPhieu($IdPhieu)
+
+    function CreatIdPhieu($IdPhieu = null)
     {
-        $date = date("Y-m-d");
-        $sql = " SELECT COUNT(*) AS `Tong` FROM `lap1_qlthuoc_phieuxuatnhap` WHERE `CreateRecord` LIKE '%{$date}%'";
-        $result = $this->GetRow($sql);
-        $tong = $result["Tong"] + 1;
-        $Id = Common::NumberToStringFomatZero($tong, 3);
-        $Id = $IdPhieu . date("dmy{$Id}");
-        return $Id;
+
+        return Common::uuid();
     }
 
     // Hàm Xóa Tạm Thời
@@ -129,21 +117,20 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
         $this->Update($model, $where);
     }
 
-    public function GetItems($params, $indexPage, $pageNumber, &$total) {
+    public function GetItems($params, $indexPage, $pageNumber, &$total)
+    {
         $name = isset($params["keyword"]) ? $params["keyword"] : '';
         $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
         $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
-        $isShowSql = "and `isShow` >= 0 ";
+        $isShowSql = "and `IsDelete` = 0 ";
         $danhmucSql = "";
-
         if ($isShow) {
-            $isShowSql = "and `isShow` = '{$isShow}' ";
+            $isShowSql = "and `IsDelete` = '{$isShow}' ";
         }
         if ($danhmuc) {
             $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
-        }
-
-        $where = " (`IdPhieu` like '%{$name}%' or `IdThuoc` like '%{$name}%' {$danhmucSql}) and `isDelete` = 0 ";
+        } 
+        $where = " (`IdPhieu` like '%{$name}%' {$danhmucSql}) {$isShowSql} ";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 

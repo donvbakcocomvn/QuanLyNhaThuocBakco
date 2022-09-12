@@ -110,31 +110,26 @@ $modelUser = Model\User::CurentUser();
                                                     <fieldset>
                                                         <legend>Thông Tin Hợp Đồng</legend>
                                                         <div class="row">
-                                                            <div class="col-md-4">
+                                                            <div class="col-md-3">
                                                                 <?php
                                                                 \Model\Users\FormUserInfor::SoHopDong($modelUser->UserInfor("SoHopDong")->Val)->renderHTML();
                                                                 ?>
                                                             </div>
-                                                            <div class="col-md-4">
+                                                            <div class="col-md-3">
                                                                 <?php
                                                                 \Model\Users\FormUserInfor::ThoiHangHopDong($modelUser->UserInfor("ThoiHangHopDong")->Val)->renderHTML();
                                                                 ?>
                                                             </div>
-                                                            <div class="col-md-4">
+                                                            <div class="col-md-3">
                                                                 <?php
                                                                 \Model\Users\FormUserInfor::NgayKyHopDong($modelUser->UserInfor("NgayKyHopDong")->Val)->renderHTML();
                                                                 ?>
                                                             </div>
-                                                            <div class="col-md-4">
+                                                            <div class="col-md-3">
                                                                 <?php
                                                                 \Model\Users\FormUserInfor::TinhTrangHD($modelUser->UserInfor("TinhTrangHD")->Val)->renderHTML();
                                                                 ?>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <?php
-                                                                \Model\Users\FormUserInfor::TinhTrangHD($modelUser->UserInfor("TinhTrangHD")->Val)->renderHTML();
-                                                                ?>
-                                                            </div>
+                                                            </div> 
                                                         </div>
                                                     </fieldset>
                                                 </div>

@@ -247,17 +247,25 @@ class Functions
                                 <?php
                                 if (\Model\Permission::CheckPremision([User::Admin, Permission::QLT_Thuoc_Post], []) == true) {
                                 ?>
-                                    <li><a href="/index.php?module=quanlythuoc&controller=danhmuc&action=index"><i class="fa fa-circle-o"></i> Danh Mục thuốc</a></li>
+                                    <li><a href="/index.php?module=quanlythuoc&controller=sanpham&action=index"><i class="fa fa-circle-o"></i>
+                                            Thuốc
+                                        </a></li>
                                 <?php  } ?>
                                 <?php
                                 if (\Model\Permission::CheckPremision([User::Admin, Permission::QLT_Thuoc_Post], []) == true) {
                                 ?>
-                                    <li><a href="/index.php?module=quanlythuoc&controller=sanpham&action=index"><i class="fa fa-circle-o"></i> Danh sách thuốc</a></li>
+                                    <li><a href="/index.php?module=quanlythuoc&controller=danhmuc&action=index"><i class="fa fa-circle-o"></i>
+                                            Danh Mục Thuốc
+                                        </a>
+                                    </li>
                                 <?php  } ?>
+
                                 <?php
                                 if (\Model\Permission::CheckPremision([User::Admin, Permission::QLT_Thuoc_Post], []) == true) {
                                 ?>
-                                    <li><a href="/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=index"><i class="fa fa-circle-o"></i> Danh Sách Phiếu</a></li>
+                                    <li><a href="/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=index"><i class="fa fa-circle-o"></i>
+                                            Xuất/Nhập Thuốc
+                                        </a></li>
                                 <?php  } ?>
                             </ul>
                         </li>
@@ -278,16 +286,16 @@ class Functions
                     }
 
                     if (\Model\Permission::CheckPremision([KhachhangPermission::KhachHangDS, User::Admin], []) == true) {
-                        ?>
-                            <li class="<?php echo \Application::$_Module == "khachhang" ? 'active' : '' ?>">
-                                <a href="/index.php?module=donthuoc&controller=index&action=index">
-                                    <i class="fa fa-user-plus"></i>
-                                    <span>Quản lý đơn thuốc</span>
-                                </a>
-    
-                            </li>
-                        <?php
-                        }
+                    ?>
+                        <li class="<?php echo \Application::$_Module == "khachhang" ? 'active' : '' ?>">
+                            <a href="/index.php?module=donthuoc&controller=index&action=index">
+                                <i class="fa fa-user-plus"></i>
+                                <span>Quản lý đơn thuốc</span>
+                            </a>
+
+                        </li>
+                    <?php
+                    }
 
                     // \Module\nhanvien\Functions::menulayout(\Application::$_Module);
 
@@ -353,7 +361,8 @@ class Functions
                                 <li><a href="/options/hopdong/"><i class="fa fa-circle-o"></i> Hợp Đồng</a></li>
                                 <li><a href="/options/tinhtrang/"><i class="fa fa-circle-o"></i>Tinh trạng Hợp Đồng</a></li>
                                 <li><a href="/options/hinhthuchd/"><i class="fa fa-circle-o"></i> Hình Thức Hợp Đồng</a></li> -->
-                                <li><a href="/options/gioitinh/"><i class="fa fa-circle-o"></i> Giới Tính</a></li><li><a href="/options/cachdungthuoc/"><i class="fa fa-circle-o"></i> Cách Dùng Thuốc</a></li>
+                                <li><a href="/options/gioitinh/"><i class="fa fa-circle-o"></i> Giới Tính</a></li>
+                                <li><a href="/options/cachdungthuoc/"><i class="fa fa-circle-o"></i> Cách Dùng Thuốc</a></li>
                                 <li><a href="/options/donviquydoi/"><i class="fa fa-circle-o"></i> Đơn vị quy đổi</a></li>
                                 <li><a href="/options/optiondonthuoc/"><i class="fa fa-circle-o"></i> Cài Đặt Loại Đơn </a></li>
                                 <!-- <li><a href="/options/chucvu/"><i class="fa fa-circle-o"></i> Chức Vụ</a></li>

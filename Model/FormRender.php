@@ -2,8 +2,8 @@
 
 namespace Model;
 
-class FormRender {
-
+class FormRender
+{
     const Required = "required";
     const Readonly = "readonly";
     const Disabled = "disabled";
@@ -13,35 +13,48 @@ class FormRender {
 
     public $element;
 
-    function __construct($element) {
+    function __construct($element)
+    {
         $this->element = $element;
     }
 
-    public function render() {
+    public function render()
+    {
         return $this->element->render();
     }
 
-    public function renderHTML() {
+    public function renderHTML()
+    {
         $label = $this->element->getLabel();
+        $attrStr =  $this->element->getAttributes();
+        $required = "";
+        if (strpos($attrStr, FormRender::Required) > 0) {
+            $required = "(*)";
+        }
         $htmlTemplate = <<<HTML
                 <div class="form-group">
-                                    <label >$label</label>
+                                    <label >$label <span style="color:red" >$required</span></label>
 HTML;
         echo $htmlTemplate;
         $this->element->render();
         echo "</div>";
     }
 
-    public function renderHTMLIcon($icon) {
+    public function renderHTMLIcon($icon)
+    {
         $label = $this->element->getLabel();
+        $attrStr =  $this->element->getAttributes();
+        $required = "";
+        if (strpos($attrStr, FormRender::Required) > 0) {
+            $required = "(*)";
+        }
         $htmlTemplate = <<<HTML
                 <div class="form-group">
-                                    <label >$label</label>
+                <label >$label <span style="color:red" >$required</span> </label>
                 
 HTML;
         echo $htmlTemplate;
         $this->element->render();
         echo "</div>";
     }
-
 }

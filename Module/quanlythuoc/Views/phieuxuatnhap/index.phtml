@@ -18,11 +18,9 @@
             <div class="box-header">
                 <h3 class="box-title">Danh Sách Phiếu</h3>
                 <div class="box-tools">
-                    <?php
-
-use Model\Common;
-use Module\quanlythuoc\Model\PhieuXuatNhap;;
-
+                    <?php 
+                    use Model\Common;
+                    use Module\quanlythuoc\Model\PhieuXuatNhap;  
                     Module\quanlythuoc\Model\btnHtml::btnThemPhieuXuatNhap();
                     ?>
                 </div>
@@ -45,9 +43,7 @@ use Module\quanlythuoc\Model\PhieuXuatNhap;;
                     <tbody>
                         <?php
                         foreach ($items as $index => $item) {
-                            $_item = new PhieuXuatNhap($item);
-                            // var_dump($items);
-                            // echo $_item->Id;
+                            $_item = new PhieuXuatNhap($item); 
                         ?>
                             <tr>
                                 <td style="width: 200px;">
