@@ -263,7 +263,7 @@ class Functions
                                 <?php
                                 if (\Model\Permission::CheckPremision([User::Admin, Permission::QLT_Thuoc_Post], []) == true) {
                                 ?>
-                                    <li><a href="/quanlythuoc/phieuxuatnhap/><i class="fa fa-circle-o"></i>
+                                    <li><a href="/quanlythuoc/phieuxuatnhap/"><i class="fa fa-circle-o"></i>
                                             Xuất/Nhập Thuốc
                                         </a></li>
                                 <?php  } ?>
