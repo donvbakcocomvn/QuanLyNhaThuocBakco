@@ -29,6 +29,24 @@
 
                     Module\donthuoc\Model\btnHtml::btnThemDonThuoc();
                     ?>
+
+                    <a class="btn btn-primary" data-toggle="modal" href='#modal-id'>Hướng dẫn</a>
+                    <div class="modal fade" id="modal-id">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <?php
+                                    echo file_get_contents('.\public\huongdan\huongdansudung.html');
+                                    ?>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-success">Sửa File</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             <div class="box-body">
@@ -76,7 +94,7 @@
                                 <td><?php echo $_item->ChanDoanBenh ?></td>
                                 <td><?php echo $_item->ThuocLoaiDon() ?></td>
                                 <td><?php echo $_item->TongNgayDung; ?></td>
-                                
+
                             </tr>
                         <?php
                         }

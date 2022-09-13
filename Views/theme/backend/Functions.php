@@ -139,7 +139,7 @@ class Functions
     {
     ?>
 
-        <div class="control-sidebar-bg"></div>
+        <div class="control-sidebar-bg "></div>
     <?php
     }
 
@@ -147,7 +147,7 @@ class Functions
     {
         $user = \Model\User::CurentUser();
     ?>
-        <header class=" main-header">
+        <header class=" main-header ">
             <!-- Logo -->
             <a href="/backend/" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -389,7 +389,7 @@ class Functions
     public static function footer()
     {
     ?>
-        <footer class="main-footer">
+        <footer class="main-footer no-print">
             <div class="pull-right hidden-xs">
                 <b>Version</b> 0.0.1
             </div>

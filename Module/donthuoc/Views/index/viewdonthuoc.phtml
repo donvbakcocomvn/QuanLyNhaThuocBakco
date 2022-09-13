@@ -2,20 +2,14 @@
 
 use Module\cart\Model\Order;
 use PhpOffice\PhpSpreadsheet\Calculation\DateTimeExcel\Days;
-use Common\Common;
 use Model\Products;
 use Module\donthuoc\Model\DonThuoc;
 use Module\quanlythuoc\Model\SanPham;
+use Module\benhnhan\Model\BenhNhan;
+use Model\Common;
+use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Sum;
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
 <style>
     @media print {
 
@@ -28,8 +22,6 @@ use Module\quanlythuoc\Model\SanPham;
     .main {
         margin: 0;
         padding: 0;
-        box-sizing: border-box;
-        border: 1px solid #000;
     }
 
     .salesslip {
@@ -99,16 +91,14 @@ $donthuoc  = new DonThuoc($donthuoc);
 $IdDonThuoc = $donthuoc->Id;
 // var_dump($donthuoc);
 ?>
-
-<body>
-    <div class="main">
+<div class="box box-default" style="border: none;">
+    <div class="main main-body">
         <div class="salesslip">
             <div class="shop">
-                <h2>PHÒNG KHÁM PHƯƠNG UYÊN</h2>
-                <h5>ĐC: 176 đường số 18,Bình Hưng Hòa,Bình Tân</h5>
-                <h5>Giờ làm việc: Sáng 7h30 - 11h, Chiều 17h - 20h30 (Nghỉ thứ 7)</h5>
-                <h3 style="margin: 0px;">ĐƠN THUỐC</h3>
-                <h5 style=" font-weight: 500; margin: 10px 0;">
+                <h4 style="margin: 0px; margin-top:5px;"><b>PHÒNG KHÁM PHƯƠNG UYÊN</b></h4>
+                <span style="font-size: 11px;">ĐC: 176 đường số 18,Bình Hưng Hòa,Bình Tân. Giờ làm việc: Sáng 7h30 - 11h, Chiều 17h - 20h30 (Nghỉ thứ 7)</span>
+                <span><b>ĐƠN THUỐC</b></span>
+                <!-- <h5 style=" font-weight: 500; margin: 10px 0;">
                     <?php $date = getdate();
                     // echo $date['weekday'] . ", ";
                     echo "Ngày " . $date['mday'] . " ";
@@ -118,7 +108,7 @@ $IdDonThuoc = $donthuoc->Id;
                     echo $date['minutes'] . " " . " phút" . " ";
                     echo $date['seconds'] . " " . " giây" . " ";
                     ?>
-                </h5>
+                </h5> -->
                 <!-- <h5 style="font-style: italic ;font-weight: 300; margin: 10px 0;">
                     <?php $date = getdate();
                     echo $date['hours'] . " " . "giờ" . " ";
@@ -126,13 +116,13 @@ $IdDonThuoc = $donthuoc->Id;
                     echo $date['seconds'] . " " . " giây" . " ";
                     ?>
                 </h5> -->
-                <h5 style="font-style: italic ;font-weight: 400; margin: 10px 0;">
+                <!-- <h5 style="font-style: italic ;font-weight: 400; margin: 10px 0;">
                     Mã đơn: <?php echo $donthuoc->Id; ?>
-                </h5>
+                </h5> -->
             </div>
             <!---------------------------------->
             <div style="margin: 0; border-bottom: 1px solid #00000042">
-                <table class="table table-hover">
+                <table class="table-hover" style="width: 100%;">
                     <thead>
                         <th>
                         <td>Họ và tên : <?php echo $donthuoc->NameBN; ?></td>
@@ -143,73 +133,82 @@ $IdDonThuoc = $donthuoc->Id;
                     </thead>
                     <thead>
                         <th>
-                        <td>Chẩn đoán : <?php echo $donthuoc->ChanDoanBenh; ?></td>
+                        <td>Quê quán : <?php echo DonThuoc::GetItemById('Address', $donthuoc->IdBenhNhan); ?></td>
                         </th>
                         <th>
-                        <td>Phái : <?php echo $donthuoc->GioiTinh(); ?></td>
+                        <td>Giới tính : <?php echo $donthuoc->GioiTinh(); ?></td>
+                        </th>
+                    </thead>
+                    <thead>
+                        <th>
+                        <td>Số điện thoại : <?php echo DonThuoc::GetItemById('Phone', $donthuoc->IdBenhNhan); ?></td>
+                        </th>
+                        <th>
+                        <td>Chẩn đoán : <?php echo $donthuoc->ChanDoanBenh; ?></td>
                         </th>
                     </thead>
                 </table>
             </div>
 
             <div style="margin: 0; border-bottom: 1px solid #00000042">
-                <table class="table table-bordered">
+                <table style="width: 100%;">
                     <thead>
                         <tr>
                             <th>STT</th>
-                            <th>Tên thuốc</th>
+                            <th class="text-center">Tên thuốc</th>
                             <th>Số lượng</th>
-                            <th></th>
-                            <th>Ghi chú</th>
+                            <th>Đơn giá</th>
+                            <th>Thành Tiền</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         $detail = DonThuoc::GetDetailById($IdDonThuoc);
+                        $common = new Common();
                         // var_dump($detail);
+                        $sum = 0;
                         foreach ($detail as $index => $DTdetail) { ?>
                             <tr>
-                                <td><?php echo $index + 1 ?></td>
+                                <td class="text-center"><b><?php echo $index + 1 ?></b></td>
                                 <th><?php echo SanPham::GetNameById($DTdetail['IdThuoc']); ?></th>
-                                <td><?php echo $DTdetail['SoLuong'] . ' ' . $DTdetail['DVT']; ?></td>
-                                <td></td>
-                                <td><?php echo $DTdetail['GhiChu']; ?></td>
+                                <td><span style="font-weight: 400 !important;"><?php echo $DTdetail['SoLuong'] . ' ' . $DTdetail['DVT']; ?></span></td>
+                                <td><?php echo Common::ViewNumber($DTdetail['GiaBan']); ?></td>
+                                <td><?php echo Common::ViewPrice($DTdetail['SoLuong'] * $DTdetail['GiaBan']); ?></td>
+                                <td><?php $sum += $DTdetail['SoLuong'] * $DTdetail['GiaBan'] ?></td>
                             </tr>
-                            <tr>
+                            <tr >
                                 <td></td>
-                                <td>Sáng: <?php echo SanPham::GetDesByVal($DTdetail['Sang'],'donviquydoi') . ' ' . $DTdetail['DVT']; ?></td>
-                                <td>Trưa: <?php echo SanPham::GetDesByVal($DTdetail['Trua'],'donviquydoi') . ' ' . $DTdetail['DVT']; ?></td>
-                                <td>Chiều: <?php echo SanPham::GetDesByVal($DTdetail['Chieu'],'donviquydoi') . ' ' . $DTdetail['DVT']; ?></td>
+                                <td>Sáng: <b><?php echo SanPham::GetDesByVal($DTdetail['Sang'], 'donviquydoi') . ' ' . $DTdetail['DVT']; ?></b></td>
+                                <td>Trưa: <b><?php echo SanPham::GetDesByVal($DTdetail['Trua'], 'donviquydoi') . ' ' . $DTdetail['DVT']; ?></b></td>
+                                <td>Chiều: <b><?php echo SanPham::GetDesByVal($DTdetail['Chieu'], 'donviquydoi') . ' ' . $DTdetail['DVT']; ?></b></td>
                             </tr>
                         <?php
                         }
                         ?>
-
                     </tbody>
                 </table>
-
             </div>
-
-
-
+            <tr>
+                <td><b>Tổng cộng :</b> <?php echo Common::ViewPrice($sum)." "."( ".$common->convert_number_to_words($sum)." )"?></td>
+            </tr>
             <!---------------------------------->
-            <div class="row text-center">
-                <div class="col-md-6"></div>
-                <div class="col-md-6">
-                    <h5 style=" font-weight: 500; margin: 10px 0;">
-                        <?php $date = getdate();
-                        // echo $date['weekday'] . ", ";
-                        echo "Ngày " . $date['mday'] . " ";
-                        echo "Tháng " . $date['mon'] . " ";
-                        echo "Năm " . $date['year'] . "";
-                        ?>
-                    </h5>
-                    <h5>Bác Sỹ</h5><br><br>
+            <div class="row">
+                <div class="col-xs-6"></div>
+                <div class="col-xs-6 text-center">
+                    <h6 style=" font-weight: 500; margin: 10px 0;">
+                        <i><?php $date = getdate();
+                            // echo $date['weekday'] . ", ";
+                            echo "Ngày " . $date['mday'] . " ";
+                            echo "Tháng " . $date['mon'] . " ";
+                            echo "Năm " . $date['year'] . "";
+                            ?></i>
+                    </h6>
+                    <h6>Bác Sỹ</h6><br><br>
                 </div>
             </div>
             <div class="footer">
-                <h5 style="margin: 10px 0; letter-spacing: 0.7 px; font-style: italic;">
-                    Khi tái khám nhớ mang theo đơn thuốc
+                <h5 style="margin: 10px 0; letter-spacing: 0.7 px; font-style: italic;text-align: left;">
+                    <b>* Khi tái khám nhớ mang theo đơn thuốc</b>
                 </h5>
             </div>
             <button type="submit" onclick="window.print()" class="no-print btn">
@@ -217,4 +216,4 @@ $IdDonThuoc = $donthuoc->Id;
             </button>
         </div>
     </div>
-</body>
+</div>

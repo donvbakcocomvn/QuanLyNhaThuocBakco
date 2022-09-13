@@ -50,11 +50,6 @@ class BenhNhan extends \Model\DB implements \Model\IModelService
         }
     }
 
-    function asdasd()
-    {
-        # code...
-    }
-
     public function GetName()
     {
         echo $sql = "SELECT `Name` FROM `lap1_benhnhan` WHERE 1";
