@@ -91,7 +91,13 @@ $donthuoc  = new DonThuoc($donthuoc);
 $IdDonThuoc = $donthuoc->Id;
 // var_dump($donthuoc);
 ?>
+
 <div class="box box-default" style="border: none;">
+<ol class="breadcrumb no-print">
+    <li><a href="/index.php?controller=backend">Home</a></li>
+    <li><a href="/index.php?module=donthuoc&controller=index&action=index">Danh Sách Đơn Thuốc</a></li>
+    <li> Đơn thuốc chi tiết <?php echo $IdDonThuoc; ?> </li>
+</ol>
     <div class="main main-body">
         <div class="salesslip">
             <div class="shop">
@@ -178,9 +184,9 @@ $IdDonThuoc = $donthuoc->Id;
                             </tr>
                             <tr >
                                 <td></td>
-                                <td>Sáng: <b><?php echo SanPham::GetDesByVal($DTdetail['Sang'], 'donviquydoi') . ' ' . $DTdetail['DVT']; ?></b></td>
-                                <td>Trưa: <b><?php echo SanPham::GetDesByVal($DTdetail['Trua'], 'donviquydoi') . ' ' . $DTdetail['DVT']; ?></b></td>
-                                <td>Chiều: <b><?php echo SanPham::GetDesByVal($DTdetail['Chieu'], 'donviquydoi') . ' ' . $DTdetail['DVT']; ?></b></td>
+                                <td><i>Sáng:</i> <b><?php echo SanPham::GetDesByVal($DTdetail['Sang'], 'donviquydoi') . ' ' . $DTdetail['DVT']; ?></b></td>
+                                <td><i>Trưa:</i> <b><?php echo SanPham::GetDesByVal($DTdetail['Trua'], 'donviquydoi') . ' ' . $DTdetail['DVT']; ?></b></td>
+                                <td><i>Chiều:</i> <b><?php echo SanPham::GetDesByVal($DTdetail['Chieu'], 'donviquydoi') . ' ' . $DTdetail['DVT']; ?></b></td>
                             </tr>
                         <?php
                         }

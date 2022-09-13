@@ -36,12 +36,14 @@
                             <div class="modal-content">
                                 <div class="modal-body">
                                     <?php
-                                    echo file_get_contents('.\public\huongdan\huongdansudung.html');
+                                    $link = '.\public\huongdan\huongdansudung.html';
+                                    $path = file_get_contents($link);
+                                    echo $path;
                                     ?>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-success">Sửa File</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <a href="<?php echo "/huongdan/put/?link=$link"?>" type="button" class="btn btn-success">Sửa File</a>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng lại</button>
                                 </div>
                             </div>
                         </div>
