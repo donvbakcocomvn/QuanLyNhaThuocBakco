@@ -350,7 +350,7 @@ class Functions
                             <a href="#">
                                 <i class="fa fa-gears"></i>
                                 <span>Cài Đặt</span>
-                                <span class="label label-primary pull-right">4</span>
+                                <!-- <span class="label label-primary pull-right">4</span> -->
                             </a>
                             <ul class="treeview-menu">
                                 <li><a href="/locations/index"><i class="fa fa-circle-o"></i> Tỉnh Thành Phố</a></li>

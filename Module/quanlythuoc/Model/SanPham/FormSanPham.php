@@ -98,7 +98,7 @@ class FormSanPham implements iFormSanPham {
 	function Gianhap($val = null) {
 		$properties = self::$properties;
         $properties["value"] = $val;
-        $properties[FormRender::Required] = "true";
+        // $properties[FormRender::Required] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
         return new FormRender(new Element\Textbox("Giá Nhập", $name, $properties));
 	}

@@ -46,7 +46,6 @@
                             <th>Chẩn Đoán</th>
                             <th>Thuộc Loại Đơn</th>
                             <th>Ngày Dùng</th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,10 +58,12 @@
                             // var_dump($_item);
                         ?>
                             <tr>
-                                <td style="width: 130px;">
+                                <td style="width: 250px;">
                                     <?php
                                     echo Module\donthuoc\Model\btnHtml::btnSuaDonThuoc($_item->Id);
                                     echo Module\donthuoc\Model\btnHtml::btnCopyDonThuoc($_item->Id);
+                                    echo Module\donthuoc\Model\btnHtml::btnXoaDonThuoc($_item->Id);
+                                    echo Module\donthuoc\Model\btnHtml::btnchitiet($_item->Id);
                                     ?>
                                 </td>
                                 <td><?php echo $index + 1; ?></td>
@@ -75,11 +76,7 @@
                                 <td><?php echo $_item->ChanDoanBenh ?></td>
                                 <td><?php echo $_item->ThuocLoaiDon() ?></td>
                                 <td><?php echo $_item->TongNgayDung; ?></td>
-                                <td>
-                                    <?php
-                                    echo Module\donthuoc\Model\btnHtml::btnXoaDonThuoc($_item->Id);
-                                    ?>
-                                </td>
+                                
                             </tr>
                         <?php
                         }

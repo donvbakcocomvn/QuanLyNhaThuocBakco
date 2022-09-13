@@ -70,6 +70,31 @@ class SanPham extends \Model\DB implements \Model\IModelService {
         }
     }
 
+    // Lấy Des by value trong options
+    public static function GetDesByVal($val, $group)
+    {
+        $sp = new SanPham();
+        $sql = "SELECT `Des` FROM `lap1_options` WHERE `Val` LIKE '$val' AND `GroupsId` LIKE '$group'";
+        $result = $sp->GetRow($sql);
+        return $result['Des'];
+    }
+
+    // Lấy Name thuốc theo Id 1 dòng 
+    public static function GetNameById($id)
+    {
+        $sp = new SanPham();
+        $sql = "SELECT `Name` FROM `lap1_qlthuoc_thuoc` WHERE `Id` = '$id'";
+        $result = $sp->GetRow($sql);
+        return $result['Name'];
+    }
+
+    public function GetBySoLuong()
+    {
+        $sql = "SELECT * FROM `lap1_qlthuoc_thuoc` WHERE `Soluong` < 100 ORDER BY `Name` ASC";
+        $result = $this->GetRows($sql);
+        return $result;
+    }
+
     public function GetCDTById($id)
     {
         $sql = "SELECT `CachDung` FROM `lap1_qlthuoc_thuoc` WHERE `Id` = '$id'";

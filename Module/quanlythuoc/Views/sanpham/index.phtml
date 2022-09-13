@@ -32,16 +32,17 @@
                         <tr>
                             <td></td>
                             <th>STT</th>
-                            <th>Mã Thuốc</th>
-                            <th>Tên Thuốc</th>
-                            <th>Tên Biệt Dược</th>
-                            <th>Cách Dùng</th>
-                            <th>Thuộc Loại</th>
-                            <th>Số Lượng</th>
+                            <th>Mã thuốc</th>
+                            <th>Tên thuốc</th>
+                            <th>Tên biệt dược</th>
+                            <th>Số lượng cũ</th>
+                            <th>Số lượng mới</th>
+                            <th>Tổng</th>
+                            <th>Số lượng xuất</th>
+                            <th>Số lượng hiện tại</th>
+                            <th>Giá nhập</th>
+                            <th>Giá bán</th>
                             <!-- <th>Đơn Vị Quy Đổi</th> -->
-                            <th>Giá Niêm Yết</th>
-                            <th>Đơn Vị Tính</th>
-                            <th>Hạn Dùng</th>
                             <!-- <th>Công dụng</th> -->
                             <!-- <th>Nhà Sản Xuất</th> -->
                             <!-- <th>Ghi Chú</th> -->
@@ -65,13 +66,18 @@
                                 <td><?php echo $_item->Id; ?></td>
                                 <td><?php echo $_item->Name; ?></td>
                                 <td><?php echo $_item->Namebietduoc; ?></td>
-                                <td><?php echo $_item->CachDungThuoc(); ?></td>
-                                <td><?php echo $_item->IdLoaiThuoc()->Name; ?></td>
-                                <td><?php echo $_item->Soluong ?></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="text-center"><?php echo $_item->Soluong ?></td>
+                                <!-- <td><?php echo $_item->CachDungThuoc(); ?></td> -->
+                                <!-- <td><?php echo $_item->IdLoaiThuoc()->Name; ?></td> -->
                                 <!-- <th><?php echo $_item->DonViQuyDoi(); ?></th> -->
+                                <td><?php echo Common::ViewPrice($_item->Gianhap); ?></td>
                                 <td><?php echo Common::ViewPrice($_item->Giaban); ?></td>
-                                <td><?php echo $_item->DonViTinh(); ?></td>
-                                <td><?php echo Common::ForMatDMY($_item->HSD); ?></td>
+                                <!-- <td><?php echo $_item->DonViTinh(); ?></td> -->
+                                <!-- <td><?php echo Common::ForMatDMY($_item->HSD); ?></td> -->
                                 <!-- <th><?php echo $_item->Tacdung; ?></th> -->
                                 <!-- <th><?php echo $_item->NhaSX; ?></th> -->
                                 <!-- <th><?php echo $_item->Ghichu; ?></th> -->

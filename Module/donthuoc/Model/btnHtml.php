@@ -17,7 +17,7 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-warning" href="/index.php?module=donthuoc&controller=index&action=detail&id=<?php echo $id; ?>">
+        <a class="btn btn-info" href="/index.php?module=donthuoc&controller=index&action=viewdonthuoc&id=<?php echo $id; ?>">
             Chi tiết
         </a>
     <?php
@@ -40,7 +40,7 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-info" href="/index.php?module=donthuoc&controller=index&action=post&isnew=1">
+        <a class="btn btn-primary" href="/index.php?module=donthuoc&controller=index&action=post">
             <i class="fa fa-plus"></i> Thêm Toa Thuốc Mới</a>
     <?php
     }
