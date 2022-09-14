@@ -25,9 +25,9 @@ $(function() {
         $(".btn-confirm").click(function() {
             return confirm($(this).attr("title"));
         });
-        $(".btn-danger").click(function() {
-            return confirm($(this).attr("title"));
-        });
+        // $(".btn-danger").click(function() {
+        //     return confirm($(this).attr("title"));
+        // });
 
         $(".system-alert").hide(5000);
 

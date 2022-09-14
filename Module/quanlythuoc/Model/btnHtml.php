@@ -14,10 +14,10 @@ class btnHtml
 
     static function btnImportSanPham()
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_Thuoc_Post, Permission::QLT_Thuoc_Put,Permission::QLT_DanhMuc_Delete, Permission::QLT_DanhMuc_Import]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_Thuoc_Post, Permission::QLT_Thuoc_Put, Permission::QLT_DanhMuc_Delete, Permission::QLT_DanhMuc_Import]) == false) {
             return;
         }
-    ?>
+?>
         <a class="btn btn-warning" href="/index.php?module=quanlythuoc&controller=sanpham&action=import">
             <i class="fa fa-filter"></i> Import</a>
     <?php
@@ -124,7 +124,7 @@ class btnHtml
         <a class="btn btn-danger" title="Bạn có muốn xóa danh mục này?" href="/index.php?module=quanlythuoc&controller=danhmuc&action=isdelete&id=<?php echo $id; ?>">
             Xóa
         </a>
-<?php
+    <?php
     }
 
     public static function btnThemPhieuXuatNhap()
@@ -144,7 +144,7 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-success" href="/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=put&id=<?php echo $id; ?>">
+        <a class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="top" title="Sửa phiếu" href="/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=put&id=<?php echo $id; ?>">
             Sửa
         </a>
     <?php
@@ -156,10 +156,10 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-danger" title="Bạn có muốn xóa danh mục này?" href="/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=isdelete&id=<?php echo $id; ?>">
+        <a class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="Xóa phiếu" title="Bạn có muốn xóa phiếu này?" href="/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=isdelete&id=<?php echo $id; ?>">
             Xóa
         </a>
-<?php
+    <?php
     }
 
     public static function btnChiTietPhieuXuatNhap($id)
@@ -168,9 +168,9 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-warning" href="/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=detail&id=<?php echo $id; ?>">
+        <a class="btn btn-sm btn-warning" data-toggle="tooltip" data-placement="top" title="Xem phiếu" href="/quanlythuoc/phieuxuatnhap/detail/<?php echo $id; ?>">
             Chi Tiết
         </a>
-    <?php
+<?php
     }
 }

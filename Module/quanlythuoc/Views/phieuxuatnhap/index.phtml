@@ -3,6 +3,8 @@
     <li> Quản Lý Phiếu Xuất Nhập</li>
 </ol>
 
+
+
 <div class="container-fluid">
     <form method="get" action="/quanlythuoc/phieuxuatnhap/index/">
         <div class="form-group d-flex">
@@ -18,11 +20,37 @@
             <div class="box-header">
                 <h3 class="box-title">Danh Sách Phiếu</h3>
                 <div class="box-tools">
-                    <?php 
+                    <?php
+
                     use Model\Common;
-                    use Module\quanlythuoc\Model\PhieuXuatNhap;  
+                    use Module\quanlythuoc\Model\PhieuXuatNhap;
+
                     Module\quanlythuoc\Model\btnHtml::btnThemPhieuXuatNhap();
                     ?>
+                    <a class="btn btn-primary" target="_self" data-toggle="modal" href='#modal-id'>
+                        <i class="fa fa-info" aria-hidden="true"></i>
+                    </a>
+                    <!-- <button id="DongBoPhieu" class="btn btn-primary">
+                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                        đồng bộ thuốc theo phiếu
+                    </button> -->
+                    <div class="modal fade" id="modal-id">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <?php
+                                    if (file_exists("public\huongdan\huongdanthemthuoc.html"))
+                                        echo file_get_contents("public\huongdan\huongdanthemthuoc.html");
+                                    ?>
+                                </div>
+                                <div class="modal-footer">
+                                    <a class="btn btn-success" href="/huongdan/put/huongdanthemthuoc">Sửa</a>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             <div class="box-body">
@@ -31,36 +59,32 @@
                         <tr>
                             <th></th>
                             <th>STT</th>
+                            <th>Mã Phiếu</th>
                             <th>Loại Phiếu</th>
-                            <th>Mã Thuốc</th>
-                            <th>Số Lượng</th>
-                            <th>Giá</th>
-                            <th>Ngày Nhập Phiếu</th>
-                            <th>Nội Dung Phiếu</th>
-                            <th>Ghi Chú</th>
+                            <th>Nội Dung</th>
+                            <th>Tổng Tiền</th>
+                            <th>Ngày tạo</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         foreach ($items as $index => $item) {
-                            $_item = new PhieuXuatNhap($item); 
+                            $_item = new PhieuXuatNhap($item);
                         ?>
                             <tr>
-                                <td style="width: 200px;">
+                                <td style="width: 140px;">
                                     <?php
                                     echo Module\quanlythuoc\Model\btnHtml::btnSuaPhieuXuatNhap($_item->Id);
-                                    echo Module\quanlythuoc\Model\btnHtml::btnXoaPhieuXuatNhap($_item->Id);
+                                    // echo Module\quanlythuoc\Model\btnHtml::btnXoaPhieuXuatNhap($_item->Id);
                                     echo Module\quanlythuoc\Model\btnHtml::btnChiTietPhieuXuatNhap($_item->Id);
                                     ?>
                                 </td>
                                 <td><?php echo $index + 1; ?></td>
-                                <td><?php echo $_item->IdPhieu; ?></td>
-                                <td><?php echo $_item->IdThuoc; ?></td>
-                                <td><?php echo Common::ViewNumber($_item->SoLuong); ?></td>
-                                <td><?php echo Common::ViewPrice($_item->Price); ?></td>
-                                <td><?php echo Common::ForMatDMY($_item->NgayNhap); ?></td>
-                                <td><?php echo $_item->NoiDungPhieu; ?></td>
-                                <td><?php echo $_item->GhiChu; ?></td>
+                                <th><?php echo $_item->IdPhieu; ?></th>
+                                <th><?php echo $_item->XuatNhap(); ?></th>
+                                <th><?php echo $_item->NoiDungPhieu ?></th>
+                                <th><?php echo $_item->getTongTien(); ?></th>
+                                <th><?php echo $_item->NgayNhap() ?></th>
                             </tr>
                         <?php
                         }
@@ -83,7 +107,7 @@
                         )->render();
                         ?>
                         <?php
-                        $linkPhanTrang = "/index.php?module=quanlythuoc&controller=danhmuc&action=index&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
+                        $linkPhanTrang = "/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=index&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
                         echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
                         ?>
                     </div>
@@ -94,8 +118,34 @@
 </div>
 <script type="text/javascript">
     var SoDongHienThi = function(evalue) {
-        var linkPhanTrang = '/index.php?module=quanlythuoc&controller=danhmuc&action=index&indexPage=1&pageNumber=[j]';
+        var linkPhanTrang = '/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=index&indexPage=1&pageNumber=[j]';
         linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
         window.location.href = linkPhanTrang;
     }
+    $(document).ready(function() {
+
+
+        // Change Thuốc
+
+        // console.log(e.attr("id"));
+        $("#DongBoPhieu").change(function(param) {
+            // $.ajax({
+            //     url: `/quanlythuoc/phieuxuatnhap/capnhatdanhsachsanpham/${idThuoc}/${index}/`,
+            //     type: 'get',
+            //     contentType: false,
+            //     processData: false,
+            //     success: function(response) {
+            //         $(idSoLuong).val(response.Soluong);
+            //         $(idSoLo).val(response.Solo);
+            //         $(idNhaSanXuat).val(response.NhaSX);
+            //         $(idNuocSanXuat).val(response.NuocSX);
+            //         $(idPrice).val(response.Gianhap);
+            //         $(idDVT).val(response.DVTTitle);
+            //     },
+            //     complete: function() {
+            //         //spinner.close();
+            //     }
+            // });
+        });
+    });
 </script>

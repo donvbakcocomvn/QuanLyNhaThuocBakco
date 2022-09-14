@@ -4,80 +4,76 @@ namespace Module\quanlythuoc\Model;
 
 use Model\Common;
 
-class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
+
+class PhieuXuatNhapChiTiet extends \Model\DB implements \Model\IModelService
 {
 
     public $Id;
     public $IdPhieu;
-    public $TongTien;
-    public $DoViCungCap;
+    public $IdThuoc;
+    public $SoLuong;
+    public $SoLo;
+    public $NhaSanXuat;
+    public $NuocSanXuat;
+    public $Price;
     public $XuatNhap;
+    public $CreateRecord;
+    public $UpdateRecord;
     public $NoiDungPhieu;
     public $GhiChu;
     public $NgayNhap;
-    public $CreateRecord;
-    public $UpdateRecord;
     public $IsDelete;
+
 
 
     public function __construct($dm = null)
     {
-        self::$TableName = prefixTable . "qlthuoc_phieuxuatnhap";
+        self::$TableName = prefixTable . "qlthuoc_phieuxuatnhap_chitiet";
         parent::__construct();
+
         if ($dm) {
             if (!is_array($dm)) {
                 $id = $dm;
                 $dm = $this->GetById($id);
             }
             if ($dm) {
-
                 $this->Id = $dm["Id"] ?? null;
                 $this->IdPhieu = $dm["IdPhieu"] ?? null;
-                $this->TongTien = $dm["TongTien"] ?? null;
-                $this->DoViCungCap = $dm["DoViCungCap"] ?? null;
+                $this->IdThuoc = $dm["IdThuoc"] ?? null;
+                $this->SoLuong = $dm["SoLuong"] ?? null;
+                $this->SoLo = $dm["SoLo"] ?? null;
+                $this->NhaSanXuat = $dm["NhaSanXuat"] ?? null;
+                $this->NuocSanXuat = $dm["NuocSanXuat"] ?? null;
+                $this->Price = $dm["Price"] ?? null;
                 $this->XuatNhap = $dm["XuatNhap"] ?? null;
+                $this->CreateRecord = $dm["CreateRecord"] ?? null;
+                $this->UpdateRecord = $dm["UpdateRecord"] ?? null;
                 $this->NoiDungPhieu = $dm["NoiDungPhieu"] ?? null;
                 $this->GhiChu = $dm["GhiChu"] ?? null;
                 $this->NgayNhap = $dm["NgayNhap"] ?? null;
-                $this->CreateRecord = $dm["CreateRecord"] ?? null;
-                $this->UpdateRecord = $dm["UpdateRecord"] ?? null;
                 $this->IsDelete = $dm["IsDelete"] ?? null;
             }
         }
     }
-
-    public function PhieuChiTiet()
+    public function ThanhTien()
     {
-        $phieuChiTiet = new PhieuXuatNhapChiTiet();
-        return $phieuChiTiet->GetByIdPhieu($this->IdPhieu);
+        return number_format($this->Price * $this->SoLuong, 0, ".", ",")." đ";
+    }
+    public function Price()
+    {
+        return number_format($this->Price, 0, ".", ",")." đ";
+    }
+    public function GetByIdPhieu($id)
+    {
+        $where = "`IdPhieu` = '{$id}'";
+        return $this->Select($where);
     }
 
-    public function NgayNhap()
+    public function SanPham()
     {
-        return date("d-m-Y", strtotime($this->NgayNhap));
+        return new SanPham($this->IdThuoc);
     }
 
-    public function XuatNhap()
-    {
-        return $this->XuatNhap == 1 ? "<span class='label-danger'>Phiếu Nhập</span>" : "<span class='label-success'>Phiếu Xuất</span>";
-    }
-    public function getTongTien()
-    {
-        return  number_format($this->TongTien, 0, ".", ",") . " đ";
-    }
-
-
-    public static function TongTien()
-    {
-        $DSThuoc = $_SESSION["DSThuocPhieuNhap"];
-        $tong = 0;
-        foreach ($DSThuoc as $key => $value) {
-            $_sp = new SanPham($value);
-            $thanhTien = $_sp->ThanhTien();
-            $tong += $thanhTien;
-        }
-        return $tong;
-    }
     public function checkDsThuoc($detailThuoc)
     {
         $sp = new SanPham($detailThuoc);
@@ -104,7 +100,8 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
         // $chieu = $item["Chieu"] ?? 0;
         // $trua = $item["Trua"] ?? 0;
 
-        $detail["SoLuong"] = $detail["Soluong"] ?? "";
+        $sp = new SanPham($detail);
+        $detail["SoLuong"] = $detail["SoLuong"] ?? "";
         $detail["SoLo"] = $detail["SoLo"] ?? "";
         $detail["NhaSanXuat"] = $detail["NhaSanXuat"] ?? "";
         $detail["NuocSanXuat"] = $detail["NuocSanXuat"] ?? "";
@@ -163,7 +160,7 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
         if ($danhmuc) {
             $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
         }
-        $where = " (`IdPhieu` like '%{$name}%' {$danhmucSql}) {$isShowSql} Order By `NgayNhap`  DESC";
+        $where = " (`IdPhieu` like '%{$name}%' {$danhmucSql}) {$isShowSql} ";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 
@@ -181,8 +178,14 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
 
     public function Post($model)
     {
-        // self::$Debug = true;
-        return $this->Insert($model);
+        $this->Insert($model);
+        $sp = new SanPham($model["IdThuoc"]);
+        $spItem["Id"] = $sp->Id;
+        $spItem["SoLuong"] =
+            $sp->Soluong +
+            ($model["SoLuong"] * $model["XuatNhap"]);
+        $sp->Put($spItem);
+        return;
     }
 
     public function Put($model)
@@ -192,7 +195,7 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
 
     public function GetById($Id)
     {
-        
+        // self::$Debug = false;
         return $this->SelectById($Id);
     }
 

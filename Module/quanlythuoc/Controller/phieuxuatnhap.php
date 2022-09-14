@@ -3,10 +3,13 @@
 namespace Module\quanlythuoc\Controller;
 
 use Model\Common;
+use Model\Error;
+use Model\Request;
 use Module\quanlythuoc\Model\PhieuXuatNhap as ModelPhieuXuatNhap;
 use Module\quanlythuoc\Model\PhieuXuatNhap\FormPhieuXuatNhap;
 use Module\quanlythuoc\Model\SanPham;
 use Module\quanlythuoc\Permission;
+use PhpOffice\PhpSpreadsheet\Writer\Exception;
 
 
 class phieuxuatnhap extends \Application implements \Controller\IControllerBE
@@ -23,7 +26,7 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
     }
 
     function index()
-    { 
+    {
         \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Phieu_DS]);
         $modelItem = new \Module\quanlythuoc\Model\PhieuXuatNhap();
         $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
@@ -35,12 +38,12 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
         $pageNumber = max(1, $pageNumber);
         $total = 0;
         $DanhSachTaiKhoan = $modelItem->GetItems($params, $indexPage, $pageNumber, $total);
-         
+
         $data["items"] = $DanhSachTaiKhoan;
         $data["indexPage"] = $indexPage;
         $data["pageNumber"] = $pageNumber;
         $data["params"] = $params;
-        $data["total"] = $total; 
+        $data["total"] = $total;
         $this->View($data);
     }
 
@@ -51,32 +54,42 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
         $index = $this->getParams(1);
         $donthuocdetail = new \Module\quanlythuoc\Model\PhieuXuatNhap();
         $sanpham = new SanPham($id);
-        // cap nhat don thuoc
         $_sanpham = $sanpham->GetById($id);
-        var_dump($_sanpham);
-        $_sanpham["SoNgaySDThuoc"] = $_SESSION["SoNgaySDThuoc"] ?? 0;
-        $result = $donthuocdetail->checkDsThuoc($_sanpham);
-        if ($result == null) {
-            echo json_encode(new \Module\quanlythuoc\Model\PhieuXuatNhap());
-            return;
-        }
+        $_sanpham["Soluong"] = 0;
+        $_sanpham["DVTTitle"] = $sanpham->DonViTinh();
         $donthuocdetail->CapNhatSanPham($_sanpham, $index);
-        // echo $sanpham->DonViTinh();
         echo json_encode(\Module\quanlythuoc\Model\PhieuXuatNhap::DSThuocPhieuNhap()[$index], JSON_UNESCAPED_UNICODE);
     }
 
+
+    public function capnhatsanpham()
+    {
+        header('Content-Type: application/json; charset=utf-8');
+        $dataRequest = json_decode(file_get_contents('php://input'), JSON_OBJECT_AS_ARRAY);
+        // var_dump($dataRequest);
+        $index = intval($dataRequest["index"]);
+        $donthuocdetail = new \Module\quanlythuoc\Model\PhieuXuatNhap();
+        $sanpham = new SanPham(\Module\quanlythuoc\Model\PhieuXuatNhap::DSThuocPhieuNhap()[$index]);
+        $_sanpham = $sanpham->GetById($sanpham->Id);
+
+        $_sanpham["Soluong"] = intval($dataRequest["soLuong"]);
+        $_sanpham["NhaSX"] =  $dataRequest["nhaSanXuat"];
+        $_sanpham["NuocSX"] =  $dataRequest["nuocSanXuat"];
+        $_sanpham["Solo"] =  $dataRequest["soLo"];
+        $_sanpham["Gianhap"] =  $dataRequest["gia"];
+        $_sanpham["Giaban"] =  $dataRequest["gia"];
+        $donthuocdetail->CapNhatSanPham($_sanpham, $index);
+        echo json_encode(\Module\quanlythuoc\Model\PhieuXuatNhap::DSThuocPhieuNhap()[$index], JSON_UNESCAPED_UNICODE);
+    }
 
     public function ThemSanPham()
     {
         // $MaSP = \Model\Request::Get("id", []);
         // $index = \Model\Request::Get("index", []);
-        for ($i=0; $i < 1 ; $i++) { 
-            $_SESSION["DSThuocPhieuNhap"][] = [];
-        }
+        $_SESSION["DSThuocPhieuNhap"][] = [];
         return $_SESSION["DSThuocPhieuNhap"];
-        
     }
-    
+
 
     public function DeleteSP()
     {
@@ -104,12 +117,18 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
 
     function detail()
     {
-        $id = \Model\Request::Get("id", null);
-        if ($id == null) {
+        try {
+            $id = $this->getParams(0);
+            if ($id == null || $id == "") {
+                throw new Exception("Không có mã phiếu xuất");
+            }
+            $SP = new \Module\quanlythuoc\Model\PhieuXuatNhap();
+            $data["data"] = $SP->GetById($id);
+            $this->View($data);
+        } catch (Exception $ex) {
+            new Error(Error::danger, $ex->getMessage());
+            Common::ToUrl("/quanlythuoc/phieuxuatnhap/");
         }
-        $SP = new \Module\quanlythuoc\Model\PhieuXuatNhap();
-        $data["data"] = $SP->GetById($id);
-        $this->View($data);
     }
 
     function post()
@@ -118,34 +137,52 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
         try {
             if (\Model\Request::Post(FormPhieuXuatNhap::$ElementsName, null)) {
                 $itemForm = \Model\Request::Post(FormPhieuXuatNhap::$ElementsName, null);
-                $phieu = new \Module\quanlythuoc\Model\PhieuXuatNhap();
-                $itemForm["IdPhieu"] = $phieu->CreatIdPhieu($itemForm["IdPhieu"]);
-                $itemForm["XuatNhap"] = $itemForm["XuatNhap"];
-                $itemForm["NoiDungPhieu"] = $itemForm["NoiDungPhieu"];
-                $itemForm["GhiChu"] = $itemForm["GhiChu"];
-                $itemForm["NgayNhap"] = Date("Y-m-d", strtotime($itemForm["NgayNhap"]));
-                foreach (ModelPhieuXuatNhap::DSThuocPhieuNhap() as $maphieu => $phieu) {
-                    $sp = new \Module\quanlythuoc\Model\PhieuXuatNhap();
-                    if (isset($phieu["Id"]) == true) {
-                        $itemForm["IdThuoc"] = $phieu["Id"];
-                        $itemForm["SoLuong"] = $phieu["SoLuong"];
-                        $itemForm["SoLo"] = $phieu["SoLo"];
-                        $itemForm["NhaSanXuat"] = $phieu["NhaSanXuat"];
-                        $itemForm["NuocSanXuat"] = $phieu["NuocSanXuat"] ?? "";
-                        $itemForm["Price"] = $phieu["Price"] ?? "";
-                        // $detail = new DonThuocDetail();
-                        // var_dump($phieu);
-                    }
-                }
-                // $phieu->Post($itemForm);
-                // new \Model\Error(\Model\Error::success, "Đã Thêm Phiếu");
-                // \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=index");
+                $phieuXuatNhap = new \Module\quanlythuoc\Model\PhieuXuatNhap();
+                $phieuDB =  $phieuXuatNhap->GetById($itemForm["IdPhieu"]);
 
+                if ($phieuDB != null) {
+                    throw new Exception("Đã có mã phiếu này.");
+                }
+                $Phieu["TongTien"] = ModelPhieuXuatNhap::TongTien();
+                $Phieu["DoViCungCap"] = $itemForm["DoViCungCap"] ?? "";
+                $Phieu["IdPhieu"] = $itemForm["IdPhieu"];
+                $Phieu["XuatNhap"] = $itemForm["XuatNhap"];
+                $Phieu["NoiDungPhieu"] = $itemForm["NoiDungPhieu"];
+                $Phieu["GhiChu"] = $itemForm["GhiChu"];
+                $Phieu["NgayNhap"] = Date("Y-m-d", strtotime($itemForm["NgayNhap"]));
+                $Phieu["CreateRecord"] = Date("Y-m-d H:i:s", time());
+                $Phieu["UpdateRecord"] = Date("Y-m-d H:i:s", time());
+                $Phieu["IsDelete"] = 0;
+                // var_dump($Phieu);
+                // die();
+                $phieuXuatNhap = new \Module\quanlythuoc\Model\PhieuXuatNhap();
+                $phieuXuatNhap->Post($Phieu);
+
+                foreach (ModelPhieuXuatNhap::DSThuocPhieuNhap() as $maphieu => $_phieu) {
+                    $itemFormDetail["IdPhieu"] = $Phieu["IdPhieu"];
+                    $itemFormDetail["IdThuoc"] = $_phieu["Id"];
+                    $itemFormDetail["SoLuong"] = $_phieu["SoLuong"];
+                    $itemFormDetail["SoLo"] = $_phieu["SoLo"];
+                    $itemFormDetail["NhaSanXuat"] = $_phieu["NhaSanXuat"];
+                    $itemFormDetail["NuocSanXuat"] = $_phieu["NuocSanXuat"];
+                    $itemFormDetail["Price"] = floatval($_phieu["Gianhap"]);
+                    $itemFormDetail["XuatNhap"] = $itemForm["XuatNhap"];
+                    $itemFormDetail["CreateRecord"] = Date("Y-m-d", time());
+                    $itemFormDetail["UpdateRecord"] = Date("Y-m-d", time());
+                    $itemFormDetail["GhiChu"] = "";
+                    $itemFormDetail["IsDelete"] = 0;
+                    $SanPham = new \Module\quanlythuoc\Model\PhieuXuatNhapChiTiet();
+                    $SanPham->Post($itemFormDetail);
+                }
+
+                ModelPhieuXuatNhap::DeleteAllThuocPhieuNhap();
+                // new \Model\Error(\Model\Error::success, "Đã Thêm Phiếu");
+                \Model\Common::ToUrl("/quanlythuoc/phieuxuatnhap/detail/?id=" . $itemFormDetail["IdPhieu"] . "");
             }
         } catch (\Exception $exc) {
-            echo $exc->getMessage();
+            new  Error(Error::danger, $exc->getMessage());
         }
-        $this->View();   
+        $this->View();
     }
 
     /**
@@ -167,7 +204,7 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
                 $itemForm["SoLo"] = $itemHtml["SoLo"];
                 $itemForm["NhaSanXuat"] = $itemHtml["NhaSanXuat"];
                 $itemForm["NuocSanXuat"] = $itemHtml["NuocSanXuat"];
-                $itemForm["Price"] = $itemHtml["Price"];
+                $itemForm["Gianhap"] = $itemHtml["Gianhap"];
                 $itemForm["XuatNhap"] = $itemHtml["XuatNhap"];
                 $itemForm["NoiDungPhieu"] = $itemHtml["NoiDungPhieu"];
                 $itemForm["GhiChu"] = $itemHtml["GhiChu"];
@@ -179,12 +216,17 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
         } catch (\Exception $exc) {
             echo $exc->getMessage();
         }
-
-        $id = \Model\Request::Get("id", null);
+        $id = Request::Get("id", null);
         if ($id == null) {
         }
-        $DM = new \Module\quanlythuoc\Model\PhieuXuatNhap();
-        $data["data"] = $DM->GetById($id);
+        $DM = new ModelPhieuXuatNhap($id);
+        $data["phieuData"] = $DM->GetById($id);
+        \Module\quanlythuoc\Model\PhieuXuatNhap::DeleteAllThuocPhieuNhap();
+        foreach ($DM->PhieuChiTiet() as $key => $value) {
+            \Module\quanlythuoc\Model\PhieuXuatNhap::ThemDSThuocPhieuNhap($value, $key);
+        }
+
+
         $this->View($data);
     }
 
