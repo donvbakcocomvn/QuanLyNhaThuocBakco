@@ -21,26 +21,26 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 class SanPham extends \Model\DB implements \Model\IModelService
 {
 
-    public $Id; 
-    public $Idloaithuoc; 
-    public $Name; 
-    public $Namebietduoc; 
-    public $Solo; 
-    public $Gianhap; 
-    public $Giaban; 
-    public $DVT; 
-    public $Ngaysx; 
-    public $HSD; 
-    public $DVQuyDoi; 
-    public $Tacdung; 
-    public $Cochetacdung; 
-    public $Ghichu; 
-    public $Soluong; 
-    public $NhaSX; 
-    public $NuocSX; 
-    public $IsDelete; 
-    public $CachDung; 
-    public $Canhbao; 
+    public $Id;
+    public $Idloaithuoc;
+    public $Name;
+    public $Namebietduoc;
+    public $Solo;
+    public $Gianhap;
+    public $Giaban;
+    public $DVT;
+    public $Ngaysx;
+    public $HSD;
+    public $DVQuyDoi;
+    public $Tacdung;
+    public $Cochetacdung;
+    public $Ghichu;
+    public $Soluong;
+    public $NhaSX;
+    public $NuocSX;
+    public $IsDelete;
+    public $CachDung;
+    public $Canhbao;
 
     public function __construct($sp = null)
     {
@@ -52,26 +52,26 @@ class SanPham extends \Model\DB implements \Model\IModelService
                 $sp = $this->GetById($id);
             }
             if ($sp) {
-                $this->Id = isset($sp["Id"]) ? $sp["Id"] : null ;
-                $this->Idloaithuoc = isset($sp["Idloaithuoc"]) ? $sp["Idloaithuoc"] : null ;
-                $this->Name = isset($sp["Name"]) ? $sp["Name"] : null ;
-                $this->Namebietduoc = isset($sp["Namebietduoc"]) ? $sp["Namebietduoc"] : null ;
-                $this->Solo = isset($sp["Solo"]) ? $sp["Solo"] : null ;
-                $this->Gianhap = isset($sp["Gianhap"]) ? $sp["Gianhap"] : null ;
-                $this->Giaban = isset($sp["Giaban"]) ? $sp["Giaban"] : null ;
-                $this->DVT = isset($sp["DVT"]) ? $sp["DVT"] : null ;
-                $this->Ngaysx = isset($sp["Ngaysx"]) ? $sp["Ngaysx"] : null ;
-                $this->HSD = isset($sp["HSD"]) ? $sp["HSD"] : null ;
-                $this->DVQuyDoi = isset($sp["DVQuyDoi"]) ? $sp["DVQuyDoi"] : null ;
-                $this->Tacdung = isset($sp["Tacdung"]) ? $sp["Tacdung"] : null ;
-                $this->Cochetacdung = isset($sp["Cochetacdung"]) ? $sp["Cochetacdung"] : null ;
-                $this->Ghichu = isset($sp["Ghichu"]) ? $sp["Ghichu"] : null ;
-                $this->Soluong = isset($sp["Soluong"]) ? $sp["Soluong"] : null ;
-                $this->NhaSX = isset($sp["NhaSX"]) ? $sp["NhaSX"] : null ;
-                $this->NuocSX = isset($sp["NuocSX"]) ? $sp["NuocSX"] : null ;
-                $this->IsDelete = isset($sp["IsDelete"]) ? $sp["IsDelete"] : null ;
-                $this->CachDung = isset($sp["CachDung"]) ? $sp["CachDung"] : null ;
-                $this->Canhbao = isset($sp["Canhbao"]) ? $sp["Canhbao"] : null ;
+                $this->Id = isset($sp["Id"]) ? $sp["Id"] : null;
+                $this->Idloaithuoc = isset($sp["Idloaithuoc"]) ? $sp["Idloaithuoc"] : null;
+                $this->Name = isset($sp["Name"]) ? $sp["Name"] : null;
+                $this->Namebietduoc = isset($sp["Namebietduoc"]) ? $sp["Namebietduoc"] : null;
+                $this->Solo = isset($sp["Solo"]) ? $sp["Solo"] : null;
+                $this->Gianhap = isset($sp["Gianhap"]) ? $sp["Gianhap"] : null;
+                $this->Giaban = isset($sp["Giaban"]) ? $sp["Giaban"] : null;
+                $this->DVT = isset($sp["DVT"]) ? $sp["DVT"] : null;
+                $this->Ngaysx = isset($sp["Ngaysx"]) ? $sp["Ngaysx"] : null;
+                $this->HSD = isset($sp["HSD"]) ? $sp["HSD"] : null;
+                $this->DVQuyDoi = isset($sp["DVQuyDoi"]) ? $sp["DVQuyDoi"] : null;
+                $this->Tacdung = isset($sp["Tacdung"]) ? $sp["Tacdung"] : null;
+                $this->Cochetacdung = isset($sp["Cochetacdung"]) ? $sp["Cochetacdung"] : null;
+                $this->Ghichu = isset($sp["Ghichu"]) ? $sp["Ghichu"] : null;
+                $this->Soluong = isset($sp["Soluong"]) ? $sp["Soluong"] : null;
+                $this->NhaSX = isset($sp["NhaSX"]) ? $sp["NhaSX"] : null;
+                $this->NuocSX = isset($sp["NuocSX"]) ? $sp["NuocSX"] : null;
+                $this->IsDelete = isset($sp["IsDelete"]) ? $sp["IsDelete"] : null;
+                $this->CachDung = isset($sp["CachDung"]) ? $sp["CachDung"] : null;
+                $this->Canhbao = isset($sp["Canhbao"]) ? $sp["Canhbao"] : null;
             }
         }
     }

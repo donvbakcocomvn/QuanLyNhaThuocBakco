@@ -57,11 +57,11 @@ class PhieuXuatNhapChiTiet extends \Model\DB implements \Model\IModelService
     }
     public function ThanhTien()
     {
-        return number_format($this->Price * $this->SoLuong, 0, ".", ",")." đ";
+        return number_format($this->Price * $this->SoLuong, 0, ".", ",") . " đ";
     }
     public function Price()
     {
-        return number_format($this->Price, 0, ".", ",")." đ";
+        return number_format($this->Price, 0, ".", ",") . " đ";
     }
     public function GetByIdPhieu($id)
     {
@@ -178,14 +178,13 @@ class PhieuXuatNhapChiTiet extends \Model\DB implements \Model\IModelService
 
     public function Post($model)
     {
-        $this->Insert($model);
-        $sp = new SanPham($model["IdThuoc"]);
-        $spItem["Id"] = $sp->Id;
-        $spItem["SoLuong"] =
-            $sp->Soluong +
-            ($model["SoLuong"] * $model["XuatNhap"]);
-        $sp->Put($spItem);
-        return;
+        return $this->Insert($model);
+        // $sp = new SanPham($model["IdThuoc"]);
+        // $spItem["Id"] = $sp->Id;
+        // $spItem["SoLuong"] =
+        //     $sp->Soluong +
+        //     ($model["SoLuong"] * $model["XuatNhap"]);
+        // return $sp->Put($spItem);
     }
 
     public function Put($model)
