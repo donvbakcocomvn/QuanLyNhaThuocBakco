@@ -87,9 +87,13 @@ $roleDetail = new Model\Role();
                         <label for="">Hạn Sử Dụng</label>
                         <input readonly value="<?php echo Common::ForMatDMY($itemSP->HSD); ?>" class="form-control">
                     </div>
-                    <div class="col-md-3">
+                    <!-- <div class="col-md-3">
                         <label for="">Ẩn/hiện</label>
                         <input readonly value="<?php echo SanPham::IsDeleteOption($itemSP->IsDelete); ?>" class="form-control">
+                    </div> -->
+                    <div class="col-md-3">
+                        <label for="">Số Lượng Cảnh Báo</label>
+                        <input readonly value="<?php echo $itemSP->Canhbao; ?>" class="form-control">
                     </div>
                     <div class="col-md-4">
                         <label for="">Tác Dụng</label>

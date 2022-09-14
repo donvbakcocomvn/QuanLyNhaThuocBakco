@@ -29,6 +29,26 @@
 
                     Module\donthuoc\Model\btnHtml::btnThemDonThuoc();
                     ?>
+
+                    <a class="btn btn-primary" data-toggle="modal" href='#modal-id'>Hướng dẫn</a>
+                    <div class="modal fade" id="modal-id">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <?php
+                                    $link = 'huongdansudung';
+                                    $path = "public/huongdan/{$link}.html";
+                                    echo file_get_contents($path);
+                                    ?>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="<?php echo "/huongdan/put/?link=$link"?>" type="button" class="btn btn-success">Sửa File</a>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng lại</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             <div class="box-body">
@@ -46,7 +66,6 @@
                             <th>Chẩn Đoán</th>
                             <th>Thuộc Loại Đơn</th>
                             <th>Ngày Dùng</th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,10 +78,12 @@
                             // var_dump($_item);
                         ?>
                             <tr>
-                                <td style="width: 130px;">
+                                <td style="width: 250px;">
                                     <?php
                                     echo Module\donthuoc\Model\btnHtml::btnSuaDonThuoc($_item->Id);
                                     echo Module\donthuoc\Model\btnHtml::btnCopyDonThuoc($_item->Id);
+                                    echo Module\donthuoc\Model\btnHtml::btnXoaDonThuoc($_item->Id);
+                                    echo Module\donthuoc\Model\btnHtml::btnchitiet($_item->Id);
                                     ?>
                                 </td>
                                 <td><?php echo $index + 1; ?></td>
@@ -75,11 +96,7 @@
                                 <td><?php echo $_item->ChanDoanBenh ?></td>
                                 <td><?php echo $_item->ThuocLoaiDon() ?></td>
                                 <td><?php echo $_item->TongNgayDung; ?></td>
-                                <td>
-                                    <?php
-                                    echo Module\donthuoc\Model\btnHtml::btnXoaDonThuoc($_item->Id);
-                                    ?>
-                                </td>
+
                             </tr>
                         <?php
                         }

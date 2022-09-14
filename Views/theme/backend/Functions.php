@@ -139,7 +139,7 @@ class Functions
     {
     ?>
 
-        <div class="control-sidebar-bg"></div>
+        <div class="control-sidebar-bg "></div>
     <?php
     }
 
@@ -147,7 +147,7 @@ class Functions
     {
         $user = \Model\User::CurentUser();
     ?>
-        <header class=" main-header">
+        <header class=" main-header ">
             <!-- Logo -->
             <a href="/backend/" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -247,14 +247,14 @@ class Functions
                                 <?php
                                 if (\Model\Permission::CheckPremision([User::Admin, Permission::QLT_Thuoc_Post], []) == true) {
                                 ?>
-                                    <li><a href="/index.php?module=quanlythuoc&controller=sanpham&action=index"><i class="fa fa-circle-o"></i>
+                                    <li><a href="/quanlythuoc/sanpham/"><i class="fa fa-circle-o"></i>
                                             Thuốc
                                         </a></li>
                                 <?php  } ?>
                                 <?php
                                 if (\Model\Permission::CheckPremision([User::Admin, Permission::QLT_Thuoc_Post], []) == true) {
                                 ?>
-                                    <li><a href="/index.php?module=quanlythuoc&controller=danhmuc&action=index"><i class="fa fa-circle-o"></i>
+                                    <li><a href="/quanlythuoc/danhmuc/"><i class="fa fa-circle-o"></i>
                                             Danh Mục Thuốc
                                         </a>
                                     </li>
@@ -263,7 +263,7 @@ class Functions
                                 <?php
                                 if (\Model\Permission::CheckPremision([User::Admin, Permission::QLT_Thuoc_Post], []) == true) {
                                 ?>
-                                    <li><a href="/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=index"><i class="fa fa-circle-o"></i>
+                                    <li><a href="/quanlythuoc/phieuxuatnhap/"><i class="fa fa-circle-o"></i>
                                             Xuất/Nhập Thuốc
                                         </a></li>
                                 <?php  } ?>
@@ -276,7 +276,7 @@ class Functions
                     if (\Model\Permission::CheckPremision([KhachhangPermission::KhachHangDS, User::Admin], []) == true) {
                     ?>
                         <li class="<?php echo \Application::$_Module == "khachhang" ? 'active' : '' ?>">
-                            <a href="/index.php?module=benhnhan&controller=index&action=index">
+                            <a href="/benhnhan/">
                                 <i class="fa fa-user-plus"></i>
                                 <span>Quản lý bệnh nhân</span>
                             </a>
@@ -288,7 +288,7 @@ class Functions
                     if (\Model\Permission::CheckPremision([KhachhangPermission::KhachHangDS, User::Admin], []) == true) {
                     ?>
                         <li class="<?php echo \Application::$_Module == "khachhang" ? 'active' : '' ?>">
-                            <a href="/index.php?module=donthuoc&controller=index&action=index">
+                            <a href="/donthuoc/">
                                 <i class="fa fa-user-plus"></i>
                                 <span>Quản lý đơn thuốc</span>
                             </a>
@@ -324,7 +324,7 @@ class Functions
                     if (\Model\Permission::CheckPremision([\Model\User::Admin, md5(\Controller\quanlyquyen::class . "_view")]) == true) {
                     ?>
                         <li class="<?php echo \Application::$_Controller == "quanlyquyen" ? 'active' : '' ?> treeview">
-                            <a href="/index.php?controller=quanlyquyen">
+                            <a href="/quanlyquyen/">
                                 <i class="fa fa-dashboard"></i> <span>Quản Lý Quyền</span>
                             </a>
                         </li>
@@ -337,7 +337,7 @@ class Functions
                     if (\Model\Permission::CheckPremision([\Model\User::Admin, md5(\Controller\quanlyusers::class . "_view")]) == true) {
                     ?>
                         <li class="<?php echo \Application::$_Controller == "quanlyusers" ? 'active' : '' ?> treeview">
-                            <a href="/index.php?controller=quanlyusers">
+                            <a href="/quanlyusers/">
                                 <i class="fa fa-dashboard"></i> <span>Quản Lý Tài Khoản</span>
                             </a>
                         </li>
@@ -350,12 +350,11 @@ class Functions
                             <a href="#">
                                 <i class="fa fa-gears"></i>
                                 <span>Cài Đặt</span>
-                                <span class="label label-primary pull-right">4</span>
+                                <!-- <span class="label label-primary pull-right">4</span> -->
                             </a>
                             <ul class="treeview-menu">
                                 <li><a href="/locations/index"><i class="fa fa-circle-o"></i> Tỉnh Thành Phố</a></li>
                                 <li><a href="/options/donvitinh/"><i class="fa fa-circle-o"></i> Đơn Vị Tính</a></li>
-
                                 <!-- <li><a href="/options/congty/"><i class="fa fa-circle-o"></i> Công Ty</a></li>
                                 <li><a href="/options/index/phongban/"><i class="fa fa-circle-o"></i> Phòng Ban</a></li>
                                 <li><a href="/options/hopdong/"><i class="fa fa-circle-o"></i> Hợp Đồng</a></li>
@@ -390,7 +389,7 @@ class Functions
     public static function footer()
     {
     ?>
-        <footer class="main-footer">
+        <footer class="main-footer no-print">
             <div class="pull-right hidden-xs">
                 <b>Version</b> 0.0.1
             </div>

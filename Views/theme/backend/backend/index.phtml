@@ -1,5 +1,5 @@
-<ol class="breadcrumb" >
-    <li><a href="" >Dashboard</a></li>
+<ol class="breadcrumb">
+    <li><a href="">Dashboard</a></li>
 </ol>
 <div class="container-fluid">
     <div class="box box-primary">
@@ -9,9 +9,158 @@
 
             </div>
         </div>
-        <div class="box-body">
-            <a href="/backend/qrcode/" class="btn btn-success" >Mã QRCode Cá Nhân</a>
+        <div class="row">
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                        <h3>150</h3>
+                        <p>Nhập Kho</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-reply-all"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">Xem thêm <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div><!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3>53<sup style="font-size: 20px">%</sup></h3>
+                        <p>Xuất kho</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-paper-plane"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">Xem thêm <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div><!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-yellow">
+                    <div class="inner">
+                        <h3>44</h3>
+                        <p>Tồn kho</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-cubes"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">Xem thêm <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div><!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-red">
+                    <div class="inner">
+                        <h3>65</h3>
+                        <p>Tổng</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-pie-chart"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">Xem thêm <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div><!-- ./col -->
         </div>
+        
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">Những Sản Phẩm Sắp Hết</h3>
+                <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <div class="table-responsive">
+                    <table class="table no-margin">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên Thuốc</th>
+                                <th>Tên Biệt Dược</th>
+                                <th>Còn Lại</th>
+                                <th>Số Lô</th>
+                                <th>Nhà Sản Xuất</th>
+                                <th>Nước Sản Xuất</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+
+                            use Module\quanlythuoc\Model\SanPham;
+
+                            $sp = new SanPham();
+                            $a = $sp->GetBySoLuong();
+                            // var_dump($a);
+
+                            foreach ($a as $key => $value) { ?>
+                                <tr>
+                                    <td><?php echo $key + 1 ?></td>
+                                    <td><a href="pages/examples/invoice.html"><?php echo $value['Name'] ?></a></td>
+                                    <td><?php echo $value['Namebietduoc'] ?></td>
+                                    <td><span class="label label-danger"><?php echo $value['Soluong'] ?></span></td>
+                                    <td><?php echo $value['Solo'] ?></td>
+                                    <td><?php echo $value['NhaSX'] ?></td>
+                                    <td><?php echo $value['NuocSX'] ?></td>
+                                    <td>
+                                        <div class="sparkbar" data-color="#00a65a" data-height="20"><canvas width="34" height="20" style="display: inline-block; width: 34px; height: 20px; vertical-align: top;"></canvas></div>
+                                    </td>
+                                </tr>
+                            <?php
+                            }
+                            ?>
+
+                        </tbody>
+                    </table>
+                </div><!-- /.table-responsive -->
+            </div><!-- /.box-body -->
+            <div class="box-footer clearfix">
+                <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+                <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
+            </div><!-- /.box-footer -->
+        </div>
+
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">Lịch Sử Nhập Kho</h3>
+                <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <div class="table-responsive">
+                    <table class="table no-margin">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Mã Phiếu</th>
+                                <th>Thời Gian</th>
+                                <th>Nội Dung</th>
+                                <th>Loại Phiếu</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><a href="pages/examples/invoice.html">OR9842</a></td>
+                                <td>Call of Duty IV</td>
+                                <td><span class="label label-success">Shipped</span></td>
+                                <td>
+                                    <div class="sparkbar" data-color="#00a65a" data-height="20"><canvas width="34" height="20" style="display: inline-block; width: 34px; height: 20px; vertical-align: top;"></canvas></div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><!-- /.table-responsive -->
+            </div><!-- /.box-body -->
+            <div class="box-footer clearfix">
+                <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
+                <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
+            </div><!-- /.box-footer -->
+        </div>
+
     </div>
 
 </div>

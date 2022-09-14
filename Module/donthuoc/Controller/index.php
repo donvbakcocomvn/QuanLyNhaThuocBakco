@@ -244,7 +244,13 @@ class index extends \Application implements \Controller\IControllerBE
 
     function viewdonthuoc()
     {
-        $this->View();
+        $id = \Model\Request::Get("id", null);
+        if ($id == null) {
+        }
+        $DM = new DonThuoc();
+        $data["donthuoc"] = $DM->GetById($id);
+        DonThuocDetail::setDsThuoc($id);
+        $this->View($data);
     }
 
     /**

@@ -2,18 +2,14 @@
 
 use Module\cart\Model\Order;
 use PhpOffice\PhpSpreadsheet\Calculation\DateTimeExcel\Days;
-use Common\Common;
 use Model\Products;
+use Module\donthuoc\Model\DonThuoc;
+use Module\quanlythuoc\Model\SanPham;
+use Module\benhnhan\Model\BenhNhan;
+use Model\Common;
+use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Sum;
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
 <style>
     @media print {
 
@@ -26,8 +22,6 @@ use Model\Products;
     .main {
         margin: 0;
         padding: 0;
-        box-sizing: border-box;
-        border: 1px solid #000;
     }
 
     .salesslip {
@@ -47,9 +41,10 @@ use Model\Products;
         margin-bottom: 15px;
     }
 
-    td.temporary-title{
+    td.temporary-title {
         padding-right: 7px;
     }
+
     /* ------------------------------ */
     .content {
         display: flex;
@@ -91,124 +86,140 @@ use Model\Products;
         background-color: #6b6565ba;
     }
 </style>
+<?php
+$donthuoc  = new DonThuoc($donthuoc);
+$IdDonThuoc = $donthuoc->Id;
+// var_dump($donthuoc);
+?>
 
-<body>
-    <div class="main">
+<div class="box box-default" style="border: none;">
+<ol class="breadcrumb no-print">
+    <li><a href="/index.php?controller=backend">Home</a></li>
+    <li><a href="/index.php?module=donthuoc&controller=index&action=index">Danh Sách Đơn Thuốc</a></li>
+    <li> Đơn thuốc chi tiết <?php echo $IdDonThuoc; ?> </li>
+</ol>
+    <div class="main main-body">
         <div class="salesslip">
             <div class="shop">
-                <h2>PHÒNG KHÁM PHƯƠNG UYÊN</h2>
-                <h5>ĐC: 176 đường số 18,Bình Hưng Hòa,Bình Tân</h5>
-                <h5>Giờ làm việc: Sáng 7h30 - 11h, Chiều 17h - 20h30 (Nghỉ thứ 7)</h5>
-                <h3>ĐƠN THUỐC</h3>
-                <h4 style=" font-weight: 300; margin: 10px 0;">
+                <h4 style="margin: 0px; margin-top:5px;"><b>PHÒNG KHÁM PHƯƠNG UYÊN</b></h4>
+                <span style="font-size: 11px;">ĐC: 176 đường số 18,Bình Hưng Hòa,Bình Tân. Giờ làm việc: Sáng 7h30 - 11h, Chiều 17h - 20h30 (Nghỉ thứ 7)</span>
+                <span><b>ĐƠN THUỐC</b></span>
+                <!-- <h5 style=" font-weight: 500; margin: 10px 0;">
                     <?php $date = getdate();
-                    echo $date['weekday'] . ", ";
+                    // echo $date['weekday'] . ", ";
                     echo "Ngày " . $date['mday'] . " ";
-                    echo "Tháng " . $date['mon'] . " ";
-                    echo "Năm " . $date['year'] . " ";
+                    echo "/ " . $date['mon'] . " ";
+                    echo "/ " . $date['year'] . " - ";
+                    echo $date['hours'] . " " . "giờ" . " ";
+                    echo $date['minutes'] . " " . " phút" . " ";
+                    echo $date['seconds'] . " " . " giây" . " ";
                     ?>
-                </h4>
-                <h5 style="font-style: italic ;font-weight: 300; margin: 10px 0;">
+                </h5> -->
+                <!-- <h5 style="font-style: italic ;font-weight: 300; margin: 10px 0;">
                     <?php $date = getdate();
                     echo $date['hours'] . " " . "giờ" . " ";
                     echo $date['minutes'] . " " . " phút" . " ";
                     echo $date['seconds'] . " " . " giây" . " ";
                     ?>
-                </h5>
+                </h5> -->
+                <!-- <h5 style="font-style: italic ;font-weight: 400; margin: 10px 0;">
+                    Mã đơn: <?php echo $donthuoc->Id; ?>
+                </h5> -->
             </div>
             <!---------------------------------->
-            <div class="temporary">
-                <table>
-                    <tr>
-                        <td class="temporary-title">Mã đơn hàng :</td>
-                    </tr>
-                    <tr>
-                        <td class="temporary-title">Khách hàng:</td>
-                    </tr>
-                    <tr>
-                        <td class="temporary-title">Số điện thoại:</td>
-                    </tr>
-                    <tr>
-                        <td class="temporary-title">Địa chỉ :</td>
-                    </tr>
-                    <tr>
-                        <td class="temporary-title">Thời gian mua hàng :</td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <td><?php echo $order->CodeOrder ?></td>
-                    </tr>
-                    <tr>
-                        <td><?php echo $order->Name; ?></td>
-                    </tr>
-                    <tr>
-                        <td><?php echo $order->Phone; ?></td>
-                    </tr>
-                    <tr>
-                        <td><?php echo $order->Address; ?></td>
-                    </tr>
-                    <tr>
-                        <td><?php echo $order->NgayTao; ?></td>
-                    </tr>
-
+            <div style="margin: 0; border-bottom: 1px solid #00000042">
+                <table class="table-hover" style="width: 100%;">
+                    <thead>
+                        <th>
+                        <td>Họ và tên : <?php echo $donthuoc->NameBN; ?></td>
+                        </th>
+                        <th>
+                        <td>Tuổi : <?php echo date('Y') - date('Y', strtotime($donthuoc->NgaySinh)); ?></td>
+                        </th>
+                    </thead>
+                    <thead>
+                        <th>
+                        <td>Quê quán : <?php echo DonThuoc::GetItemById('Address', $donthuoc->IdBenhNhan); ?></td>
+                        </th>
+                        <th>
+                        <td>Giới tính : <?php echo $donthuoc->GioiTinh(); ?></td>
+                        </th>
+                    </thead>
+                    <thead>
+                        <th>
+                        <td>Số điện thoại : <?php echo DonThuoc::GetItemById('Phone', $donthuoc->IdBenhNhan); ?></td>
+                        </th>
+                        <th>
+                        <td>Chẩn đoán : <?php echo $donthuoc->ChanDoanBenh; ?></td>
+                        </th>
+                    </thead>
                 </table>
             </div>
-            <div class="content" style="padding: 0 10px;">
-                <table style="width: 100%; border-top: 1px dashed;border-bottom: 1px dashed">
-                    <tr>
-                        <td class="temporary-title">Mã hàng</td>
-                        <td style="text-align: center;">Tên hàng hóa</td>
-                        <td style="padding-left: 7px;">SL</td>
-                        <td style="text-align: center;padding: 0 10px;">Giá</td>
-                        <td style="text-align: center;">ThànhTiền</td>
-                    </tr>
-                    <?php
-                    $orderdetails = $order->orderDetailbyid($order->CodeOrder);
-                    foreach ($orderdetails as $orderdetail) {
-                        $total = 0;
-                        $total += ($orderdetail["Price"] * $orderdetail["Number"]);
-                        $item_detail = $orderdetail["IdProduct"];
-                        $products = new Products();
-                        $product = $products->ProductsByID($item_detail);
-                    ?>
+
+            <div style="margin: 0; border-bottom: 1px solid #00000042">
+                <table style="width: 100%;">
+                    <thead>
                         <tr>
-                            <td class="temporary-title"><?php echo $product->Code; ?></td>
-                            <td><?php echo $product->nameProduct; ?></td>
-                            <td style="padding-left: 7px;"><?php echo $orderdetail["Number"]; ?></td>
-                            <td style="padding: 0 10px;"><?php echo Common::NumberFomat($orderdetail["Price"]); ?></td>
-                            <td style="padding-left: 12px;"><?php echo Common::NumberFomat($total); ?></td>
+                            <th>STT</th>
+                            <th class="text-center">Tên thuốc</th>
+                            <th>Số lượng</th>
+                            <th>Đơn giá</th>
+                            <th>Thành Tiền</th>
                         </tr>
-                    <?php
-                    }
-                    ?>
-
-
+                    </thead>
+                    <tbody>
+                        <?php
+                        $detail = DonThuoc::GetDetailById($IdDonThuoc);
+                        $common = new Common();
+                        // var_dump($detail);
+                        $sum = 0;
+                        foreach ($detail as $index => $DTdetail) { ?>
+                            <tr>
+                                <td class="text-center"><b><?php echo $index + 1 ?></b></td>
+                                <th><?php echo SanPham::GetNameById($DTdetail['IdThuoc']); ?></th>
+                                <td><span style="font-weight: 400 !important;"><?php echo $DTdetail['SoLuong'] . ' ' . $DTdetail['DVT']; ?></span></td>
+                                <td><?php echo Common::ViewNumber($DTdetail['GiaBan']); ?></td>
+                                <td><?php echo Common::ViewPrice($DTdetail['SoLuong'] * $DTdetail['GiaBan']); ?></td>
+                                <td><?php $sum += $DTdetail['SoLuong'] * $DTdetail['GiaBan'] ?></td>
+                            </tr>
+                            <tr >
+                                <td></td>
+                                <td><i>Sáng:</i> <b><?php echo SanPham::GetDesByVal($DTdetail['Sang'], 'donviquydoi') . ' ' . $DTdetail['DVT']; ?></b></td>
+                                <td><i>Trưa:</i> <b><?php echo SanPham::GetDesByVal($DTdetail['Trua'], 'donviquydoi') . ' ' . $DTdetail['DVT']; ?></b></td>
+                                <td><i>Chiều:</i> <b><?php echo SanPham::GetDesByVal($DTdetail['Chieu'], 'donviquydoi') . ' ' . $DTdetail['DVT']; ?></b></td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
+                    </tbody>
                 </table>
             </div>
-            <div class="total-order" style="padding: 0 10px;">
-                <div class="total-order-title">
-                    <p>Tổng tiền: </p>
-                    <p>Tổng tiền bằng chữ: </p>
-                    <p>Số tiền còn lại trong thẻ bằng số: </p>
-                </div>
-                <div class="total-order-number">
-                    <p style="text-align: center;"><?php echo Common::NumberFomat($order->TotalPrice); ?></p>
-                    <p>
-                        <?php
-                        $a = new Common;
-                        $b = $a->convert_number_to_words($order->TotalPrice);
-                        echo $b;
-                        ?>
-                    </p>
-                    <p style="text-align: center;">Không biết</p>
+            <tr>
+                <td><b>Tổng cộng :</b> <?php echo Common::ViewPrice($sum)." "."( ".$common->convert_number_to_words($sum)." )"?></td>
+            </tr>
+            <!---------------------------------->
+            <div class="row">
+                <div class="col-xs-6"></div>
+                <div class="col-xs-6 text-center">
+                    <h6 style=" font-weight: 500; margin: 10px 0;">
+                        <i><?php $date = getdate();
+                            // echo $date['weekday'] . ", ";
+                            echo "Ngày " . $date['mday'] . " ";
+                            echo "Tháng " . $date['mon'] . " ";
+                            echo "Năm " . $date['year'] . "";
+                            ?></i>
+                    </h6>
+                    <h6>Bác Sỹ</h6><br><br>
                 </div>
             </div>
             <div class="footer">
-                <p style="margin: 10px 0;">Cảm ơn và chúc các bạn một ngày tuyệt vời !</p>
+                <h5 style="margin: 10px 0; letter-spacing: 0.7 px; font-style: italic;text-align: left;">
+                    <b>* Khi tái khám nhớ mang theo đơn thuốc</b>
+                </h5>
             </div>
             <button type="submit" onclick="window.print()" class="no-print btn">
                 Print
             </button>
         </div>
-</body>
+    </div>
+</div>

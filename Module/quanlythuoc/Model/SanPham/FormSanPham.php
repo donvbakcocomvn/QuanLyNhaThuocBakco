@@ -98,7 +98,7 @@ class FormSanPham implements iFormSanPham {
 	function Gianhap($val = null) {
 		$properties = self::$properties;
         $properties["value"] = $val;
-        $properties[FormRender::Required] = "true";
+        // $properties[FormRender::Required] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
         return new FormRender(new Element\Textbox("Giá Nhập", $name, $properties));
 	}
@@ -284,5 +284,18 @@ class FormSanPham implements iFormSanPham {
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
 		$option = OptionsService::GetGroupsToSelect("cachdungthuoc");
         return new FormRender(new Element\Select("Cách Dùng Thuốc", $name,$option ,$properties));
+	}
+	/**
+	 *
+	 * @param mixed $val
+	 *
+	 * @return mixed
+	 */
+	function Canhbao($val = null) {
+		$properties = self::$properties;
+        $properties["value"] = $val;
+        $properties[FormRender::Required] = "true";
+        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+        return new FormRender(new Element\Textbox("Số Lượng Cảnh Báo", $name, $properties));
 	}
 }

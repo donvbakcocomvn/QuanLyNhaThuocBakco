@@ -44,6 +44,24 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
         }
     }
 
+    // Lấy 1 dòng by Id
+    public static function GetItemById($item,$Id)
+    {
+        $donthuoc = new DonThuoc();
+        $sql = "SELECT `$item` FROM `lap1_benhnhan` WHERE `Id` = '$Id'";
+        $result = $donthuoc->GetRow($sql);
+        return $result[$item];
+    }
+
+    //Lấy Đơn thuốc Detail by Id đơn thuốc
+    public static function GetDetailById($IdDonThuoc)
+    {
+        $donthuoc = new DonThuoc();
+        $sql = "SELECT * FROM `lap1_toathuoc_detail` WHERE `IdDonThuoc` = '$IdDonThuoc'";
+        $result = $donthuoc->GetRows($sql);
+        return $result;
+    }
+
     // Lấy Id bệnh nhân bằng Id toa thuốc
     public function GetIdBnById($IdTT)
     {

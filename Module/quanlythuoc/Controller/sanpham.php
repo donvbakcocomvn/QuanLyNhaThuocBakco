@@ -21,6 +21,33 @@ class sanpham extends \Application implements \Controller\IControllerBE
         self::$_Theme = "backend";
     }
 
+    function export()
+    {
+        $sp = new \Module\quanlythuoc\Model\SanPham();
+        $item = $sp->GetAllThuoc();
+        // var_dump($item);
+        // $data[] = ["BẢNG KÊ THUỐC PHÒNG KHÁM PHƯƠNG UYÊN"];
+        $data[] = [
+            "Mã thuốc","Tên Thuốc", "Tên biệt dược", "Số lô", "Giá nhập","Giá Bán","Đơn vị tính", "Ngày sản xuất", "Hạn sử dụng","Tác dụng","Cơ chế tác dụng", "Ghi chú","Số lượng", "Nhà sản xuất", "Nước sản xuất","Cách dùng thuốc", "Số lượng cảnh báo"
+        ];
+        $data[] = [];
+        // $total = 0;
+        // $convert = new Common();
+        if ($item) {
+            foreach ($item as $row) {
+                $data["Giaban"] = Common::ViewPrice($row["Giaban"]);
+                $data["Gianhap"] = Common::ViewPrice($row["Gianhap"]);
+                $data["Ngaysx"] = Common::ForMatDMY($row["Ngaysx"]);
+                $data["HSD"] = Common::ForMatDMY($row["HSD"]);
+                echo $data["CachDung"] = $row["CachDung"];
+                // $row["DVT"] = $sp->DonViTinh($row["DVT"]);
+                // var_dump($row["DVT"]);
+                $data[] = $row;
+            }
+            // \Module\quanlythuoc\Model\SanPham::ExportBangKe($data, "public/Excel/ExportThuoc.xlsx");
+        }
+    }
+
     function import()
     {
         try {
@@ -64,11 +91,12 @@ class sanpham extends \Application implements \Controller\IControllerBE
                         $itemInsert["Soluong"] = $item[15];
                         $itemInsert["DVQuyDoi"] = $item[16];
                         $itemInsert["CachDung"] = $b["Val"] ?? "";
+                        $itemInsert["Canhbao"] = $item[18];
                         $sanpham->Post($itemInsert);
                         new \Model\Error(\Model\Error::success, "Import Thành Công");
                     }
                 }
-                // Common::ToUrl("/index.php?module=quanlythuoc&controller=sanpham&action=index");
+                Common::ToUrl("/index.php?module=quanlythuoc&controller=sanpham&action=index");
                 // die();
             }
         } catch (Exception $ex) {
@@ -129,9 +157,9 @@ class sanpham extends \Application implements \Controller\IControllerBE
                 $item["Gianhap"] = $itemForm["Gianhap"];
                 $item["Giaban"] = $itemForm["Giaban"];
                 $item["DVQuyDoi"]  = $itemForm["DVQuyDoi"];
-                echo $item["Ngaysx"] = $itemForm["Ngaysx"] ? $itemForm["Ngaysx"] : "";
+                $item["Ngaysx"] = $itemForm["Ngaysx"] ? $itemForm["Ngaysx"] : "";
                 $item["DVT"] = $itemForm["DVT"];
-                echo $item["HSD"] = $itemForm["HSD"] ? $itemForm["HSD"] : "";
+                $item["HSD"] = $itemForm["HSD"] ? $itemForm["HSD"] : "";
                 $item["Tacdung"] = $itemForm["Tacdung"];
                 $item["Cochetacdung"] = $itemForm["Cochetacdung"];
                 $item["Ghichu"] = $itemForm["Ghichu"];
@@ -139,8 +167,10 @@ class sanpham extends \Application implements \Controller\IControllerBE
                 $item["NhaSX"] = $itemForm["NhaSX"];
                 $item["NuocSX"] = $itemForm["NuocSX"];
                 $item["CachDung"] = $itemForm["CachDung"];
+                $item["Warning"] = $itemForm["Warning"];
                 $item["IsDelete"] = 0;
                 $sanpham->Post($item);
+                new \Model\Error(\Model\Error::success, "Thêm thuốc thành công");
                 // \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=danhmuc&action=put&id=" . $itemForm["Code"]);
                 Common::ToUrl("/index.php?module=quanlythuoc&controller=sanpham&action=index");
             }
@@ -180,9 +210,10 @@ class sanpham extends \Application implements \Controller\IControllerBE
                 $model["DVQuyDoi"] = $itemHtml["DVQuyDoi"];
                 $model["NuocSX"] = $itemHtml["NuocSX"];
                 $model["CachDung"] = $itemHtml["CachDung"];
+                $model["Warning"] = $itemHtml["Warning"];
                 $dm = new ModelSanPham();
                 $dm->Put($model);
-                new \Model\Error(\Model\Error::success, "Đã Sửa Danh Mục");
+                new \Model\Error(\Model\Error::success, "Sửa thuốc thành công");
                 // \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=sanpham&action=index");
             }
         } catch (Exception $exc) {
@@ -209,7 +240,7 @@ class sanpham extends \Application implements \Controller\IControllerBE
             if ($Id) {
                 $SanPham = new ModelSanPham();
                 $SanPham->Delete($Id);
-                new \Model\Error(\Model\Error::success, "Đã Xóa Danh Mục");
+                new \Model\Error(\Model\Error::success, "Xóa Thuốc Thành Công");
             }
         } catch (Exception $ex) {
             new \Model\Error(\Model\Error::danger, $ex->getMessage());
@@ -230,6 +261,7 @@ class sanpham extends \Application implements \Controller\IControllerBE
             $modelItem = new ModelSanPham();
             $modelItem->isDelete($DSMaSanPham);
         }
+        new \Model\Error(\Model\Error::success, "Xóa Thuốc Thành Công");
         \Model\Common::ToUrl($_SERVER["HTTP_REFERER"]);
     }
 }

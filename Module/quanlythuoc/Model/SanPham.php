@@ -10,6 +10,8 @@ namespace Module\quanlythuoc\Model;
 use Model\OptionsService;
 use Module\quanlythuoc\Permission;
 use Model\Common;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 /**
  * Description of SanPham
@@ -19,25 +21,26 @@ use Model\Common;
 class SanPham extends \Model\DB implements \Model\IModelService
 {
 
-    public $Id;
-    public $Idloaithuoc;
-    public $Name;
-    public $Namebietduoc;
-    public $Solo;
-    public $Gianhap;
-    public $Giaban;
-    public $DVT;
-    public $Ngaysx;
-    public $HSD;
-    public $DVQuyDoi;
-    public $Tacdung;
-    public $Cochetacdung;
-    public $Ghichu;
-    public $Soluong;
-    public $NhaSX;
-    public $NuocSX;
-    public $IsDelete;
-    public $CachDung;
+    public $Id; 
+    public $Idloaithuoc; 
+    public $Name; 
+    public $Namebietduoc; 
+    public $Solo; 
+    public $Gianhap; 
+    public $Giaban; 
+    public $DVT; 
+    public $Ngaysx; 
+    public $HSD; 
+    public $DVQuyDoi; 
+    public $Tacdung; 
+    public $Cochetacdung; 
+    public $Ghichu; 
+    public $Soluong; 
+    public $NhaSX; 
+    public $NuocSX; 
+    public $IsDelete; 
+    public $CachDung; 
+    public $Canhbao; 
 
     public function __construct($sp = null)
     {
@@ -49,32 +52,148 @@ class SanPham extends \Model\DB implements \Model\IModelService
                 $sp = $this->GetById($id);
             }
             if ($sp) {
-                $this->Id = isset($sp["Id"]) ? $sp["Id"] : null;
-                $this->Idloaithuoc = isset($sp["Idloaithuoc"]) ? $sp["Idloaithuoc"] : null;
-                $this->Name = isset($sp["Name"]) ? $sp["Name"] : null;
-                $this->Namebietduoc = isset($sp["Namebietduoc"]) ? $sp["Namebietduoc"] : null;
-                $this->Solo = isset($sp["Solo"]) ? $sp["Solo"] : null;
-                $this->Gianhap = isset($sp["Gianhap"]) ? $sp["Gianhap"] : null;
-                $this->Giaban = isset($sp["Giaban"]) ? $sp["Giaban"] : null;
-                $this->DVT = isset($sp["DVT"]) ? $sp["DVT"] : null;
-                $this->Ngaysx = isset($sp["Ngaysx"]) ? $sp["Ngaysx"] : null;
-                $this->HSD = isset($sp["HSD"]) ? $sp["HSD"] : null;
-                $this->DVQuyDoi = isset($sp["DVQuyDoi"]) ? $sp["DVQuyDoi"] : null;
-                $this->Tacdung = isset($sp["Tacdung"]) ? $sp["Tacdung"] : null;
-                $this->Cochetacdung = isset($sp["Cochetacdung"]) ? $sp["Cochetacdung"] : null;
-                $this->Ghichu = isset($sp["Ghichu"]) ? $sp["Ghichu"] : null;
-                $this->Soluong = isset($sp["Soluong"]) ? $sp["Soluong"] : null;
-                $this->NhaSX = isset($sp["NhaSX"]) ? $sp["NhaSX"] : null;
-                $this->NuocSX = isset($sp["NuocSX"]) ? $sp["NuocSX"] : null;
-                $this->IsDelete = isset($sp["IsDelete"]) ? $sp["IsDelete"] : null;
-                $this->CachDung = isset($sp["CachDung"]) ? $sp["CachDung"] : null;
+                $this->Id = isset($sp["Id"]) ? $sp["Id"] : null ;
+                $this->Idloaithuoc = isset($sp["Idloaithuoc"]) ? $sp["Idloaithuoc"] : null ;
+                $this->Name = isset($sp["Name"]) ? $sp["Name"] : null ;
+                $this->Namebietduoc = isset($sp["Namebietduoc"]) ? $sp["Namebietduoc"] : null ;
+                $this->Solo = isset($sp["Solo"]) ? $sp["Solo"] : null ;
+                $this->Gianhap = isset($sp["Gianhap"]) ? $sp["Gianhap"] : null ;
+                $this->Giaban = isset($sp["Giaban"]) ? $sp["Giaban"] : null ;
+                $this->DVT = isset($sp["DVT"]) ? $sp["DVT"] : null ;
+                $this->Ngaysx = isset($sp["Ngaysx"]) ? $sp["Ngaysx"] : null ;
+                $this->HSD = isset($sp["HSD"]) ? $sp["HSD"] : null ;
+                $this->DVQuyDoi = isset($sp["DVQuyDoi"]) ? $sp["DVQuyDoi"] : null ;
+                $this->Tacdung = isset($sp["Tacdung"]) ? $sp["Tacdung"] : null ;
+                $this->Cochetacdung = isset($sp["Cochetacdung"]) ? $sp["Cochetacdung"] : null ;
+                $this->Ghichu = isset($sp["Ghichu"]) ? $sp["Ghichu"] : null ;
+                $this->Soluong = isset($sp["Soluong"]) ? $sp["Soluong"] : null ;
+                $this->NhaSX = isset($sp["NhaSX"]) ? $sp["NhaSX"] : null ;
+                $this->NuocSX = isset($sp["NuocSX"]) ? $sp["NuocSX"] : null ;
+                $this->IsDelete = isset($sp["IsDelete"]) ? $sp["IsDelete"] : null ;
+                $this->CachDung = isset($sp["CachDung"]) ? $sp["CachDung"] : null ;
+                $this->Canhbao = isset($sp["Canhbao"]) ? $sp["Canhbao"] : null ;
             }
         }
     }
-    public function ThanhTien()
+
+    static  public function ExportBangKe($data, $fileName)
     {
-        return $this->Soluong * $this->Gianhap;
+        $spreadsheet = new Spreadsheet();
+        $spreadsheet->setActiveSheetIndex(0);
+        $sheet0 = $spreadsheet->getActiveSheet();
+        $spreadsheet->getActiveSheet()->getColumnDimension('A')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('B')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('C')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('D')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('E')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('F')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('G')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('H')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('I')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('J')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('K')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('M')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('N')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('O')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('P')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('Q')->setAutoSize(TRUE);
+
+        // Set kiểu chữ
+        $spreadsheet->getDefaultStyle()->getFont()->setName('Times New Roman');
+        // $spreadsheet->getActiveSheet()->getDefaultRowDimension()->setRowHeight(50);
+        foreach ($data as $row => $colums) {
+            $colIndex = 0;
+            foreach ($colums as  $value) {
+                // echo $colIndex;
+                $sheet0->setCellValue(
+                    SanPham::GetCellName(
+                        $colIndex,
+                        $row + 1
+                    ),
+                    $value
+                );
+                $colIndex++;
+            }
+        }
+        $writer = IOFactory::createWriter($spreadsheet, "Xlsx");
+        $writer->save($fileName);
+        Common::ToUrl("/{$fileName}");
     }
+
+    static  public function GetCollums($num)
+    {
+        $numeric = $num % 26;
+        $letter = chr(65 + $numeric);
+        $num2 = intval($num / 26);
+        if ($num2 > 0) {
+            return self::GetCollums($num2 - 1) . $letter;
+        } else {
+            return $letter;
+        }
+    }
+    static  public function GetCellName($col, $row)
+    {
+        $row = max($row, 1);
+        $colName = self::GetCollums($col);
+        return "{$colName}{$row}";
+    }
+
+    static  public function Export($data, $fileName)
+    {
+        $spreadsheet = new Spreadsheet();
+        $spreadsheet->setActiveSheetIndex(0);
+        $sheet0 = $spreadsheet->getActiveSheet();
+        foreach ($data as $row => $colums) {
+            $colIndex = 0;
+            foreach ($colums as  $value) {
+                // echo $colIndex;
+                $sheet0->setCellValue(
+                    SanPham::GetCellName(
+                        $colIndex,
+                        $row + 1
+                    ),
+                    $value
+                );
+                $colIndex++;
+            }
+        }
+        $writer = IOFactory::createWriter($spreadsheet, "Xlsx");
+        $writer->save($fileName);
+        Common::ToUrl("/{$fileName}");
+    }
+
+    public function GetAllThuoc()
+    {
+        $sql = "SELECT `Id`,`Name`, `Namebietduoc`, `Solo`, `Gianhap`, `Giaban`, `DVT`, `Ngaysx`, `HSD`, `Tacdung`, `Cochetacdung`, `Ghichu`, `Soluong`, `NhaSX`, `NuocSX`,`CachDung`, `Canhbao` FROM `lap1_qlthuoc_thuoc`";
+        $result = $this->GetRows($sql);
+        return $result;
+    }
+
+    // Lấy Des by value trong options
+    public static function GetDesByVal($val, $group)
+    {
+        $sp = new SanPham();
+        $sql = "SELECT `Des` FROM `lap1_options` WHERE `Val` LIKE '$val' AND `GroupsId` LIKE '$group'";
+        $result = $sp->GetRow($sql);
+        return $result['Des'];
+    }
+
+    // Lấy Name thuốc theo Id 1 dòng 
+    public static function GetNameById($id)
+    {
+        $sp = new SanPham();
+        $sql = "SELECT `Name` FROM `lap1_qlthuoc_thuoc` WHERE `Id` = '$id'";
+        $result = $sp->GetRow($sql);
+        return $result['Name'];
+    }
+
+    public function GetBySoLuong()
+    {
+        $sql = "SELECT * FROM `lap1_qlthuoc_thuoc` WHERE `Soluong` < `Canhbao` ORDER BY `Name` ASC";
+        $result = $this->GetRows($sql);
+        return $result;
+    }
+
     public function GetCDTById($id)
     {
         $sql = "SELECT `CachDung` FROM `lap1_qlthuoc_thuoc` WHERE `Id` = '$id'";
