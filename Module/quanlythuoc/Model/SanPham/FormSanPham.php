@@ -291,7 +291,7 @@ class FormSanPham implements iFormSanPham {
 	 *
 	 * @return mixed
 	 */
-	function Warning($val = null) {
+	function Canhbao($val = null) {
 		$properties = self::$properties;
         $properties["value"] = $val;
         $properties[FormRender::Required] = "true";

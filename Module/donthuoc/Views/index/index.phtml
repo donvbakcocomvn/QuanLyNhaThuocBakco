@@ -36,9 +36,9 @@
                             <div class="modal-content">
                                 <div class="modal-body">
                                     <?php
-                                    $link = '.\public\huongdan\huongdansudung.html';
-                                    $path = file_get_contents($link);
-                                    echo $path;
+                                    $link = 'huongdansudung';
+                                    $path = "public/huongdan/{$link}.html";
+                                    echo file_get_contents($path);
                                     ?>
                                 </div>
                                 <div class="modal-footer">

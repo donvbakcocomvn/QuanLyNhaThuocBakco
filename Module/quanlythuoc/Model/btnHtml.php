@@ -19,7 +19,18 @@ class btnHtml
         }
     ?>
         <a class="btn btn-warning" href="/index.php?module=quanlythuoc&controller=sanpham&action=import">
-            <i class="fa fa-filter"></i> Import</a>
+            <i class="fa fa-download"></i> Import</a>
+    <?php
+    }
+
+    static function btnExportSanPham()
+    {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_Thuoc_Post, Permission::QLT_Thuoc_Put,Permission::QLT_DanhMuc_Delete, Permission::QLT_DanhMuc_Import]) == false) {
+            return;
+        }
+    ?>
+        <a class="btn btn-success" href="/index.php?module=quanlythuoc&controller=sanpham&action=export">
+            <i class="fa fa-filter"></i> Export</a>
     <?php
     }
 

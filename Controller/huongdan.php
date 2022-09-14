@@ -50,7 +50,7 @@ class huongdan extends \Application implements IControllerBE
 
                 file_put_contents($path, $content, FILE_USE_INCLUDE_PATH);
                 new \Model\Error(\Model\Error::success, "Đã sửa nội dung thành công");
-                // \Model\Common::ToUrl("/index.php?module=donthuoc&controller=index&action=index");
+                \Model\Common::ToUrl("/huongdan/put/?link=huongdansudung");
                 exit();
             }
         } catch (\Exception $exc) {

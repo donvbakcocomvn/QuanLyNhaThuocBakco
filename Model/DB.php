@@ -28,7 +28,7 @@ class DB
         $res = self::$Connect->query($sql);
         $a = [];
         if ($res) {
-            while ($row = $res->fetch_array()) {
+            while ($row = $res->fetch_assoc()) {
                 $a[] = $row;
             }
         }

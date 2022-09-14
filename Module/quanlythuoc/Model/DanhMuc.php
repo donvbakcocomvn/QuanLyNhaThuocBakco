@@ -29,6 +29,15 @@ class DanhMuc extends \Model\DB implements \Model\IModelService
         }
     }
 
+    // Lấy Name danh mục by Id (1 dòng)
+    public static function GetNameById($id)
+    {
+        $dm = new DanhMuc();
+        $sql = "SELECT `Name` FROM `lap1_qlthuoc_danhmuc` WHERE `Id` = '$id'";
+        $result = $dm->GetRow($sql);
+        return $result["Name"];
+    }
+
     public function GetItems($params, $indexPage, $pageNumber, &$total)
     {
         $where = "`Name` like '%{$params["keyword"]}%'";

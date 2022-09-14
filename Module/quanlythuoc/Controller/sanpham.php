@@ -21,6 +21,33 @@ class sanpham extends \Application implements \Controller\IControllerBE
         self::$_Theme = "backend";
     }
 
+    function export()
+    {
+        $sp = new \Module\quanlythuoc\Model\SanPham();
+        $item = $sp->GetAllThuoc();
+        // var_dump($item);
+        // $data[] = ["BẢNG KÊ THUỐC PHÒNG KHÁM PHƯƠNG UYÊN"];
+        $data[] = [
+            "Mã thuốc","Tên Thuốc", "Tên biệt dược", "Số lô", "Giá nhập","Giá Bán","Đơn vị tính", "Ngày sản xuất", "Hạn sử dụng","Tác dụng","Cơ chế tác dụng", "Ghi chú","Số lượng", "Nhà sản xuất", "Nước sản xuất","Cách dùng thuốc", "Số lượng cảnh báo"
+        ];
+        $data[] = [];
+        // $total = 0;
+        // $convert = new Common();
+        if ($item) {
+            foreach ($item as $row) {
+                $data["Giaban"] = Common::ViewPrice($row["Giaban"]);
+                $data["Gianhap"] = Common::ViewPrice($row["Gianhap"]);
+                $data["Ngaysx"] = Common::ForMatDMY($row["Ngaysx"]);
+                $data["HSD"] = Common::ForMatDMY($row["HSD"]);
+                echo $data["CachDung"] = $row["CachDung"];
+                // $row["DVT"] = $sp->DonViTinh($row["DVT"]);
+                // var_dump($row["DVT"]);
+                $data[] = $row;
+            }
+            // \Module\quanlythuoc\Model\SanPham::ExportBangKe($data, "public/Excel/ExportThuoc.xlsx");
+        }
+    }
+
     function import()
     {
         try {
@@ -64,7 +91,7 @@ class sanpham extends \Application implements \Controller\IControllerBE
                         $itemInsert["Soluong"] = $item[15];
                         $itemInsert["DVQuyDoi"] = $item[16];
                         $itemInsert["CachDung"] = $b["Val"] ?? "";
-                        $itemInsert["Warning"] = $item[18];
+                        $itemInsert["Canhbao"] = $item[18];
                         $sanpham->Post($itemInsert);
                         new \Model\Error(\Model\Error::success, "Import Thành Công");
                     }

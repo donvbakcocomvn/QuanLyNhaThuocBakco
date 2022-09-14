@@ -10,6 +10,8 @@ namespace Module\quanlythuoc\Model;
 use Model\OptionsService;
 use Module\quanlythuoc\Permission;
 use Model\Common;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 /**
  * Description of SanPham
@@ -37,7 +39,7 @@ class SanPham extends \Model\DB implements \Model\IModelService {
     public $NuocSX; 
     public $IsDelete; 
     public $CachDung; 
-    public $Warning; 
+    public $Canhbao; 
 
     public function __construct($sp = null) {
         self::$TableName = prefixTable . "qlthuoc_thuoc";
@@ -67,9 +69,102 @@ class SanPham extends \Model\DB implements \Model\IModelService {
                 $this->NuocSX = isset($sp["NuocSX"]) ? $sp["NuocSX"] : null ;
                 $this->IsDelete = isset($sp["IsDelete"]) ? $sp["IsDelete"] : null ;
                 $this->CachDung = isset($sp["CachDung"]) ? $sp["CachDung"] : null ;
-                $this->Warning = isset($sp["Warning"]) ? $sp["Warning"] : null ;
+                $this->Canhbao = isset($sp["Canhbao"]) ? $sp["Canhbao"] : null ;
             }
         }
+    }
+
+    static  public function ExportBangKe($data, $fileName)
+    {
+        $spreadsheet = new Spreadsheet();
+        $spreadsheet->setActiveSheetIndex(0);
+        $sheet0 = $spreadsheet->getActiveSheet();
+        $spreadsheet->getActiveSheet()->getColumnDimension('A')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('B')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('C')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('D')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('E')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('F')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('G')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('H')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('I')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('J')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('K')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('M')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('N')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('O')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('P')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('Q')->setAutoSize(TRUE);
+
+        // Set kiểu chữ
+        $spreadsheet->getDefaultStyle()->getFont()->setName('Times New Roman');
+        // $spreadsheet->getActiveSheet()->getDefaultRowDimension()->setRowHeight(50);
+        foreach ($data as $row => $colums) {
+            $colIndex = 0;
+            foreach ($colums as  $value) {
+                // echo $colIndex;
+                $sheet0->setCellValue(
+                    SanPham::GetCellName(
+                        $colIndex,
+                        $row + 1
+                    ),
+                    $value
+                );
+                $colIndex++;
+            }
+        }
+        $writer = IOFactory::createWriter($spreadsheet, "Xlsx");
+        $writer->save($fileName);
+        Common::ToUrl("/{$fileName}");
+    }
+
+    static  public function GetCollums($num)
+    {
+        $numeric = $num % 26;
+        $letter = chr(65 + $numeric);
+        $num2 = intval($num / 26);
+        if ($num2 > 0) {
+            return self::GetCollums($num2 - 1) . $letter;
+        } else {
+            return $letter;
+        }
+    }
+    static  public function GetCellName($col, $row)
+    {
+        $row = max($row, 1);
+        $colName = self::GetCollums($col);
+        return "{$colName}{$row}";
+    }
+
+    static  public function Export($data, $fileName)
+    {
+        $spreadsheet = new Spreadsheet();
+        $spreadsheet->setActiveSheetIndex(0);
+        $sheet0 = $spreadsheet->getActiveSheet();
+        foreach ($data as $row => $colums) {
+            $colIndex = 0;
+            foreach ($colums as  $value) {
+                // echo $colIndex;
+                $sheet0->setCellValue(
+                    SanPham::GetCellName(
+                        $colIndex,
+                        $row + 1
+                    ),
+                    $value
+                );
+                $colIndex++;
+            }
+        }
+        $writer = IOFactory::createWriter($spreadsheet, "Xlsx");
+        $writer->save($fileName);
+        Common::ToUrl("/{$fileName}");
+    }
+
+    public function GetAllThuoc()
+    {
+        $sql = "SELECT `Id`,`Name`, `Namebietduoc`, `Solo`, `Gianhap`, `Giaban`, `DVT`, `Ngaysx`, `HSD`, `Tacdung`, `Cochetacdung`, `Ghichu`, `Soluong`, `NhaSX`, `NuocSX`,`CachDung`, `Canhbao` FROM `lap1_qlthuoc_thuoc`";
+        $result = $this->GetRows($sql);
+        return $result;
     }
 
     // Lấy Des by value trong options
@@ -92,7 +187,7 @@ class SanPham extends \Model\DB implements \Model\IModelService {
 
     public function GetBySoLuong()
     {
-        $sql = "SELECT * FROM `lap1_qlthuoc_thuoc` WHERE `Soluong` < 100 ORDER BY `Name` ASC";
+        $sql = "SELECT * FROM `lap1_qlthuoc_thuoc` WHERE `Soluong` < `Canhbao` ORDER BY `Name` ASC";
         $result = $this->GetRows($sql);
         return $result;
     }
