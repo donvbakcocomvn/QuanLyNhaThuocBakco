@@ -19,8 +19,10 @@
                         use Model\HuongDan\FormHuongDan;
                         $form = new FormHuongDan();
                         $id = $_GET['link'];
-                        $path = file_get_contents($id);
-                        echo $form->Content($path)->render();
+                        $path = "public/huongdan/{$id}.html";
+                        $content = file_get_contents($path);
+                        
+                        echo $form->Content($content)->render();
                         ?>
                         <div class="box-footer">
                             <input type="submit" class="btn btn-success" name="Luu" value="Cập nhật nội dung hướng dẫn " />

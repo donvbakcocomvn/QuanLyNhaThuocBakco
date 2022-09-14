@@ -46,13 +46,12 @@ class huongdan extends \Application implements IControllerBE
                 $itemHtml = \Model\Request::Post(FormHuongDan::$FormName, null);
                 $content = $itemHtml['Content']; // Content trong form
                 $id = \Model\Request::Get("link", null); // Get link đường dẫn
-                if (file_exists($id) and is_file($id)) {
-                    file_put_contents($id,$content, FILE_USE_INCLUDE_PATH);
-                    new \Model\Error(\Model\Error::success, "Đã sửa nội dung thành công");
-                \Model\Common::ToUrl("/index.php?module=donthuoc&controller=index&action=index");
-                }
+                $path = "public/huongdan/{$id}.html";
+
+                file_put_contents($path, $content, FILE_USE_INCLUDE_PATH);
+                new \Model\Error(\Model\Error::success, "Đã sửa nội dung thành công");
+                // \Model\Common::ToUrl("/index.php?module=donthuoc&controller=index&action=index");
                 exit();
-                
             }
         } catch (\Exception $exc) {
             echo $exc->getMessage();

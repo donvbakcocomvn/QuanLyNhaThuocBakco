@@ -37,6 +37,7 @@ class SanPham extends \Model\DB implements \Model\IModelService {
     public $NuocSX; 
     public $IsDelete; 
     public $CachDung; 
+    public $Warning; 
 
     public function __construct($sp = null) {
         self::$TableName = prefixTable . "qlthuoc_thuoc";
@@ -66,6 +67,7 @@ class SanPham extends \Model\DB implements \Model\IModelService {
                 $this->NuocSX = isset($sp["NuocSX"]) ? $sp["NuocSX"] : null ;
                 $this->IsDelete = isset($sp["IsDelete"]) ? $sp["IsDelete"] : null ;
                 $this->CachDung = isset($sp["CachDung"]) ? $sp["CachDung"] : null ;
+                $this->Warning = isset($sp["Warning"]) ? $sp["Warning"] : null ;
             }
         }
     }
