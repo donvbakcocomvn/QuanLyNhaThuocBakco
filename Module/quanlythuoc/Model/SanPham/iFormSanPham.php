@@ -22,4 +22,7 @@ interface iFormSanPham {
     public function Lang($val = null);
     public function CachDung($val = null);
     public function Canhbao($val = null);
+    public function SLXuat($val = null);
+    public function SLNhap($val = null);
+    public function SLHienTai($val = null);    
 }

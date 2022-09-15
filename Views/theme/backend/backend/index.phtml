@@ -92,13 +92,13 @@
                             use Module\quanlythuoc\Model\SanPham;
 
                             $sp = new SanPham();
-                            $a = $sp->GetBySoLuong();
+                            $a = $sp->GetSpCanhBao();
                             // var_dump($a);
 
                             foreach ($a as $key => $value) { ?>
                                 <tr>
                                     <td><?php echo $key + 1 ?></td>
-                                    <td><a href="pages/examples/invoice.html"><?php echo $value['Name'] ?></a></td>
+                                    <td><a href="#"><?php echo $value['Name'] ?></a></td>
                                     <td><?php echo $value['Namebietduoc'] ?></td>
                                     <td><span class="label label-danger"><?php echo $value['Soluong'] ?></span></td>
                                     <td><?php echo $value['Solo'] ?></td>

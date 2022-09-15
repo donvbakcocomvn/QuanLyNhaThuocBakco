@@ -23,6 +23,7 @@ class sanpham extends \Application implements \Controller\IControllerBE
 
     function export()
     {
+        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Thuoc_Export]);
         $sp = new \Module\quanlythuoc\Model\SanPham();
         $item = $sp->GetAllThuoc();
         // var_dump($item);
@@ -30,26 +31,28 @@ class sanpham extends \Application implements \Controller\IControllerBE
         $data[] = [
             "Mã thuốc","Tên Thuốc", "Tên biệt dược", "Số lô", "Giá nhập","Giá Bán","Đơn vị tính", "Ngày sản xuất", "Hạn sử dụng","Tác dụng","Cơ chế tác dụng", "Ghi chú","Số lượng", "Nhà sản xuất", "Nước sản xuất","Cách dùng thuốc", "Số lượng cảnh báo"
         ];
-        $data[] = [];
+        // $data[] = [];
         // $total = 0;
         // $convert = new Common();
         if ($item) {
             foreach ($item as $row) {
-                $data["Giaban"] = Common::ViewPrice($row["Giaban"]);
-                $data["Gianhap"] = Common::ViewPrice($row["Gianhap"]);
-                $data["Ngaysx"] = Common::ForMatDMY($row["Ngaysx"]);
-                $data["HSD"] = Common::ForMatDMY($row["HSD"]);
-                echo $data["CachDung"] = $row["CachDung"];
+                $row["Giaban"] = Common::ViewPrice($row["Giaban"]);
+                $row["Gianhap"] = Common::ViewPrice($row["Gianhap"]);
+                $row["Ngaysx"] = Common::ForMatDMY($row["Ngaysx"]);
+                $row["HSD"] = Common::ForMatDMY($row["HSD"]);
+                $row["CachDung"] = $sp->GetDesByVal($row["CachDung"], 'cachdungthuoc');
+                $row["DVT"] = $sp->GetDesByVal($row["DVT"], 'donvitinh');
                 // $row["DVT"] = $sp->DonViTinh($row["DVT"]);
                 // var_dump($row["DVT"]);
                 $data[] = $row;
             }
-            // \Module\quanlythuoc\Model\SanPham::ExportBangKe($data, "public/Excel/ExportThuoc.xlsx");
+            \Module\quanlythuoc\Model\SanPham::ExportBangKe($data, "public/Excel/ExportThuoc.xlsx");
         }
     }
 
     function import()
     {
+        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Thuoc_Import]);
         try {
             if (isset($_POST["submit"])) {
                 // Kiểm tra File đúng định dạng không khi import
@@ -107,7 +110,7 @@ class sanpham extends \Application implements \Controller\IControllerBE
 
     function index()
     {
-        \Model\Permission::Check([\Model\User::Admin, Permission::QLT_Thuoc_DS]);
+        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy,Permission::QLT_Thuoc_DS]);
         $modelItem = new ModelSanPham();
         $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
         $params["danhmuc"] = isset($_REQUEST["danhmuc"]) ? \Model\Common::TextInput($_REQUEST["danhmuc"]) : "";
@@ -128,6 +131,7 @@ class sanpham extends \Application implements \Controller\IControllerBE
 
     function detail()
     {
+        \Model\Permission::Check([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_Thuoc_Detail]);
         $id = \Model\Request::Get("id", null);
         if ($id == null) {
         }
@@ -167,7 +171,7 @@ class sanpham extends \Application implements \Controller\IControllerBE
                 $item["NhaSX"] = $itemForm["NhaSX"];
                 $item["NuocSX"] = $itemForm["NuocSX"];
                 $item["CachDung"] = $itemForm["CachDung"];
-                $item["Warning"] = $itemForm["Warning"];
+                $item["Canhbao"] = $itemForm["Canhbao"];
                 $item["IsDelete"] = 0;
                 $sanpham->Post($item);
                 new \Model\Error(\Model\Error::success, "Thêm thuốc thành công");
@@ -210,7 +214,7 @@ class sanpham extends \Application implements \Controller\IControllerBE
                 $model["DVQuyDoi"] = $itemHtml["DVQuyDoi"];
                 $model["NuocSX"] = $itemHtml["NuocSX"];
                 $model["CachDung"] = $itemHtml["CachDung"];
-                $model["Warning"] = $itemHtml["Warning"];
+                $model["Canhbao"] = $itemHtml["Canhbao"];
                 $dm = new ModelSanPham();
                 $dm->Put($model);
                 new \Model\Error(\Model\Error::success, "Sửa thuốc thành công");
@@ -250,6 +254,7 @@ class sanpham extends \Application implements \Controller\IControllerBE
 
     public function isdelete()
     {
+        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Thuoc_Delete]);
         if (\Model\Request::Get("id", [])) {
             $DSMaSanPham = \Model\Request::Get("id", []);
             $modelItem = new ModelSanPham();

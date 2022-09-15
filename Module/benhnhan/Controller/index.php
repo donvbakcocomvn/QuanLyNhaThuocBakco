@@ -45,7 +45,7 @@ class index extends \Application implements \Controller\IControllerBE
 
     function detail()
     {
-        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_BenhNhan_Put]);
+        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_BenhNhan_Detail]);
 
         try {
             if (\Model\Request::Post(FormBenhNhan::$ElementsName, null)) {
@@ -163,7 +163,7 @@ class index extends \Application implements \Controller\IControllerBE
     public function delete()
     {
         try {
-            \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy]);
+            \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_BenhNhan_Delete]);
             $Id = \Model\Request::Get("id", null);
             if ($Id) {
                 $DanhMuc = new ModelBenhNhan();

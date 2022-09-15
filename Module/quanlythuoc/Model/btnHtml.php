@@ -14,7 +14,7 @@ class btnHtml
 
     static function btnImportSanPham()
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_Thuoc_Post, Permission::QLT_Thuoc_Put, Permission::QLT_DanhMuc_Delete, Permission::QLT_DanhMuc_Import]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_Thuoc_Import]) == false) {
             return;
         }
 ?>
@@ -25,7 +25,7 @@ class btnHtml
 
     static function btnExportSanPham()
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_Thuoc_Post, Permission::QLT_Thuoc_Put,Permission::QLT_DanhMuc_Delete, Permission::QLT_DanhMuc_Import]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Thuoc_Export]) == false) {
             return;
         }
     ?>
@@ -36,7 +36,7 @@ class btnHtml
 
     static function btnThemSanPham()
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_Thuoc_Post]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Thuoc_Post]) == false) {
             return;
         }
     ?>
@@ -47,7 +47,7 @@ class btnHtml
 
     public static function btnViewSanPham()
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_Thuoc_DS]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Thuoc_DS]) == false) {
             return;
         }
     ?>
@@ -58,7 +58,7 @@ class btnHtml
 
     public static function btnSuaSanPham($id)
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_Thuoc_Put]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Thuoc_Put]) == false) {
             return;
         }
     ?>
@@ -70,7 +70,7 @@ class btnHtml
 
     public static function btnChiSanPham($id)
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_Thuoc_Put]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_Thuoc_Detail]) == false) {
             return;
         }
     ?>
@@ -82,7 +82,7 @@ class btnHtml
 
     public static function btnXoaSanPham($id)
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_Thuoc_Delete]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_Thuoc_Delete]) == false) {
             return;
         }
     ?>
@@ -94,7 +94,7 @@ class btnHtml
 
     public static function btnViewDanhMuc()
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_DanhMuc_DS]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_DanhMuc_DS]) == false) {
             return;
         }
     ?>
@@ -105,7 +105,7 @@ class btnHtml
 
     public static function btnThemDanhMuc()
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_DanhMuc_Post]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DanhMuc_Post]) == false) {
             return;
         }
     ?>
@@ -116,7 +116,7 @@ class btnHtml
 
     public static function btnSuaDanhMuc($id)
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_DanhMuc_Put]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_DanhMuc_Put]) == false) {
             return;
         }
     ?>
@@ -128,7 +128,7 @@ class btnHtml
 
     public static function btnXoaDanhMuc($id)
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_DanhMuc_Delete]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DanhMuc_Delete]) == false) {
             return;
         }
     ?>
@@ -140,7 +140,7 @@ class btnHtml
 
     public static function btnThemPhieuXuatNhap()
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_DanhMuc_Post]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_Phieu_Post]) == false) {
             return;
         }
     ?>
@@ -151,7 +151,7 @@ class btnHtml
 
     public static function btnSuaPhieuXuatNhap($id)
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_DanhMuc_Put]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_Phieu_Put]) == false) {
             return;
         }
     ?>
@@ -163,7 +163,7 @@ class btnHtml
 
     public static function btnXoaPhieuXuatNhap($id)
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_DanhMuc_Delete]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_Phieu_Delete]) == false) {
             return;
         }
     ?>
@@ -175,7 +175,7 @@ class btnHtml
 
     public static function btnChiTietPhieuXuatNhap($id)
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_Thuoc_Put]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy,Permission::QLT_Phieu_Detail]) == false) {
             return;
         }
     ?>

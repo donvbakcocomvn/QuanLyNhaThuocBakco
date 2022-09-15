@@ -15,7 +15,7 @@ class Permission {
          * @param {type} parameter
          */
         if ($kt == false) {
-            exit("Bạn không có quền trên đường dẫn này.");
+            exit("Bạn không có quyền trên đường dẫn này.");
         }
     }
     public static function CheckPremision($param0, $param1=[]) {

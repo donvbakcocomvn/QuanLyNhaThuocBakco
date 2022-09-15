@@ -3,7 +3,7 @@
 namespace Module\benhnhan\Controller;
 
 use Model\Common;
-use Module\quanlythuoc\Permission;
+use Module\benhnhan\Permission;
 
 class install extends \Application  {
 

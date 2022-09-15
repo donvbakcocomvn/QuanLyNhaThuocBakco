@@ -5,6 +5,7 @@ namespace Module\quanlythuoc\Model\SanPham;
 use PFBC\Element;
 use Model\FormRender;
 use Model\OptionsService;
+use Model\Notions;
 
 class FormSanPham implements iFormSanPham {
 
@@ -42,7 +43,8 @@ class FormSanPham implements iFormSanPham {
 		$properties = self::$properties;
         $properties["value"] = $val;
         $properties[FormRender::Required] = "true";
-		$option = \Module\quanlythuoc\Model\DanhMuc::CapChaTpOptions();
+		$option = array("0" => null);
+		$option += \Module\quanlythuoc\Model\DanhMuc::CapChaTpOptions();
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
         return new FormRender(new Element\Select("Thuộc Danh Mục", $name, $option,$properties));
 	}
@@ -238,9 +240,13 @@ class FormSanPham implements iFormSanPham {
 	function NuocSX($val = null) {
 		$properties = self::$properties;
         $properties["value"] = $val;
+		$properties["class"] = "select2 form-control  ";
+
         // $properties[FormRender::Required] = "true";
+		$options = array("0" => null);
+		$options += Notions::GetToOptions();
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-        return new FormRender(new Element\Textbox("Nước Sản Xuất", $name, $properties));
+        return new FormRender(new Element\Select("Nước Sản Xuất", $name,$options, $properties));
 	}
 	
 	/**
@@ -282,7 +288,8 @@ class FormSanPham implements iFormSanPham {
         $properties["value"] = $val;
         $properties[FormRender::Required] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-		$option = OptionsService::GetGroupsToSelect("cachdungthuoc");
+		$option = array("0" => null);
+		$option += OptionsService::GetGroupsToSelect("cachdungthuoc");
         return new FormRender(new Element\Select("Cách Dùng Thuốc", $name,$option ,$properties));
 	}
 	/**
@@ -292,6 +299,47 @@ class FormSanPham implements iFormSanPham {
 	 * @return mixed
 	 */
 	function Canhbao($val = null) {
+		$properties = self::$properties;
+        $properties["value"] = $val;
+        $properties[FormRender::Required] = "true";
+        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+        return new FormRender(new Element\Textbox("Số Lượng Cảnh Báo", $name, $properties));
+	}
+	/**
+	 *
+	 * @param mixed $val
+	 *
+	 * @return mixed
+	 */
+	function SLXuat($val = null) {
+		$properties = self::$properties;
+        $properties["value"] = $val;
+        $properties[FormRender::Required] = "true";
+        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+        return new FormRender(new Element\Textbox("Số Lượng Cảnh Báo", $name, $properties));
+	}
+	
+	/**
+	 *
+	 * @param mixed $val
+	 *
+	 * @return mixed
+	 */
+	function SLNhap($val = null) {
+		$properties = self::$properties;
+        $properties["value"] = $val;
+        $properties[FormRender::Required] = "true";
+        $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+        return new FormRender(new Element\Textbox("Số Lượng Cảnh Báo", $name, $properties));
+	}
+	
+	/**
+	 *
+	 * @param mixed $val
+	 *
+	 * @return mixed
+	 */
+	function SLHienTai($val = null) {
 		$properties = self::$properties;
         $properties["value"] = $val;
         $properties[FormRender::Required] = "true";

@@ -140,6 +140,11 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
         // $trua = $item["Trua"] ?? 0;
 
         $sp = new ModelSanPham($detailThuoc);
+
+        $sanpham = new \Module\quanlythuoc\Model\SanPham();
+        $spThuoc = $sanpham->GetById($detailThuoc["Id"]);
+        // echo $spThuoc['Soluong'];
+
         $detailThuoc["Id"] = $detailThuoc["Id"];
         $detailThuoc["IdThuoc"] = $detailThuoc["Id"];
         $detailThuoc["DVT"] = $sp->DVT;

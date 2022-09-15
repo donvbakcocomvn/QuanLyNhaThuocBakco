@@ -1,6 +1,6 @@
 <ol class="breadcrumb">
     <li><a href="/index.php?controller=backend">Home</a></li>
-    <li><a href="/index.php?controller=quanlyusers">Quản lý file hướng dẫn</a></li>
+    <li><a href="/donthuoc/">Quản lý đơn thuốc</a></li>
     <li> Sửa file hướng dẫn </li>
 </ol>
 <div class="container-fluid">
@@ -18,10 +18,9 @@
                         <?php
                         use Model\HuongDan\FormHuongDan;
                         $form = new FormHuongDan();
-                        $id = $_GET['link'];
+                        $id = $this->getParams(0);
                         $path = "public/huongdan/{$id}.html";
                         $content = file_get_contents($path);
-                        
                         echo $form->Content($content)->render();
                         ?>
                         <div class="box-footer">

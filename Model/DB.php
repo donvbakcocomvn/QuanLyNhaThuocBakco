@@ -8,6 +8,9 @@ class DB
     public static $TableName;
     public static $Debug;
     private static $Connect;
+
+    private static $params;
+    
     // static protected $_Query = "";
 
     public function __construct()
@@ -222,5 +225,29 @@ class DB
             }
         }
         return $d;
+    }
+
+    static function getParam() {
+        if (self::$params) {
+            foreach (self::$params as $v => $param) {
+                self::$params[$v] = self::BokyTuDacBietPaRam(self::$params[$v]);
+            }
+            return self::$params;
+        } else {
+            return FALSE;
+        }
+    }
+
+    static function BokyTuDacBietPaRam($str) {
+
+        if (!empty($str)) {
+            $kytu = array(";", "select", "delete", "insert", "update");
+            foreach ($kytu as $k => $v) {
+                $str = str_replace($v, "", $str);
+            }
+            return $str;
+        } else {
+            return FALSE;
+        }
     }
 }

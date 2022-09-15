@@ -41,6 +41,9 @@ class SanPham extends \Model\DB implements \Model\IModelService
     public $IsDelete;
     public $CachDung;
     public $Canhbao;
+    public $SLXuat;
+    public $SLNhap;
+    public $SLHienTai;
 
     public function __construct($sp = null)
     {
@@ -72,6 +75,9 @@ class SanPham extends \Model\DB implements \Model\IModelService
                 $this->IsDelete = isset($sp["IsDelete"]) ? $sp["IsDelete"] : null;
                 $this->CachDung = isset($sp["CachDung"]) ? $sp["CachDung"] : null;
                 $this->Canhbao = isset($sp["Canhbao"]) ? $sp["Canhbao"] : null;
+                $this->SLXuat = isset($sp["SLXuat"]) ? $sp["SLXuat"] : null;
+                $this->SLNhap = isset($sp["SLNhap"]) ? $sp["SLNhap"] : null;
+                $this->SLHienTai = isset($sp["SLHienTai"]) ? $sp["SLHienTai"] : null;
             }
         }
     }
@@ -187,7 +193,7 @@ class SanPham extends \Model\DB implements \Model\IModelService
         return $result['Name'];
     }
 
-    public function GetBySoLuong()
+    public function GetSpCanhBao()
     {
         $sql = "SELECT * FROM `lap1_qlthuoc_thuoc` WHERE `Soluong` < `Canhbao` ORDER BY `Name` ASC";
         $result = $this->GetRows($sql);
