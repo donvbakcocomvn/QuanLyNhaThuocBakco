@@ -144,8 +144,9 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-success" href="/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=post">
-            <i class="fa fa-plus"></i> Thêm Phiếu Mới</a>
+        <a class="btn btn-success" href="/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=post&isnews=1">
+            <i class="fa fa-plus"></i> Thêm Phiếu Mới
+        </a>
     <?php
     }
 

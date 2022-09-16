@@ -20,9 +20,9 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th></th>
-                        <th>STT</th>
-                        <th>Mã </th>
+                        <th style="width: 150px"></th>
+                        <th style="width: 100px">STT</th>
+                        <th style="width: 100px">Mã </th>
                         <th>Tên</th>
 
                     </tr>
@@ -37,6 +37,7 @@
                                 <th>
                                     <?php
                                     $_item->btnSua();
+                                    $_item->btnXoa();
                                     ?>
                                 </th>
                                 <th><?php echo $k + 1 ?></th>

@@ -55,8 +55,7 @@ $roleDetail = new Model\Role();
                         <th>Thuốc</th>
                         <th>Số lượng</th>
                         <th>Số Lô</th>
-                        <th>Nhà sản xuất</th>
-                        <th>Nơi sản xuất</th>
+                        <th>Hạn sử dụng</th> 
                         <th>Giá</th>
                         <th>Thành tiền</th>
                     </tr>
@@ -68,8 +67,7 @@ $roleDetail = new Model\Role();
                             <td><?php echo $_chiTiet->SanPham()->Name ?></td>
                             <td><b><?php echo $_chiTiet->SoLuong ?></b></td>
                             <td><?php echo $_chiTiet->SoLo ?></td>
-                            <td><?php echo $_chiTiet->NhaSanXuat ?></td>
-                            <td><?php echo $_chiTiet->NuocSanXuat ?></td>
+                            <td><?php echo $_chiTiet->HanSuDung() ?></td> 
                             <td><b><?php echo $_chiTiet->Price() ?></b></td>
                             <td><b><?php echo $_chiTiet->ThanhTien(); ?></b></td>
                         </tr>
@@ -77,7 +75,7 @@ $roleDetail = new Model\Role();
                     }
                     ?>
                     <tr> 
-                        <td colspan="6" class="text-right" > Tổng Tiền</td>
+                        <td colspan="5" class="text-right" > Tổng Tiền</td>
                         <td><b><?php echo $itemSP->getTongTien(); ?></b></td>
                     </tr>
                 </table>

@@ -35,7 +35,7 @@ class SanPham extends \Model\DB implements \Model\IModelService
     public $Tacdung;
     public $Cochetacdung;
     public $Ghichu;
-    public $Soluong;
+    public $Soluong; 
     public $NhaSX;
     public $NuocSX;
     public $IsDelete;
@@ -82,7 +82,11 @@ class SanPham extends \Model\DB implements \Model\IModelService
         }
     }
 
-
+    public function ThanhTien()
+    {
+        return intval($this->Soluong)  * floatval($this->Gianhap);
+    }
+    
     static  public function ExportBangKe($data, $fileName)
     {
         $spreadsheet = new Spreadsheet();
