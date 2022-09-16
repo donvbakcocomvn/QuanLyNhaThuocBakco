@@ -36,6 +36,18 @@ class backend extends \Application {
         $this->View();
     }
 
+    function nhapkho() {
+
+        $this->View();
+    }
+
+    function lichsunhap()
+    {
+        $idThuoc = $this->getParams(0);
+        // echo $idThuoc;
+        $this->View($id = ['id']);
+    }
+
     function qrcode() {
 
         $this->View();

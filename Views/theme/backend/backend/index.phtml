@@ -6,7 +6,6 @@
         <div class="box-header">
             <h3 class="box-title">Tủy Chọn</h3>
             <div class="box-tools">
-
             </div>
         </div>
         <div class="row">
@@ -14,21 +13,22 @@
                 <!-- small box -->
                 <div class="small-box bg-aqua">
                     <div class="inner">
-                        <h3>150</h3>
-                        <p>Nhập Kho</p>
+                        <h3><?php
+                            echo \Model\Common::ViewNumber(\Model\ThongKe::GetSumNhap()); ?></h3>
+                        <p><i>SỐ LƯỢNG NHẬP KHO</i></p>
                     </div>
                     <div class="icon">
                         <i class="fa fa-reply-all"></i>
                     </div>
-                    <a href="#" class="small-box-footer">Xem thêm <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="/backend/nhapkho/" class="small-box-footer">Xem thêm <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div><!-- ./col -->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3>53<sup style="font-size: 20px">%</sup></h3>
-                        <p>Xuất kho</p>
+                        <h3><?php echo \Model\Common::ViewNumber(\Model\ThongKe::GetSumXuat()); ?></h3>
+                        <p><i>SỐ LƯỢNG XUẤT KHO</i></p>
                     </div>
                     <div class="icon">
                         <i class="fa fa-paper-plane"></i>
@@ -53,8 +53,8 @@
                 <!-- small box -->
                 <div class="small-box bg-red">
                     <div class="inner">
-                        <h3>65</h3>
-                        <p>Tổng</p>
+                        <h3><?php echo \Model\Common::ViewNumber(\Model\ThongKe::GetSumSLTong()) ;?></h3>
+                        <p><i>SỐ LƯỢNG TỔNG</i></p>
                     </div>
                     <div class="icon">
                         <i class="fa fa-pie-chart"></i>
@@ -63,7 +63,7 @@
                 </div>
             </div><!-- ./col -->
         </div>
-        
+
         <div class="box box-info">
             <div class="box-header with-border">
                 <h3 class="box-title">Những Sản Phẩm Sắp Hết</h3>
