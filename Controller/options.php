@@ -148,7 +148,7 @@ class options extends \Application implements IControllerBE
     {
         $options = new \Model\OptionsService();
         $params["keyword"] = isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "";
-        $params["GroupsId"] = "donviquydoi";
+        $params["GroupsId"] = "cachdungthuoc";
         $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
         $indexPage = max(1, $indexPage);
         $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;

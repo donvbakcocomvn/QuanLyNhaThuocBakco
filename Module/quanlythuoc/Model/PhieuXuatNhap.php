@@ -3,6 +3,7 @@
 namespace Module\quanlythuoc\Model;
 
 use Model\Common;
+use Model\DB;
 
 class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
 {
@@ -28,9 +29,12 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
             if (!is_array($dm)) {
                 $id = $dm;
                 $dm = $this->GetById($id);
+                if ($dm == null) {
+                    $dm = $this->GetByIdPhieu($id);
+                    // var_dump($dm);
+                }
             }
             if ($dm) {
-
                 $this->Id = $dm["Id"] ?? null;
                 $this->IdPhieu = $dm["IdPhieu"] ?? null;
                 $this->TongTien = $dm["TongTien"] ?? null;
@@ -78,6 +82,7 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
         }
         return $tong;
     }
+
     public function checkDsThuoc($detailThuoc)
     {
         $sp = new SanPham($detailThuoc);
@@ -123,6 +128,36 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
     {
         return $_SESSION["DSThuocPhieuNhap"] = [];
     }
+    public static function AddThuocPhieuNhapDefault()
+    {
+        $_SESSION["DSThuocPhieuNhap"] = $_SESSION["DSThuocPhieuNhap"] ?? [];
+        if ($_SESSION["DSThuocPhieuNhap"] == []) {
+            for ($i = 0; $i < 10; $i++) {
+                $_SESSION["DSThuocPhieuNhap"][] = [];
+            }
+        }
+    }
+
+    public static function GetPostForm()
+    {
+        if (!isset($_SESSION["FormPostDefaut"])) {
+            $_SESSION["FormPostDefaut"] = [];
+        }
+        $_SESSION["FormPostDefaut"]["IdPhieu"] = $_SESSION["FormPostDefaut"]["IdPhieu"] ?? self::getIdPhieu();
+        $_SESSION["FormPostDefaut"]["IdPhieu"] = trim($_SESSION["FormPostDefaut"]["IdPhieu"]);
+        $_SESSION["FormPostDefaut"]["IdPhieu"] =
+            $_SESSION["FormPostDefaut"]["IdPhieu"] == ""
+            ? self::getIdPhieu()
+            : $_SESSION["FormPostDefaut"]["IdPhieu"];
+        return $_SESSION["FormPostDefaut"];
+    }
+    public static function SetPostForm($form = null)
+    {
+        $form["IdPhieu"] = $form["IdPhieu"] ?? self::getIdPhieu();
+        $form["NgayNhap"] = $form["NgayNhap"] ?? date("Y-m-d", time());
+        $form["NgayNhap"] = $form["NgayNhap"] == "" ? date("Y-m-d", time()) :  $form["NgayNhap"];
+        $_SESSION["FormPostDefaut"] = $form;
+    }
 
     public static function DeletePhieuNhap($index)
     {
@@ -163,7 +198,7 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
         if ($danhmuc) {
             $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
         }
-        $where = " (`IdPhieu` like '%{$name}%' {$danhmucSql}) {$isShowSql} Order By `NgayNhap`  DESC";
+        $where = " (`IdPhieu` like '%{$name}%' {$danhmucSql}) {$isShowSql} Order By `CreateRecord`  DESC";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 
@@ -192,8 +227,23 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
 
     public function GetById($Id)
     {
-        
+
         return $this->SelectById($Id);
+    }
+    public function GetByIdPhieu($Id)
+    {
+        // DB::$Debug = true;
+        return $this->SelectRow("`IdPhieu` = '{$Id}'");
+    }
+
+    public static function getIdPhieu()
+    {
+        $year = date("ym", time());
+        $yearSD = date("Y-m", time());
+        $phieu = new PhieuXuatNhap();
+        $number = ($phieu->SelectCount("`CreateRecord` like '{$yearSD}%'") + 1);
+        $number = Common::NumberToStringFomatZero($number, 5);
+        return "P{$year}-" . $number;
     }
 
 

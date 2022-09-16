@@ -80,11 +80,11 @@
                                     ?>
                                 </td>
                                 <td><?php echo $index + 1; ?></td>
-                                <th><?php echo $_item->IdPhieu; ?></th>
-                                <th><?php echo $_item->XuatNhap(); ?></th>
-                                <th><?php echo $_item->NoiDungPhieu ?></th>
-                                <th><?php echo $_item->getTongTien(); ?></th>
-                                <th><?php echo $_item->NgayNhap() ?></th>
+                                <td><?php echo $_item->IdPhieu; ?></td>
+                                <td><?php echo $_item->XuatNhap(); ?></td>
+                                <td><?php echo $_item->NoiDungPhieu ?></td>
+                                <td><?php echo $_item->getTongTien(); ?></td>
+                                <td><?php echo $_item->NgayNhap() ?></td>
                             </tr>
                         <?php
                         }
@@ -124,9 +124,7 @@
     }
     $(document).ready(function() {
 
-
-        // Change Thuốc
-
+        // Change Thuốc 
         // console.log(e.attr("id"));
         $("#DongBoPhieu").change(function(param) {
             // $.ajax({

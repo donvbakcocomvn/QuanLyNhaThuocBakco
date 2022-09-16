@@ -26,23 +26,21 @@
                     use Model\OptionsService;
                     use Model\TinhThanh;
                     use Module\donthuoc\Model\DonThuoc;
-
                     Module\donthuoc\Model\btnHtml::btnThemDonThuoc();
-                    ?>
-
-                    <a class="btn btn-primary" data-toggle="modal" href='#modal-id'>Hướng dẫn</a>
+                    ?> 
+                    <a class="btn btn-primary" data-toggle="modal" target="_self" href='#modal-id'>Hướng dẫn</a>
                     <div class="modal fade" id="modal-id">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-body">
                                     <?php
                                     $link = 'huongdansudung';
-                                    $path = "public/huongdan/{$link}.html";
+                                    $path = "public/huongdan/huongdansudung.html";
                                     echo file_get_contents($path);
                                     ?>
                                 </div>
                                 <div class="modal-footer">
-                                    <a href="<?php echo "/huongdan/put/?link=$link"?>" type="button" class="btn btn-success">Sửa File</a>
+                                    <a href="<?php echo "/huongdan/put/huongdansudung"?>" type="button" class="btn btn-success">Sửa File</a>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng lại</button>
                                 </div>
                             </div>

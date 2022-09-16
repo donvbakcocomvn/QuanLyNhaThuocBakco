@@ -15,6 +15,7 @@ class PhieuXuatNhapChiTiet extends \Model\DB implements \Model\IModelService
     public $SoLo;
     public $NhaSanXuat;
     public $NuocSanXuat;
+    public $HanSuDung;
     public $Price;
     public $XuatNhap;
     public $CreateRecord;
@@ -43,6 +44,7 @@ class PhieuXuatNhapChiTiet extends \Model\DB implements \Model\IModelService
                 $this->SoLuong = $dm["SoLuong"] ?? null;
                 $this->SoLo = $dm["SoLo"] ?? null;
                 $this->NhaSanXuat = $dm["NhaSanXuat"] ?? null;
+                $this->HanSuDung = $dm["HanSuDung"] ?? null;
                 $this->NuocSanXuat = $dm["NuocSanXuat"] ?? null;
                 $this->Price = $dm["Price"] ?? null;
                 $this->XuatNhap = $dm["XuatNhap"] ?? null;
@@ -58,6 +60,10 @@ class PhieuXuatNhapChiTiet extends \Model\DB implements \Model\IModelService
     public function ThanhTien()
     {
         return number_format($this->Price * $this->SoLuong, 0, ".", ",") . " đ";
+    }
+    public function HanSuDung()
+    {
+        return date("d-m-Y", strtotime($this->HanSuDung) );
     }
     public function Price()
     {

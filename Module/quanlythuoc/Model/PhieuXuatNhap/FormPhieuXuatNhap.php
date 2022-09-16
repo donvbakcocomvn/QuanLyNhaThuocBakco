@@ -35,156 +35,29 @@ class FormPhieuXuatNhap implements iFormPhieuXuatNhap
 	{
 		return $this->formData[$functionName] ?? $default;
 	}
-	function IdPhieu($val = null)
+	function IdPhieu($val = null, $id = null, $index = null, $prop = [])
 	{
 		$properties = self::$properties;
+		foreach ($prop  as $key => $value) {
+			$properties[$key] = $value;
+		}
 		$properties["value"] = $val ?? $this->getVal(__FUNCTION__);
+		$properties["id"] = $id ?? __FUNCTION__ . "_Id";
+		$properties["index"] = $index;
+		$properties["class"] = "form-control formpostdata";
 		$properties[FormRender::Required] = "true";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-		// $options = ['PX' => 'Phiếu Xuất', 'PN' => 'Phiếu Nhập'];
 		return new FormRender(new Element\Textbox("Mã Phiếu", $name, $properties));
 	}
 
-	/**
-	 *
-	 * @param mixed $val
-	 *
-	 * @return mixed
-	 */
-	function IdThuoc($val = null, $id = null, $index = null)
-	{
-		$properties = self::$properties;
-		$properties["value"] = $val ?? $this->getVal(__FUNCTION__);
-		$option = ModelSanPham::CapChaTpOptions();
-		$option = ["" => ""] + $option;
-		$properties["id"] = $id;
-		$properties["index"] = $index;
-		$properties["class"] = "select2 form-control changename ";
-		$properties[FormRender::Required] = "true";
-		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-		return new FormRender(new Element\Select("Thuốc", $name, $option, $properties));
-	}
-	function DVT($val = null, $id = null, $index = null)
-	{
-		$properties = self::$properties;
-		$properties["value"] = $val ?? $this->getVal(__FUNCTION__);
-		$option = ModelSanPham::CapChaTpOptions();
-		$option = ["" => ""] + $option;
-		$properties["id"] = $id;
-		$properties["index"] = $index;
-		$properties["class"] = "form-control";
-		$properties[FormRender::Required] = "true";
-		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-		// return new FormRender(new Element\Select("Đơn Vị Tính", $name,$option,  $properties));
-		return new FormRender(new Element\Textbox("Đơn Vị Tính", $name,  $properties));
-	}
 
-	/**
-	 *
-	 * @param mixed $val
-	 *
-	 * @return mixed
-	 */
-	function SoLuong($val = null, $id = null, $index = null)
-	{
-		$properties = self::$properties;
-		$properties["value"] = $val ?? $this->getVal(__FUNCTION__);
-		$properties["id"] = $id;
-		$properties["index"] = $index;
-		$properties["class"] = " form-control changenum ";
-		// $properties[FormRender::Required] = "true";
-		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-		return new FormRender(new Element\Textbox("Số Lượng", $name, $properties));
-	}
-
-	/**
-	 *
-	 * @param mixed $val
-	 *
-	 * @return mixed
-	 */
-	function SoLo($val = null, $id = null, $index = null)
-	{
-		$properties = self::$properties;
-		$properties["value"] = $val ?? $this->getVal(__FUNCTION__);
-		$properties["id"] = $id;
-		$properties["index"] = $index;
-		$properties["class"] = " form-control changenum ";
-		// $properties[FormRender::Required] = "true";
-		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-		return new FormRender(new Element\Textbox("Số Lô", $name, $properties));
-	}
-
-	/**
-	 *
-	 * @param mixed $val
-	 *
-	 * @return mixed
-	 */
-	function NhaSanXuat($val = null, $id = null, $index = null)
-	{
-		$properties = self::$properties;
-		$properties["value"] = $val ?? $this->getVal(__FUNCTION__);
-		$properties["id"] = $id;
-		$properties["index"] = $index;
-		$properties["class"] = " form-control changenum ";
-		// $properties[FormRender::Required] = "true";
-		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-		return new FormRender(new Element\Textbox("Nhà Sản Xuất", $name, $properties));
-	}
-
-	/**
-	 *
-	 * @param mixed $val
-	 *
-	 * @return mixed
-	 */
-	function NuocSanXuat($val = null, $id = null, $index = null)
-	{
-		$properties = self::$properties;
-		$properties["value"] = $val ?? $this->getVal(__FUNCTION__);
-		$properties["id"] = $id;
-		$properties["index"] = $index;
-		$properties["class"] = "select2 form-control changenum ";
-		$properties["style"] = "width:100%";
-		// $properties[FormRender::Required] = "true";
-		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-		// return new FormRender(new Element\Textbox("Nước Sản Xuất", $name, $properties));
-		$options = Notions::GetToOptions();
-		// var_dump($options);
-		return new FormRender(new Element\Select("Nước Sản Xuất", $name, $options, $properties));
-	}
-
-	/**
-	 *
-	 * @param mixed $val
-	 *
-	 * @return mixed
-	 */
-	function Price($val = null, $id = null, $index = null)
-	{
-		$properties = self::$properties;
-		$properties["value"] = $val ?? $this->getVal(__FUNCTION__);
-		$properties["id"] = $id;
-		$properties["index"] = $index;
-		$properties["class"] = " form-control changenum ";
-		// $properties[FormRender::Required] = "true";
-		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-		return new FormRender(new Element\Textbox("Giá Tiền", $name, $properties));
-	}
-
-	/**
-	 *
-	 * @param mixed $val
-	 *
-	 * @return mixed
-	 */
 	function XuatNhap($val = null, $id = null, $index = null)
 	{
 		$properties = self::$properties;
 		$properties["value"] = $val ?? $this->getVal(__FUNCTION__);
-		$properties["id"] = $id;
+		$properties["id"] = $id ?? __FUNCTION__ . "_Id";
 		$properties["index"] = $index;
+		$properties["class"] = "form-control formpostdata";
 		$properties[FormRender::Required] = "true";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
 		$options = [1 => "Phiếu Nhập", -1 => "Phiếu Xuất"];
@@ -217,10 +90,13 @@ class FormPhieuXuatNhap implements iFormPhieuXuatNhap
 	 *
 	 * @return mixed
 	 */
-	function NoiDungPhieu($val = null)
+	function NoiDungPhieu($val = null, $id = null, $index = null)
 	{
 		$properties = self::$properties;
 		$properties["value"] = $val ?? $this->getVal(__FUNCTION__);
+		$properties["id"] = $id ?? __FUNCTION__ . "_Id";
+		$properties["index"] = $index;
+		$properties["class"] = "form-control formpostdata";
 		$properties[FormRender::Required] = "true";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
 		return new FormRender(new Element\Textbox("Nội Dung", $name, $properties));
@@ -232,13 +108,16 @@ class FormPhieuXuatNhap implements iFormPhieuXuatNhap
 	 *
 	 * @return mixed
 	 */
-	function NgayNhap($val = null)
+	function NgayNhap($val = null, $id = null, $index = null)
 	{
 		$properties = self::$properties;
-		$properties["value"] = $val ?? $this->getVal(__FUNCTION__, date("Y-m-d", time()));
-		$properties[FormRender::Required] = "true";
+		$properties["value"] = $val ?? $this->getVal(__FUNCTION__);
+		$properties["id"] = $id ?? __FUNCTION__ . "_Id";
 		$properties["type"] = "date";
 		$properties["max"] = date("Y-m-d", time());
+		$properties["index"] = $index;
+		$properties["class"] = "form-control formpostdata";
+		$properties[FormRender::Required] = "true";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
 		return new FormRender(new Element\DateTime("Ngày Nhập/Xuất", $name, $properties));
 	}
@@ -258,12 +137,35 @@ class FormPhieuXuatNhap implements iFormPhieuXuatNhap
 	 *
 	 * @return mixed
 	 */
-	function GhiChu($val = null)
+	function GhiChu($val = null, $id = null, $index = null)
 	{
 		$properties = self::$properties;
 		$properties["value"] = $val ?? $this->getVal(__FUNCTION__);
+		$properties["id"] = $id ?? __FUNCTION__ . "_Id";
+		$properties["index"] = $index;
+		$properties["class"] = "form-control formpostdata";
 		// $properties[FormRender::Required] = "true";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
 		return new FormRender(new Element\Textbox("Ghi Chú", $name, $properties));
 	}
+	function TongTien($val = null)
+	{
+	}
+
+	/**
+	 *
+	 * @param mixed $val
+	 *
+	 * @return mixed
+	 */
+	function DonViCungCap($val = null)
+	{
+	}
+
+	/**
+	 *
+	 * @param mixed $val
+	 *
+	 * @return mixed
+	 */
 }

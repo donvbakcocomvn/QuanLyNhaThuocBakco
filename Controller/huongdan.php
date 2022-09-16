@@ -45,12 +45,12 @@ class huongdan extends \Application implements IControllerBE
             if (\Model\Request::Post(FormHuongDan::$FormName, null)) {
                 $itemHtml = \Model\Request::Post(FormHuongDan::$FormName, null);
                 $content = $itemHtml['Content']; // Content trong form
-                $id = \Model\Request::Get("link", null); // Get link đường dẫn
+                $id = $this->getParams(0); // Get link đường dẫn
                 $path = "public/huongdan/{$id}.html";
 
                 file_put_contents($path, $content, FILE_USE_INCLUDE_PATH);
                 new \Model\Error(\Model\Error::success, "Đã sửa nội dung thành công");
-                \Model\Common::ToUrl("/huongdan/put/?link=huongdansudung");
+                \Model\Common::ToUrl("/huongdan/put/{$id}");
                 exit();
             }
         } catch (\Exception $exc) {
