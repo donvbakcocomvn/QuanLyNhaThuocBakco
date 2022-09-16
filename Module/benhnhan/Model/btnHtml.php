@@ -13,7 +13,7 @@ class btnHtml
 
     public static function btnchitiet($id)
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_BenhNhan_Put]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_BenhNhan_Detail]) == false) {
             return;
         }
     ?>
@@ -23,21 +23,9 @@ class btnHtml
     <?php
     }
 
-
-    static function btnExportKhachHang()
-    {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_BenhNhan_Export]) == false) {
-            return;
-        }
-    ?>
-        <a class="btn btn-warning" href="/index.php?module=benhnhan&controller=index&action=export">
-            <i class="fa fa-filter"></i> Export</a>
-    <?php
-    }
-
     public static function btnViewKhachHang()
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_BenhNhan_DS]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_BenhNhan_DS]) == false) {
             return;
         }
     ?>
@@ -48,18 +36,18 @@ class btnHtml
 
     public static function btnThemKhachHang()
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_BenhNhan_Post]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_BenhNhan_Post]) == false) {
             return;
         }
     ?>
-        <a class="btn btn-success" href="index.php?module=benhnhan&controller=index&action=post">
+        <a class="btn btn-success" href="/index.php?module=benhnhan&controller=index&action=post">
             <i class="fa fa-plus"></i> Thêm mới</a>
     <?php
     }
 
     public static function btnSuaKhachHang($id)
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_BenhNhan_Put]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_BenhNhan_Put]) == false) {
             return;
         }
     ?>
@@ -71,7 +59,7 @@ class btnHtml
 
     public static function btnXoaKhachHang($id)
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_BenhNhan_Delete]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_BenhNhan_Delete]) == false) {
             return;
         }
     ?>

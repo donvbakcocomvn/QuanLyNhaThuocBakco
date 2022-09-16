@@ -13,7 +13,7 @@ class btnHtml
 
     public static function btnchitiet($id)
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_DonThuoc_Put]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_DonThuoc_Detail]) == false) {
             return;
         }
     ?>
@@ -25,7 +25,7 @@ class btnHtml
 
     public static function btnViewToaThuoc()
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_DonThuoc_DS]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DonThuoc_DS]) == false) {
             return;
         }
     ?>
@@ -36,7 +36,7 @@ class btnHtml
 
     public static function btnThemDonThuoc()
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_DonThuoc_Post]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy,Permission::QLT_DonThuoc_Post]) == false) {
             return;
         }
     ?>
@@ -47,7 +47,7 @@ class btnHtml
 
     public static function btnCapNhatNgayDung()
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_DonThuoc_Put]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy,Permission::QLT_DonThuoc_Put]) == false) {
             return;
         }
     ?>
@@ -59,7 +59,7 @@ class btnHtml
 
     public static function btnSuaDonThuoc($id)
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_DonThuoc_Put]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy,Permission::QLT_DonThuoc_Put]) == false) {
             return;
         }
     ?>
@@ -71,7 +71,7 @@ class btnHtml
 
     public static function btnCopyDonThuoc($id)
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_DonThuoc_Put]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy,Permission::QLT_DonThuoc_Copy]) == false) {
             return;
         }
     ?>
@@ -83,7 +83,7 @@ class btnHtml
 
     public static function btnXoaDonThuoc($id)
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, Permission::QLT_DonThuoc_Delete]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy,Permission::QLT_DonThuoc_Delete]) == false) {
             return;
         }
     ?>

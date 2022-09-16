@@ -54,7 +54,7 @@ class index extends \Application implements \Controller\IControllerBE
         // var_dump($data);
         $donthuocdetail = new DonThuocDetail();
         $thuoc = DonThuocDetail::DsThuoc()[$data["index"]];
-  
+
         $thuoc["Sang"] = floatval($data["sang"]);
         $thuoc["Trua"] = floatval($data["trua"]);
         $thuoc["Chieu"] = floatval($data["chieu"]);
@@ -66,7 +66,7 @@ class index extends \Application implements \Controller\IControllerBE
         // die();
         $donthuocdetail->CapNhatThuoc($thuoc, $data["index"]);
         $thuoc = DonThuocDetail::DsThuoc()[$data["index"]];
-        
+
         echo json_encode($thuoc, JSON_UNESCAPED_UNICODE);
     }
 
@@ -151,25 +151,33 @@ class index extends \Application implements \Controller\IControllerBE
                 foreach (DonThuocDetail::DsThuoc() as $mathuoc => $thuoc) {
                     $sp = new SanPham();
                     if (isset($thuoc["Id"]) == true) {
-                        $itemDetail["IdDetail"] = DonThuocDetail::CreatIdDetail();
-                        $itemDetail["IdDonThuoc"] = $item["Id"];
-                        $itemDetail["IdThuoc"] = $thuoc["Id"];
-                        $itemDetail["SoNgaySDThuoc"] = $thuoc["SoNgaySDThuoc"];
-                        $itemDetail["DVT"] = $thuoc["DVTTitle"];
-                        $itemDetail["SoLuong"] = $thuoc["Soluong"];
-                        $itemDetail["CachDung"] = $sp->GetCDTById($thuoc["Id"]);
-                        $itemDetail["Sang"] = $thuoc["Sang"];
-                        $itemDetail["Trua"] = $thuoc["Trua"];
-                        $itemDetail["Chieu"] = $thuoc["Chieu"];
-                        $itemDetail["GiaBan"] = $thuoc["Giaban"];
-                        $itemDetail["GhiChu"] = $thuoc["Ghichu"] ?? "";
-                        $detail = new DonThuocDetail();
+                        $idThuoc = $thuoc["Id"];
+                        $spThuoc = $sp->GetById($idThuoc);
+                        $SoLuongDB = $spThuoc['Soluong'];
+                        if ($SoLuongDB < $thuoc["Soluong"]) {
+                            echo "<script>alert('Thuốc trong kho không đủ');</script>";
+                        } else {
+                            $itemDetail["IdDetail"] = DonThuocDetail::CreatIdDetail();
+                            $itemDetail["IdDonThuoc"] = $item["Id"];
+                            $itemDetail["IdThuoc"] = $idThuoc;
+                            $itemDetail["SoNgaySDThuoc"] = $thuoc["SoNgaySDThuoc"];
+                            $itemDetail["DVT"] = $thuoc["DVTTitle"];
+                            $itemDetail["SoLuong"] = $thuoc["Soluong"];
+                            $itemDetail["CachDung"] = $sp->GetCDTById($thuoc["Id"]);
+                            $itemDetail["Sang"] = $thuoc["Sang"];
+                            $itemDetail["Trua"] = $thuoc["Trua"];
+                            $itemDetail["Chieu"] = $thuoc["Chieu"];
+                            $itemDetail["GiaBan"] = $thuoc["Giaban"];
+                            $itemDetail["GhiChu"] = $thuoc["Ghichu"] ?? "";
+                            $detail = new DonThuocDetail();
+                        }
+
                         $detail->Post($itemDetail);
                         // var_dump($thuoc);
                     }
                     DonThuocDetail::ClearSession();
                 }
-                // new \Model\Error(\Model\Error::success, "Đã Thêm Toa Thuốc");
+                new \Model\Error(\Model\Error::success, "Đã Thêm Toa Thuốc");
                 // \Model\Common::ToUrl("/index.php?module=donthuoc&controller=index&action=index");
             }
         } catch (\Exception $exc) {
@@ -244,6 +252,7 @@ class index extends \Application implements \Controller\IControllerBE
 
     function viewdonthuoc()
     {
+        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DonThuoc_Detail]);
         $id = \Model\Request::Get("id", null);
         if ($id == null) {
         }
@@ -259,7 +268,7 @@ class index extends \Application implements \Controller\IControllerBE
      */
     function copy()
     {
-        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DonThuoc_Put]);
+        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DonThuoc_Copy]);
 
         try {
             if (\Model\Request::Post(FormDonThuoc::$ElementsName, null)) {
@@ -300,7 +309,7 @@ class index extends \Application implements \Controller\IControllerBE
                 new \Model\Error(\Model\Error::success, "Copy Đơn Thuốc Thành Công");
                 $idToaThuoc = $_GET['id'];
                 $IdBn = $donthuoc->GetIdBnById($idToaThuoc);
-                \Model\Common::ToUrl("/index.php?module=benhnhan&controller=index&action=detail&id=$IdBn");
+                \Model\Common::ToUrl("/donthuoc/");
             }
         } catch (\Exception $exc) {
             echo $exc->getMessage();
@@ -319,7 +328,7 @@ class index extends \Application implements \Controller\IControllerBE
     public function delete()
     {
         try {
-            \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy]);
+            \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DonThuoc_Delete]);
             $Id = \Model\Request::Get("id", null);
             if ($Id) {
                 $donthuoc = new DonThuoc();

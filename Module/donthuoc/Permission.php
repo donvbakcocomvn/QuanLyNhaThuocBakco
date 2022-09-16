@@ -12,6 +12,9 @@ class Permission
     const QLT_DonThuoc_Put = "QLT_DonThuoc_Put";
     const QLT_DonThuoc_Delete = "QLT_DonThuoc_Delete";
     const QLT_DonThuoc_Export = "QLT_DonThuoc_Export";
+    const QLT_DonThuoc_Copy = "QLT_DonThuoc_Copy";
+    const QLT_DonThuoc_Detail = "QLT_DonThuoc_Detail";
+
 
     public function __construct()
     {
@@ -48,6 +51,18 @@ class Permission
                 "Id" => self::QLT_DonThuoc_Export,
                 "Name" => "Export Đơn Thuốc",
                 "Des" => "Export Đơn Thuốc",
+                "IsNotDelete" => 0,
+            ],
+            self::QLT_DonThuoc_Copy => [
+                "Id" => self::QLT_DonThuoc_Copy,
+                "Name" => "Copy Đơn Thuốc",
+                "Des" => "Copy Đơn Thuốc",
+                "IsNotDelete" => 0,
+            ],
+            self::QLT_DonThuoc_Detail => [
+                "Id" => self::QLT_DonThuoc_Detail,
+                "Name" => "Đơn Thuốc Chi Tiết",
+                "Des" => "Đơn Thuốc Chi Tiết",
                 "IsNotDelete" => 0,
             ],
         ];

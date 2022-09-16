@@ -40,14 +40,12 @@ class huongdan extends \Application implements IControllerBE
     function put()
     {
         \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy]);
-
         try {
             if (\Model\Request::Post(FormHuongDan::$FormName, null)) {
                 $itemHtml = \Model\Request::Post(FormHuongDan::$FormName, null);
                 $content = $itemHtml['Content']; // Content trong form
                 $id = $this->getParams(0); // Get link đường dẫn
                 $path = "public/huongdan/{$id}.html";
-
                 file_put_contents($path, $content, FILE_USE_INCLUDE_PATH);
                 new \Model\Error(\Model\Error::success, "Đã sửa nội dung thành công");
                 \Model\Common::ToUrl("/huongdan/put/{$id}");
@@ -62,7 +60,7 @@ class huongdan extends \Application implements IControllerBE
         // $DM = new ModelBenhNhan();
         // $data["data"] = $DM->GetById($id);
         // $this->View($data);
-        $this->View();
+        $this->View($id = ['id']);
     }
 
     /**
