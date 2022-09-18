@@ -41,7 +41,19 @@ class backend extends \Application {
         $this->View();
     }
 
+    function xuatkho() {
+
+        $this->View();
+    }
+
     function lichsunhap()
+    {
+        $idThuoc = $this->getParams(0);
+        // echo $idThuoc;
+        $this->View($id = ['id']);
+    }
+
+    function lichsuxuat()
     {
         $idThuoc = $this->getParams(0);
         // echo $idThuoc;

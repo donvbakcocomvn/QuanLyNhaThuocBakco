@@ -35,6 +35,7 @@ class FormPhieuXuatNhap implements iFormPhieuXuatNhap
 	{
 		return $this->formData[$functionName] ?? $default;
 	}
+
 	function IdPhieu($val = null, $id = null, $index = null, $prop = [])
 	{
 		$properties = self::$properties;

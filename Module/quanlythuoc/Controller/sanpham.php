@@ -4,6 +4,7 @@ namespace Module\quanlythuoc\Controller;
 
 use Exception;
 use Model\Common;
+use Module\quanlythuoc\Model\PhieuXuatNhap;
 use Module\quanlythuoc\Model\SanPham as ModelSanPham;
 use Module\quanlythuoc\Model\SanPham\FormSanPham;
 use Module\quanlythuoc\Permission;
@@ -29,7 +30,7 @@ class sanpham extends \Application implements \Controller\IControllerBE
         // var_dump($item);
         // $data[] = ["BẢNG KÊ THUỐC PHÒNG KHÁM PHƯƠNG UYÊN"];
         $data[] = [
-            "Mã thuốc","Tên Thuốc", "Tên biệt dược", "Số lô", "Giá nhập","Giá Bán","Đơn vị tính", "Ngày sản xuất", "Hạn sử dụng","Tác dụng","Cơ chế tác dụng", "Ghi chú","Số lượng", "Nhà sản xuất", "Nước sản xuất","Cách dùng thuốc", "Số lượng cảnh báo"
+            "Mã thuốc", "Tên Thuốc", "Tên biệt dược", "Số lô", "Giá nhập", "Giá Bán", "Đơn vị tính", "Ngày sản xuất", "Hạn sử dụng", "Tác dụng", "Cơ chế tác dụng", "Ghi chú", "Số lượng", "Nhà sản xuất", "Nước sản xuất", "Cách dùng thuốc", "Số lượng cảnh báo"
         ];
         // $data[] = [];
         // $total = 0;
@@ -68,19 +69,19 @@ class sanpham extends \Application implements \Controller\IControllerBE
                 $dataSheet0 = $spreadsheet->getSheet(0)->toArray();
                 $sanpham = new ModelSanPham();
                 foreach ($dataSheet0 as $index => $item) {
-                    if ( $index > 0) {
-                        $item[8] = str_replace("/","-",$item[8]);
-                        $item[9] = str_replace("/","-",$item[9]);
+                    if ($index > 0) {
+                        $item[8] = str_replace("/", "-", $item[8]);
+                        $item[9] = str_replace("/", "-", $item[9]);
                         // echo $item[0];
                         // var_dump($index);
                         // them vào database  
                         $itemInsert["Id"] = $sanpham->CreatId();
                         $itemInsert["Idloaithuoc"] = $item[1];
-                        $itemInsert["Name"] = Common::CheckName($item[2]) ;
+                        $itemInsert["Name"] = Common::CheckName($item[2]);
                         $itemInsert["Namebietduoc"] = $item[3];
                         $itemInsert["Solo"] = intval($item[4]);
-                        $itemInsert["Gianhap"] = $item[5] ;
-                        $itemInsert["Giaban"] = $item[6];       
+                        $itemInsert["Gianhap"] = $item[5];
+                        $itemInsert["Giaban"] = $item[6];
                         $a = $sanpham->GetValByDesDVT($item[7]);
                         $b = $sanpham->GetValByDesCachDung($item[17]);
                         $itemInsert["DVT"] = $a["Val"] ?? "";
@@ -110,7 +111,7 @@ class sanpham extends \Application implements \Controller\IControllerBE
 
     function index()
     {
-        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy,Permission::QLT_Thuoc_DS]);
+        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Thuoc_DS]);
         $modelItem = new ModelSanPham();
         $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
         $params["danhmuc"] = isset($_REQUEST["danhmuc"]) ? \Model\Common::TextInput($_REQUEST["danhmuc"]) : "";
@@ -129,9 +130,15 @@ class sanpham extends \Application implements \Controller\IControllerBE
         $this->View($data);
     }
 
+    function dongboSL()
+    {
+        $sp = new \Module\quanlythuoc\Model\SanPham();
+        $sp->DongBoThuocNhap();
+    }
+
     function detail()
     {
-        \Model\Permission::Check([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_Thuoc_Detail]);
+        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Thuoc_Detail]);
         $id = \Model\Request::Get("id", null);
         if ($id == null) {
         }
@@ -150,7 +157,6 @@ class sanpham extends \Application implements \Controller\IControllerBE
         try {
             if (\Model\Request::Post(FormSanPham::$ElementsName, null)) {
                 $sanpham = new ModelSanPham();
-
                 $itemForm = \Model\Request::Post(FormSanPham::$ElementsName, null);
                 $item["Id"] = $sanpham->CreatId();
                 // $itemForm["Link"] = \Model\Common::BoDauTienViet($itemForm["Link"]);
@@ -174,6 +180,43 @@ class sanpham extends \Application implements \Controller\IControllerBE
                 $item["Canhbao"] = $itemForm["Canhbao"];
                 $item["IsDelete"] = 0;
                 $sanpham->Post($item);
+
+                $phieuXuatNhap = new \Module\quanlythuoc\Model\PhieuXuatNhap();
+                $IdPhieu = PhieuXuatNhap::getIdPhieu();
+                // echo $IdPhieu;
+                $phieuDB =  $phieuXuatNhap->GetById($IdPhieu);
+                if ($phieuDB != null) {
+                    throw new Exception("Đã có mã phiếu này.");
+                }
+                $Phieu["IdPhieu"] = $IdPhieu;
+                $Phieu["TongTien"] = $itemForm["Soluong"] * $itemForm["Gianhap"];
+                $Phieu["DoViCungCap"] = $itemForm["DoViCungCap"] ?? "";
+                $Phieu["XuatNhap"] = 1;
+                $Phieu["NoiDungPhieu"] = "Nhập thuốc mới";
+                $Phieu["GhiChu"] = "";
+                $Phieu["NgayNhap"] = Date("Y-m-d H:i:s");
+                $Phieu["CreateRecord"] = Date("Y-m-d H:i:s", time());
+                $Phieu["UpdateRecord"] = Date("Y-m-d H:i:s", time());
+                $Phieu["IsDelete"] = 0;
+                // die();
+                $phieuXuatNhap = new \Module\quanlythuoc\Model\PhieuXuatNhap();
+                $phieuXuatNhap->Post($Phieu);
+
+                $thuocDetail['IdPhieu'] = $IdPhieu;
+                $thuocDetail['IdThuoc'] = $item["Id"];
+                $thuocDetail['SoLuong'] = $item["Soluong"];
+                $thuocDetail['SoLo'] = $item["Solo"];
+                $thuocDetail['NhaSanXuat'] = $item["NhaSX"];
+                $thuocDetail['NuocSanXuat'] = $item["NuocSX"];
+                $thuocDetail['Price'] = $item["Gianhap"];
+                $thuocDetail['HanSuDung'] = date("Y-m-d", strtotime($item["HSD"]));
+                $thuocDetail['XuatNhap'] = 1;
+                $thuocDetail['CreateRecord'] = Date("Y-m-d H:i:s", time());
+                $thuocDetail['UpdateRecord'] = Date("Y-m-d H:i:s", time());
+                $thuocDetail['GhiChu'] = "";
+                $thuocDetail['IsDelete'] = 0;
+                $detail = new \Module\quanlythuoc\Model\PhieuXuatNhapChiTiet();
+                $detail->Post($thuocDetail);
                 new \Model\Error(\Model\Error::success, "Thêm thuốc thành công");
                 // \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=danhmuc&action=put&id=" . $itemForm["Code"]);
                 Common::ToUrl("/index.php?module=quanlythuoc&controller=sanpham&action=index");

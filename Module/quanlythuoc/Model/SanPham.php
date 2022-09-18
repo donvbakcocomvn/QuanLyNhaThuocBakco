@@ -10,6 +10,7 @@ namespace Module\quanlythuoc\Model;
 use Model\OptionsService;
 use Module\quanlythuoc\Permission;
 use Model\Common;
+use Model\ThongKe;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
@@ -35,7 +36,7 @@ class SanPham extends \Model\DB implements \Model\IModelService
     public $Tacdung;
     public $Cochetacdung;
     public $Ghichu;
-    public $Soluong; 
+    public $Soluong;
     public $NhaSX;
     public $NuocSX;
     public $IsDelete;
@@ -82,11 +83,70 @@ class SanPham extends \Model\DB implements \Model\IModelService
         }
     }
 
+    function DongBoThuocNhap()
+    {
+        $thuocNhap = ThongKe::GetTongXuatNhap();
+        // var_dump($thuocNhap);
+        $tongThuoc = $this->GetAllThuoc();
+        foreach ($thuocNhap as $item) {
+            // var_dump($item);
+            // echo $item['IdThuoc'];
+            foreach ($tongThuoc as $thuoc) {
+                // var_dump($thuoc);
+                $tong = 0 ;
+                if ($item['IdThuoc'] === $thuoc['Id']) {
+                    $a['Id'] = $thuoc['Id'];
+                    $a['SLNhap'] = $item['TongSLNhap'];
+                    $a['SLXuat'] = $item['TongSLXuat'];
+                    $a['Soluong'] = $tong + $a['SLNhap'] - $a['SLXuat'] ;
+                    // $a['Soluong'] = $a['Soluong'] - $a['SLXuat'];
+                    echo $a['SLHienTai'] = $a['Soluong'];
+                    $sp = new SanPham();
+                    $sp->Put($a);
+                }
+            }
+        }
+    }
+
+    // function DongBoThuocXuat()
+    // {
+    //     $thuocXuat = ThongKe::GetTongThuocXuatAndCode();
+    //     $tongThuoc = $this->GetAllThuoc();
+    //     foreach ($thuocXuat as $thuocXuat) {
+    //         // var_dump($thuocXuat);
+    //         foreach ($tongThuoc as $thuoc) {
+    //             var_dump($thuoc);
+    //             if ($thuocXuat['IdThuoc'] === $thuoc['Id']) {
+    //                 $a['Id'] = $thuoc['Id'];
+    //                 $a['SLXuat'] = $thuocXuat['Tong'];
+    //                 $sp = new SanPham();
+    //                 // $sp->Put($a);
+    //             }
+    //         }
+    //     }
+    // }
+
+    // function DongBoThuocTonKho()
+    // {
+    //     $tongThuoc = $this->GetAllThuoc();
+    //     // var_dump($tongThuoc);
+    //     foreach ($tongThuoc as $item) {
+    //         // var_dump($item);
+    //         $a['Id'] = $item['Id'];
+    //         $a['SLHienTai'] = $item['Soluong'] - $item['SLXuat'];
+    //         $a['Soluong'] = $item['SLHienTai'] + $item['SLNhap'];
+    //         $sp = new SanPham();
+    //         $sp->Put($a);
+    //     }
+    // }
+
+
+
     public function ThanhTien()
     {
         return intval($this->Soluong)  * floatval($this->Gianhap);
     }
-    
+
     static  public function ExportBangKe($data, $fileName)
     {
         $spreadsheet = new Spreadsheet();
@@ -175,7 +235,7 @@ class SanPham extends \Model\DB implements \Model\IModelService
 
     public function GetAllThuoc()
     {
-        $sql = "SELECT `Id`,`Name`, `Namebietduoc`, `Solo`, `Gianhap`, `Giaban`, `DVT`, `Ngaysx`, `HSD`, `Tacdung`, `Cochetacdung`, `Ghichu`, `Soluong`, `NhaSX`, `NuocSX`,`CachDung`, `Canhbao` FROM `lap1_qlthuoc_thuoc`";
+        $sql = "SELECT * FROM `lap1_qlthuoc_thuoc`";
         $result = $this->GetRows($sql);
         return $result;
     }

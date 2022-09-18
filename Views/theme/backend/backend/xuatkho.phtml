@@ -1,19 +1,18 @@
 <ol class="breadcrumb">
     <li><a href="/backend/"><i class="fa fa-dashboard"></i>&nbsp; Dashboard</a></li>
-    <li class="active">Danh sách thuốc nhập kho</li>
+    <li class="active">Danh sách thuốc xuất kho</li>
 </ol>
 <section class="content">
     <div class="row">
         <div class="col-md-12">
             <div class="box box-success">
                 <div class="box-header">
-                    <h3 style="text-align: center;">Danh sách thuốc nhập kho</h3>
+                    <h3 style="text-align: center;">Danh sách thuốc xuất kho</h3>
                     <div class="box-tools">
                         <a class="btn btn-success" href="/thongke/exportthuocsaphet">
                             <i class="fa fa-filter"></i> Export</a>
                     </div>
                 </div>
-
                 <div class="box-body">
                     <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                         <div class="row">
@@ -44,12 +43,12 @@
                                         use Model\ThongKe;
                                         use Module\quanlythuoc\Model\SanPham;
                                         $index = 0;
-                                        $thongke = ThongKe::TongNhapTheoThuoc();
+                                        $thongke = ThongKe::TongXuatTheoThuoc();
                                         // var_dump($thongke);
                                         $sp = new SanPham();
                                         foreach ($thongke as $value) {?>
                                         <?php
-                                        var_dump($value);
+                                        // var_dump($value);
                                         $thuoc = $sp->GetById($value["IdThuoc"]);
                                         // var_dump($thuoc);
                                         // echo $thuoc["Name"];
@@ -63,7 +62,7 @@
                                                 <td><?php echo Common::ViewNumber($value['TongSoLuong']); ?></td>
                                                 <td><?php echo Common::ViewPrice($value['TongGia']); ?></td>
                                                 <td>
-                                                <a href="/backend/lichsunhap/<?php echo $value['IdThuoc'];?>" type="button" class="btn btn-default"><i class="fa fa-eye"></i>&nbsp;Lịch sử nhập</a>
+                                                <a href="/backend/lichsuxuat/<?php echo $value['IdThuoc'];?>" type="button" class="btn btn-default"><i class="fa fa-eye"></i>&nbsp;Lịch sử Xuất</a>
                                                 </td>
                                             </tr>
                                         <?php

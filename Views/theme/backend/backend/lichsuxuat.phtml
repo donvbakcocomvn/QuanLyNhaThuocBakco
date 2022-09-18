@@ -4,7 +4,7 @@ $id = $this->getParams(0);
 
 <ol class="breadcrumb">
     <li><a href="/backend/"><i class="fa fa-dashboard"></i>&nbsp; Dashboard</a></li>
-    <li><a href="/backend/nhapkho/"> Danh sách thuốc nhập kho</a></li>
+    <li><a href="/backend/xuatkho/"> Danh sách thuốc xuất kho</a></li>
     <li class="active">Lịch sử nhập kho của thuốc <?php echo \Module\quanlythuoc\Model\SanPham::GetNameById($id);?></li>
 </ol>
 <section class="content">
@@ -12,7 +12,7 @@ $id = $this->getParams(0);
         <div class="col-md-12">
             <div class="box box-success">
                 <div class="box-header">
-                    <h3 style="text-align: center;">Lịch sử nhập của thuốc <?php echo \Module\quanlythuoc\Model\SanPham::GetNameById($id);?></h3>
+                    <h3 style="text-align: center;">Lịch sử xuất của thuốc <?php echo \Module\quanlythuoc\Model\SanPham::GetNameById($id);?></h3>
                     <div class="box-tools">
                         <a class="btn btn-success" href="/thongke/exportthuocsaphet">
                             <i class="fa fa-filter"></i> Export</a>
@@ -49,7 +49,7 @@ $id = $this->getParams(0);
                                         use Module\quanlythuoc\Model\SanPham;
                                         $index = 0;
                                         // echo $id;
-                                        $thongke = ThongKe::LichSuNhapById($id);
+                                        $thongke = ThongKe::LichSuXuatById($id);
                                         // var_dump($thongke);
                                         // $sp = new SanPham();
                                         foreach ($thongke as $value) {?>

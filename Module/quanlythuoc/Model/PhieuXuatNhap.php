@@ -63,7 +63,7 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
 
     public function XuatNhap()
     {
-        return $this->XuatNhap == 1 ? "<span class='label-danger'>Phiếu Nhập</span>" : "<span class='label-success'>Phiếu Xuất</span>";
+        return $this->XuatNhap == 1 ? "<span class='label-success'>Phiếu Nhập</span>" : "<span class='label-danger'>Phiếu Xuất</span>";
     }
     public function getTongTien()
     {
@@ -117,6 +117,7 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
         return $_SESSION["DSThuocPhieuNhap"][$index] = $detail;
     }
 
+    // SESSION Danh sách thuốc trong phiếu
     public static function DSThuocPhieuNhap()
     {
         $_SESSION["DSThuocPhieuNhap"] = $_SESSION["DSThuocPhieuNhap"] ?? [];
@@ -128,11 +129,13 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
     {
         return $_SESSION["DSThuocPhieuNhap"] = [];
     }
+
+    // Thêm thuốc mới
     public static function AddThuocPhieuNhapDefault()
     {
         $_SESSION["DSThuocPhieuNhap"] = $_SESSION["DSThuocPhieuNhap"] ?? [];
         if ($_SESSION["DSThuocPhieuNhap"] == []) {
-            for ($i = 0; $i < 10; $i++) {
+            for ($i = 0; $i < 1; $i++) {
                 $_SESSION["DSThuocPhieuNhap"][] = [];
             }
         }

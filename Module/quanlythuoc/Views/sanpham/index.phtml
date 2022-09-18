@@ -21,6 +21,7 @@
                     <?php 
                     use Model\Common;
                     use Module\quanlythuoc\Model\SanPham; 
+                    Module\quanlythuoc\Model\btnHtml::btnDongBoSL(); 
                     Module\quanlythuoc\Model\btnHtml::btnImportSanPham(); 
                     Module\quanlythuoc\Model\btnHtml::btnExportSanPham(); 
                     Module\quanlythuoc\Model\btnHtml::btnThemSanPham();
@@ -36,11 +37,10 @@
                             <th>Mã thuốc</th>
                             <th>Tên thuốc</th>
                             <th>Tên biệt dược</th>
-                            <th>Số lượng cũ</th>
-                            <th>Số lượng mới</th>
+                            <th>Tổng Nhập</th>
+                            <th>Tổng Xuất</th>
+                            <th>Tồn Kho</th>
                             <th>Tổng</th>
-                            <th>Số lượng xuất</th>
-                            <th>Số lượng hiện tại</th>
                             <th>Giá nhập</th>
                             <th>Giá bán</th>
                             <!-- <th>Đơn Vị Quy Đổi</th> -->
@@ -67,10 +67,10 @@
                                 <td><?php echo $_item->Id; ?></td>
                                 <td><?php echo $_item->Name; ?></td>
                                 <td><?php echo $_item->Namebietduoc; ?></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td><?php echo $_item->SLNhap;?></td>
+                                <td><?php echo $_item->SLXuat;?></td>
+                                <td><?php echo $_item->SLHienTai;?></td>
+                                <td><?php echo $_item->Soluong;?></td>
                                 <td class="text-center"><?php echo $_item->Soluong ?></td>
                                 <!-- <td><?php echo $_item->CachDungThuoc(); ?></td> -->
                                 <!-- <td><?php echo $_item->IdLoaiThuoc()->Name; ?></td> -->

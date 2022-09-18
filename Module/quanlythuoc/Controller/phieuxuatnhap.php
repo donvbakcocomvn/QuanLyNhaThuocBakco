@@ -174,17 +174,17 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
                 $phieuXuatNhap->Post($Phieu);
 
                 foreach (ModelPhieuXuatNhap::DSThuocPhieuNhap() as $maphieu => $_phieu) {
-
+                    // var_dump($_phieu);
                     if ($_phieu) {
-                        if ($_phieu["Id"]) {
-                            $itemFormDetail["IdPhieu"] = $Phieu["IdPhieu"];
+                        if (isset($_phieu["Id"]) == true) {
+                            $itemFormDetail["IdPhieu"] = $itemForm["IdPhieu"];
                             $itemFormDetail["IdThuoc"] = $_phieu["Id"];
                             $itemFormDetail["SoLuong"] = $_phieu["SoLuong"];
                             $itemFormDetail["SoLo"] = $_phieu["Solo"];
                             $itemFormDetail["HanSuDung"] = date("Y-m-d", strtotime($_phieu["HSD"]));
                             $itemFormDetail["NhaSanXuat"] = $_phieu["NhaSanXuat"];
                             $itemFormDetail["NuocSanXuat"] = $_phieu["NuocSanXuat"];
-                            $itemFormDetail["Price"] = floatval($_phieu["Gianhap"]);
+                            $itemFormDetail["Price"] = $_phieu["Gianhap"];
                             $itemFormDetail["XuatNhap"] = $itemForm["XuatNhap"];
                             $itemFormDetail["CreateRecord"] = Date("Y-m-d", time());
                             $itemFormDetail["UpdateRecord"] = Date("Y-m-d", time());
@@ -199,7 +199,7 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
                 ModelPhieuXuatNhap::DeleteAllThuocPhieuNhap();
                 ModelPhieuXuatNhap::SetPostForm([]);
                 $phieu = new ModelPhieuXuatNhap($itemFormDetail["IdPhieu"]);
-                // new \Model\Error(\Model\Error::success, "Đã Thêm Phiếu");
+                new \Model\Error(\Model\Error::success, "Đã Thêm Phiếu");
                 \Model\Common::ToUrl("/quanlythuoc/phieuxuatnhap/detail/" . $phieu->Id . "");
             }
         } catch (\Exception $exc) {

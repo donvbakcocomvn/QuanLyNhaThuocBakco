@@ -68,6 +68,18 @@ class btnHtml
     <?php
     }
 
+    public static function btnDongBoSL()
+    {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy]) == false) {
+            return;
+        }
+    ?>
+        <a class="btn btn-primary" href="/index.php?module=quanlythuoc&controller=sanpham&action=dongboSL">
+            Đồng bộ số lượng
+        </a>
+    <?php
+    }
+
     public static function btnChiSanPham($id)
     {
         if (\Model\Permission::CheckPremision([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_Thuoc_Detail]) == false) {
