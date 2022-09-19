@@ -18,12 +18,14 @@
             <div class="box-header">
                 <h3 class="box-title">Danh Sách Thuốc</h3>
                 <div class="box-tools">
-                    <?php 
+                    <?php
+
                     use Model\Common;
-                    use Module\quanlythuoc\Model\SanPham; 
-                    Module\quanlythuoc\Model\btnHtml::btnDongBoSL(); 
-                    Module\quanlythuoc\Model\btnHtml::btnImportSanPham(); 
-                    Module\quanlythuoc\Model\btnHtml::btnExportSanPham(); 
+                    use Module\quanlythuoc\Model\SanPham;
+
+                    Module\quanlythuoc\Model\btnHtml::btnDongBoSL();
+                    Module\quanlythuoc\Model\btnHtml::btnImportSanPham();
+                    Module\quanlythuoc\Model\btnHtml::btnExportSanPham();
                     Module\quanlythuoc\Model\btnHtml::btnThemSanPham();
                     ?>
                 </div>
@@ -67,21 +69,12 @@
                                 <td><?php echo $_item->Id; ?></td>
                                 <td><?php echo $_item->Name; ?></td>
                                 <td><?php echo $_item->Namebietduoc; ?></td>
-                                <td><?php echo $_item->SLNhap;?></td>
-                                <td><?php echo $_item->SLXuat;?></td>
-                                <td><?php echo $_item->SLHienTai;?></td>
-                                <td><?php echo $_item->Soluong;?></td>
-                                <td class="text-center"><?php echo $_item->Soluong ?></td>
-                                <!-- <td><?php echo $_item->CachDungThuoc(); ?></td> -->
-                                <!-- <td><?php echo $_item->IdLoaiThuoc()->Name; ?></td> -->
-                                <!-- <th><?php echo $_item->DonViQuyDoi(); ?></th> -->
+                                <td><?php echo $_item->SLNhap; ?></td>
+                                <td><?php echo $_item->SLXuat; ?></td>
+                                <td><?php echo $_item->SLHienTai; ?></td>
+                                <td class="text-center"><?php echo $_item->TongSoLuong() ?></td>
                                 <td><?php echo Common::ViewPrice($_item->Gianhap); ?></td>
                                 <td><?php echo Common::ViewPrice($_item->Giaban); ?></td>
-                                <!-- <td><?php echo $_item->DonViTinh(); ?></td> -->
-                                <!-- <td><?php echo Common::ForMatDMY($_item->HSD); ?></td> -->
-                                <!-- <th><?php echo $_item->Tacdung; ?></th> -->
-                                <!-- <th><?php echo $_item->NhaSX; ?></th> -->
-                                <!-- <th><?php echo $_item->Ghichu; ?></th> -->
                             </tr>
                         <?php
                         }

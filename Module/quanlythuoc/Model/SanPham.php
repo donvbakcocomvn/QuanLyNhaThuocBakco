@@ -83,29 +83,43 @@ class SanPham extends \Model\DB implements \Model\IModelService
         }
     }
 
+    public function TongSoLuong()
+    {
+        // số lượng ban đầu + số lượng nhập
+        return $this->Soluong + $this->SLNhap;
+    }
+    public function SLi()
+    {
+        // số lượng ban đầu + số lượng nhập
+        return $this->Soluong + $this->SLNhap;
+    }
+
     function DongBoThuocNhap()
     {
         $thuocNhap = ThongKe::GetTongXuatNhap();
-        // var_dump($thuocNhap);
-        $tongThuoc = $this->GetAllThuoc();
+        // phía phiếu
         foreach ($thuocNhap as $item) {
-            // var_dump($item);
-            // echo $item['IdThuoc'];
-            foreach ($tongThuoc as $thuoc) {
-                // var_dump($thuoc);
-                $tong = 0 ;
-                if ($item['IdThuoc'] === $thuoc['Id']) {
-                    $a['Id'] = $thuoc['Id'];
-                    $a['SLNhap'] = $item['TongSLNhap'];
-                    $a['SLXuat'] = $item['TongSLXuat'];
-                    $a['Soluong'] = $tong + $a['SLNhap'] - $a['SLXuat'] ;
-                    // $a['Soluong'] = $a['Soluong'] - $a['SLXuat'];
-                    echo $a['SLHienTai'] = $a['Soluong'];
-                    $sp = new SanPham();
-                    $sp->Put($a);
-                }
-            }
+            $thuoc = new SanPham($item['IdThuoc']);
+            $thuocModel = $thuoc->GetById($item['IdThuoc']);
+            $thuocModel["SLXuat"] = $item["TongSLXuat"];
+            $thuocModel["SLNhap"] = $item["TongSLNhap"];
+            $thuocModel["SLHienTai"] = $thuocModel["Soluong"] - $item["TongSLXuat"] + $item["TongSLNhap"];
+            $thuoc->Put($thuocModel);
         }
+    }
+    function DongBoThuocNhapByID($id = null)
+    {
+        if ($id == null) {
+            $id = $this->Id;
+        }
+        $item = ThongKe::GetTongXuatNhapById($id);
+        // phía phiếu
+        $thuoc = new SanPham($id);
+        $thuocModel = $thuoc->GetById($id);
+        $thuocModel["SLXuat"] = $item["TongSLXuat"] ?? 0;
+        $thuocModel["SLNhap"] = $item["TongSLNhap"] ?? 0;
+        $thuocModel["SLHienTai"] = $thuocModel["Soluong"] - $thuocModel["SLXuat"] +  $thuocModel["SLNhap"];
+        $thuoc->Put($thuocModel);
     }
 
     // function DongBoThuocXuat()

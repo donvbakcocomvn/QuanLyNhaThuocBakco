@@ -120,7 +120,7 @@ $(function () {
         // console.log(getCookie("sidebar-toggle"));
 
         $(".sidebar-toggle").click(function () {
-            var miniMenu = getCookie("sidebar-toggle"); 
+            var miniMenu = getCookie("sidebar-toggle");
             if ($("body").hasClass("sidebar-collapse")) {
                 setCookie("sidebar-toggle", "sidebar-collapse", 30);
             } else {
@@ -130,8 +130,6 @@ $(function () {
     } catch (e) {
 
     }
-
-
 });
 
 app.controller("searchCtrl", function ($scope) {

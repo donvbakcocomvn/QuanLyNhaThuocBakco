@@ -1,7 +1,9 @@
 <?php
 
 namespace Model;
-class ThongKe extends DB{
+
+class ThongKe extends DB
+{
     public function GetSpCanhBao()
     {
         $sql = "SELECT `Id`,`Name`, `Namebietduoc`, `Solo`, `Gianhap`, `Giaban`, `DVT`, `Ngaysx`, `HSD`, `Tacdung`, `Cochetacdung`, `Ghichu`, `Soluong`, `NhaSX`, `NuocSX`,`CachDung`, `Canhbao` FROM `lap1_qlthuoc_thuoc`WHERE `Soluong` < `Canhbao` ORDER BY `Name` ASC;";
@@ -92,15 +94,28 @@ class ThongKe extends DB{
     {
         $thongke = new ThongKe();
         // $sql = "SELECT `TongNhap`.`IdThuoc`, `TongSLNhap`,`TongSLXuat` FROM (SELECT `IdThuoc`, SUM(`SoLuong`) as 'TongSLNhap' FROM `lap1_qlthuoc_phieuxuatnhap_chitiet` WHERE `XuatNhap` = 1 and `IsDelete` = 0 GROUP BY `IdThuoc`) AS TongNhap JOIN (SELECT `IdThuoc`, SUM(`SoLuong`) as 'TongSLXuat' FROM `lap1_qlthuoc_phieuxuatnhap_chitiet` WHERE `XuatNhap` = -1 and `IsDelete` = 0 GROUP BY `IdThuoc`) AS TongXuat ON `TongNhap`.`IdThuoc` = `TongXuat`.`IdThuoc`";
-
+        $table = prefixTable;
         $sql = "Select `IdThuoc`, 
         SUM(CASE When `XuatNhap`= 1 Then`SoLuong` Else 0 End ) as 'TongSLNhap', 
         SUM(CASE When `XuatNhap`= -1 Then `SoLuong` Else 0 End ) as 'TongSLXuat'
-        from  `lap1_qlthuoc_phieuxuatnhap_chitiet`
+        from  `{$table}qlthuoc_phieuxuatnhap_chitiet`
         Where `IsDelete`=0
         GROUP BY `IdThuoc`";
         $result = $thongke->GetRows($sql);
         return $result;
     }
-
+    public static function GetTongXuatNhapById($idThuoc)
+    {
+        $thongke = new ThongKe();
+        // $sql = "SELECT `TongNhap`.`IdThuoc`, `TongSLNhap`,`TongSLXuat` FROM (SELECT `IdThuoc`, SUM(`SoLuong`) as 'TongSLNhap' FROM `lap1_qlthuoc_phieuxuatnhap_chitiet` WHERE `XuatNhap` = 1 and `IsDelete` = 0 GROUP BY `IdThuoc`) AS TongNhap JOIN (SELECT `IdThuoc`, SUM(`SoLuong`) as 'TongSLXuat' FROM `lap1_qlthuoc_phieuxuatnhap_chitiet` WHERE `XuatNhap` = -1 and `IsDelete` = 0 GROUP BY `IdThuoc`) AS TongXuat ON `TongNhap`.`IdThuoc` = `TongXuat`.`IdThuoc`";
+        $table = prefixTable;
+        $sql = "Select `IdThuoc`, 
+        SUM(CASE When `XuatNhap`= 1 Then`SoLuong` Else 0 End ) as 'TongSLNhap', 
+        SUM(CASE When `XuatNhap`= -1 Then `SoLuong` Else 0 End ) as 'TongSLXuat'
+        from  `{$table}qlthuoc_phieuxuatnhap_chitiet`
+        Where `IsDelete`=0 and `IdThuoc` = '{$idThuoc}'
+        GROUP BY `IdThuoc`";
+        $result = $thongke->GetRows($sql);
+        return $result;
+    }
 }

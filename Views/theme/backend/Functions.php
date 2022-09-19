@@ -214,7 +214,7 @@ class Functions
                 <!-- Sidebar user panel -->
                 <div class="user-panel">
                     <div class="pull-left image">
-                        <img style="height: 45px;width: 45px;" onerror="this.src='/public/no-user.jpg'" src="<?php echo $user->UserInfor(\Model\Users\UserInfor::HinhNhanVien)->Val; ?>" class="img-circle" alt="User Image">
+                        <img style="height: auto;min-height: 35px;" onerror="this.src='/public/no-user.jpg'" src="<?php echo $user->UserInfor(\Model\Users\UserInfor::HinhNhanVien)->Val; ?>" class="img-circle" alt="User Image">
                     </div>
                     <div class="pull-left info">
                         <p><?php echo $user->Name ?></p>
