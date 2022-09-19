@@ -30,7 +30,6 @@ $roleDetail = new Model\Role();
         <form action="" method="post" onsubmit="return confirm('Bạn có chắc thông tin đã nhập chính xác?')" enctype="multipart/form-data">
             <div class="box-body">
                 <?php
-
                 $phieu = new FormPhieuXuatNhap(PhieuXuatNhap::GetPostForm());
                 ?>
                 <div class="row">
@@ -43,7 +42,7 @@ $roleDetail = new Model\Role();
                                 <?php $phieu->XuatNhap(null, "XuatNhapId")->renderHtml(); ?>
                             </div>
                             <div class="col-md-4">
-                                <?php $phieu->NgayNhap()->renderHtml();?>
+                                <?php $phieu->NgayNhap()->renderHtml(); ?>
                             </div>
                             <div class="col-md-6">
                                 <?php $phieu->NoiDungPhieu()->renderHtml();  ?>
@@ -52,7 +51,7 @@ $roleDetail = new Model\Role();
                                 <?php $phieu->GhiChu()->renderHtml();  ?>
                             </div>
                         </div>
-                    </div>   
+                    </div>
                     <div class="col-md-12">
                         <fieldset>
                             <legend>Danh Sách Thuốc</legend>

@@ -116,10 +116,10 @@ $(document).ready(function () {
         var xuatNhap = $(this).val();
         if (xuatNhap == 1) {
             $(".hansudung").show();
-            $(".txtTongTien").attr("colspan",8);
-        }else{
+            $(".txtTongTien").attr("colspan", 8);
+        } else {
             $(".hansudung").hide();
-            $(".txtTongTien").attr("colspan",7);
+            $(".txtTongTien").attr("colspan", 7);
         }
     });
     $(".formpostdata").each(function (index, e) {
@@ -127,7 +127,7 @@ $(document).ready(function () {
         $(this).change(function (param) {
             var IdPhieu = $("#IdPhieu_Id");
             var DonViCungCap = $("#DonViCungCap_Id");
-            var XuatNhap = $("#XuatNhap_Id");
+            var XuatNhap = $("#XuatNhapId");
             var NoiDungPhieu = $("#NoiDungPhieu_Id");
             var GhiChu = $("#GhiChu_Id");
             var NgayNhap = $("#NgayNhap_Id");

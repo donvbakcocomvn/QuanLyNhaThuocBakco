@@ -23,7 +23,11 @@ class FormRender
         return $this->element->render();
     }
 
-    public function renderHTML()
+    static public function ToolTip($var, $placement = "top")
+    {
+        return  'data-toggle="tooltip" data-placement="' . $placement . '" title="' . $var . '"';
+    }
+    public function renderHTML($tooltip = "")
     {
         $label = $this->element->getLabel();
         $attrStr =  $this->element->getAttributes();
@@ -31,6 +35,13 @@ class FormRender
         if (strpos($attrStr, FormRender::Required) > 0) {
             $required = "(*)";
         }
+        if ($tooltip != "") {
+?>
+            <i class="fa fa-info" <?php echo self::ToolTip("$tooltip"); ?> aria-hidden="true"></i>
+<?php
+        }
+        // data-toggle="tooltip" data-placement="top"
+
         $htmlTemplate = <<<HTML
                 <div class="form-group">
                                     <label >$label <span style="color:red" >$required</span></label>
