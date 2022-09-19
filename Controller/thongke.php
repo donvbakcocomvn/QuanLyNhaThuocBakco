@@ -34,10 +34,10 @@ class thongke extends \Application
         $thongke = new \Model\ThongKe();
         $sp = new SanPham();
         $item = $thongke->GetSpCanhBao();
-        var_dump($item);
+        // var_dump($item);
         // $data[] = ["BẢNG KÊ THUỐC PHÒNG KHÁM PHƯƠNG UYÊN"];
         $data[] = [
-            "Mã thuốc","Tên Thuốc", "Tên biệt dược", "Số lô", "Giá nhập","Giá Bán","Đơn vị tính", "Ngày sản xuất", "Hạn sử dụng","Tác dụng","Cơ chế tác dụng", "Ghi chú","Số lượng", "Nhà sản xuất", "Nước sản xuất","Cách dùng thuốc", "Số lượng cảnh báo"
+            "Mã thuốc", "Tên Thuốc", "Tên biệt dược", "Số lô", "Giá nhập", "Giá Bán", "Đơn vị tính", "Ngày sản xuất", "Hạn sử dụng", "Tác dụng", "Cơ chế tác dụng", "Ghi chú", "Số lượng", "Nhà sản xuất", "Nước sản xuất", "Cách dùng thuốc", "Số lượng cảnh báo"
         ];
         if ($item) {
             foreach ($item as $row) {
@@ -53,6 +53,48 @@ class thongke extends \Application
                 $data[] = $row;
             }
             \Module\quanlythuoc\Model\SanPham::ExportBangKe($data, "public/thongke/ExportThuocSapHet.xlsx");
+        }
+    }
+
+    function ExportDSPhieuXuat()
+    {
+        $thongke = new \Model\ThongKe();
+        $sp = new SanPham();
+        $item = $thongke->GetDSPhieuXuatNhapExport(-1);
+        // var_dump($item);
+        // $data[] = ["BẢNG KÊ THUỐC PHÒNG KHÁM PHƯƠNG UYÊN"];
+        $data[] = [
+            "Mã phiếu", "Đơn vị cung cấp", "Nội dung phiếu", "Ngày xuất", "Tổng tiền xuất", "Ghi chú"
+        ];
+        if ($item) {
+            foreach ($item as $row) {
+                $row["NgayNhap"] = Common::ForMatDMYHIS($row["NgayNhap"]);
+                $row["TongTien"] = Common::ViewPrice($row["TongTien"]);
+                // var_dump($row);
+                $data[] = $row;
+            }
+            \Module\quanlythuoc\Model\SanPham::ExportBangKe($data, "public/thongke/ExportDSPhieuXuat.xlsx");
+        }
+    }
+
+    function ExportDSPhieuNhap()
+    {
+        $thongke = new \Model\ThongKe();
+        $sp = new SanPham();
+        $item = $thongke->GetDSPhieuXuatNhapExport(1);
+        // var_dump($item);
+        // $data[] = ["BẢNG KÊ THUỐC PHÒNG KHÁM PHƯƠNG UYÊN"];
+        $data[] = [
+            "Mã phiếu", "Đơn vị cung cấp", "Nội dung phiếu", "Ngày nhập", "Tổng tiền nhập", "Ghi chú"
+        ];
+        if ($item) {
+            foreach ($item as $row) {
+                $row["NgayNhap"] = Common::ForMatDMYHIS($row["NgayNhap"]);
+                $row["TongTien"] = Common::ViewPrice($row["TongTien"]);
+                // var_dump($row);
+                $data[] = $row;
+            }
+            \Module\quanlythuoc\Model\SanPham::ExportBangKe($data, "public/thongke/ExportDSPhieuNhap.xlsx");
         }
     }
 

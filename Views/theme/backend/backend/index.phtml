@@ -8,14 +8,15 @@
             <div class="box-tools">
             </div>
         </div>
+        <div class="box-body">
         <div class="row">
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-aqua">
                     <div class="inner">
                         <h3><?php
-                            echo \Model\Common::ViewNumber(\Model\ThongKe::GetSumNhap()); ?></h3>
-                        <p><i>SỐ LƯỢNG NHẬP KHO</i></p>
+                            echo \Model\Common::ViewNumber(\Model\ThongKe::GetSumSLPhieuNhap()); ?></h3>
+                        <p><i>SỐ LƯỢNG PHIẾU NHẬP</i></p>
                     </div>
                     <div class="icon">
                         <i class="fa fa-reply-all"></i>
@@ -27,8 +28,8 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3><?php echo \Model\Common::ViewNumber(\Model\ThongKe::GetSumXuat()); ?></h3>
-                        <p><i>SỐ LƯỢNG XUẤT KHO</i></p>
+                        <h3><?php echo \Model\Common::ViewNumber(\Model\ThongKe::GetSumSLPhieuXuat()); ?></h3>
+                        <p><i>SỐ LƯỢNG PHIẾU XUẤT</i></p>
                     </div>
                     <div class="icon">
                         <i class="fa fa-paper-plane"></i>
@@ -53,7 +54,7 @@
                 <!-- small box -->
                 <div class="small-box bg-red">
                     <div class="inner">
-                        <h3><?php echo \Model\Common::ViewNumber(\Model\ThongKe::GetSumSLTong()) ;?></h3>
+                        <!-- <h3><?php echo \Model\Common::ViewNumber(\Model\ThongKe::GetSumSLPhieuNhap()) ;?></h3> -->
                         <p><i>SỐ LƯỢNG TỔNG</i></p>
                     </div>
                     <div class="icon">
@@ -64,6 +65,8 @@
             </div><!-- ./col -->
         </div>
 
+        </div>
+        
         <div class="box box-info">
             <div class="box-header with-border">
                 <h3 class="box-title">Những Sản Phẩm Sắp Hết</h3>

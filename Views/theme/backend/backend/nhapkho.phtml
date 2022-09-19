@@ -1,16 +1,18 @@
 <ol class="breadcrumb">
     <li><a href="/backend/"><i class="fa fa-dashboard"></i>&nbsp; Dashboard</a></li>
-    <li class="active">Danh sách thuốc nhập kho</li>
+    <li class="active">Danh sách phiếu nhập kho</li>
 </ol>
 <section class="content">
     <div class="row">
         <div class="col-md-12">
             <div class="box box-success">
                 <div class="box-header">
-                    <h3 style="text-align: center;">Danh sách thuốc nhập kho</h3>
-                    <div class="box-tools">
-                        <a class="btn btn-success" href="/thongke/exportthuocsaphet">
-                            <i class="fa fa-filter"></i> Export</a>
+                    <h3 style="text-align: center;">Danh sách phiếu nhập kho</h3>
+                    <div class="box-tools float-left">
+                        <a class="btn btn-warning" href="/backend/dsnhapchitiet">
+                            <i class="fa fa-circle"></i> Lịch sử nhập chi tiết</a>
+                        <a class="btn btn-success" href="/thongke/ExportDSPhieuNhap">
+                            <i class="fa fa-filter"></i> Export danh sách phiếu</a>
                     </div>
                 </div>
 
@@ -26,14 +28,13 @@
                                     <thead>
                                         <tr role="row">
                                             <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">STT</th>
-                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Mã thuốc</th>
-                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Tên thuốc</th>
-                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Tên biệt dược</th>
-                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Cách dùng</th>
-                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Tổng số lượng nhập</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Mã phiếu</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Nội dung phiếu</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Ngày nhập</th>
                                             <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Tổng tiền</th>
-                                            <th></th>
-                                            <!-- <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Nước sản xuất</th> -->
+                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Ghi chú</th>
+                                            <!-- <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Tổng tiền</th> -->
+                                            <!-- <th></th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -43,27 +44,23 @@
                                         use Model\Notions;
                                         use Model\ThongKe;
                                         use Module\quanlythuoc\Model\SanPham;
+
                                         $index = 0;
-                                        $thongke = ThongKe::TongNhapTheoThuoc();
+                                        $thongke = ThongKe::GetDSPhieuNhap(1);
                                         // var_dump($thongke);
-                                        $sp = new SanPham();
-                                        foreach ($thongke as $value) {?>
-                                        <?php
-                                        var_dump($value);
-                                        $thuoc = $sp->GetById($value["IdThuoc"]);
-                                        // var_dump($thuoc);
-                                        // echo $thuoc["Name"];
-                                        ?>
+                                        foreach ($thongke as $value) { ?>
+                                            <?php
+                                            ?>
                                             <tr role="row" class="even">
                                                 <td class="sorting_1 text-center"><?php echo $index + 1 ?></td>
-                                                <td><?php echo $value['IdThuoc']; ?></td>
-                                                <td><?php echo $thuoc["Name"]; ?></td>
-                                                <td><?php echo $thuoc["Namebietduoc"]; ?></td>
-                                                <td><?php echo $sp->GetDesByVal($thuoc["CachDung"],'cachdungthuoc'); ?></td>
-                                                <td><?php echo Common::ViewNumber($value['TongSoLuong']); ?></td>
-                                                <td><?php echo Common::ViewPrice($value['TongGia']); ?></td>
+                                                <td><?php echo $value['IdPhieu']; ?></td>
+                                                <td><?php echo $value["NoiDungPhieu"]; ?></td>
+                                                <td><?php echo Common::ForMatDMYHIS($value["NgayNhap"]); ?></td>
+                                                <td><?php echo Common::ViewPrice($value["TongTien"]); ?></td>
+                                                <!-- <td><?php echo Common::ViewNumber($value['TongSoLuong']); ?></td> -->
+                                                <td><?php echo $value['GhiChu']; ?></td>
                                                 <td>
-                                                <a href="/backend/lichsunhap/<?php echo $value['IdThuoc'];?>" type="button" class="btn btn-default"><i class="fa fa-eye"></i>&nbsp;Lịch sử nhập</a>
+                                                    <a href="/backend/lichsunhap/?id=<?php echo $value['IdPhieu']; ?>" type="button" class="btn btn-default"><i class="fa fa-eye"></i>&nbsp;Lịch sử nhập</a>
                                                 </td>
                                             </tr>
                                         <?php

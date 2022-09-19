@@ -1,0 +1,209 @@
+<ol class="breadcrumb">
+    <li><a href="/backend/"><i class="fa fa-dashboard"></i>&nbsp; Dashboard</a></li>
+    <li><a href="/backend/nhapkho/"><i class="fa fa-dashboard"></i>&nbsp; Danh sách phiếu nhập kho</a></li>
+    <li class="active">Danh sách phiếu nhập kho</li>
+</ol>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="box box-warning">
+                <div class="box-header">
+                    <h3 style="text-align: center;">Lịch sử nhập thuốc chi tiết</h3>
+                    <div class="box-tools float-left">
+                        <a class="btn btn-warning" href="/thongke/ExportDSPhieuNhap">
+                            <i class="fa fa-filter"></i> Export lịch sử nhập</a>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                        <div class="row">
+                            <div class="col-sm-6"></div>
+                            <div class="col-sm-6"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">STT</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Ngày nhập</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Mã thuốc</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Số lô</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Nhà sản xuất</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Số lượng</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Nước sản xuất</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Giá nhập</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Tổng giá nhập</th>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody>
+                                        <?php
+
+                                        use Model\Common;
+                                        use Model\Notions;
+                                        use Model\ThongKe;
+                                        use Module\quanlythuoc\Model\SanPham;
+
+                                        $index = 0;
+                                        $thongke = ThongKe::LichSuNhapChiTiet();
+                                        // var_dump($thongke);
+                                        foreach ($thongke as $value) { ?>
+                                            <?php
+                                            ?>
+                                            <tr role="row" class="even">
+                                                <td class="sorting_1 text-center"><?php echo $index + 1 ?></td>
+                                                <td><?php echo $value['NgayNhap']; ?></td>
+                                                <td><?php echo $value["IdThuoc"]; ?></td>
+                                                <td><?php echo $value["SoLo"]; ?></td>
+                                                <td><?php echo $value['NhaSanXuat']; ?></td>
+                                                <td><?php echo Common::ViewNumber($value['SoLuong']); ?></td>
+                                                <td><?php echo $value['NuocSanXuat']; ?></td>
+                                                <td><?php echo Common::ViewPrice($value['Price']); ?></td>
+                                                <td><?php echo Common::ViewPrice($value['Tong']); ?></td>
+                                            </tr>
+                                        <?php
+                                            $index++;
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="container-fluid">
+    <form method="get" action="/donthuoc/index/index/">
+        <div class="form-group d-flex">
+            <label class="btn btn-default"><input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox"><i class="fa fa-share" aria-hidden="true"></class=></i></label>
+            <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập mã đơn thuốc hoặc tên bệnh nhân để tìm kiếm">
+            <button class="btn btn-primary no-border-radius" name="btnTim" type="submit">
+                <i class="fa fa-search"></i> Tìm Kiếm
+            </button>
+        </div>
+    </form>
+    <div class="clearfix">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Danh Sách Đơn Thuốc</h3>
+                <div class="box-tools">
+                    <?php
+
+                    use Model\Locations;
+                    use Model\OptionsService;
+                    use Model\TinhThanh;
+                    use Module\donthuoc\Model\DonThuoc;
+                    Module\donthuoc\Model\btnHtml::btnThemDonThuoc();
+                    ?> 
+                    <a class="btn btn-primary" data-toggle="modal" target="_self" href='#modal-id'>Hướng dẫn</a>
+                    <div class="modal fade" id="modal-id">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <?php
+                                    $link = 'huongdansudung';
+                                    $path = "public/huongdan/huongdansudung.html";
+                                    echo file_get_contents($path);
+                                    ?>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="<?php echo "/huongdan/put/huongdansudung"?>" type="button" class="btn btn-success">Sửa File</a>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng lại</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="box-body">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>STT</th>
+                            <th>Mã Đơn Thuốc</th>
+                            <!-- <th>Mã Bệnh Nhân</th> -->
+                            <th>Tên Bệnh Nhân</th>
+                            <th>Giới Tính</th>
+                            <th>Ngày Sinh</th>
+                            <th>Thời Gian Khám Bệnh</th>
+                            <th>Chẩn Đoán</th>
+                            <th>Thuộc Loại Đơn</th>
+                            <th>Ngày Dùng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        // var_dump($items);
+                        // echo $a;
+                        foreach ($items as $index => $item) {
+                            $_item = new DonThuoc($item);
+                            $nameBN = $_item->GetNameById($_item->IdBenhNhan);
+                            // var_dump($_item);
+                        ?>
+                            <tr>
+                                <td style="width: 250px;">
+                                    <?php
+                                    echo Module\donthuoc\Model\btnHtml::btnSuaDonThuoc($_item->Id);
+                                    echo Module\donthuoc\Model\btnHtml::btnCopyDonThuoc($_item->Id);
+                                    echo Module\donthuoc\Model\btnHtml::btnXoaDonThuoc($_item->Id);
+                                    echo Module\donthuoc\Model\btnHtml::btnchitiet($_item->Id);
+                                    ?>
+                                </td>
+                                <td><?php echo $index + 1; ?></td>
+                                <td><?php echo $_item->Id; ?></td>
+                                <!-- <td><?php echo $_item->IdBenhNhan; ?></td> -->
+                                <td><?php echo $nameBN; ?></td>
+                                <td><?php echo $_item->Gioitinh(); ?></td>
+                                <td><?php echo $_item->NgaySinh; ?></td>
+                                <td><?php echo date("d-m-Y H:i:s", strtotime($_item->ThoiGianKham)); ?></td>
+                                <td><?php echo $_item->ChanDoanBenh ?></td>
+                                <td><?php echo $_item->ThuocLoaiDon() ?></td>
+                                <td><?php echo $_item->TongNgayDung; ?></td>
+
+                            </tr>
+                        <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
+                <div class="box-footer">
+                    <div class="d-flex">
+                        <?php
+                        \Model\FormCommon::Select(
+                            "",
+                            "",
+                            [10, 20, 50, 100],
+                            [
+                                "style" => "max-width:150px;",
+                                "class" => "form-control",
+                                "value" => $pageNumber,
+                                "onchange" => "SoDongHienThi(this.value)",
+                            ]
+                        )->render();
+                        ?>
+                        <?php
+                        $linkPhanTrang = "/index.php?module=donthuoc&controller=index&action=index&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
+                        echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var SoDongHienThi = function(evalue) {
+        var linkPhanTrang = '/index.php?module=donthuoc&controller=index&action=index&indexPage=1&pageNumber=[j]';
+        linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
+        window.location.href = linkPhanTrang;
+    }
+</script>

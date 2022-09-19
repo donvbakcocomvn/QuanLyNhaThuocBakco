@@ -6,7 +6,7 @@ class ThongKe extends DB
 {
     public function GetSpCanhBao()
     {
-        $sql = "SELECT `Id`,`Name`, `Namebietduoc`, `Solo`, `Gianhap`, `Giaban`, `DVT`, `Ngaysx`, `HSD`, `Tacdung`, `Cochetacdung`, `Ghichu`, `Soluong`, `NhaSX`, `NuocSX`,`CachDung`, `Canhbao` FROM `lap1_qlthuoc_thuoc`WHERE `Soluong` < `Canhbao` ORDER BY `Name` ASC;";
+        $sql = "SELECT `Id`,`Name`, `Namebietduoc`, `Solo`, `Gianhap`, `Giaban`, `DVT`, `Ngaysx`, `HSD`, `Tacdung`, `Cochetacdung`, `Ghichu`, `Soluong`, `NhaSX`, `NuocSX`,`CachDung`, `Canhbao` FROM `lap1_qlthuoc_thuoc`WHERE `Soluong` < `Canhbao` ORDER BY `Name` ASC";
         $result = $this->GetRows($sql);
         return $result;
     }
@@ -18,28 +18,20 @@ class ThongKe extends DB
         return $result;
     }
 
-    public static function GetSumXuat()
+    public static function GetSumSLPhieuXuat()
     {
         $thongke = new ThongKe();
-        $sql = "SELECT SUM(`SoLuong`) AS Tong FROM `lap1_qlthuoc_phieuxuatnhap_chitiet` WHERE `XuatNhap` = -1 AND `IsDelete` = 0;";
+        $sql = "SELECT COUNT(*) as 'TongRow' FROM `lap1_qlthuoc_phieuxuatnhap` WHERE `XuatNhap` = -1";
         $result = $thongke->GetRow($sql);
-        return $result['Tong'];
+        return $result['TongRow'];
     }
 
-    public static function GetSumNhap()
+    public static function GetSumSLPhieuNhap()
     {
         $thongke = new ThongKe();
-        $sql = "SELECT SUM(`SoLuong`) AS Tong FROM `lap1_qlthuoc_phieuxuatnhap_chitiet` WHERE `XuatNhap` = 1 AND `IsDelete` = 0;";
+        $sql = "SELECT COUNT(*) as 'TongRow' FROM `lap1_qlthuoc_phieuxuatnhap` WHERE `XuatNhap` = 1";
         $result = $thongke->GetRow($sql);
-        return $result['Tong'];
-    }
-
-    public static function GetSumSLTong()
-    {
-        $thongke = new ThongKe();
-        $sql = "SELECT SUM(`Soluong`) AS Tong FROM `lap1_qlthuoc_thuoc`;";
-        $result = $thongke->GetRow($sql);
-        return $result['Tong'];
+        return $result['TongRow'];
     }
 
     public static function TongNhapTheoThuoc()
@@ -58,10 +50,10 @@ class ThongKe extends DB
         return $result;
     }
 
-    public static function LichSuNhapById($id)
+    public static function LichSuNhapChiTiet()
     {
         $thongke = new ThongKe();
-        $sql = "SELECT b.NgayNhap, a.IdThuoc,a.SoLo,a.NhaSanXuat,a.SoLuong,a.NuocSanXuat, a.Price, a.SoLuong * a.Price AS 'Tong' FROM `lap1_qlthuoc_phieuxuatnhap_chitiet` AS a, `lap1_qlthuoc_phieuxuatnhap` b WHERE a.IdPhieu = b.IdPhieu and a.XuatNhap = 1 and b.XuatNhap = 1 and a.IdThuoc = '$id' ORDER BY b.NgayNhap DESC";
+        $sql = "SELECT b.NgayNhap, a.IdThuoc,a.SoLo,a.NhaSanXuat,a.SoLuong,a.NuocSanXuat, a.Price, a.SoLuong * a.Price AS 'Tong' FROM `lap1_qlthuoc_phieuxuatnhap_chitiet` AS a, `lap1_qlthuoc_phieuxuatnhap` b WHERE a.IdPhieu = b.IdPhieu and a.XuatNhap = 1 and b.XuatNhap = 1 ORDER BY a.IdThuoc ASC";
         $result = $thongke->GetRows($sql);
         return $result;
     }

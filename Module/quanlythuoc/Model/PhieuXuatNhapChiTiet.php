@@ -204,7 +204,6 @@ class PhieuXuatNhapChiTiet extends \Model\DB implements \Model\IModelService
         return $this->SelectById($Id);
     }
 
-
     // Select option theo Name
     public static function CapChaTpOptions($dungTatCa = false)
     {
