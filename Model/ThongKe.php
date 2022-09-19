@@ -64,10 +64,10 @@ class ThongKe extends DB{
         return $result;
     }
 
-    public static function LichSuNhapById($id)
+    public static function LichSuNhapChiTiet()
     {
         $thongke = new ThongKe();
-        $sql = "SELECT b.NgayNhap, a.IdThuoc,a.SoLo,a.NhaSanXuat,a.SoLuong,a.NuocSanXuat, a.Price, a.SoLuong * a.Price AS 'Tong' FROM `lap1_qlthuoc_phieuxuatnhap_chitiet` AS a, `lap1_qlthuoc_phieuxuatnhap` b WHERE a.IdPhieu = b.IdPhieu and a.XuatNhap = 1 and b.XuatNhap = 1 and a.IdThuoc = '$id' ORDER BY b.NgayNhap DESC";
+        $sql = "SELECT b.NgayNhap, a.IdThuoc,a.SoLo,a.NhaSanXuat,a.SoLuong,a.NuocSanXuat, a.Price, a.SoLuong * a.Price AS 'Tong' FROM `lap1_qlthuoc_phieuxuatnhap_chitiet` AS a, `lap1_qlthuoc_phieuxuatnhap` b WHERE a.IdPhieu = b.IdPhieu and a.XuatNhap = 1 and b.XuatNhap = 1 ORDER BY a.IdThuoc ASC";
         $result = $thongke->GetRows($sql);
         return $result;
     }

@@ -1,6 +1,7 @@
 <?php
 
 namespace Controller;
+use PFBC\View;
 
 class backend extends \Application {
 
@@ -38,6 +39,11 @@ class backend extends \Application {
 
     function nhapkho() {
 
+        $this->View();
+    }
+
+    function dsnhapchitiet()
+    {
         $this->View();
     }
 
