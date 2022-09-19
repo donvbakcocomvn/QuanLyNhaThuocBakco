@@ -1,83 +1,85 @@
 <?php 
-$id = $this->getParams(0);
+use Model\Common;
+use Model\OptionsService;
+use Module\quanlythuoc\Model\PhieuXuatNhap;
+use Module\quanlythuoc\Model\PhieuXuatNhapChiTiet;
+$param = $_GET['id'];
+$phieu = new PhieuXuatNhap();
+$phieuNhap = $phieu->GetByIdPhieu($param);
+// var_dump($item);
 ?>
-
 <ol class="breadcrumb">
-    <li><a href="/backend/"><i class="fa fa-dashboard"></i>&nbsp; Dashboard</a></li>
-    <li><a href="/backend/nhapkho/"> Danh sách thuốc nhập kho</a></li>
-    <li class="active">Lịch sử nhập kho của thuốc <?php echo \Module\quanlythuoc\Model\SanPham::GetNameById($id);?></li>
+    <li><a href="/index.php?controller=backend">Dashboard</a></li>
+    <li><a href="/backend/nhapkho/"> Danh sách phiếu nhập kho</a></li>
+    <li> Thông Tin Chi Tiết Của Phiếu <?php echo $param?></li>
 </ol>
-<section class="content">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box box-success">
-                <div class="box-header">
-                    <h3 style="text-align: center;">Lịch sử nhập của thuốc <?php echo \Module\quanlythuoc\Model\SanPham::GetNameById($id);?></h3>
-                    <div class="box-tools">
-                        <a class="btn btn-success" href="/thongke/exportthuocsaphet">
-                            <i class="fa fa-filter"></i> Export</a>
-                    </div>
-                </div>
+<div class="container">
+    <div class="box box-primary">
+        <div class="box-header">
+            <h3 class="box-title">Thông Tin Chi Tiết Của Phiếu</h3>
+        </div>
+        <div class="box-body">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <table class="table ">
+                    <tr>
+                        <td class="text-right">Mã Phiếu</td>
+                        <td><?php echo $phieuNhap['IdPhieu']; ?></td>
+                    </tr>
 
-                <div class="box-body">
-                    <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-                        <div class="row">
-                            <div class="col-sm-6"></div>
-                            <div class="col-sm-6"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
-                                    <thead>
-                                        <tr role="row">
-                                            <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">STT</th>
-                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Ngày nhập</th>
-                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Số lượng</th>
-                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Nhà sản xuất</th>
-                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Số lô</th>
-                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Nước sản xuất</th>
-                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Giá nhập</th>
-                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Tổng giá</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
+                    <tr>
+                        <td class="text-right">Loại phiếu</td>
+                        <td><?php echo $phieu->XuatNhapViewThongKe($phieuNhap['XuatNhap']); ?></td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">Tổng tiền</td>
+                        <td><?php echo Common::ViewPrice($phieuNhap['TongTien']); ?></td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">Nội Dung</td>
+                        <td><?php echo $phieuNhap['NoiDungPhieu']; ?></td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">Ghi chú</td>
+                        <td><?php echo $phieuNhap['GhiChu']; ?></td>
+                    </tr>
+                </table>
+            </div>
 
-                                        use Model\Common;
-                                        use Model\Notions;
-                                        use Model\ThongKe;
-                                        use Module\quanlythuoc\Model\SanPham;
-                                        $index = 0;
-                                        // echo $id;
-                                        $thongke = ThongKe::LichSuNhapById($id);
-                                        // var_dump($thongke);
-                                        // $sp = new SanPham();
-                                        foreach ($thongke as $value) {?>
-                                        <?php
-                                        // $thuoc = $sp->GetById($value["IdThuoc"]);
-                                        ?>
-                                            <tr role="row" class="even">
-                                                <td class="sorting_1 text-center"><?php echo $index + 1 ?></td>
-                                                <td><?php echo Common::ForMatDMYHIS($value['NgayNhap']); ?></td>
-                                                <td><?php echo $value['SoLuong']; ?></td>
-                                                <td><?php echo $value['NhaSanXuat']; ?></td>
-                                                <td><?php echo $value['SoLo']; ?></td>
-                                                <td><?php echo $value['NuocSanXuat']; ?></td>
-                                                <td><?php echo Common::ViewPrice($value['Price']); ?></td>
-                                                <td><?php echo Common::ViewPrice($value['Tong']); ?></td>
-                                                
-                                            </tr>
-                                        <?php
-                                            $index++;
-                                        }
-                                        ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-md-12">
+            
+                <table class="table ">
+                    <tr>
+                        <th>Thuốc</th>
+                        <th>Số lượng</th>
+                        <th>Số Lô</th>
+                        <th>Hạn sử dụng</th> 
+                        <th>Giá</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                    <?php
+                    $phieuDetail = new PhieuXuatNhapChiTiet();
+                    $DSThuocPhieuNhap = $phieuDetail->GetByIdPhieu($param);
+                    // var_dump($DSThuocPhieuNhap);
+                    foreach ($DSThuocPhieuNhap as $key => $value) {
+                    ?>
+                        <tr>
+                            <td><?php echo $value['IdThuoc'] ?></td>
+                            <td><b><?php echo $value['SoLuong'] ?></b></td>
+                            <td><?php echo $value['SoLo'] ?></td>
+                            <td><?php echo Common::ForMatDMY($value['HanSuDung']) ?></td> 
+                            <td><b><?php echo Common::ViewPrice($value['Price']); ?></b></td>
+                            <td><b><?php echo Common::ViewPrice($value['SoLuong'] * $value['Price'])?></b></td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
+                    <tr> 
+                        <td colspan="5" class="text-right" > Tổng Tiền</td>
+                        <td><b><?php echo Common::ViewPrice($phieuNhap['TongTien']); ?></b></td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
-</section>
+</div>

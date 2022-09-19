@@ -108,40 +108,6 @@ class SanPham extends \Model\DB implements \Model\IModelService
         }
     }
 
-    // function DongBoThuocXuat()
-    // {
-    //     $thuocXuat = ThongKe::GetTongThuocXuatAndCode();
-    //     $tongThuoc = $this->GetAllThuoc();
-    //     foreach ($thuocXuat as $thuocXuat) {
-    //         // var_dump($thuocXuat);
-    //         foreach ($tongThuoc as $thuoc) {
-    //             var_dump($thuoc);
-    //             if ($thuocXuat['IdThuoc'] === $thuoc['Id']) {
-    //                 $a['Id'] = $thuoc['Id'];
-    //                 $a['SLXuat'] = $thuocXuat['Tong'];
-    //                 $sp = new SanPham();
-    //                 // $sp->Put($a);
-    //             }
-    //         }
-    //     }
-    // }
-
-    // function DongBoThuocTonKho()
-    // {
-    //     $tongThuoc = $this->GetAllThuoc();
-    //     // var_dump($tongThuoc);
-    //     foreach ($tongThuoc as $item) {
-    //         // var_dump($item);
-    //         $a['Id'] = $item['Id'];
-    //         $a['SLHienTai'] = $item['Soluong'] - $item['SLXuat'];
-    //         $a['Soluong'] = $item['SLHienTai'] + $item['SLNhap'];
-    //         $sp = new SanPham();
-    //         $sp->Put($a);
-    //     }
-    // }
-
-
-
     public function ThanhTien()
     {
         return intval($this->Soluong)  * floatval($this->Gianhap);

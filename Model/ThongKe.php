@@ -2,9 +2,25 @@
 
 namespace Model;
 class ThongKe extends DB{
+
+    public function GetDSPhieuXuatNhapExport($xuatnhap)
+    {
+        $sql = "SELECT `IdPhieu`,`DoViCungCap`, `NoiDungPhieu`, `NgayNhap`,`TongTien`,`GhiChu` FROM `lap1_qlthuoc_phieuxuatnhap` WHERE `XuatNhap` = '$xuatnhap' ORDER BY `NgayNhap` ASC;";
+        $result = $this->GetRows($sql);
+        return $result;
+    }
+
+    public static function GetDSPhieuNhap($xuatnhap)
+    {
+        $thongke = new ThongKe();
+        $sql = "SELECT * FROM `lap1_qlthuoc_phieuxuatnhap` WHERE `XuatNhap` = '$xuatnhap' ORDER BY `NgayNhap` ASC";
+        $result = $thongke->GetRows($sql);
+        return $result;
+    }
+
     public function GetSpCanhBao()
     {
-        $sql = "SELECT `Id`,`Name`, `Namebietduoc`, `Solo`, `Gianhap`, `Giaban`, `DVT`, `Ngaysx`, `HSD`, `Tacdung`, `Cochetacdung`, `Ghichu`, `Soluong`, `NhaSX`, `NuocSX`,`CachDung`, `Canhbao` FROM `lap1_qlthuoc_thuoc`WHERE `Soluong` < `Canhbao` ORDER BY `Name` ASC;";
+        $sql = "SELECT `Id`,`Name`, `Namebietduoc`, `Solo`, `Gianhap`, `Giaban`, `DVT`, `Ngaysx`, `HSD`, `Tacdung`, `Cochetacdung`, `Ghichu`, `Soluong`, `NhaSX`, `NuocSX`,`CachDung`, `Canhbao` FROM `lap1_qlthuoc_thuoc`WHERE `Soluong` < `Canhbao` ORDER BY `Name` ASC";
         $result = $this->GetRows($sql);
         return $result;
     }
@@ -16,28 +32,20 @@ class ThongKe extends DB{
         return $result;
     }
 
-    public static function GetSumXuat()
+    public static function GetSumSLPhieuXuat()
     {
         $thongke = new ThongKe();
-        $sql = "SELECT SUM(`SoLuong`) AS Tong FROM `lap1_qlthuoc_phieuxuatnhap_chitiet` WHERE `XuatNhap` = -1 AND `IsDelete` = 0;";
+        $sql = "SELECT COUNT(*) as 'TongRow' FROM `lap1_qlthuoc_phieuxuatnhap` WHERE `XuatNhap` = -1";
         $result = $thongke->GetRow($sql);
-        return $result['Tong'];
+        return $result['TongRow'];
     }
 
-    public static function GetSumNhap()
+    public static function GetSumSLPhieuNhap()
     {
         $thongke = new ThongKe();
-        $sql = "SELECT SUM(`SoLuong`) AS Tong FROM `lap1_qlthuoc_phieuxuatnhap_chitiet` WHERE `XuatNhap` = 1 AND `IsDelete` = 0;";
+        $sql = "SELECT COUNT(*) as 'TongRow' FROM `lap1_qlthuoc_phieuxuatnhap` WHERE `XuatNhap` = 1";
         $result = $thongke->GetRow($sql);
-        return $result['Tong'];
-    }
-
-    public static function GetSumSLTong()
-    {
-        $thongke = new ThongKe();
-        $sql = "SELECT SUM(`Soluong`) AS Tong FROM `lap1_qlthuoc_thuoc`;";
-        $result = $thongke->GetRow($sql);
-        return $result['Tong'];
+        return $result['TongRow'];
     }
 
     public static function TongNhapTheoThuoc()

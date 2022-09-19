@@ -50,6 +50,11 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
         }
     }
 
+    public function XuatNhapViewThongKe($xuatnhap)
+    {
+        return $xuatnhap == 1 ? "<span class='label-success'>Phiếu Nhập</span>" : "<span class='label-danger'>Phiếu Xuất</span>";
+    }
+
     public function PhieuChiTiet()
     {
         $phieuChiTiet = new PhieuXuatNhapChiTiet();
