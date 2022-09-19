@@ -162,6 +162,7 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
                 $Phieu["DoViCungCap"] = $itemForm["DoViCungCap"] ?? "";
                 $Phieu["IdPhieu"] = $itemForm["IdPhieu"];
                 $Phieu["XuatNhap"] = $itemForm["XuatNhap"];
+
                 $Phieu["NoiDungPhieu"] = $itemForm["NoiDungPhieu"];
                 $Phieu["GhiChu"] = $itemForm["GhiChu"];
                 $Phieu["NgayNhap"] = Date("Y-m-d", strtotime($itemForm["NgayNhap"]));
@@ -174,7 +175,7 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
                 $phieuXuatNhap->Post($Phieu);
 
                 foreach (ModelPhieuXuatNhap::DSThuocPhieuNhap() as $maphieu => $_phieu) {
-                    // var_dump($_phieu);
+                    var_dump($_phieu);
                     if ($_phieu) {
                         if (isset($_phieu["Id"]) == true) {
                             $itemFormDetail["IdPhieu"] = $itemForm["IdPhieu"];
@@ -195,7 +196,6 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
                         }
                     }
                 }
-
                 ModelPhieuXuatNhap::DeleteAllThuocPhieuNhap();
                 ModelPhieuXuatNhap::SetPostForm([]);
                 $phieu = new ModelPhieuXuatNhap($itemFormDetail["IdPhieu"]);

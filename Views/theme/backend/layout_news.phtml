@@ -11,7 +11,7 @@ use Views\theme\backend\Functions;
         ?>
 
     </head>
-    <body class="hold-transition skin-blue sidebar-mini">
+    <body class="hold-transition <?php echo $_COOKIE["sidebar-toggle"] ?? "" ?> skin-blue sidebar-mini">
         <div class="wrapper"> 
             <?php
             Functions::header();

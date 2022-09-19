@@ -243,7 +243,7 @@ class Functions
 
                     <?php
                     // ----------------------------
-                    if (\Model\Permission::CheckPremision([Permission::QLT_Thuoc_DS,Permission::QLT_DanhMuc_DS, Permission::QLT_Phieu_DS, User::Admin], []) == true) {
+                    if (\Model\Permission::CheckPremision([Permission::QLT_Thuoc_DS, Permission::QLT_DanhMuc_DS, Permission::QLT_Phieu_DS, User::Admin], []) == true) {
                     ?>
                         <li class="treeview <?php echo \Application::$_Module == "quanlythuoc" ? 'active' : '' ?>">
                             <a href="#">
@@ -252,15 +252,17 @@ class Functions
                             </a>
                             <ul class="treeview-menu">
                                 <?php
-                                if (\Model\Permission::CheckPremision([User::Admin,User::QuanLy, Permission::QLT_Thuoc_Post,Permission::QLT_Thuoc_Put,Permission::QLT_Thuoc_Delete,Permission::QLT_Thuoc_DS,Permission::QLT_Thuoc_Detail,
-                                Permission::QLT_Thuoc_Export,Permission::QLT_Thuoc_Import], []) == true) {
+                                if (\Model\Permission::CheckPremision([
+                                    User::Admin, User::QuanLy, Permission::QLT_Thuoc_Post, Permission::QLT_Thuoc_Put, Permission::QLT_Thuoc_Delete, Permission::QLT_Thuoc_DS, Permission::QLT_Thuoc_Detail,
+                                    Permission::QLT_Thuoc_Export, Permission::QLT_Thuoc_Import
+                                ], []) == true) {
                                 ?>
                                     <li><a href="/quanlythuoc/sanpham/"><i class="fa fa-circle-o"></i>
                                             Thuốc
                                         </a></li>
                                 <?php  } ?>
                                 <?php
-                                if (\Model\Permission::CheckPremision([User::Admin, User::QuanLy, Permission::QLT_DanhMuc_Post,Permission::QLT_DanhMuc_Put, Permission::QLT_DanhMuc_Delete,Permission::QLT_DanhMuc_DS] , []) == true) {
+                                if (\Model\Permission::CheckPremision([User::Admin, User::QuanLy, Permission::QLT_DanhMuc_Post, Permission::QLT_DanhMuc_Put, Permission::QLT_DanhMuc_Delete, Permission::QLT_DanhMuc_DS], []) == true) {
                                 ?>
                                     <li><a href="/quanlythuoc/danhmuc/"><i class="fa fa-circle-o"></i>
                                             Danh Mục Thuốc
@@ -269,7 +271,7 @@ class Functions
                                 <?php  } ?>
 
                                 <?php
-                                if (\Model\Permission::CheckPremision([User::Admin,User::QuanLy,  Permission::QLT_Phieu_Post, Permission::QLT_Phieu_Put, Permission::QLT_Phieu_Delete, Permission::QLT_Phieu_DS, Permission::QLT_Phieu_Detail] , []) == true) {
+                                if (\Model\Permission::CheckPremision([User::Admin, User::QuanLy,  Permission::QLT_Phieu_Post, Permission::QLT_Phieu_Put, Permission::QLT_Phieu_Delete, Permission::QLT_Phieu_DS, Permission::QLT_Phieu_Detail], []) == true) {
                                 ?>
                                     <li><a href="/quanlythuoc/phieuxuatnhap/"><i class="fa fa-circle-o"></i>
                                             Xuất/Nhập Thuốc
@@ -281,7 +283,7 @@ class Functions
                     }
 
                     // ----------------------------
-                    if (\Model\Permission::CheckPremision([User::QuanLy, User::Admin, BenhnhanPermission::QLT_BenhNhan_DS,BenhnhanPermission::QLT_BenhNhan_Post, BenhnhanPermission::QLT_BenhNhan_Delete, BenhnhanPermission::QLT_BenhNhan_Put,BenhnhanPermission::QLT_BenhNhan_Detail], []) == true) {
+                    if (\Model\Permission::CheckPremision([User::QuanLy, User::Admin, BenhnhanPermission::QLT_BenhNhan_DS, BenhnhanPermission::QLT_BenhNhan_Post, BenhnhanPermission::QLT_BenhNhan_Delete, BenhnhanPermission::QLT_BenhNhan_Put, BenhnhanPermission::QLT_BenhNhan_Detail], []) == true) {
                     ?>
                         <li class="<?php echo \Application::$_Module == "khachhang" ? 'active' : '' ?>">
                             <a href="/benhnhan/">
@@ -293,8 +295,10 @@ class Functions
                     <?php
                     }
 
-                    if (\Model\Permission::CheckPremision([User::QuanLy, User::Admin, DonthuocPermission::QLT_DonThuoc_DS,DonthuocPermission::QLT_DonThuoc_Post,
-                    DonthuocPermission::QLT_DonThuoc_Put,DonthuocPermission::QLT_DonThuoc_Detail,DonthuocPermission::QLT_DonThuoc_Delete,DonthuocPermission::QLT_DonThuoc_Export,DonthuocPermission::QLT_DonThuoc_Copy], []) == true) {
+                    if (\Model\Permission::CheckPremision([
+                        User::QuanLy, User::Admin, DonthuocPermission::QLT_DonThuoc_DS, DonthuocPermission::QLT_DonThuoc_Post,
+                        DonthuocPermission::QLT_DonThuoc_Put, DonthuocPermission::QLT_DonThuoc_Detail, DonthuocPermission::QLT_DonThuoc_Delete, DonthuocPermission::QLT_DonThuoc_Export, DonthuocPermission::QLT_DonThuoc_Copy
+                    ], []) == true) {
                     ?>
                         <li class="<?php echo \Application::$_Module == "khachhang" ? 'active' : '' ?>">
                             <a href="/donthuoc/">
@@ -330,7 +334,7 @@ class Functions
                     // \Module\congty\Functions::menulayout(\Application::$_Module);
                     // \Module\baocao\Functions::menulayout(\Application::$_Module);
 
-                    if (\Model\Permission::CheckPremision([\Model\User::Admin,\Model\User::QuanLy, md5(\Controller\quanlyquyen::class . "_view")]) == true) {
+                    if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, md5(\Controller\quanlyquyen::class . "_view")]) == true) {
                     ?>
                         <li class="<?php echo \Application::$_Controller == "quanlyquyen" ? 'active' : '' ?> treeview">
                             <a href="/quanlyquyen/">
@@ -343,7 +347,7 @@ class Functions
                     <?php
                     // \Module\giaodien\Functions::menulayout(\Application::$_Module);
 
-                    if (\Model\Permission::CheckPremision([\Model\User::Admin,\Model\User::QuanLy, md5(\Controller\quanlyusers::class . "_view")]) == true) {
+                    if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, md5(\Controller\quanlyusers::class . "_view")]) == true) {
                     ?>
                         <li class="<?php echo \Application::$_Controller == "quanlyusers" ? 'active' : '' ?> treeview">
                             <a href="/quanlyusers/">

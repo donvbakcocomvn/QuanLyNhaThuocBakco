@@ -1,3 +1,25 @@
+function setCookie(cname, cvalue, exdays) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    let expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
 const LoadDanhSachHuyen = function (maTinh, idTarget) {
     $.ajax({
         type: "get",
@@ -54,7 +76,6 @@ $(function () {
     }
     try {
 
-
         $(".editor").each(function (index, el) {
             CKEDITOR.replace($(this).attr("id"), {
                 height: "300px"
@@ -96,15 +117,14 @@ $(function () {
 
     }
     try {
-        var miniMenu = window.localStorage.getItem("sidebar-toggle");
-        if (miniMenu) {
-            $("body").addClass(miniMenu);
-        }
+        // console.log(getCookie("sidebar-toggle"));
+
         $(".sidebar-toggle").click(function () {
+            var miniMenu = getCookie("sidebar-toggle"); 
             if ($("body").hasClass("sidebar-collapse")) {
-                window.localStorage.setItem("sidebar-toggle", "sidebar-collapse");
+                setCookie("sidebar-toggle", "sidebar-collapse", 30);
             } else {
-                window.localStorage.setItem("sidebar-toggle", "");
+                setCookie("sidebar-toggle", "", -1);
             }
         });
     } catch (e) {
