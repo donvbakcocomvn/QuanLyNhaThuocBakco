@@ -3,6 +3,25 @@
 namespace Model;
 class ThongKe extends DB{
 
+    public function GetItems($params, $indexPage, $pageNumber, &$total)
+    {
+        $name = isset($params["keyword"]) ? $params["keyword"] : '';
+        $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
+        $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
+        $isShowSql = "and `isShow` >= 0 ";
+        $danhmucSql = "";
+
+        if ($isShow) {
+            $isShowSql = "and `isShow` = '{$isShow}' ";
+        }
+        if ($danhmuc) {
+            $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
+        }
+
+        $where = " `Id` like '%{$name}%' or `IdBenhNhan` like '%{$name}%' or `NameBN` like '%{$name}%' {$danhmucSql} ";
+        return $this->SelectPT($where, $indexPage, $pageNumber, $total);
+    }
+
     public function GetDSPhieuXuatNhapExport($xuatnhap)
     {
         $sql = "SELECT `IdPhieu`,`DoViCungCap`, `NoiDungPhieu`, `NgayNhap`,`TongTien`,`GhiChu` FROM `lap1_qlthuoc_phieuxuatnhap` WHERE `XuatNhap` = '$xuatnhap' ORDER BY `NgayNhap` ASC;";
@@ -64,10 +83,10 @@ class ThongKe extends DB{
         return $result;
     }
 
-    public static function LichSuNhapChiTiet()
+    public static function LichSuNhapXuatChiTiet($value)
     {
         $thongke = new ThongKe();
-        $sql = "SELECT b.NgayNhap, a.IdThuoc,a.SoLo,a.NhaSanXuat,a.SoLuong,a.NuocSanXuat, a.Price, a.SoLuong * a.Price AS 'Tong' FROM `lap1_qlthuoc_phieuxuatnhap_chitiet` AS a, `lap1_qlthuoc_phieuxuatnhap` b WHERE a.IdPhieu = b.IdPhieu and a.XuatNhap = 1 and b.XuatNhap = 1 ORDER BY a.IdThuoc ASC";
+        $sql = "SELECT b.NgayNhap, a.IdThuoc,a.SoLo,a.NhaSanXuat,a.SoLuong,a.NuocSanXuat, a.Price, a.SoLuong * a.Price AS 'Tong' FROM `lap1_qlthuoc_phieuxuatnhap_chitiet` AS a, `lap1_qlthuoc_phieuxuatnhap` b WHERE a.IdPhieu = b.IdPhieu and a.XuatNhap = $value and b.XuatNhap = $value ORDER BY a.IdThuoc ASC";
         $result = $thongke->GetRows($sql);
         return $result;
     }

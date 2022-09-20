@@ -1,6 +1,8 @@
 <?php
 
 namespace Controller;
+
+use Model\ThongKe;
 use PFBC\View;
 
 class backend extends \Application {
@@ -44,8 +46,30 @@ class backend extends \Application {
 
     function dsnhapchitiet()
     {
+        $modelItem = new ThongKe();
+        $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
+        $params["danhmuc"] = isset($_REQUEST["danhmuc"]) ? \Model\Common::TextInput($_REQUEST["danhmuc"]) : "";
+        $params["isShow"] = isset($_REQUEST["isShow"]) ? \Model\Common::TextInput($_REQUEST["isShow"]) : "";
+        $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
+        $indexPage = max(1, $indexPage);
+        $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;
+        $pageNumber = max(1, $pageNumber);
+        $total = 0;
+        $DanhSachTaiKhoan = $modelItem->GetItems($params, $indexPage, $pageNumber, $total);
+        $data["items"] = $DanhSachTaiKhoan;
+        $data["indexPage"] = $indexPage;
+        $data["pageNumber"] = $pageNumber;
+        $data["params"] = $params;
+        $data["total"] = $total;
+        // var_dump($data["items"]);
+        $this->View($data);
+    }
+
+    function dsxuatchitiet()
+    {
         $this->View();
     }
+    
 
     function xuatkho() {
 

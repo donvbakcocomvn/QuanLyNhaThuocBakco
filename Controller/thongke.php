@@ -29,6 +29,50 @@ class thongke extends \Application
         $this->View();
     }
 
+    function ExportLichSuNhap()
+    {
+        $thongke = new \Model\ThongKe();
+        $sp = new SanPham();
+        $item = $thongke->LichSuNhapXuatChiTiet(1);
+        var_dump($item);
+        $data[] = [
+            "Ngày nhập", "Tên thuốc", "Số lô", "Nhà sản xuất", "Số lượng", "Nước sản xuất","Giá nhập","Tổng giá nhập" 
+        ];
+        if ($item) {
+            foreach ($item as $row) {
+                $row["NgayNhap"] = Common::ForMatDMYHIS($row["NgayNhap"]);
+                $row["IdThuoc"] = $sp->GetNameById($row["IdThuoc"]);
+                $row["SoLuong"] = Common::ViewNumber($row["SoLuong"]);
+                $row["Price"] = Common::ViewPrice($row["Price"]);
+                $row["Tong"] = Common::ViewPrice($row["Tong"]);
+                $data[] = $row;
+            }
+            \Module\quanlythuoc\Model\SanPham::ExportBangKe($data, "public/thongke/ExportLichSuNhap.xlsx");
+        }
+    }
+
+    function ExportLichSuXuat()
+    {
+        $thongke = new \Model\ThongKe();
+        $sp = new SanPham();
+        $item = $thongke->LichSuNhapXuatChiTiet(-1);
+        var_dump($item);
+        $data[] = [
+            "Ngày nhập", "Tên thuốc", "Số lô", "Nhà sản xuất", "Số lượng", "Nước sản xuất","Giá nhập","Tổng giá nhập" 
+        ];
+        if ($item) {
+            foreach ($item as $row) {
+                $row["NgayNhap"] = Common::ForMatDMYHIS($row["NgayNhap"]);
+                $row["IdThuoc"] = $sp->GetNameById($row["IdThuoc"]);
+                $row["SoLuong"] = Common::ViewNumber($row["SoLuong"]);
+                $row["Price"] = Common::ViewPrice($row["Price"]);
+                $row["Tong"] = Common::ViewPrice($row["Tong"]);
+                $data[] = $row;
+            }
+            \Module\quanlythuoc\Model\SanPham::ExportBangKe($data, "public/thongke/ExportLichSuXuat.xlsx");
+        }
+    }
+
     function exportthuocsaphet()
     {
         $thongke = new \Model\ThongKe();
@@ -76,6 +120,8 @@ class thongke extends \Application
             \Module\quanlythuoc\Model\SanPham::ExportBangKe($data, "public/thongke/ExportDSPhieuXuat.xlsx");
         }
     }
+
+    
 
     function ExportDSPhieuNhap()
     {

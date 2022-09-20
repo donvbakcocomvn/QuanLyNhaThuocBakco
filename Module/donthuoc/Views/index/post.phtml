@@ -11,6 +11,7 @@ use Module\donthuoc\Model\btnHtml;
 use Module\donthuoc\Model\DonThuoc\FormDonThuoc;
 use Module\donthuoc\Model\DonThuocDetail;
 use Module\quanlythuoc\Model\SanPham;
+
 $roleDetail = new Model\Role();
 ?>
 <div class="container-fluid">
@@ -50,6 +51,7 @@ $roleDetail = new Model\Role();
                         <tr>
                             <th>STT</th>
                             <th>Tên Thuốc</th>
+                            <th>Số lượng còn</th>
                             <th>Số Ngày Dùng</th>
                             <th>Cách Dùng</th>
                             <th>Đơn Vị Tính</th>
@@ -65,7 +67,7 @@ $roleDetail = new Model\Role();
                         <?php
                         // var_dump(DonThuocDetail::DsThuoc());
                         $i = 0;
-                        foreach (DonThuocDetail::DsThuoc() as $mathuoc => $thuoc) { 
+                        foreach (DonThuocDetail::DsThuoc() as $mathuoc => $thuoc) {
                             $sanPham = new SanPham($thuoc["Id"] ?? null);
                             // var_dump($sanPham);
                         ?>
@@ -75,9 +77,13 @@ $roleDetail = new Model\Role();
                                         <?php echo $i + 1; ?>
                                     </div>
                                 </th>
-                                <th style="width:250px;">
+                                <th style="width: 250px;">
                                     <?php
-                                    echo $form->Name($thuoc["Id"] ?? "", "donthuoc" . $i, $i)->renderHTML() ?>
+                                    echo $form->Name($thuoc["Id"] ?? "", "donthuoc" . $i, $i)->renderHTML();
+                                    ?>
+                                </th>
+                                <th>
+                                    <input type="text" value="ahsdjksa" class="form-control">
                                 </th>
                                 <th style="width:120px;">
                                     <?php echo $form->SoNgaySDThuoc($thuoc["SoNgaySDThuoc"] ?? "", "SoNgaySD" . $i, $i)->render(); ?>
@@ -128,7 +134,7 @@ $roleDetail = new Model\Role();
                                 var idName = "#" + $(this).attr("id");
                                 var idDVT = "#dvt" + $("#" + $(this).attr("id")).attr("index");
                                 var index = $("#" + $(this).attr("id")).attr("index");
-                                var idThuoc = $(idName).val();  
+                                var idThuoc = $(idName).val();
                                 var idSoNgaySD = "#SoNgaySD" + $("#" + $(this).attr("id")).attr("index");
                                 var idSang = "#sang" + $("#" + $(this).attr("id")).attr("index");
                                 var idTrua = "#trua" + $("#" + $(this).attr("id")).attr("index");
