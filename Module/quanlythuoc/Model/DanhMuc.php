@@ -1,6 +1,7 @@
 <?php
 
 namespace Module\quanlythuoc\Model;
+use Model\Common;
 
 class DanhMuc extends \Model\DB implements \Model\IModelService
 {
@@ -29,6 +30,17 @@ class DanhMuc extends \Model\DB implements \Model\IModelService
         }
     }
 
+    static function CreatId()
+    {
+        $dm = new DanhMuc();
+        $sql = " SELECT COUNT(*) AS `Tong` FROM `lap1_qlthuoc_danhmuc`";
+        $result = $dm->GetRow($sql);
+        $tong = $result["Tong"] + 1;
+        $Id = Common::NumberToStringFomatZero($tong, 3);
+        $IdCreate = "DMT". "-" . $Id;
+        return $IdCreate;
+    }
+
     // Lấy Name danh mục by Id (1 dòng)
     public static function GetNameById($id)
     {
@@ -37,6 +49,14 @@ class DanhMuc extends \Model\DB implements \Model\IModelService
         $result = $dm->GetRow($sql);
         return $result["Name"];
     }
+    public static function GetIdByName($name)
+    {
+        $dm = new DanhMuc();
+        $sql = "SELECT `Id` FROM `lap1_qlthuoc_danhmuc` WHERE `Name` = '$name'";
+        $result = $dm->GetRow($sql);
+        return $result['Id'];
+    }
+
 
     public function GetItems($params, $indexPage, $pageNumber, &$total)
     {

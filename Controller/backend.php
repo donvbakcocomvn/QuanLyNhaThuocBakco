@@ -39,6 +39,11 @@ class backend extends \Application {
         $this->View();
     }
 
+    // function livesearch()
+    // {
+
+    // }
+
     function nhapkho() {
 
         $this->View();

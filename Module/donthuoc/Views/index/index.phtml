@@ -28,19 +28,20 @@
                     use Module\donthuoc\Model\DonThuoc;
                     Module\donthuoc\Model\btnHtml::btnThemDonThuoc();
                     ?> 
-                    <a class="btn btn-primary" data-toggle="modal" target="_self" href='#modal-id'>Hướng dẫn</a>
+                    <a class="btn btn-warning" target="_self" data-toggle="modal" href='#modal-id'>
+                        <i class="fa fa-info" aria-hidden="true"></i>
+                    </a>
                     <div class="modal fade" id="modal-id">
-                        <div class="modal-dialog">
+                        <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-body">
                                     <?php
-                                    $link = 'huongdansudung';
-                                    $path = "public/huongdan/huongdansudung.html";
-                                    echo file_get_contents($path);
+                                    if (file_exists("public\huongdan\huongdandonthuoc.html"))
+                                        echo file_get_contents("public\huongdan\huongdandonthuoc.html");
                                     ?>
                                 </div>
                                 <div class="modal-footer">
-                                    <a href="<?php echo "/huongdan/put/huongdansudung"?>" type="button" class="btn btn-success">Sửa File</a>
+                                    <a class="btn btn-success" href="/huongdan/huongdandonthuoc/huongdandonthuoc">Sửa hướng dẫn thêm thuốc</a>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng lại</button>
                                 </div>
                             </div>

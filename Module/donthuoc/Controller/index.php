@@ -152,26 +152,26 @@ class index extends \Application implements \Controller\IControllerBE
                     $sp = new SanPham();
                     if (isset($thuoc["Id"]) == true) {
                         $idThuoc = $thuoc["Id"];
-                        $spThuoc = $sp->GetById($idThuoc);
-                        $SoLuongDB = $spThuoc['Soluong'];
-                        if ($SoLuongDB < $thuoc["Soluong"]) {
-                            echo "<script>alert('Thuốc trong kho không đủ');</script>";
-                        } else {
-                            $itemDetail["IdDetail"] = DonThuocDetail::CreatIdDetail();
-                            $itemDetail["IdDonThuoc"] = $item["Id"];
-                            $itemDetail["IdThuoc"] = $idThuoc;
-                            $itemDetail["SoNgaySDThuoc"] = $thuoc["SoNgaySDThuoc"];
-                            $itemDetail["DVT"] = $thuoc["DVTTitle"];
-                            $itemDetail["SoLuong"] = $thuoc["Soluong"];
-                            $itemDetail["CachDung"] = $sp->GetCDTById($thuoc["Id"]);
-                            $itemDetail["Sang"] = $thuoc["Sang"];
-                            $itemDetail["Trua"] = $thuoc["Trua"];
-                            $itemDetail["Chieu"] = $thuoc["Chieu"];
-                            $itemDetail["GiaBan"] = $thuoc["Giaban"];
-                            $itemDetail["GhiChu"] = $thuoc["Ghichu"] ?? "";
-                            $detail = new DonThuocDetail();
-                        }
+                        // $spThuoc = $sp->GetById($idThuoc);
+                        // $SoLuongDB = $spThuoc['Soluong'];
+                        // if ($SoLuongDB < $thuoc["Soluong"]) {
+                        //     echo "<script>alert('Thuốc trong kho không đủ');</script>";
+                        // } else {
 
+                        // }
+                        $itemDetail["IdDetail"] = DonThuocDetail::CreatIdDetail();
+                        $itemDetail["IdDonThuoc"] = $item["Id"];
+                        $itemDetail["IdThuoc"] = $idThuoc;
+                        $itemDetail["SoNgaySDThuoc"] = $thuoc["SoNgaySDThuoc"];
+                        $itemDetail["DVT"] = $thuoc["DVTTitle"];
+                        $itemDetail["SoLuong"] = $thuoc["Soluong"];
+                        $itemDetail["CachDung"] = $sp->GetCDTById($thuoc["Id"]);
+                        $itemDetail["Sang"] = $thuoc["Sang"];
+                        $itemDetail["Trua"] = $thuoc["Trua"];
+                        $itemDetail["Chieu"] = $thuoc["Chieu"];
+                        $itemDetail["GiaBan"] = $thuoc["Giaban"];
+                        $itemDetail["GhiChu"] = $thuoc["Ghichu"] ?? "";
+                        $detail = new DonThuocDetail();
                         $detail->Post($itemDetail);
                         // var_dump($thuoc);
                     }

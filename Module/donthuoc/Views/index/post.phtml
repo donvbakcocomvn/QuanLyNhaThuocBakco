@@ -18,9 +18,79 @@ $roleDetail = new Model\Role();
     <div class="box box-primary">
         <div class="box-header">
             <h3 class="box-title">Thêm Toa Thuốc</h3>
+            <div class="box-tools">
+                <a class="btn btn-warning" target="_self" data-toggle="modal" href='#modal-id'>
+                    <i class="fa fa-info" aria-hidden="true"></i>
+                </a>
+                <div class="modal fade" id="modal-id">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <?php
+                                if (file_exists("public\huongdan\huongdandonthuoc.html"))
+                                    echo file_get_contents("public\huongdan\huongdandonthuoc.html");
+                                ?>
+                            </div>
+                            <div class="modal-footer">
+                                <a class="btn btn-success" href="/huongdan/huongdandonthuoc/huongdandonthuoc">Sửa hướng dẫn thêm thuốc</a>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng lại</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="box-body">
             <form action="" method="post" enctype="multipart/form-data">
+                <form action="" method="post" enctype="multipart/form-data">
+                    <div class="box-body">
+                        <?php
+                        $bn = new FormBenhNhan();
+                        $benhnhan = new BenhNhan();
+                        ?>
+                        <div class="">
+                            <div class="col-md-4">
+                                <?php $bn->Id($benhnhan->CreatId())->renderHTML(); ?>
+                            </div>
+                            <div class="col-md-4">
+                                <?php $bn->Name()->renderHTML();  ?>
+                            </div>
+                            <div class="col-md-4">
+                                <?php $bn->Gioitinh()->renderHtml();  ?>
+                            </div>
+                            <div class="col-md-4">
+                                <?php $bn->Ngaysinh()->renderHtml();  ?>
+                            </div>
+                            <div class="col-md-4">
+                                <?php $bn->CMND()->renderHtml();  ?>
+                            </div>
+                            <div class="col-md-4">
+                                <?php $bn->Phone()->renderHtml();  ?>
+                            </div>
+                            <div class="col-md-12">
+                                <?php $bn->Address()->renderHtml();  ?>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for="">Tỉnh</label>
+                                <select id="tinhThanh" name="BenhNhan[TinhThanh]" class="form-control"></select>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for="">Huyện</label>
+                                <select id="quanHuyen" name="BenhNhan[QuanHuyen]" class="form-control"> </select>
+
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for="">Xã</label>
+                                <select id="phuongXa" name="BenhNhan[PhuongXa]" class="form-control"> </select>
+                            </div>
+                            <div class="col-md-12 ">
+                                <button class="btn btn-warning" type="reset">Làm Lại</button>
+                                <!-- <button class="btn btn-success">Lưu</button> -->
+                                <button class="btn btn-success" name="LuuThoat">Thêm Mới</button>
+                            </div>
+                        </div>
+                </form>
+
                 <?php
                 $form = new FormDonThuoc();
                 ?>

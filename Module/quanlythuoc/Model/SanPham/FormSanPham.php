@@ -6,15 +6,13 @@ use PFBC\Element;
 use Model\FormRender;
 use Model\OptionsService;
 use Model\Notions;
+use PFBC\Element\Color;
 
 class FormSanPham implements iFormSanPham {
 
     static $properties = ["class" => "form-control"];
     static $ElementsName = "SanPham";
 
-    public function __construct() {
-        
-    }
 
 	/**
 	 *
@@ -27,6 +25,7 @@ class FormSanPham implements iFormSanPham {
         // return new FormRender(new Element\Hidden($name, $val));
 		$properties = self::$properties;
         $properties["value"] = $val;
+        $properties[FormRender::Readonly] = "true";
         // $properties[FormRender::Required] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
         return new FormRender(new Element\Textbox("Mã Thuốc", $name,$properties));
@@ -41,10 +40,12 @@ class FormSanPham implements iFormSanPham {
 	function Idloaithuoc($val = null) {
 		// $dm = new ModelDanhMuc();
 		$properties = self::$properties;
-        $properties["value"] = $val;
+        $properties["value"] = $val ;
+		$properties["class"] = "select2 form-control";
         $properties[FormRender::Required] = "true";
-		$option = array("0" => null);
-		$option += \Module\quanlythuoc\Model\DanhMuc::CapChaTpOptions();
+		$option = \Module\quanlythuoc\Model\DanhMuc::CapChaTpOptions();
+		$option1 =  ["" => "--- Chọn danh mục thuốc ---"];
+		$option = $option1 + $option;
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
         return new FormRender(new Element\Select("Thuộc Danh Mục", $name, $option,$properties));
 	}
@@ -128,18 +129,24 @@ class FormSanPham implements iFormSanPham {
 	function DVT($val = null) {
 		$properties = self::$properties;
         $properties["value"] = $val;
+		$properties["class"] = "select2 form-control  ";
         // $properties[FormRender::Required] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
 		$option = OptionsService::GetGroupsToSelect("donvitinh");
+		$option1 =  ["" => "--- Đơn vị tính ---"];
+		$option = $option1 + $option;
         return new FormRender(new Element\Select("Đơn vị tính", $name,$option ,$properties));
 	}
 
 	function DVQuyDoi($val = null) {
 		$properties = self::$properties;
         $properties["value"] = $val;
+		$properties["class"] = "select2 form-control  ";
         // $properties[FormRender::Required] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
 		$option = OptionsService::GetGroupsToSelect("donviquydoi");
+		$option1 =  ["" => "--- Đơn vị quy đổi ---"];
+		$option = $option1 + $option;
         return new FormRender(new Element\Select("Đơn vị quy đổi", $name,$option ,$properties));
 	}
 	
@@ -241,10 +248,10 @@ class FormSanPham implements iFormSanPham {
 		$properties = self::$properties;
         $properties["value"] = $val;
 		$properties["class"] = "select2 form-control  ";
-
         // $properties[FormRender::Required] = "true";
-		$options = array("0" => null);
-		$options += Notions::GetToOptions();
+		$option = Notions::GetToOptions();
+		$option1 =  ["" => "--- Chọn nước sản xuất ---"];
+		$options = $option1 + $option;
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
         return new FormRender(new Element\Select("Nước Sản Xuất", $name,$options, $properties));
 	}
@@ -286,10 +293,12 @@ class FormSanPham implements iFormSanPham {
 	function CachDung($val = null) {
 		$properties = self::$properties;
         $properties["value"] = $val;
+		$properties["class"] = "select2 form-control  ";
         $properties[FormRender::Required] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-		$option = array("0" => null);
-		$option += OptionsService::GetGroupsToSelect("cachdungthuoc");
+		$option = OptionsService::GetGroupsToSelect("cachdungthuoc");
+		$option1 =  ["" => "--- Chọn cách dùng thuốc ---"];
+		$option = $option1 + $option;
         return new FormRender(new Element\Select("Cách Dùng Thuốc", $name,$option ,$properties));
 	}
 	/**

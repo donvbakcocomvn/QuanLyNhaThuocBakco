@@ -21,11 +21,27 @@ $roleDetail = new Model\Role();
     <div class="box box-primary">
         <div class="box-header">
             <h3 class="box-title">Thêm Phiếu</h3>
-            <!-- <div class="box-tools">
-                <?php
-                Module\quanlythuoc\Model\btnHtml::btnViewDanhMuc();
-                ?>
-            </div> -->
+            <div class="box-tools">
+                <a class="btn btn-warning" target="_self" data-toggle="modal" href='#modal-id'>
+                        <i class="fa fa-info" aria-hidden="true"></i>
+                    </a>
+                    <div class="modal fade" id="modal-id">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <?php
+                                    if (file_exists("public\huongdan\huongdanphieu.html"))
+                                        echo file_get_contents("public\huongdan\huongdanphieu.html");
+                                    ?>
+                                </div>
+                                <div class="modal-footer">
+                                    <a class="btn btn-success" href="/huongdan/huongdanphieu/huongdanphieu">Sửa file hướng dẫn phiếu</a>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng lại</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
         </div>
         <form action="" method="post" onsubmit="return confirm('Bạn có chắc thông tin đã nhập chính xác?')" enctype="multipart/form-data">
             <div class="box-body">

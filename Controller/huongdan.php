@@ -25,6 +25,11 @@ class huongdan extends \Application implements IControllerBE
     {
     }
 
+    function put()
+    {
+        
+    }
+
     /**
      *
      * @return mixed
@@ -37,7 +42,7 @@ class huongdan extends \Application implements IControllerBE
      *
      * @return mixed
      */
-    function put()
+    function huongdanthuoc()
     {
         \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy]);
         try {
@@ -48,7 +53,7 @@ class huongdan extends \Application implements IControllerBE
                 $path = "public/huongdan/{$id}.html";
                 file_put_contents($path, $content, FILE_USE_INCLUDE_PATH);
                 new \Model\Error(\Model\Error::success, "Đã sửa nội dung thành công");
-                \Model\Common::ToUrl("/huongdan/put/{$id}");
+                \Model\Common::ToUrl("/huongdan/huongdanthuoc/{$id}");
                 exit();
             }
         } catch (\Exception $exc) {
@@ -60,6 +65,86 @@ class huongdan extends \Application implements IControllerBE
         // $DM = new ModelBenhNhan();
         // $data["data"] = $DM->GetById($id);
         // $this->View($data);
+        $this->View($id = ['id']);
+    }
+
+    function huongdandanhmuc()
+    {
+        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy]);
+        try {
+            if (\Model\Request::Post(FormHuongDan::$FormName, null)) {
+                $itemHtml = \Model\Request::Post(FormHuongDan::$FormName, null);
+                $content = $itemHtml['Content']; // Content trong form
+                $id = $this->getParams(0); // Get link đường dẫn
+                $path = "public/huongdan/{$id}.html";
+                file_put_contents($path, $content, FILE_USE_INCLUDE_PATH);
+                new \Model\Error(\Model\Error::success, "Đã sửa nội dung thành công");
+                \Model\Common::ToUrl("/huongdan/huongdandanhmuc/{$id}");
+                exit();
+            }
+        } catch (\Exception $exc) {
+            echo $exc->getMessage();
+        }
+        $this->View($id = ['id']);
+    }
+
+    function huongdanphieu()
+    {
+        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy]);
+        try {
+            if (\Model\Request::Post(FormHuongDan::$FormName, null)) {
+                $itemHtml = \Model\Request::Post(FormHuongDan::$FormName, null);
+                $content = $itemHtml['Content']; // Content trong form
+                $id = $this->getParams(0); // Get link đường dẫn
+                $path = "public/huongdan/{$id}.html";
+                file_put_contents($path, $content, FILE_USE_INCLUDE_PATH);
+                new \Model\Error(\Model\Error::success, "Đã sửa nội dung thành công");
+                \Model\Common::ToUrl("/huongdan/huongdanphieu/{$id}");
+                exit();
+            }
+        } catch (\Exception $exc) {
+            echo $exc->getMessage();
+        }
+        $this->View($id = ['id']);
+    }
+
+    function huongdanbenhnhan()
+    {
+        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy]);
+        try {
+            if (\Model\Request::Post(FormHuongDan::$FormName, null)) {
+                $itemHtml = \Model\Request::Post(FormHuongDan::$FormName, null);
+                $content = $itemHtml['Content']; // Content trong form
+                $id = $this->getParams(0); // Get link đường dẫn
+                $path = "public/huongdan/{$id}.html";
+                file_put_contents($path, $content, FILE_USE_INCLUDE_PATH);
+                new \Model\Error(\Model\Error::success, "Đã sửa nội dung thành công");
+                \Model\Common::ToUrl("/huongdan/huongdanbenhnhan/{$id}");
+                exit();
+            }
+        } catch (\Exception $exc) {
+            echo $exc->getMessage();
+        }
+        $this->View($id = ['id']);
+    }
+
+    function huongdandonthuoc()
+    {
+        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy]);
+        try {
+            if (\Model\Request::Post(FormHuongDan::$FormName, null)) {
+                $itemHtml = \Model\Request::Post(FormHuongDan::$FormName, null);
+                $content = $itemHtml['Content']; // Content trong form
+                $id = $this->getParams(0); // Get link đường dẫn
+                $path = "public/huongdan/{$id}.html";
+                file_put_contents($path, $content, FILE_USE_INCLUDE_PATH);
+                new \Model\Error(\Model\Error::success, "Đã sửa nội dung thành công");
+                \Model\Common::ToUrl("/huongdan/huongdandonthuoc/{$id}");
+                exit();
+            }
+        } catch (\Exception $exc) {
+            echo $exc->getMessage();
+        }
         $this->View($id = ['id']);
     }
 

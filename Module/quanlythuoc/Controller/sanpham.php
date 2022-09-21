@@ -4,10 +4,12 @@ namespace Module\quanlythuoc\Controller;
 
 use Exception;
 use Model\Common;
+use Model\Notions;
 use Module\quanlythuoc\Model\PhieuXuatNhap;
 use Module\quanlythuoc\Model\SanPham as ModelSanPham;
 use Module\quanlythuoc\Model\SanPham\FormSanPham;
 use Module\quanlythuoc\Permission;
+use Module\quanlythuoc\Model\DanhMuc;
 
 class sanpham extends \Application implements \Controller\IControllerBE
 {
@@ -26,11 +28,11 @@ class sanpham extends \Application implements \Controller\IControllerBE
     {
         \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Thuoc_Export]);
         $sp = new \Module\quanlythuoc\Model\SanPham();
-        $item = $sp->GetAllThuoc();
+        $item = $sp->GetThuoc();
         // var_dump($item);
         // $data[] = ["BẢNG KÊ THUỐC PHÒNG KHÁM PHƯƠNG UYÊN"];
         $data[] = [
-            "Mã thuốc", "Tên Thuốc", "Tên biệt dược", "Số lô", "Giá nhập", "Giá Bán", "Đơn vị tính", "Ngày sản xuất", "Hạn sử dụng", "Tác dụng", "Cơ chế tác dụng", "Ghi chú", "Số lượng", "Nhà sản xuất", "Nước sản xuất", "Cách dùng thuốc", "Số lượng cảnh báo"
+            "Mã thuốc","Danh mục thuốc", "Tên Thuốc", "Số lô", "Giá nhập", "Giá Bán", "Đơn vị tính", "Ngày sản xuất", "Hạn sử dụng", "Tác dụng", "Cơ chế tác dụng", "Ghi chú", "Số lượng Tổng", "Số lượng xuất","Số lượng nhập","Số lượng tồn kho","Số lượng cảnh báo", "Nhà sản xuất", "Nước sản xuất", "Cách dùng thuốc", "Ngày tạo thuốc"
         ];
         // $data[] = [];
         // $total = 0;
@@ -42,7 +44,13 @@ class sanpham extends \Application implements \Controller\IControllerBE
                 $row["Ngaysx"] = Common::ForMatDMY($row["Ngaysx"]);
                 $row["HSD"] = Common::ForMatDMY($row["HSD"]);
                 $row["CachDung"] = $sp->GetDesByVal($row["CachDung"], 'cachdungthuoc');
-                $row["DVT"] = $sp->GetDesByVal($row["DVT"], 'donvitinh');
+                $row["Soluong"] = Common::ViewNumber($row["Soluong"]);
+                $row["SLXuat"] = Common::ViewNumber($row["SLXuat"]);
+                $row["SLNhap"] = Common::ViewNumber($row["SLNhap"]);
+                $row["SLHienTai"] = Common::ViewNumber($row["SLHienTai"]);
+                $row["CreateRecord"] = Common::ForMatDMYHIS($row["CreateRecord"]);
+                $row["Idloaithuoc"] = DanhMuc::GetNameById($row["Idloaithuoc"]) ?? "";
+                $row["NuocSX"] = Notions::GetById($row["NuocSX"]) ?? "";
                 // $row["DVT"] = $sp->DonViTinh($row["DVT"]);
                 // var_dump($row["DVT"]);
                 $data[] = $row;
@@ -69,33 +77,31 @@ class sanpham extends \Application implements \Controller\IControllerBE
                 $dataSheet0 = $spreadsheet->getSheet(0)->toArray();
                 $sanpham = new ModelSanPham();
                 foreach ($dataSheet0 as $index => $item) {
+                    // var_dump($item[$index]);
                     if ($index > 0) {
+                        $item[7] = str_replace("/", "-", $item[7]);
                         $item[8] = str_replace("/", "-", $item[8]);
-                        $item[9] = str_replace("/", "-", $item[9]);
-                        // echo $item[0];
-                        // var_dump($index);
                         // them vào database  
                         $itemInsert["Id"] = $sanpham->CreatId();
-                        $itemInsert["Idloaithuoc"] = $item[1];
+                        $itemInsert["Idloaithuoc"] = $item[1] ? DanhMuc::GetIdByName($item[1]) : '';
                         $itemInsert["Name"] = Common::CheckName($item[2]);
-                        $itemInsert["Namebietduoc"] = $item[3];
-                        $itemInsert["Solo"] = intval($item[4]);
-                        $itemInsert["Gianhap"] = $item[5];
-                        $itemInsert["Giaban"] = $item[6];
-                        $a = $sanpham->GetValByDesDVT($item[7]);
-                        $b = $sanpham->GetValByDesCachDung($item[17]);
+                        $itemInsert["Solo"] = $item[3] ? intval($item[3]) : '';
+                        $itemInsert["Gianhap"] = $item[4] ? $item[4] : '';
+                        $itemInsert["Giaban"] = $item[5] ? $item[5] : '';
+                        $a = $sanpham->GetValByDesDVT($item[6]);
+                        $b = $sanpham->GetValByDesCachDung($item[16]);
                         $itemInsert["DVT"] = $a["Val"] ?? "";
-                        $itemInsert["Ngaysx"] = date("Y-m-d", strtotime($item[8]));
-                        $itemInsert["HSD"] = date("Y-m-d", strtotime($item[9]));
-                        $itemInsert["Tacdung"] = $item[10];
-                        $itemInsert["Cochetacdung"] = $item[11];
-                        $itemInsert["Ghichu"] = $item[12];
-                        $itemInsert["NhaSX"] = $item[13];
-                        $itemInsert["NuocSX"] = $item[14];
-                        $itemInsert["Soluong"] = $item[15];
-                        $itemInsert["DVQuyDoi"] = $item[16];
+                        $itemInsert["Ngaysx"] = date("Y-m-d", strtotime($item[7])) ?? "";
+                        $itemInsert["HSD"] = date("Y-m-d", strtotime($item[8])) ?? "";
+                        $itemInsert["Tacdung"] = $item[9] ?? "";
+                        $itemInsert["Cochetacdung"] = $item[10] ?? "";
+                        $itemInsert["Ghichu"] = $item[11] ?? "";
+                        $itemInsert["NhaSX"] = $item[12] ?? "";
+                        $itemInsert["NuocSX"] = $item[13] ?? "";
+                        $itemInsert["Soluong"] = $item[14] ?? "";
+                        $itemInsert["DVQuyDoi"] = $item[15];
                         $itemInsert["CachDung"] = $b["Val"] ?? "";
-                        $itemInsert["Canhbao"] = $item[18];
+                        $itemInsert["Canhbao"] = $item[17];
                         $sanpham->Post($itemInsert);
                         new \Model\Error(\Model\Error::success, "Import Thành Công");
                     }
@@ -159,10 +165,9 @@ class sanpham extends \Application implements \Controller\IControllerBE
                 $sanpham = new ModelSanPham();
                 $itemForm = \Model\Request::Post(FormSanPham::$ElementsName, null);
                 $item["Id"] = $sanpham->CreatId();
-                // $itemForm["Link"] = \Model\Common::BoDauTienViet($itemForm["Link"]);
                 $item["Idloaithuoc"] = $itemForm["Idloaithuoc"];
                 $item["Name"] = $itemForm["Name"];
-                $item["Namebietduoc"] = $itemForm["Namebietduoc"];
+                $item["Namebietduoc"] = $itemForm["Name"];
                 $item["Solo"] = $itemForm["Solo"];
                 $item["Gianhap"] = $itemForm["Gianhap"];
                 $item["Giaban"] = $itemForm["Giaban"];
@@ -179,47 +184,9 @@ class sanpham extends \Application implements \Controller\IControllerBE
                 $item["CachDung"] = $itemForm["CachDung"];
                 $item["Canhbao"] = $itemForm["Canhbao"];
                 $item["IsDelete"] = 0;
-                $sanpham->Post($item);
-
-                $phieuXuatNhap = new \Module\quanlythuoc\Model\PhieuXuatNhap();
-                $IdPhieu = PhieuXuatNhap::getIdPhieu();
-                // echo $IdPhieu;
-                $phieuDB =  $phieuXuatNhap->GetById($IdPhieu);
-                if ($phieuDB != null) {
-                    throw new Exception("Đã có mã phiếu này.");
-                }
-                $Phieu["IdPhieu"] = $IdPhieu;
-                $Phieu["TongTien"] = $itemForm["Soluong"] * $itemForm["Gianhap"];
-                $Phieu["DoViCungCap"] = $itemForm["DoViCungCap"] ?? "";
-                $Phieu["XuatNhap"] = 1;
-                $Phieu["NoiDungPhieu"] = "Nhập thuốc mới";
-                $Phieu["GhiChu"] = "";
-                $Phieu["NgayNhap"] = Date("Y-m-d H:i:s");
-                $Phieu["CreateRecord"] = Date("Y-m-d H:i:s", time());
-                $Phieu["UpdateRecord"] = Date("Y-m-d H:i:s", time());
-                $Phieu["IsDelete"] = 0;
-                // die();
-                $phieuXuatNhap = new \Module\quanlythuoc\Model\PhieuXuatNhap();
-                $phieuXuatNhap->Post($Phieu);
-
-                $thuocDetail['IdPhieu'] = $IdPhieu;
-                $thuocDetail['IdThuoc'] = $item["Id"];
-                $thuocDetail['SoLuong'] = $item["Soluong"];
-                $thuocDetail['SoLo'] = $item["Solo"];
-                $thuocDetail['NhaSanXuat'] = $item["NhaSX"];
-                $thuocDetail['NuocSanXuat'] = $item["NuocSX"];
-                $thuocDetail['Price'] = $item["Gianhap"];
-                $thuocDetail['HanSuDung'] = date("Y-m-d", strtotime($item["HSD"]));
-                $thuocDetail['XuatNhap'] = 1;
-                $thuocDetail['CreateRecord'] = Date("Y-m-d H:i:s", time());
-                $thuocDetail['UpdateRecord'] = Date("Y-m-d H:i:s", time());
-                $thuocDetail['GhiChu'] = "";
-                $thuocDetail['IsDelete'] = 0;
-                $detail = new \Module\quanlythuoc\Model\PhieuXuatNhapChiTiet();
-                $detail->Post($thuocDetail);
-                new \Model\Error(\Model\Error::success, "Thêm thuốc thành công");
-                // \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=danhmuc&action=put&id=" . $itemForm["Code"]);
-                Common::ToUrl("/index.php?module=quanlythuoc&controller=sanpham&action=index");
+                // $sanpham->Post($item);
+                // new \Model\Error(\Model\Error::success, "Thêm thuốc thành công");
+                // Common::ToUrl("/index.php?module=quanlythuoc&controller=sanpham&action=index");
             }
         } catch (Exception $exc) {
             echo $exc->getMessage();
@@ -242,7 +209,7 @@ class sanpham extends \Application implements \Controller\IControllerBE
                 $model["Id"] = $itemHtml["Id"]; // Phải Có
                 $model["Idloaithuoc"] = $itemHtml["Idloaithuoc"];
                 $model["Name"] = $itemHtml["Name"];
-                $model["Namebietduoc"] = $itemHtml["Namebietduoc"];
+                $model["Namebietduoc"] = $itemHtml["Name"];
                 $model["Solo"] = $itemHtml["Solo"];
                 $model["Gianhap"] = $itemHtml["Gianhap"];
                 $model["Giaban"] = $itemHtml["Giaban"];

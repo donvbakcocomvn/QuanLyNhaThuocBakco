@@ -24,8 +24,28 @@
 
                     Module\quanlythuoc\Model\btnHtml::btnThemDanhMuc();
                     ?>
+                    <a class="btn btn-warning" target="_self" data-toggle="modal" href='#modal-id'>
+                        <i class="fa fa-info" aria-hidden="true"></i>
+                    </a>
+                    <div class="modal fade" id="modal-id">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <?php
+                                    if (file_exists("public\huongdan\huongdandanhmuc.html"))
+                                        echo file_get_contents("public\huongdan\huongdandanhmuc.html");
+                                    ?>
+                                </div>
+                                <div class="modal-footer">
+                                    <a class="btn btn-success" href="/huongdan/huongdandanhmuc/huongdandanhmuc">Sửa hướng dẫn danh mục</a>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng lại</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+
             <div class="box-body">
                 <table class="table table-hover table-bordered">
                     <thead>
@@ -46,13 +66,13 @@
                             // echo $_item->Id;
                         ?>
                             <tr>
-                                <td style="width: 150px;">
+                                <td>
                                     <?php
                                     echo Module\quanlythuoc\Model\btnHtml::btnSuaDanhMuc($_item->Id);
                                     echo Module\quanlythuoc\Model\btnHtml::btnXoaDanhMuc($_item->Id);
                                     ?>
                                 </td>
-                                <td><?php echo $index + 1; ?></td>
+                                <td scope="row"><?php echo $index + 1; ?></td>
                                 <td><?php echo $_item->Id; ?></td>
                                 <td><?php echo $_item->Name; ?></td>
                                 <td><?php echo $_item->Link; ?></td>

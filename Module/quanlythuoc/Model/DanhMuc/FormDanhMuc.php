@@ -46,6 +46,7 @@ class FormDanhMuc implements iFormDanhMuc
         $properties = self::$properties;
         $properties["value"] = $val;
         $properties[FormRender::Required] = "true";
+        $properties[FormRender::Readonly] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
         return new FormRender(new Element\Textbox("Mã Danh Mục", $name, $properties));
     }
@@ -103,7 +104,7 @@ class FormDanhMuc implements iFormDanhMuc
     {
         $properties = self::$properties;
         $properties["value"] = $val;
-        $properties[FormRender::Required] = "true";
+        // $properties[FormRender::Required] = "true";
         $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
         return new FormRender(new Element\Textarea("Link", $name, $properties));
     }

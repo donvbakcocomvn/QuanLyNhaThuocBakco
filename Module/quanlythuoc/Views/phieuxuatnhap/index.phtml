@@ -27,7 +27,7 @@
 
                     Module\quanlythuoc\Model\btnHtml::btnThemPhieuXuatNhap();
                     ?>
-                    <a class="btn btn-primary" target="_self" data-toggle="modal" href='#modal-id'>
+                    <a class="btn btn-warning" target="_self" data-toggle="modal" href='#modal-id'>
                         <i class="fa fa-info" aria-hidden="true"></i>
                     </a>
                     <!-- <button id="DongBoPhieu" class="btn btn-primary">
@@ -39,13 +39,13 @@
                             <div class="modal-content">
                                 <div class="modal-body">
                                     <?php
-                                    if (file_exists("public\huongdan\huongdanthemthuoc.html"))
-                                        echo file_get_contents("public\huongdan\huongdanthemthuoc.html");
+                                    if (file_exists("public\huongdan\huongdanphieu.html"))
+                                        echo file_get_contents("public\huongdan\huongdanphieu.html");
                                     ?>
                                 </div>
                                 <div class="modal-footer">
-                                    <a class="btn btn-success" href="/huongdan/put/huongdanthemthuoc">Sửa</a>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <a class="btn btn-success" href="/huongdan/huongdanphieu/huongdanphieu">Sửa file hướng dẫn phiếu</a>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng lại</button>
                                 </div>
                             </div>
                         </div>
@@ -72,9 +72,9 @@
                             $_item = new PhieuXuatNhap($item);
                         ?>
                             <tr>
-                                <td style="width: 140px;">
+                                <td>
                                     <?php
-                                    echo Module\quanlythuoc\Model\btnHtml::btnSuaPhieuXuatNhap($_item->Id);
+                                    // echo Module\quanlythuoc\Model\btnHtml::btnSuaPhieuXuatNhap($_item->Id);
                                     // echo Module\quanlythuoc\Model\btnHtml::btnXoaPhieuXuatNhap($_item->Id);
                                     echo Module\quanlythuoc\Model\btnHtml::btnChiTietPhieuXuatNhap($_item->Id);
                                     ?>

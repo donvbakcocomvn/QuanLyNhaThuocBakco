@@ -91,6 +91,7 @@ class ThongKe extends DB{
         return $result;
     }
 
+
     public static function LichSuXuatById($id)
     {
         $thongke = new ThongKe();

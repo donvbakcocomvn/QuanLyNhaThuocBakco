@@ -1,5 +1,4 @@
 <?php
-// var_dump($items);
 ?>
 <ol class="breadcrumb">
     <li><a href="/backend/"><i class="fa fa-dashboard"></i>&nbsp; Dashboard</a></li>
@@ -12,7 +11,7 @@
             <div class="col-md-12">
                 <div class="box box-warning">
                     <div class="box-header">
-                        <!-- <form method="get" action="/backend/dsnhapchitiet/">
+                        <form method="get" action="/backend/dsnhapchitiet/">
                             <div class="form-group d-flex">
                                 <label class="btn btn-default"><input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox"><i class="fa fa-share" aria-hidden="true"></class=></i></label>
                                 <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập tên thuốc để tìm kiếm">
@@ -20,7 +19,9 @@
                                     <i class="fa fa-search"></i> Tìm Kiếm
                                 </button>
                             </div>
-                        </form> -->
+                        </form>
+                        <!-- <input id="keyword" class="form-control" name="keyword" autocomplete="off" type="" placeholder="Nhập tên thuốc để tìm kiếm">
+                        <div id="searchresult"></div> -->
                         <!-- <form action="">
                             <div class="row">
                                 <div class="col-md-3 form-group">
@@ -75,7 +76,8 @@
                                             $index = 0;
                                             $thongke = ThongKe::LichSuNhapXuatChiTiet(1);
                                             $sanpham = new SanPham();
-                                            // var_dump($thongke);
+                                            var_dump($thongke);
+                                            // echo $thongke['IdThuoc'];
                                             foreach ($thongke as $value) { ?>
                                                 <?php
                                                 ?>
@@ -96,27 +98,6 @@
                                             ?>
                                         </tbody>
                                     </table>
-                                    <!-- <div class="box-footer">
-                                        <div class="d-flex">
-                                            <?php
-                                            \Model\FormCommon::Select(
-                                                "",
-                                                "",
-                                                [10, 20, 50, 100],
-                                                [
-                                                    "style" => "max-width:150px;",
-                                                    "class" => "form-control",
-                                                    "value" => $pageNumber,
-                                                    "onchange" => "SoDongHienThi(this.value)",
-                                                ]
-                                            )->render();
-                                            ?>
-                                            <?php
-                                            $linkPhanTrang = "/index.php?controller=backend&action=dsnhapchitiet&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
-                                            echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
-                                            ?>
-                                        </div>
-                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -128,9 +109,25 @@
 
 </div>
 <script type="text/javascript">
-    var SoDongHienThi = function(evalue) {
-        var linkPhanTrang = '/index.php?controller=backend&action=dsnhapchitiet&indexPage=1&pageNumber=[j]';
-        linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
-        window.location.href = linkPhanTrang;
-    }
+    $(document).ready(function() {
+        $("#keyword").keyup(function() {
+            var input = $(this).val();
+            // alert(input);
+            if (input != "") {
+                $.ajax({
+                    // type: "method",
+                    url: "/backend/livesearch/",
+                    method: "POST",
+                    data: {
+                        input: input
+                    },
+                    success: function(data) {
+                        $("#searchresult").html(data);
+                    }
+                });
+            } else {
+                $("#searchresult").css("display", "none");
+            }
+        });
+    });
 </script>

@@ -1,12 +1,12 @@
 <ol class="breadcrumb">
     <li><a href="/index.php?controller=backend">Home</a></li>
-    <li><a href="/donthuoc/">Quản lý đơn thuốc</a></li>
-    <li> Sửa file hướng dẫn </li>
+    <li><a href="/index.php?module=quanlythuoc&controller=sanpham&action=index">Quản lý thuốc</a></li>
+    <li> Sửa file hướng dẫn thuốc </li>
 </ol>
 <div class="container-fluid">
     <div class="box box-primary">
         <div class="box-header">
-            <h3 class="box-title">Sửa file hướng dẫn </h3>
+            <h3 class="box-title">Sửa file hướng dẫn thuốc</h3>
             <div class="box-tools">
                 <!--<a href="#" class="btn btn-success" ><i class="fa fa-plus" ></i></a>-->
             </div>
@@ -26,8 +26,9 @@
 
                         echo $form->Content($content)->render();
                         ?>
-                        <div class="box-footer">
-                            <input type="submit" class="btn btn-success" name="Luu" value="Cập nhật nội dung hướng dẫn " />
+                        <br>
+                        <div class="box-primary">
+                        <input type="submit" class="btn btn-success" name="Luu" value="Cập nhật hướng dẫn thêm thuốc" />
                         </div>
                     </form>
                 </div>
