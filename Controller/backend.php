@@ -66,7 +66,6 @@ class backend extends \Application {
         $data["pageNumber"] = $pageNumber;
         $data["params"] = $params;
         $data["total"] = $total;
-        // var_dump($data["items"]);
         $this->View($data);
     }
 

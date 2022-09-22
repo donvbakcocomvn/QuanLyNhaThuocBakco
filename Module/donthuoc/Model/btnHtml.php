@@ -52,7 +52,7 @@ class btnHtml
         }
     ?>
         <button class="btn btn-success" id="btn-capnhattongngaydungthuoc">
-            Cập Nhật Ngày Sử Dụng Thuốc
+            Cập Nhật
         </button>
     <?php
     }

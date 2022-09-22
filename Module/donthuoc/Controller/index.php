@@ -5,6 +5,8 @@ namespace Module\donthuoc\Controller;
 use LengthException;
 use Model\Common;
 use Model\OptionsService;
+use Module\benhnhan\Model\BenhNhan;
+use Module\benhnhan\Model\BenhNhan\FormBenhNhan;
 use Module\cart\Model\DonHangChiTiet;
 use Module\donthuoc\Model\DonThuoc;
 use Module\donthuoc\Model\DonThuoc\FormDonThuoc;
@@ -133,12 +135,25 @@ class index extends \Application implements \Controller\IControllerBE
         // }
         \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DonThuoc_Post]);
         try {
-            if (\Model\Request::Post(FormDonThuoc::$ElementsName, null)) {
+            if (\Model\Request::Post(FormDonThuoc::$ElementsName, null), \Model\Request::Post(BenhNhan::$ElementsName, null)) {
+                $itemBenhNhan = \Model\Request::Post(FormBenhNhan::$ElementsName, null);
+                $benhnhan = new BenhNhan();
+                $itemBN["Id"] = $benhnhan->CreatId();
+                $itemBN["Name"] = $itemBenhNhan["Name"];
+                $itemBN["Gioitinh"] = $itemBenhNhan["Gioitinh"];
+                $itemBN["Ngaysinh"] = $itemBenhNhan["Ngaysinh"];
+                $itemBN["CMND"] = $itemBenhNhan["CMND"];
+                $itemBN["Address"] = $itemBenhNhan["Address"];
+                $itemBN["TinhThanh"] = $itemBenhNhan["TinhThanh"];
+                $itemBN["QuanHuyen"] = $itemBenhNhan["QuanHuyen"];
+                $itemBN["PhuongXa"] = $itemBenhNhan["PhuongXa"];
+                $itemBN["Phone"] = $itemBenhNhan["Phone"];
+                $benhnhan->Post($itemBN);
+
                 $itemForm = \Model\Request::Post(FormDonThuoc::$ElementsName, null);
                 $donthuoc = new DonThuoc();
-
                 $item["Id"] = $donthuoc->CreatId();
-                $item["IdBenhNhan"] = $itemForm["IdBenhNhan"];
+                $item["IdBenhNhan"] = $itemBN["Id"];
                 $item["NameBN"] = $donthuoc->GetNameById($itemForm["IdBenhNhan"]);
                 $item["Ngaysinh"] = Common::ForMatDMY($donthuoc->GetNgaySinhById($itemForm["IdBenhNhan"]));
                 $item["Gioitinh"] = $donthuoc->GetGioiTinhById($itemForm["IdBenhNhan"]);
@@ -175,9 +190,9 @@ class index extends \Application implements \Controller\IControllerBE
                         $detail->Post($itemDetail);
                         // var_dump($thuoc);
                     }
-                    DonThuocDetail::ClearSession();
+                    // DonThuocDetail::ClearSession();
                 }
-                new \Model\Error(\Model\Error::success, "Đã Thêm Toa Thuốc");
+                // new \Model\Error(\Model\Error::success, "Đã Thêm Toa Thuốc");
                 // \Model\Common::ToUrl("/index.php?module=donthuoc&controller=index&action=index");
             }
         } catch (\Exception $exc) {
@@ -187,7 +202,7 @@ class index extends \Application implements \Controller\IControllerBE
         if ($isnew != null) {
             DonThuocDetail::ClearSession();
         }
-        $this->View();
+        // $this->View();
     }
     function put()
     {

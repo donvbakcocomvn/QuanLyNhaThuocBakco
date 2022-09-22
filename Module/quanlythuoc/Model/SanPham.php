@@ -384,9 +384,10 @@ class SanPham extends \Model\DB implements \Model\IModelService
             $isShowSql = "and `isShow` = '{$isShow}' ";
         }
         if ($danhmuc) {
-            $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
+            $danhmucSql = "and `DanhMucId` = '{$danhmuc}'";
         }
 
+        // self::$Debug = true;
         $where = " (`Name` like '%{$name}%' or `Namebietduoc` like '%{$name}%' {$danhmucSql}) and `isDelete` = 0 ";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }

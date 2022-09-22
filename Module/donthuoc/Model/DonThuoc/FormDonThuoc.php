@@ -286,7 +286,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 		$properties["value"] = $val;
 		$properties["id"] = $id;
 		$properties["index"] = $index;
-		$properties["class"] = "form-control changenumber ";
+		$properties["class"] = "form-control changenumber select2 ";
 		// $properties[FormRender::Required] = "true";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]" . "[]";
 		// $option = OptionsService::GetGroupsToSelect("donviquydoi");
@@ -308,7 +308,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 		$properties["value"] = $val;
 		$properties["id"] = $id;
 		$properties["index"] = $index;
-		$properties["class"] = "form-control changenumber ";
+		$properties["class"] = "form-control changenumber select2";
 
 		// $properties[FormRender::Required] = "true";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]" . "[]";
@@ -331,7 +331,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 		$properties["value"] = $val;
 		$properties["id"] = $id;
 		$properties["index"] = $index;
-		$properties["class"] = "form-control changenumber ";
+		$properties["class"] = "form-control changenumber select2";
 
 		// $properties[FormRender::Required] = "true";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]" . "[]";

@@ -5,7 +5,9 @@ namespace Controller;
 use Model\ThongKe as ModelThongKe;
 use Model\Common;
 use Model\Notions;
+use Module\benhnhan\Model\BenhNhan;
 use Module\quanlythuoc\Model\SanPham;
+use Module\quanlythuoc\Permission;
 
 class thongke extends \Application
 {
@@ -26,7 +28,65 @@ class thongke extends \Application
 
     function thuocsaphet()
     {
-        $this->View();
+        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Thuoc_DS]);
+        $modelItem = new \Model\ThongKe();
+        $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
+        $params["danhmuc"] = isset($_REQUEST["danhmuc"]) ? \Model\Common::TextInput($_REQUEST["danhmuc"]) : "";
+        $params["isShow"] = isset($_REQUEST["isShow"]) ? \Model\Common::TextInput($_REQUEST["isShow"]) : "";
+        $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
+        $indexPage = max(1, $indexPage);
+        $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;
+        $pageNumber = max(1, $pageNumber);
+        $total = 0;
+        $DanhSachTaiKhoan = $modelItem->GetThuocSapHet($params, $indexPage, $pageNumber, $total);
+        $data["items"] = $DanhSachTaiKhoan;
+        $data["indexPage"] = $indexPage;
+        $data["pageNumber"] = $pageNumber;
+        $data["params"] = $params;
+        $data["total"] = $total;
+        $this->View($data);
+    }
+
+    function benhnhantrongngay()
+    {
+        $modelItem = new \Model\ThongKe();
+        $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
+        $params["danhmuc"] = isset($_REQUEST["danhmuc"]) ? \Model\Common::TextInput($_REQUEST["danhmuc"]) : "";
+        $params["isShow"] = isset($_REQUEST["isShow"]) ? \Model\Common::TextInput($_REQUEST["isShow"]) : "";
+        $params["indate"] = isset($_REQUEST["indate"]) ? date('Y-m-d', strtotime($_REQUEST["indate"])) : date('Y-m-d', time());
+        $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
+        $indexPage = max(1, $indexPage);
+        $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;
+        $pageNumber = max(1, $pageNumber);
+        $total = 0;
+        $DanhSachTaiKhoan = $modelItem->GetBenhNhanTrongNgay($params, $indexPage, $pageNumber, $total);
+        $data["items"] = $DanhSachTaiKhoan;
+        $data["indexPage"] = $indexPage;
+        $data["pageNumber"] = $pageNumber;
+        $data["params"] = $params;
+        $data["total"] = $total;
+        $this->View($data);
+    }
+
+    function donthuoctrongngay()
+    {
+        $modelItem = new \Model\ThongKe();
+        $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
+        $params["danhmuc"] = isset($_REQUEST["danhmuc"]) ? \Model\Common::TextInput($_REQUEST["danhmuc"]) : "";
+        $params["isShow"] = isset($_REQUEST["isShow"]) ? \Model\Common::TextInput($_REQUEST["isShow"]) : "";
+        $params["indate"] = isset($_REQUEST["indate"]) ? date('Y-m-d', strtotime($_REQUEST["indate"])) : date('Y-m-d', time());
+        $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
+        $indexPage = max(1, $indexPage);
+        $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;
+        $pageNumber = max(1, $pageNumber);
+        $total = 0;
+        $DanhSachTaiKhoan = $modelItem->GetDonThuocTrongNgay($params, $indexPage, $pageNumber, $total);
+        $data["items"] = $DanhSachTaiKhoan;
+        $data["indexPage"] = $indexPage;
+        $data["pageNumber"] = $pageNumber;
+        $data["params"] = $params;
+        $data["total"] = $total;
+        $this->View($data);
     }
 
     function ExportLichSuNhap()
