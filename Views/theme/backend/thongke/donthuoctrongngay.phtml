@@ -1,0 +1,130 @@
+<ol class="breadcrumb">
+    <li><a href="/index.php?controller=backend">Home</a></li>
+    <li><a href="/index.php?controller=thongke">Thống kê</a></li>
+    <li> Danh sách đơn thuốc kê toa trong ngày </li>
+</ol>
+<?php
+
+use Model\Common;
+use Module\benhnhan\Model\BenhNhan;
+use Model\Locations;
+use Model\ThongKe;
+use Module\donthuoc\Model\DonThuoc;
+
+?>
+<div class="container-fluid">
+    <form method="get" action="/thongke/donthuoctrongngay/">
+        <div class="form-group d-flex">
+            <label class="btn btn-default"><input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox"><i class="fa fa-share" aria-hidden="true"></class=></i></label>
+            <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập tên, số điện thoại hoặc địa chỉ để tìm kiếm">                                                              
+            <input name="indate" value="<?php echo date("Y-m-d", time()); ?>" type="hidden">                                                              
+            <button class="btn btn-primary no-border-radius" name="btnTim" type="submit">
+                <i class="fa fa-search"></i> Tìm Kiếm
+            </button>
+        </div>
+    </form>
+    <div class="clearfix">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Danh sách đơn thuốc kê toa trong ngày</h3>
+                <div class="box-tools">
+                </div>
+            </div>
+            <div class="box-body">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>STT</th>
+                            <th>Mã đơn thuốc</th>
+                            <th>Thuộc loại đơn</th>
+                            <th>Tên bệnh nhân</th>
+                            <th>Giới Tính</th>
+                            <th>Ngày Sinh</th>
+                            <th>Thời gian khám bệnh</th>
+                            <th>Chẩn đoán</th>
+                            <th>Số ngày dùng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $danhsach = $data['items'];
+                        foreach ($danhsach as $index => $item) {
+                            $_item = new DonThuoc($item);
+                            // var_dump($_item);
+                        ?>
+                            <tr>
+                                <td>
+                                    <?php
+                                    // echo Module\benhnhan\Model\btnHtml::btnSuaKhachHang($_item->Id);
+                                    // echo Module\benhnhan\Model\btnHtml::btnXoaKhachHang($_item->Id);
+                                    // echo Module\benhnhan\Model\btnHtml::btnchitiet($_item->Id);
+                                    ?>
+                                    
+                                    <a class="btn btn-primary" data-toggle="modal" href='#modal-id'>Trigger modal</a>
+                                    <div class="modal fade" id="modal-id">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                    <h4 class="modal-title">Modal title</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </td>
+                                <td><?php echo $index + 1; ?></td>
+                                <td><?php echo $_item->Id; ?></td>
+                                <td><?php echo $_item->ThuocLoaiDon; ?></td>
+                                <td><?php echo $_item->NameBN; ?></td>
+                                <td><?php echo $_item->Gioitinh(); ?></td>
+                                <td><?php echo $_item->NgaySinh; ?></td>
+                                <td><?php echo $_item->ThoiGianKham; ?></td>
+                                <td><?php echo $_item->ChanDoanBenh; ?></td>
+                                <td><?php echo $_item->TongNgayDung. " " . "Ngày"; ?></td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
+                <div class="box-footer">
+                    <div class="d-flex">
+                        <?php
+                        \Model\FormCommon::Select(
+                            "",
+                            "",
+                            [10, 20, 50, 100],
+                            [
+                                "style" => "max-width:150px;",
+                                "class" => "form-control",
+                                "value" => $pageNumber,
+                                "onchange" => "SoDongHienThi(this.value)",
+                            ]
+                        )->render();
+                        ?>
+                        <?php
+                        $linkPhanTrang = "/index.php?controller=thongke&action=donthuoctrongngay&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
+                        echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var SoDongHienThi = function(evalue) {
+        var linkPhanTrang = '/index.php?controller=thongke&action=donthuoctrongngay&indexPage=1&pageNumber=[j]';
+        linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
+        window.location.href = linkPhanTrang;
+    }
+</script>

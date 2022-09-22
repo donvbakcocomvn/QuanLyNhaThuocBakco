@@ -124,21 +124,29 @@ class BenhNhan extends \Model\DB implements \Model\IModelService
     public function GetItems($params, $indexPage, $pageNumber, &$total)
     {
         $name = isset($params["keyword"]) ? $params["keyword"] : '';
+        $fromdate = isset($params["fromdate"]) ? $params["fromdate"] : null;
+        $todate = isset($params["todate"]) ? $params["todate"] : null;
+        $indate = isset($params["indate"]) ? $params["indate"] : null;
         $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
         $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
         $isShowSql = "and `isShow` >= 0 ";
+        $indateSql = "";
         $danhmucSql = "";
-
+        if ($indate) {
+            $indateSql = " and `CreateRecord` LIKE '%$indate%'";
+        }
         if ($isShow) {
             $isShowSql = "and `isShow` = '{$isShow}' ";
         }
         if ($danhmuc) {
             $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
         }
-
-        $where = " (`Name` like '%{$name}%' or `Phone` like '%{$name}%' or `Address` like '%{$name}%' {$danhmucSql}) and `isDelete` = 0 ";
+        // self::$Debug = true;
+        $where = " (`Name` like '%{$name}%' or `Phone` like '%{$name}%' {$danhmucSql}) {$indateSql} and `isDelete` = 0 ";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
+
+    
 
     public function Post($model)
     {

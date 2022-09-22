@@ -57,9 +57,12 @@ class FormBenhNhan implements iFormBenhNhan
         {
                 $properties = self::$properties;
                 $properties["value"] = $val;
+                $properties["class"] = "select2 form-control";
+                $options = OptionsService::GetGroupsToSelect("gioitinh");
+                $option1 =  ["" => "--- Chọn giới tính ---"];
+		$options = $option1 + $options;
                 $properties[FormRender::Required] = "true";
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-                $options = OptionsService::GetGroupsToSelect("gioitinh");
                 return new FormRender(new Element\Select("Giới Tính", $name, $options, $properties));
         }
 
@@ -77,7 +80,29 @@ class FormBenhNhan implements iFormBenhNhan
                 // $properties["type"] = "date";
 		// $properties["max"] = date("Y-m-d", time());
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-                return new FormRender(new Element\Textbox("Ngày Sinh", $name, $properties));
+                return new FormRender(new Element\Textbox("Ngày", $name, $properties));
+        }
+
+        function Thangsinh($val = null)
+        {
+                $properties = self::$properties;
+                $properties["value"] = $val;
+                // $properties[FormRender::Required] = "true";
+                // $properties["type"] = "date";
+		// $properties["max"] = date("Y-m-d", time());
+                $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+                return new FormRender(new Element\Textbox("Tháng", $name, $properties));
+        }
+
+        function Namsinh($val = null)
+        {
+                $properties = self::$properties;
+                $properties["value"] = $val;
+                // $properties[FormRender::Required] = "true";
+                // $properties["type"] = "date";
+		// $properties["max"] = date("Y-m-d", time());
+                $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+                return new FormRender(new Element\Textbox("Năm", $name, $properties));
         }
 
         /**

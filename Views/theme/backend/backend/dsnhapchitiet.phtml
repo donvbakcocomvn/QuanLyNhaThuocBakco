@@ -76,7 +76,7 @@
                                             $index = 0;
                                             $thongke = ThongKe::LichSuNhapXuatChiTiet(1);
                                             $sanpham = new SanPham();
-                                            var_dump($thongke);
+                                            // var_dump($thongke);
                                             // echo $thongke['IdThuoc'];
                                             foreach ($thongke as $value) { ?>
                                                 <?php
@@ -100,15 +100,43 @@
                                     </table>
                                 </div>
                             </div>
+                            <div class="box-footer">
+                                <div class="d-flex">
+                                    <?php
+                                    \Model\FormCommon::Select(
+                                        "",
+                                        "",
+                                        [10, 20, 50, 100],
+                                        [
+                                            "style" => "max-width:150px;",
+                                            "class" => "form-control",
+                                            "value" => $pageNumber,
+                                            "onchange" => "SoDongHienThi(this.value)",
+                                        ]
+                                    )->render();
+                                    ?>
+                                    <?php
+                                    $linkPhanTrang = "/backend/dsnhapchitiet/?keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
+                                    echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
+                                    ?>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
 </div>
 <script type="text/javascript">
+    var SoDongHienThi = function(evalue) {
+        var linkPhanTrang = '/backend/dsnhapchitiet/?keyword=&indexPage=1&pageNumber=[j]';
+        linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
+        window.location.href = linkPhanTrang;
+    }
+</script>
+
+<!-- <script type="text/javascript">
     $(document).ready(function() {
         $("#keyword").keyup(function() {
             var input = $(this).val();
@@ -130,4 +158,4 @@
             }
         });
     });
-</script>
+</script> -->

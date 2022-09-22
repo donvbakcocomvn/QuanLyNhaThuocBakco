@@ -1,25 +1,87 @@
 <?php
 
 namespace Model;
-class ThongKe extends DB{
 
-    public function GetItems($params, $indexPage, $pageNumber, &$total)
+class ThongKe extends DB
+{
+
+    public function GetThuocSapHet($params, $indexPage, $pageNumber, &$total)
     {
+        self::$TableName = prefixTable . "qlthuoc_thuoc";
         $name = isset($params["keyword"]) ? $params["keyword"] : '';
         $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
         $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
         $isShowSql = "and `isShow` >= 0 ";
         $danhmucSql = "";
-
         if ($isShow) {
             $isShowSql = "and `isShow` = '{$isShow}' ";
         }
         if ($danhmuc) {
             $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
         }
-
-        $where = " `Id` like '%{$name}%' or `IdBenhNhan` like '%{$name}%' or `NameBN` like '%{$name}%' {$danhmucSql} ";
+        // self::$Debug = true;
+        $where = " (`Name` like '%{$name}%' {$danhmucSql})and `SLHienTai` <= `Canhbao` and `isDelete` = 0 ";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
+    }
+
+    public function GetBenhNhanTrongNgay($params, $indexPage, $pageNumber, &$total)
+    {
+        self::$TableName = prefixTable . "benhnhan";
+        $name = isset($params["keyword"]) ? $params["keyword"] : '';
+        $fromdate = isset($params["fromdate"]) ? $params["fromdate"] : null;
+        $todate = isset($params["todate"]) ? $params["todate"] : null;
+        $indate = isset($params["indate"]) ? $params["indate"] : null;
+        $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
+        $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
+        $isShowSql = "and `isShow` >= 0 ";
+        $indateSql = "";
+        $danhmucSql = "";
+        if ($indate) {
+            $indateSql = " and `CreateRecord` LIKE '%$indate%'";
+        }
+        if ($isShow) {
+            $isShowSql = "and `isShow` = '{$isShow}' ";
+        }
+        if ($danhmuc) {
+            $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
+        }
+        // self::$Debug = true;
+        $where = " (`Name` like '%{$name}%' or `Phone` like '%{$name}%' or `Address` like '%{$name}%' {$danhmucSql}) {$indateSql} and `isDelete` = 0 ";
+        return $this->SelectPT($where, $indexPage, $pageNumber, $total);
+    }
+
+    public function GetDonThuocTrongNgay($params, $indexPage, $pageNumber, &$total)
+    {
+        self::$TableName = prefixTable . "toathuoc";
+        $name = isset($params["keyword"]) ? $params["keyword"] : '';
+        $fromdate = isset($params["fromdate"]) ? $params["fromdate"] : null;
+        $todate = isset($params["todate"]) ? $params["todate"] : null;
+        $indate = isset($params["indate"]) ? $params["indate"] : null;
+        $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
+        $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
+        $isShowSql = "and `isShow` >= 0 ";
+        $indateSql = "";
+        $danhmucSql = "";
+        if ($indate) {
+            $indateSql = " and `CreateRecord` LIKE '%$indate%'";
+        }
+        if ($isShow) {
+            $isShowSql = "and `isShow` = '{$isShow}' ";
+        }
+        if ($danhmuc) {
+            $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
+        }
+        // self::$Debug = true;
+        $where = " (`NameBN` like '%{$name}%' {$danhmucSql}) {$indateSql} ";
+        return $this->SelectPT($where, $indexPage, $pageNumber, $total);
+    }
+
+    static function DSBenhNhanTrongNgay($date)
+    {
+        $thongke = new ThongKe();
+        $sql = "SELECT * FROM `lap1_benhnhan` WHERE `CreateRecord` LIKE '%$date%'";
+        $result = $thongke->GetRows($sql);
+        return $result;
     }
 
     public function GetDSPhieuXuatNhapExport($xuatnhap)
