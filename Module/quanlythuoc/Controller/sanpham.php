@@ -4,6 +4,7 @@ namespace Module\quanlythuoc\Controller;
 
 use Exception;
 use Model\Common;
+use Model\Error;
 use Model\Notions;
 use Module\quanlythuoc\Model\PhieuXuatNhap;
 use Module\quanlythuoc\Model\SanPham as ModelSanPham;
@@ -32,7 +33,7 @@ class sanpham extends \Application implements \Controller\IControllerBE
         // var_dump($item);
         // $data[] = ["BẢNG KÊ THUỐC PHÒNG KHÁM PHƯƠNG UYÊN"];
         $data[] = [
-            "Mã thuốc","Danh mục thuốc", "Tên Thuốc", "Số lô", "Giá nhập", "Giá Bán", "Đơn vị tính", "Ngày sản xuất", "Hạn sử dụng", "Tác dụng", "Cơ chế tác dụng", "Ghi chú", "Số lượng Tổng", "Số lượng xuất","Số lượng nhập","Số lượng tồn kho","Số lượng cảnh báo", "Nhà sản xuất", "Nước sản xuất", "Cách dùng thuốc", "Ngày tạo thuốc"
+            "Mã thuốc", "Danh mục thuốc", "Tên Thuốc", "Số lô", "Giá nhập", "Giá Bán", "Đơn vị tính", "Ngày sản xuất", "Hạn sử dụng", "Tác dụng", "Cơ chế tác dụng", "Ghi chú", "Số lượng Tổng", "Số lượng xuất", "Số lượng nhập", "Số lượng tồn kho", "Số lượng cảnh báo", "Nhà sản xuất", "Nước sản xuất", "Cách dùng thuốc", "Ngày tạo thuốc"
         ];
         // $data[] = [];
         // $total = 0;

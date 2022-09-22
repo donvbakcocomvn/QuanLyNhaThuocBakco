@@ -34,19 +34,23 @@ class FormRender
     <?php
     }
 
-    public static function HuongDan($id)
+    public static function HuongDan($id, $title = "Hướng dẫn")
     {
     ?>
         <a class="btn pull-right btn-primary" target="_self" data-toggle="modal" href='#huongdan<?php echo $id; ?>'>
             <i class="fa fa-info" aria-hidden="true"></i>
-            Hướng dẫn
+            
+            <?php echo $title ?>
         </a>
         <div class="modal fade" id="huongdan<?php echo $id; ?>">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Hướng dẫn</h4>
+                        <h4 class="modal-title">
+                            <i class="fa fa-info"></i>
+                            Hướng dẫn
+                        </h4>
                     </div>
                     <div class="modal-body">
                         <?php

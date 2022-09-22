@@ -136,7 +136,7 @@ class BenhNhan extends \Model\DB implements \Model\IModelService
             $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
         }
 
-        echo $where = " (`Name` like '%{$name}%' or `Phone` like '%{$name}%' or `Address` like '%{$name}%' {$danhmucSql}) and `isDelete` = 0 ";
+        $where = " (`Name` like '%{$name}%' or `Phone` like '%{$name}%' or `Address` like '%{$name}%' {$danhmucSql}) and `isDelete` = 0 ";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 

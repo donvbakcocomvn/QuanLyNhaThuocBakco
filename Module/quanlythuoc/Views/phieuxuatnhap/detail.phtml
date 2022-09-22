@@ -25,7 +25,7 @@ $roleDetail = new Model\Role();
             <div class="col-md-12">
                 <fieldset>
                     <legend>Thông tin phiếu</legend>
-                    <table class="table table-border">
+                    <table class="table table-bordered">
                         <tr>
                             <th>Mã Phiếu</th>
                             <td><?php echo $itemSP->IdPhieu ?></td>
@@ -35,12 +35,10 @@ $roleDetail = new Model\Role();
                             <td><?php echo $itemSP->getTongTien(); ?></td>
                         </tr>
                         <tr>
-                            <th>Nội Dung</th>
-                            <td colspan="5"><?php echo $itemSP->NoiDungPhieu ?></td>
+                            <td colspan="6"><strong>Nội Dung: </strong> <?php echo $itemSP->NoiDungPhieu ?></td>
                         </tr>
                         <tr>
-                            <th>Ghi chú</th>
-                            <td colspan="5"><?php echo $itemSP->GhiChu ?></td>
+                            <td colspan="6"><strong>Ghi chú: </strong> <?php echo $itemSP->GhiChu ?></td>
                         </tr>
                     </table>
                 </fieldset>
@@ -49,7 +47,7 @@ $roleDetail = new Model\Role();
             <div class="col-md-12">
                 <fieldset>
                     <legend>Danh sách thuốc</legend>
-                    <table class="table ">
+                    <table class="table table-bordered" style="margin-bottom: 5px;" >
                         <tr>
                             <th>Mã thuốc </th>
                             <th>Thuốc <?php FormRender::ToolTipElement("Tên thuốc"); ?></th>
