@@ -22,8 +22,9 @@
                         $form = new FormHuongDan();
                         $id = $_Params[0];
                         $path = "public/huongdan/{$id}.html";
-                        $content = file_get_contents($path);
-
+                        $content = "";
+                        if (file_exists($path))
+                            $content = file_get_contents($path);
                         echo $form->Content($content)->render();
                         ?>
                         <div class="box-footer">

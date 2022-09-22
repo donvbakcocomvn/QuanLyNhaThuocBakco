@@ -5,6 +5,7 @@ namespace Module\quanlythuoc\Model;
 use Model\Common;
 use Model\DB;
 
+
 class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
 {
 
@@ -83,7 +84,7 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
         foreach ($DSThuoc as $key => $value) {
             $_sp = new SanPham($value);
             $thanhTien = $_sp->ThanhTien();
-            $tong += $thanhTien;
+            $tong += floatval($thanhTien);
         }
         return $tong;
     }
@@ -115,6 +116,8 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
         // $trua = $item["Trua"] ?? 0;
 
         $detail["SoLuong"] = $detail["Soluong"] ?? "";
+        $detail["Giaban"] = $detail["Giaban"] ?? 0;
+        $detail["Gianhap"] = $detail["Gianhap"] ?? 0;
         $detail["SoLo"] = $detail["SoLo"] ?? "";
         $detail["NhaSanXuat"] = $detail["NhaSanXuat"] ?? "";
         $detail["NuocSanXuat"] = $detail["NuocSanXuat"] ?? "";
@@ -213,13 +216,10 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
 
     public function Delete($Id)
     {
-        $tongSanPham = SanPham::CountSPThuocByDanhMuc($Id);
-
-        if ($tongSanPham > 0) {
-            throw new \Exception("Không xóa danh mục có sản phẩm.");
-        }
-        $DM = new danhmuc();
-        return $DM->DeleteById($Id);
+        $sp = new SanPham($Id);
+        $model["Id"] = $sp->Id;
+        $model["IsDelete"] = 1;
+        return $sp->Put($model);
     }
 
     public function Post($model)

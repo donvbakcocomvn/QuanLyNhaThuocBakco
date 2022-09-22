@@ -196,7 +196,7 @@ $(document).ready(function () {
                     $(idNhaSanXuat).val(response.NhaSX);
                     $(idHanSuDung).val(response.HSD);
                     $(idNuocSanXuat).val(response.NuocSX);
-                    $(idThanhTien).html((response.Soluong * response.Giaban).toLocaleString('en-US'));
+                    $(idThanhTien).html((response.ThanhTien).toLocaleString('en-US'));
                     $(idPrice).val(response.Giaban);
                     $("#TongTien").html(response.TongTien.toLocaleString('en-US'));
                 },

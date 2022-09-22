@@ -6,6 +6,7 @@
 <?php
 
 use Model\Common;
+use Model\FormRender;
 use Model\OptionsService;
 use Module\quanlythuoc\Model\PhieuXuatNhap;
 use Module\quanlythuoc\Model\PhieuXuatNhapChiTiet;
@@ -21,64 +22,65 @@ $roleDetail = new Model\Role();
             <?php
             $itemSP = new PhieuXuatNhap($data);
             ?>
-            <div class="col-md-3"></div>
-            <div class="col-md-6">
-                <table class="table ">
-                    <tr>
-                        <td class="text-right">Mã Phiếu</td>
-                        <td><?php echo $itemSP->IdPhieu ?></td>
-                    </tr>
-
-                    <tr>
-                        <td class="text-right">Loại phiếu</td>
-                        <td><?php echo $itemSP->XuatNhap(); ?></td>
-                    </tr>
-                    <tr>
-                        <td class="text-right">Tổng tiền</td>
-                        <td><?php echo $itemSP->getTongTien(); ?></td>
-                    </tr>
-                    <tr>
-                        <td class="text-right">Nội Dung</td>
-                        <td><?php echo $itemSP->NoiDungPhieu ?></td>
-                    </tr>
-                    <tr>
-                        <td class="text-right">Ghi chú</td>
-                        <td><?php echo $itemSP->GhiChu ?></td>
-                    </tr>
-                </table>
-            </div>
-
             <div class="col-md-12">
-            
-                <table class="table ">
-                    <tr>
-                        <th>Thuốc</th>
-                        <th>Số lượng</th>
-                        <th>Số Lô</th>
-                        <th>Hạn sử dụng</th> 
-                        <th>Giá</th>
-                        <th>Thành tiền</th>
-                    </tr>
-                    <?php
-                    foreach ($itemSP->PhieuChiTiet() as $key => $value) {
-                        $_chiTiet = new PhieuXuatNhapChiTiet($value);
-                    ?>
+                <fieldset>
+                    <legend>Thông tin phiếu</legend>
+                    <table class="table table-border">
                         <tr>
-                            <td><?php echo $_chiTiet->SanPham()->Name ?></td>
-                            <td><b><?php echo $_chiTiet->SoLuong ?></b></td>
-                            <td><?php echo $_chiTiet->SoLo ?></td>
-                            <td><?php echo $_chiTiet->HanSuDung() ?></td> 
-                            <td><b><?php echo $_chiTiet->Price() ?></b></td>
-                            <td><b><?php echo $_chiTiet->ThanhTien(); ?></b></td>
+                            <th>Mã Phiếu</th>
+                            <td><?php echo $itemSP->IdPhieu ?></td>
+                            <th>Loại phiếu</th>
+                            <td><?php echo $itemSP->XuatNhap(); ?></td>
+                            <th>Tổng tiền</th>
+                            <td><?php echo $itemSP->getTongTien(); ?></td>
                         </tr>
-                    <?php
-                    }
-                    ?>
-                    <tr> 
-                        <td colspan="5" class="text-right" > Tổng Tiền</td>
-                        <td><b><?php echo $itemSP->getTongTien(); ?></b></td>
-                    </tr>
-                </table>
+                        <tr>
+                            <th>Nội Dung</th>
+                            <td colspan="5"><?php echo $itemSP->NoiDungPhieu ?></td>
+                        </tr>
+                        <tr>
+                            <th>Ghi chú</th>
+                            <td colspan="5"><?php echo $itemSP->GhiChu ?></td>
+                        </tr>
+                    </table>
+                </fieldset>
+
+            </div>
+            <div class="col-md-12">
+                <fieldset>
+                    <legend>Danh sách thuốc</legend>
+                    <table class="table ">
+                        <tr>
+                            <th>Mã thuốc </th>
+                            <th>Thuốc <?php FormRender::ToolTipElement("Tên thuốc"); ?></th>
+                            <th>Số lượng <?php FormRender::ToolTipElement("Số lượng nhập xuất phiếu"); ?></th>
+                            <th>Số Lô <?php FormRender::ToolTipElement("Số lô sản phẩm"); ?></th>
+                            <th>Hạn sử dụng <?php FormRender::ToolTipElement("Hạn sử dụng"); ?></th>
+                            <th>Giá <?php FormRender::ToolTipElement("Giá nhập xuất phiếu"); ?></th>
+                            <th>Thành tiền <?php FormRender::ToolTipElement("Thành tiền"); ?></th>
+                        </tr>
+                        <?php
+                        foreach ($itemSP->PhieuChiTiet() as $key => $value) {
+                            $_chiTiet = new PhieuXuatNhapChiTiet($value);
+                        ?>
+                            <tr>
+                                <td><?php echo $_chiTiet->SanPham()->Id ?></td>
+                                <td><?php echo $_chiTiet->SanPham()->Name ?></td>
+                                <td><b><?php echo $_chiTiet->SoLuong ?></b></td>
+                                <td><?php echo $_chiTiet->SoLo ?></td>
+                                <td><?php echo $_chiTiet->HanSuDung() ?></td>
+                                <td><b><?php echo $_chiTiet->Price() ?></b></td>
+                                <td><b><?php echo $_chiTiet->ThanhTien(); ?></b></td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
+                        <tr>
+                            <td colspan="6" class="text-right"> <b>Tổng Tiền</b></td>
+                            <td><b><?php echo $itemSP->getTongTien(); ?></b></td>
+                        </tr>
+                    </table>
+                </fieldset>
             </div>
         </div>
     </div>

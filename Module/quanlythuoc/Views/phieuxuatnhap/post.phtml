@@ -20,12 +20,11 @@ $roleDetail = new Model\Role();
 <div class="container-fluid">
     <div class="box box-primary">
         <div class="box-header">
+
             <h3 class="box-title">Thêm Phiếu</h3>
-            <!-- <div class="box-tools">
-                <?php
-                Module\quanlythuoc\Model\btnHtml::btnViewDanhMuc();
-                ?>
-            </div> -->
+            <div class="box-tools">
+                <?php FormRender::HuongDan("huongdanphieunhanxuat"); ?>
+            </div>
         </div>
         <form action="" method="post" onsubmit="return confirm('Bạn có chắc thông tin đã nhập chính xác?')" enctype="multipart/form-data">
             <div class="box-body">
@@ -59,31 +58,7 @@ $roleDetail = new Model\Role();
                                 <button data-toggle="tooltip" data-placement="top" title="Thêm thuốc" type="button" class="btn btn-success" id="btn-addrow">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                 </button>
-                                <a class="btn pull-right btn-primary" target="_self" data-toggle="modal" href='#modal-huongdan'>
-                                    <i class="fa fa-info" aria-hidden="true"></i>
-                                    Hướng dẫn
-                                </a>
-                                <div class="modal fade" id="modal-huongdan">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                <h4 class="modal-title">Hướng dẫn</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <?php
-                                                if (file_exists("public\huongdan\huongdanthemphieu.html"))
-                                                    echo file_get_contents("public\huongdan\huongdanthemphieu.html");
-                                                ?>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a href="/huongdan/put/huongdanthemphieu/" class="btn btn-primary">Sửa</a>
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Thoát</button>
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                             <table class="table table-bordered">
                                 <thead>

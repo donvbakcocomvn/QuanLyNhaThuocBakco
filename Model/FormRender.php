@@ -27,7 +27,46 @@ class FormRender
     {
         return  'data-toggle="tooltip" data-placement="' . $placement . '" title="' . $var . '"';
     }
-    public function renderHTML($tooltip = "")
+    static public function ToolTipElement($var, $placement = "top")
+    {
+?>
+        <i class="fa fa-info" <?php echo self::ToolTip($var, $placement); ?> aria-hidden="true"></i>
+    <?php
+    }
+
+    public static function HuongDan($id)
+    {
+    ?>
+        <a class="btn pull-right btn-primary" target="_self" data-toggle="modal" href='#huongdan<?php echo $id; ?>'>
+            <i class="fa fa-info" aria-hidden="true"></i>
+            Hướng dẫn
+        </a>
+        <div class="modal fade" id="huongdan<?php echo $id; ?>">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Hướng dẫn</h4>
+                    </div>
+                    <div class="modal-body">
+                        <?php
+                        $path = "public\huongdan\\{$id}.html";
+                        if (file_exists($path))
+                            echo file_get_contents($path);
+                        ?>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="/huongdan/put/<?php echo $id; ?>/" class="btn btn-primary">Sửa</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Thoát</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <?php
+    }
+
+    public function renderHTML($tooltip = "", $placement = "top")
     {
         $label = $this->element->getLabel();
         $attrStr =  $this->element->getAttributes();
@@ -36,15 +75,17 @@ class FormRender
             $required = "(*)";
         }
         if ($tooltip != "") {
-?>
-            <i class="fa fa-info" <?php echo self::ToolTip("$tooltip"); ?> aria-hidden="true"></i>
+        ?>
+            <i class="fa fa-info" <?php echo self::ToolTip("$tooltip", $placement); ?> aria-hidden="true"></i>
 <?php
         }
         // data-toggle="tooltip" data-placement="top"
 
         $htmlTemplate = <<<HTML
                 <div class="form-group">
-                                    <label >$label <span style="color:red" >$required</span></label>
+                    <label >$label <span style="color:red" >$required</span>
+                                    $tooltip
+                    </label>
 HTML;
         echo $htmlTemplate;
         $this->element->render();

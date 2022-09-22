@@ -76,7 +76,6 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
         $donthuocdetail = new \Module\quanlythuoc\Model\PhieuXuatNhap();
         $sanpham = new SanPham(\Module\quanlythuoc\Model\PhieuXuatNhap::DSThuocPhieuNhap()[$index]);
         $_sanpham = $sanpham->GetById($sanpham->Id);
-
         $_sanpham["Soluong"] = intval($dataRequest["soLuong"]);
         $_sanpham["NhaSX"] =  $dataRequest["nhaSanXuat"] ?? "";
         $_sanpham["NuocSX"] =  $dataRequest["nuocSanXuat"] ?? "";
@@ -88,7 +87,9 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
         }
         $_sanpham["Gianhap"] = floatval($dataRequest["gia"]);
         $_sanpham["Giaban"] =  floatval($dataRequest["gia"]);
+
         $donthuocdetail->CapNhatSanPham($_sanpham, $index);
+        $_sanpham["ThanhTien"] = $_sanpham["Gianhap"] * $_sanpham["Soluong"];
         $_sanpham["TongTien"] =  \Module\quanlythuoc\Model\PhieuXuatNhap::TongTien();
         echo json_encode($_sanpham, JSON_UNESCAPED_UNICODE);
     }
@@ -250,6 +251,8 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
                 $itemForm["GhiChu"] = $itemHtml["GhiChu"];
                 $itemForm["NgayNhap"] = $itemHtml["NgayNhap"];
                 $phieu->Put($itemForm);
+                $dm = new SanPham();
+                $dm->DongBoThuocNhap();
                 new \Model\Error(\Model\Error::success, "Đã Sửa Phiếu");
                 // \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=danhmuc&action=index");
             }
@@ -278,13 +281,13 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
             \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Phieu_Delete]);
             $Id = \Model\Request::Get("id", null);
             if ($Id) {
-                $DanhMuc = new \Module\quanlythuoc\Model\PhieuXuatNhap();
+                $DanhMuc = new PhieuXuatNhap();
                 $DanhMuc->Delete($Id);
-                new \Model\Error(\Model\Error::success, "Đã Xóa Danh Mục");
+                new \Model\Error(\Model\Error::success, "Đã Xóa Phiếu");
             }
         } catch (\Exception $ex) {
             new \Model\Error(\Model\Error::danger, $ex->getMessage());
         }
-        \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=index");
+        \Model\Common::ToUrl("/quanlythuoc/phieuxuatnhap/index");
     }
 }

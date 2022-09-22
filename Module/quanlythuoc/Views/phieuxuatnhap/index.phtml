@@ -23,34 +23,12 @@
                     <?php
 
                     use Model\Common;
+                    use Model\FormRender;
                     use Module\quanlythuoc\Model\PhieuXuatNhap;
 
                     Module\quanlythuoc\Model\btnHtml::btnThemPhieuXuatNhap();
+                    FormRender::HuongDan("huongdanthemthuoc");
                     ?>
-                    <a class="btn btn-primary" target="_self" data-toggle="modal" href='#modal-id'>
-                        <i class="fa fa-info" aria-hidden="true"></i>
-                    </a>
-                    <!-- <button id="DongBoPhieu" class="btn btn-primary">
-                        <i class="fa fa-refresh" aria-hidden="true"></i>
-                        đồng bộ thuốc theo phiếu
-                    </button> -->
-                    <div class="modal fade" id="modal-id">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    <?php
-                                    if (file_exists("public\huongdan\huongdanthemthuoc.html"))
-                                        echo file_get_contents("public\huongdan\huongdanthemthuoc.html");
-                                    ?>
-                                </div>
-                                <div class="modal-footer">
-                                    <a class="btn btn-success" href="/huongdan/put/huongdanthemthuoc">Sửa</a>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
             <div class="box-body">

@@ -4,6 +4,7 @@ namespace Module\quanlythuoc\Controller;
 
 use Exception;
 use Model\Common;
+use Model\Error;
 use Model\ThongKe;
 use Module\quanlythuoc\Model\PhieuXuatNhap;
 use Module\quanlythuoc\Model\SanPham as ModelSanPham;
@@ -135,6 +136,8 @@ class sanpham extends \Application implements \Controller\IControllerBE
     {
         $sp = new \Module\quanlythuoc\Model\SanPham();
         $sp->DongBoThuocNhap();
+        new Error(Error::success, "Đã đồng bộ xong phiếu xuất nhập.");
+        Common::ToUrl("/quanlythuoc/sanpham/index/");
     }
 
     function detail()

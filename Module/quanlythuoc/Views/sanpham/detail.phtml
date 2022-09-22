@@ -25,7 +25,7 @@ $roleDetail = new Model\Role();
                 <?php
 
                 $itemSP = new SanPham($data);
-                
+
                 ?>
                 <div class="">
                     <div class="col-md-3">
@@ -102,13 +102,13 @@ $roleDetail = new Model\Role();
                     </div>
                     <div class="col-md-4">
                         <label for="">Cơ Chế Tác Dụng</label>
-                        <textarea rows="5" readonly  class="form-control"><?php echo $itemSP->Cochetacdung; ?></textarea>
+                        <textarea rows="5" readonly class="form-control"><?php echo $itemSP->Cochetacdung; ?></textarea>
                     </div>
                     <div class="col-md-4">
                         <label for="">Ghi Chú</label>
                         <textarea rows="5" readonly class="form-control"><?php echo $itemSP->Ghichu; ?></textarea>
                     </div>
-                    
+
                 </div>
             </div>
         </form>
