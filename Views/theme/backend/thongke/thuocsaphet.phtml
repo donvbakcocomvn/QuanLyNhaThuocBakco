@@ -34,7 +34,7 @@ use Model\ThongKe;
                         <tr role="row">
                             <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">STT</th>
                             <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Tên thuốc</th>
-                            
+
                             <th class="sorting text-center" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Còn lại</th>
                             <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Số lô</th>
                             <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Nhà sản xuất</th>
@@ -45,15 +45,20 @@ use Model\ThongKe;
                         <?php
 
                         use Model\Notions;
+                        use Module\quanlythuoc\Model\SanPham;
 
                         $index = 0;
                         $danhsach = $data['items'];
                         // var_dump($danhsach);
-                        foreach ($danhsach as $value) { ?>
+                        foreach ($danhsach as $value) {
+                            $thuoc = new SanPham($value["Id"]);
+                        ?>
+
+
                             <tr role="row" class="even">
                                 <td class="sorting_1 text-center"><?php echo $index + 1 ?></td>
                                 <td><?php echo $value['Name'] ?></td>
-                                <td class="text-center"><?php echo $value['SLHienTai']. " " ."Sản phẩm" ?></td>
+                                <td class="text-center"><?php echo $value['SLHienTai'] ." ". $thuoc->DonViTinh(); ?></td>
                                 <td class="text-center"><?php echo $value['Solo'] ?></td>
                                 <td><?php echo $value['NhaSX'] ?></td>
                                 <td><?php echo Notions::GetById($value['NuocSX']) ?></td>

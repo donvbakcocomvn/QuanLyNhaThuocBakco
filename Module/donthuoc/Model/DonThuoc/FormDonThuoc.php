@@ -255,6 +255,16 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]" . "[]";
 		return new FormRender(new Textbox("", $name, $properties));
 	}
+	function SLHienTai($val = null, $id = null, $index = null)
+	{
+		$properties = self::$properties;
+		$properties["value"] = $val;
+		$properties["id"] = $id;
+		$properties["index"] = $index;
+		$properties[FormRender::Disabled] = "true";
+		$name = self::$ElementsName . "[" . __FUNCTION__ . "]" . "[]";
+		return new FormRender(new Textbox("", $name, $properties));
+	}
 
 	/**
 	 *
@@ -293,7 +303,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 		$option = OptionsService::GetGroupsToSelect("donviquydoi");
 		$option = ["" => ""] + $option;
 
-        return new FormRender(new Select("", $name,$option ,$properties));
+		return new FormRender(new Select("", $name, $option, $properties));
 	}
 
 	/**
@@ -316,7 +326,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 		$option = OptionsService::GetGroupsToSelect("donviquydoi");
 		$option = ["" => ""] + $option;
 
-        return new FormRender(new Select("", $name,$option ,$properties));
+		return new FormRender(new Select("", $name, $option, $properties));
 	}
 
 	/**
@@ -336,9 +346,9 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 		// $properties[FormRender::Required] = "true";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]" . "[]";
 		// $option = OptionsService::GetGroupsToSelect("donviquydoi");
-		$option = OptionsService::GetGroupsToSelect("donviquydoi") ;
+		$option = OptionsService::GetGroupsToSelect("donviquydoi");
 		$option = ["" => ""] + $option;
-        return new FormRender(new Select("", $name,$option ,$properties));
+		return new FormRender(new Select("", $name, $option, $properties));
 	}
 
 	/**

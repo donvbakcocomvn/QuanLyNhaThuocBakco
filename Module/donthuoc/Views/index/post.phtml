@@ -5,6 +5,7 @@
 </ol>
 <?php
 
+use Model\FormRender;
 use Module\benhnhan\Model\BenhNhan;
 use Module\benhnhan\Model\BenhNhan\FormBenhNhan;
 use Module\donthuoc\Model\btnHtml;
@@ -19,77 +20,58 @@ $roleDetail = new Model\Role();
         <div class="box-header">
             <h3 class="box-title">Thêm Toa Thuốc</h3>
             <div class="box-tools">
-                <a class="btn btn-warning" target="_self" data-toggle="modal" href='#modal-id'>
-                    <i class="fa fa-info" aria-hidden="true"></i>
-                </a>
-                <div class="modal fade" id="modal-id">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <?php
-                                if (file_exists("public\huongdan\huongdandonthuoc.html"))
-                                    echo file_get_contents("public\huongdan\huongdandonthuoc.html");
-                                ?>
-                            </div>
-                            <div class="modal-footer">
-                                <a class="btn btn-success" href="/huongdan/huongdandonthuoc/huongdandonthuoc">Sửa hướng dẫn thêm thuốc</a>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng lại</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?php
+                FormRender::HuongDan("huongdandonthuoc");
+                ?>
             </div>
         </div>
-        <div class="box-body">
-            <form action="" method="post" enctype="multipart/form-data">
-                <form action="" method="post" enctype="multipart/form-data">
-                    <div class="box-body">
-                        <?php
-                        $bn = new FormBenhNhan();
-                        $benhnhan = new BenhNhan();
-                        ?>
-                        <div class="">
-                            <div class="col-md-4">
-                                <?php $bn->Id($benhnhan->CreatId())->renderHTML(); ?>
-                            </div>
-                            <div class="col-md-4">
-                                <?php $bn->Name()->renderHTML();  ?>
-                            </div>
-                            <div class="col-md-4">
-                                <?php $bn->Gioitinh()->renderHtml();  ?>
-                            </div>
-                            <div class="col-md-4">
-                                <?php $bn->Ngaysinh()->renderHtml();  ?>
-                            </div>
-                            <div class="col-md-4">
-                                <?php $bn->CMND()->renderHtml();  ?>
-                            </div>
-                            <div class="col-md-4">
-                                <?php $bn->Phone()->renderHtml();  ?>
-                            </div>
-                            <div class="col-md-12">
-                                <?php $bn->Address()->renderHtml();  ?>
-                            </div>
-                            <div class="col-md-4 form-group">
-                                <label for="">Tỉnh</label>
-                                <select id="tinhThanh" name="BenhNhan[TinhThanh]" class="form-control"></select>
-                            </div>
-                            <div class="col-md-4 form-group">
-                                <label for="">Huyện</label>
-                                <select id="quanHuyen" name="BenhNhan[QuanHuyen]" class="form-control"> </select>
+        <form action="" method="post" enctype="multipart/form-data">
+            <div class="box-body">
+                <?php
+                $bn = new FormBenhNhan();
+                $benhnhan = new BenhNhan();
+                ?>
+                <div class="">
+                    <div class="col-md-4">
+                        <?php $bn->Id($benhnhan->CreatId())->renderHTML(); ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php $bn->Name()->renderHTML();  ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php $bn->Gioitinh()->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php $bn->Ngaysinh()->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php $bn->CMND()->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php $bn->Phone()->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-12">
+                        <?php $bn->Address()->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label for="">Tỉnh</label>
+                        <select id="tinhThanh" name="BenhNhan[TinhThanh]" class="form-control"></select>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label for="">Huyện</label>
+                        <select id="quanHuyen" name="BenhNhan[QuanHuyen]" class="form-control"> </select>
 
-                            </div>
-                            <div class="col-md-4 form-group">
-                                <label for="">Xã</label>
-                                <select id="phuongXa" name="BenhNhan[PhuongXa]" class="form-control"> </select>
-                            </div>
-                            <div class="col-md-12 ">
-                                <button class="btn btn-warning" type="reset">Làm Lại</button>
-                                <!-- <button class="btn btn-success">Lưu</button> -->
-                                <button class="btn btn-success" name="LuuThoat">Thêm Mới</button>
-                            </div>
-                        </div>
-                </form>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label for="">Xã</label>
+                        <select id="phuongXa" name="BenhNhan[PhuongXa]" class="form-control"> </select>
+                    </div>
+                    <div class="col-md-12 ">
+                        <button class="btn btn-warning" type="reset">Làm Lại</button>
+                        <!-- <button class="btn btn-success">Lưu</button> -->
+                        <button class="btn btn-success" name="LuuThoat">Thêm Mới</button>
+                    </div>
+                </div>
 
                 <?php
                 $form = new FormDonThuoc();
@@ -139,7 +121,7 @@ $roleDetail = new Model\Role();
                         $i = 0;
                         foreach (DonThuocDetail::DsThuoc() as $mathuoc => $thuoc) {
                             $sanPham = new SanPham($thuoc["Id"] ?? null);
-                            // var_dump($sanPham);
+
                         ?>
                             <tr>
                                 <th style="display: table-cell; vertical-align: middle;">
@@ -153,7 +135,7 @@ $roleDetail = new Model\Role();
                                     ?>
                                 </th>
                                 <th>
-                                    <input type="text" value="ahsdjksa" class="form-control">
+                                    <?php echo $form->SLHienTai($sanPham->SLHienTai ?? "", "SLHienTai" . $i, $i)->render(); ?>
                                 </th>
                                 <th style="width:120px;">
                                     <?php echo $form->SoNgaySDThuoc($thuoc["SoNgaySDThuoc"] ?? "", "SoNgaySD" . $i, $i)->render(); ?>
@@ -190,150 +172,152 @@ $roleDetail = new Model\Role();
                         ?>
                     </tbody>
                 </table>
-                <script>
-                    $(document).ready(function() {
 
-                        // Xử lý dữ liệu sáng, trưa, chiều, số lượng thuốc
-                        $(".changenumber").each(function(index, e) {
-                            // console.log(e.attr("id"));
-                            $(this).change(function(param) {
-                                // console.log($(this).attr("id"));
-                                $($(this).attr("id")).val();
-                                // console.log($("#"+$(this).attr("id")).val());
-                                console.log($("#" + $(this).attr("id")).attr("index"));
-                                var idName = "#" + $(this).attr("id");
-                                var idDVT = "#dvt" + $("#" + $(this).attr("id")).attr("index");
-                                var index = $("#" + $(this).attr("id")).attr("index");
-                                var idThuoc = $(idName).val();
-                                var idSoNgaySD = "#SoNgaySD" + $("#" + $(this).attr("id")).attr("index");
-                                var idSang = "#sang" + $("#" + $(this).attr("id")).attr("index");
-                                var idTrua = "#trua" + $("#" + $(this).attr("id")).attr("index");
-                                var idChieu = "#chieu" + $("#" + $(this).attr("id")).attr("index");
-                                var idSoLuong = "#soluong" + $("#" + $(this).attr("id")).attr("index");
-                                var idGiaBan = "#giaban" + $("#" + $(this).attr("id")).attr("index");
-
-                                $.ajax({
-                                    url: `/donthuoc/index/capnhatsoluong/`,
-                                    type: 'post',
-                                    dataType: 'json',
-                                    contentType: 'application/json; charset=utf-8',
-                                    // data: JSON.stringify(data),
-                                    data: JSON.stringify({
-                                        "index": index,
-                                        "sang": $(idSang).val(),
-                                        "chieu": $(idChieu).val(),
-                                        "trua": $(idTrua).val(),
-                                        "ngaydungthuoc": $(idSoNgaySD).val(),
-                                    }),
-                                    contentType: false,
-                                    processData: false,
-                                    success: function(response) {
-                                        console.log(response);
-                                        $(idGiaBan).val(response.Giaban);
-                                        $(idDVT).val(response.DVTTitle);
-                                        $(idSang).val(response.Sang);
-                                        $(idTrua).val(response.Trua);
-                                        $(idChieu).val(response.Chieu);
-                                        $(idSoNgaySD).val(response.SoNgaySDThuoc);
-                                        $(idSoLuong).val(response.Soluong);
-                                    },
-                                    complete: function() {
-                                        //spinner.close();
-                                    }
-                                });
-                            });
-                        });
-
-                        // Xử lý nút button Cập nhật tổng ngày dùng
-                        $("#btn-capnhattongngaydungthuoc").click(function() {
-                            var TongNgayDungThuoc = $("#TongNgayDungThuoc").val();
-                            $.ajax({
-                                url: `/donthuoc/index/capnhatngaydungthuoc/${TongNgayDungThuoc}/`,
-                                type: 'Get',
-                                // data:{$id : $id},
-                                //dataType: 'json',
-                                contentType: false,
-                                processData: false,
-                                success: function(response) {
-                                    console.log(response);
-                                    window.location.reload();
-                                },
-                                complete: function() {
-                                    //spinner.close();
-                                }
-                            });
-                        })
-
-                        // Thay đổi dữ liệu khi change name thuốc
-                        $(".changename").each(function(index, e) {
-                            // console.log(e.attr("id"));
-                            $(this).change(function(param) {
-                                // console.log($(this).attr("id"));
-                                $($(this).attr("id")).val();
-                                // console.log($("#"+$(this).attr("id")).val());
-                                console.log($("#" + $(this).attr("id")).attr("index"));
-                                var idName = "#" + $(this).attr("id");
-                                var idDVT = "#dvt" + $("#" + $(this).attr("id")).attr("index");
-                                var index = $("#" + $(this).attr("id")).attr("index");
-                                var idThuoc = $(idName).val();
-
-                                var idSoNgaySD = "#SoNgaySD" + $("#" + $(this).attr("id")).attr("index");
-                                var idSang = "#sang" + $("#" + $(this).attr("id")).attr("index");
-                                var idTrua = "#trua" + $("#" + $(this).attr("id")).attr("index");
-                                var idChieu = "#chieu" + $("#" + $(this).attr("id")).attr("index");
-                                var idSoLuong = "#soluong" + $("#" + $(this).attr("id")).attr("index");
-                                var idGiaBan = "#giaban" + $("#" + $(this).attr("id")).attr("index");
-                                var idCachDungThuoc = "#cachdungthuoc" + $("#" + $(this).attr("id")).attr("index");
-                                var idGhiChu = "#ghichu" + $("#" + $(this).attr("id")).attr("index");
-
-                                console.log(idDVT);
-                                console.log(index);
-                                console.log(idThuoc);
-                                console.log(idCachDungThuoc);
-
-                                $.ajax({
-                                    url: `/donthuoc/index/capnhatthuoc/${idThuoc}/${index}/`,
-                                    type: 'Get',
-                                    // data:{$id : $id},
-                                    //dataType: 'json',
-                                    contentType: false,
-                                    processData: false,
-                                    success: function(response) {
-                                        console.log(response);
-                                        // console.log("ádasdsadsdadasdsd");
-                                        if (response.SoNgaySDThuoc == null) {
-                                            alert("Thuốc đã có trong danh sách");
-                                            console.log(idName);
-                                            window.location.reload();
-                                            $(idName).val("");
-                                            console.log($(idName + " option:selected").val());
-                                            return;
-                                        }
-                                        console.log(response);
-                                        $(idGiaBan).val(response.Giaban);
-                                        $(idDVT).val(response.DVTTitle);
-                                        $(idSang).val(response.Sang);
-                                        $(idTrua).val(response.Trua);
-                                        $(idChieu).val(response.Chieu);
-                                        $(idSoNgaySD).val(response.SoNgaySDThuoc);
-                                        $(idSoLuong).val(response.Soluong);
-                                        $(idCachDungThuoc).val(response.CachDung);
-                                        $(idGhiChu).val(response.Ghichu);
-                                    },
-                                    complete: function() {
-                                        //spinner.close();
-                                    }
-                                });
-                            });
-                        });
-                    });
-                </script>
                 <div class="col-md-12 ">
                     <button class="btn btn-warning" type="reset">Làm Lại</button>
                     <!-- <button class="btn btn-success">Lưu</button> -->
                     <button class="btn btn-success" name="LuuThoat">Thêm Toa Thuốc Mới</button>
                 </div>
-        </div>
+            </div>
         </form>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+
+        // Xử lý dữ liệu sáng, trưa, chiều, số lượng thuốc
+        $(".changenumber").each(function(index, e) {
+            // console.log(e.attr("id"));
+            $(this).change(function(param) {
+                // console.log($(this).attr("id"));
+                $($(this).attr("id")).val();
+                // console.log($("#"+$(this).attr("id")).val());
+                console.log($("#" + $(this).attr("id")).attr("index"));
+                var idName = "#" + $(this).attr("id");
+                var idDVT = "#dvt" + $("#" + $(this).attr("id")).attr("index");
+                var index = $("#" + $(this).attr("id")).attr("index");
+                var idThuoc = $(idName).val();
+                var idSoNgaySD = "#SoNgaySD" + $("#" + $(this).attr("id")).attr("index");
+                var idSang = "#sang" + $("#" + $(this).attr("id")).attr("index");
+                var idTrua = "#trua" + $("#" + $(this).attr("id")).attr("index");
+                var idChieu = "#chieu" + $("#" + $(this).attr("id")).attr("index");
+                var idSoLuong = "#soluong" + $("#" + $(this).attr("id")).attr("index");
+                var idGiaBan = "#giaban" + $("#" + $(this).attr("id")).attr("index");
+
+                $.ajax({
+                    url: `/donthuoc/index/capnhatsoluong/`,
+                    type: 'post',
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    // data: JSON.stringify(data),
+                    data: JSON.stringify({
+                        "index": index,
+                        "sang": $(idSang).val(),
+                        "chieu": $(idChieu).val(),
+                        "trua": $(idTrua).val(),
+                        "ngaydungthuoc": $(idSoNgaySD).val(),
+                    }),
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        console.log(response);
+                        $(idGiaBan).val(response.Giaban);
+                        $(idDVT).val(response.DVTTitle);
+                        $(idSang).val(response.Sang);
+                        $(idTrua).val(response.Trua);
+                        $(idChieu).val(response.Chieu);
+                        $(idSoNgaySD).val(response.SoNgaySDThuoc);
+                        $(idSoLuong).val(response.Soluong);
+                    },
+                    complete: function() {
+                        //spinner.close();
+                    }
+                });
+            });
+        });
+
+        // Xử lý nút button Cập nhật tổng ngày dùng
+        $("#btn-capnhattongngaydungthuoc").click(function() {
+            var TongNgayDungThuoc = $("#TongNgayDungThuoc").val();
+            $.ajax({
+                url: `/donthuoc/index/capnhatngaydungthuoc/${TongNgayDungThuoc}/`,
+                type: 'Get',
+                // data:{$id : $id},
+                //dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    console.log(response);
+                    window.location.reload();
+                },
+                complete: function() {
+                    //spinner.close();
+                }
+            });
+        })
+
+        // Thay đổi dữ liệu khi change name thuốc
+        $(".changename").each(function(index, e) {
+            // console.log(e.attr("id"));
+            $(this).change(function(param) {
+                // console.log($(this).attr("id"));
+                $($(this).attr("id")).val();
+                // console.log($("#"+$(this).attr("id")).val());
+                // console.log($("#" + $(this).attr("id")).attr("index"));
+                var index = $("#" + $(this).attr("id")).attr("index");
+                var idName = "#" + $(this).attr("id");
+                var idDVT = "#dvt" + index;
+                var idThuoc = $(idName).val();
+                var idSoNgaySD = "#SoNgaySD" + index;
+                var idSang = "#sang" + index;
+                var idTrua = "#trua" + index;
+                var idChieu = "#chieu" + index;
+                var idSoLuong = "#soluong" + index;
+                var idSLHienTai = "#SLHienTai" + index;
+                var idGiaBan = "#giaban" + index;
+                var idCachDungThuoc = "#cachdungthuoc" + index;
+                var idGhiChu = "#ghichu" + index;
+
+                console.log(idDVT);
+                console.log(index);
+                console.log(idThuoc);
+                console.log(idCachDungThuoc);
+
+                $.ajax({
+                    url: `/donthuoc/index/capnhatthuoc/${idThuoc}/${index}/`,
+                    type: 'Get',
+                    // data:{$id : $id},
+                    //dataType: 'json',
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        console.log(response);
+                        // console.log("ádasdsadsdadasdsd");
+                        if (response.SoNgaySDThuoc == null) {
+                            alert("Thuốc đã có trong danh sách");
+                            console.log(idName);
+                            window.location.reload();
+                            $(idName).val("");
+                            console.log($(idName + " option:selected").val());
+                            return;
+                        }
+                        console.log(response);
+                        $(idGiaBan).val(response.Giaban);
+                        $(idDVT).val(response.DVTTitle);
+                        $(idSang).val(response.Sang);
+                        $(idTrua).val(response.Trua);
+                        $(idChieu).val(response.Chieu);
+                        $(idSoNgaySD).val(response.SoNgaySDThuoc);
+                        $(idSoLuong).val(response.Soluong);
+                        $(idCachDungThuoc).val(response.CachDung);
+                        $(idGhiChu).val(response.Ghichu);
+                        $(idSLHienTai).val(response.SLHienTai);
+                    },
+                    complete: function() {
+                        //spinner.close();
+                    }
+                });
+            });
+        });
+    });
+</script>
