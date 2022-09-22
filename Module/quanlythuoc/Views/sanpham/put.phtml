@@ -15,6 +15,27 @@ $roleDetail = new Model\Role();
     <div class="box box-primary">
         <div class="box-header">
             <h3 class="box-title">Sửa Thuốc</h3>
+            <div class="box-tools">
+            <a class="btn btn-warning" target="_self" data-toggle="modal" href='#modal-id'>
+                        <i class="fa fa-info" aria-hidden="true"></i>
+                    </a>
+                    <div class="modal fade" id="modal-id">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <?php
+                                    if (file_exists("public\huongdan\huongdanthemthuoc.html"))
+                                        echo file_get_contents("public\huongdan\huongdanthemthuoc.html");
+                                    ?>
+                                </div>
+                                <div class="modal-footer">
+                                    <a class="btn btn-success" href="/huongdan/huongdanthuoc/huongdanthemthuoc">Sửa hướng dẫn thêm thuốc</a>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng lại</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
         </div>
         <!-- <div class="box-body"> -->
         <form action="" method="post" enctype="multipart/form-data">
@@ -24,56 +45,57 @@ $roleDetail = new Model\Role();
 
                 // var_dump($data);
                 $item = new SanPham($items);
+                // var_dump($item);
                 ?>
                 <div class="">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <?php $sp->Id($item->Id)->renderHtml(); ?>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <?php $sp->Idloaithuoc($item->Idloaithuoc)->renderHtml();  ?>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <?php $sp->Name($item->Name)->renderHtml();  ?>
                     </div>
-                    <div class="col-md-3">
+                    <!-- <div class="col-md-4">
                         <?php $sp->Namebietduoc($item->Namebietduoc)->renderHtml();  ?>
-                    </div>
-                    <div class="col-md-3">
+                    </div> -->
+                    <div class="col-md-4">
                         <?php $sp->CachDung($item->CachDung)->renderHtml();  ?>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <?php $sp->Soluong($item->Soluong)->renderHtml();  ?>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <?php $sp->NhaSX($item->NhaSX)->renderHtml();  ?>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <?php $sp->NuocSX($item->NuocSX)->renderHtml();  ?>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <?php $sp->Solo($item->Solo)->renderHtml();  ?>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <?php $sp->Gianhap($item->Gianhap)->renderHtml();  ?>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <?php $sp->Giaban($item->Giaban)->renderHtml();  ?>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <?php $sp->DVQuyDoi($item->DVQuyDoi)->renderHtml();  ?>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <?php $sp->DVT($item->DVT)->renderHtml();  ?>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <?php $sp->Canhbao($item->Canhbao)->renderHtml();  ?>
                     </div>
-                    <div class="col-md-3">
-                        <?php
+                    <div class="col-md-4">
+                        <?php 
                         $sp->Ngaysx($item->Ngaysx)->renderHtml();  ?>
                     </div>
-                    <div class="col-md-3">
-                        <?php
+                    <div class="col-md-4">
+                        <?php 
                         $sp->HSD($item->HSD)->renderHtml();  ?>
                     </div>
                     <div class="col-md-4">

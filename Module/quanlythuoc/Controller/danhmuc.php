@@ -2,6 +2,7 @@
 
 namespace Module\quanlythuoc\Controller;
 
+use Model\Common;
 use Module\quanlythuoc\Model\DanhMuc as ModelDanhMuc;
 use Module\quanlythuoc\Model\DanhMuc\FormDanhMuc;
 use Module\quanlythuoc\Permission;
@@ -55,13 +56,13 @@ class danhmuc extends \Application implements \Controller\IControllerBE
                 $itemForm = \Model\Request::Post(FormDanhMuc::$ElementsName, null);
                 $itemForm["Id"] = $itemForm["Id"];
                 $itemForm["Name"] = $itemForm["Name"];
-                $itemForm["Link"] = $itemForm["Link"];
+                $itemForm["Link"] = $itemForm["Link"] ? Common::getslug($itemForm["Link"]) : Common::getslug($itemForm["Name"]);
                 $itemForm["GhiChu"] = $itemForm["GhiChu"];
 
                 $danhmuc = new ModelDanhMuc();
-                $danhmuc->Post($itemForm);
+                // $danhmuc->Post($itemForm);
                 // \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=danhmuc&action=put&id=" . $itemForm["Code"]);
-                \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=danhmuc&action=index");
+                // \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=danhmuc&action=index");
 
             }
         } catch (\Exception $exc) {

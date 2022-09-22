@@ -1,9 +1,7 @@
-<?php
-?>
 <ol class="breadcrumb">
     <li><a href="/backend/"><i class="fa fa-dashboard"></i>&nbsp; Dashboard</a></li>
-    <li><a href="/backend/nhapkho/"><i class="fa fa-dashboard"></i>&nbsp; Danh sách phiếu nhập kho</a></li>
-    <li class="active">Danh sách phiếu nhập kho</li>
+    <li><a href="/backend/xuatkho/"><i class="fa fa-dashboard"></i>&nbsp; Danh sách phiếu xuất kho</a></li>
+    <li class="active">Danh sách phiếu xuất kho</li>
 </ol>
 <div class="container-fluid">
     <section class="content">
@@ -11,7 +9,7 @@
             <div class="col-md-12">
                 <div class="box box-warning">
                     <div class="box-header">
-                        <form method="get" action="/backend/dsnhapchitiet/">
+                        <form method="get" action="/backend/dsxuatchitiet/">
                             <div class="form-group d-flex">
                                 <label class="btn btn-default"><input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox"><i class="fa fa-share" aria-hidden="true"></class=></i></label>
                                 <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập tên thuốc để tìm kiếm">
@@ -20,27 +18,9 @@
                                 </button>
                             </div>
                         </form>
-                        <!-- <input id="keyword" class="form-control" name="keyword" autocomplete="off" type="" placeholder="Nhập tên thuốc để tìm kiếm">
-                        <div id="searchresult"></div> -->
-                        <!-- <form action="">
-                            <div class="row">
-                                <div class="col-md-3 form-group">
-                                    <label>Từ Ngày</label>
-                                    <input type="date" value="<?php echo $fromDate ?>" name="fromDate" class="form-control">
-                                </div>
-                                <div class="col-md-3 form-group">
-                                    <label>Đến Ngày</label>
-                                    <input type="date" value="<?php echo $toDate ?>" name="toDate" class="form-control">
-                                </div>
-                                <div class="col-md-3 form-group">
-                                    <button style="margin-top: 25px;" class="btn btn-primary">Lọc</button>
-                                </div>
-                                
-                            </div>
-                        </form> -->
-                        <h3 style="text-align: center;">Lịch sử nhập thuốc chi tiết</h3>
-                        <a class="btn btn-warning" href="/thongke/ExportLichSuNhap">
-                            <i class="fa fa-filter"></i> Export lịch sử nhập</a>
+                        <h3 style="text-align: center;">Lịch sử xuất thuốc chi tiết</h3>
+                            <a class="btn btn-warning" href="/thongke/ExportDSPhieuXuat">
+                                <i class="fa fa-filter"></i> Export lịch sử nhập</a>
                     </div>
                     <div class="box-body">
                         <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
@@ -74,10 +54,9 @@
                                             use Module\quanlythuoc\Model\SanPham;
 
                                             $index = 0;
-                                            $thongke = ThongKe::LichSuNhapXuatChiTiet(1);
+                                            $thongke = ThongKe::LichSuNhapXuatChiTiet(-1);
                                             $sanpham = new SanPham();
-                                            var_dump($thongke);
-                                            // echo $thongke['IdThuoc'];
+                                            // var_dump($thongke);
                                             foreach ($thongke as $value) { ?>
                                                 <?php
                                                 ?>
@@ -98,6 +77,27 @@
                                             ?>
                                         </tbody>
                                     </table>
+                                    <!-- <div class="box-footer">
+                                        <div class="d-flex">
+                                            <?php
+                                            \Model\FormCommon::Select(
+                                                "",
+                                                "",
+                                                [10, 20, 50, 100],
+                                                [
+                                                    "style" => "max-width:150px;",
+                                                    "class" => "form-control",
+                                                    "value" => $pageNumber,
+                                                    "onchange" => "SoDongHienThi(this.value)",
+                                                ]
+                                            )->render();
+                                            ?>
+                                            <?php
+                                            $linkPhanTrang = "/index.php?controller=backend&action=dsnhapchitiet&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
+                                            echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
+                                            ?>
+                                        </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -109,25 +109,9 @@
 
 </div>
 <script type="text/javascript">
-    $(document).ready(function() {
-        $("#keyword").keyup(function() {
-            var input = $(this).val();
-            // alert(input);
-            if (input != "") {
-                $.ajax({
-                    // type: "method",
-                    url: "/backend/livesearch/",
-                    method: "POST",
-                    data: {
-                        input: input
-                    },
-                    success: function(data) {
-                        $("#searchresult").html(data);
-                    }
-                });
-            } else {
-                $("#searchresult").css("display", "none");
-            }
-        });
-    });
+    var SoDongHienThi = function(evalue) {
+        var linkPhanTrang = '/index.php?controller=backend&action=dsnhapchitiet&indexPage=1&pageNumber=[j]';
+        linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
+        window.location.href = linkPhanTrang;
+    }
 </script>

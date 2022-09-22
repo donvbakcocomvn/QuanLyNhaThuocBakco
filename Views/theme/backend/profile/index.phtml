@@ -1,24 +1,24 @@
-<ol class="breadcrumb" >
-    <li><a href="/backend" >Dashboard</a></li>
+<ol class="breadcrumb">
+    <li><a href="/backend">Dashboard</a></li>
     <li> Tài Khoản </li>
 </ol>
 <?php
 $modelUser = Model\User::CurentUser();
 ?>
-<div class="container-fluid" >
-    <div class="row" >
-        <div class="col-md-12" >
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
             <div role="tabpanel">
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active">
                         <a href="#home" target="_self" aria-controls="home" role="tab" data-toggle="tab">
-                            <i class="fa fa-info" ></i>
+                            <i class="fa fa-info"></i>
                             Thông tin chung
                         </a>
                     </li>
                     <li role="presentation">
                         <a href="#tab" target="_self" aria-controls="tab" role="tab" data-toggle="tab">
-                            <i class="fa fa-shield" ></i>
+                            <i class="fa fa-shield"></i>
                             Bảo Mật</a>
                     </li>
                 </ul>
@@ -27,45 +27,48 @@ $modelUser = Model\User::CurentUser();
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="home">
                         <form action="" method="POST">
-                            <div class="box box-default" >
-                                <div class="box-header" >
-                                    <h3 class="box-title" >Thông Tin Chung</h3>
-                                    <div class="box-tools" >
+                            <div class="box box-default">
+                                <div class="box-header">
+                                    <h3 class="box-title">Thông Tin Chung</h3>
+                                    <div class="box-tools">
                                         <!--<a href="#" class="btn btn-success" ><i class="fa fa-plus" ></i></a>-->
                                     </div>
                                 </div>
-                                <div class="box-body" >
+                                <div class="box-body">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="text-center">
-                                                <img onerror="this.src='/public/no-user.jpg'"  style="max-height: 200px;" class="img center-block img-responsive" id="imgContent" src="<?php echo $modelUser->UserInfor(Model\Users\UserInfor::HinhNhanVien)->Val; ?>" >
+                                                <img onerror="this.src='/public/no-user.jpg'" style="max-height: 200px;" class="img center-block img-responsive" id="imgContent" src="<?php echo $modelUser->UserInfor(Model\Users\UserInfor::HinhNhanVien)->Val; ?>">
                                                 <?php
                                                 \Model\Users\FormUserInfor::HinhNhanVien($modelUser->UserInfor("HinhNhanVien")->Val)->render();
                                                 ?>
-                                                <button type="button" onclick="BrowseServer('idHinhNhanVien', 'imgContent')" >Chọn Hình</button>
+                                                <button type="button" onclick="BrowseServer('idHinhNhanVien', 'imgContent')">Chọn Hình</button>
                                             </div>
                                         </div>
                                         <div class="col-md-8">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <?php
-                                                    \Model\Users\FormUser::Id($modelUser->Id)->render();
-                                                    \Model\Users\FormUser::Username($modelUser->Username)->renderHTML();
-                                                    \Model\Users\FormUser::Name($modelUser->Name)->renderHTML();
-                                                    \Model\Users\FormUser::Email($modelUser->Email)->renderHTML();
-                                                    \Model\Users\FormUserInfor::HoChieu($modelUser->UserInfor("HoChieu")->Val)->renderHTML();
-                                                    ?>
+                                            <fieldset>
+                                                <legend>Thông Tin Chung</legend>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <?php
+                                                        \Model\Users\FormUser::Id($modelUser->Id)->render();
+                                                        \Model\Users\FormUser::Username($modelUser->Username)->renderHTML();
+                                                        \Model\Users\FormUser::Name($modelUser->Name)->renderHTML();
+                                                        \Model\Users\FormUser::Email($modelUser->Email)->renderHTML();
+                                                        \Model\Users\FormUserInfor::HoChieu($modelUser->UserInfor("HoChieu")->Val)->renderHTML();
+                                                        ?>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <?php
+                                                        \Model\Users\FormUser::BOD($modelUser->BODFomatDB())->renderHTML();
+                                                        \Model\Users\FormUserInfor::CCCD($modelUser->UserInfor("CCCD")->Val)->renderHTML();
+                                                        \Model\Users\FormUserInfor::CMND($modelUser->UserInfor("CMND")->Val)->renderHTML();
+                                                        \Model\Users\FormUserInfor::Phone($modelUser->UserInfor("Phone")->Val)->renderHTML();
+                                                        ?>
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <?php
-                                                    \Model\Users\FormUser::BOD($modelUser->BODFomatDB())->renderHTML();
-                                                    \Model\Users\FormUserInfor::CCCD($modelUser->UserInfor("CCCD")->Val)->renderHTML();
-                                                    \Model\Users\FormUserInfor::CMND($modelUser->UserInfor("CMND")->Val)->renderHTML();
-                                                    \Model\Users\FormUserInfor::Phone($modelUser->UserInfor("Phone")->Val)->renderHTML();
-                                                    ?>
-                                                </div>
-                                            </div>
                                         </div>
+                                        </fieldset>
 
                                     </div>
                                     <div class="col-md-12">
@@ -75,7 +78,7 @@ $modelUser = Model\User::CurentUser();
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="row">
-                                                    <fieldset>
+                                                    <!-- <fieldset>
                                                         <legend>Thông Tin Chung</legend>
                                                         <div class="row">
                                                             <div class="col-md-3">
@@ -101,13 +104,13 @@ $modelUser = Model\User::CurentUser();
                                                             </div>
                                                         </div>
 
-                                                    </fieldset>
+                                                    </fieldset> -->
                                                 </div>
                                             </div>
 
                                             <div class="col-md-12">
                                                 <div class="row">
-                                                    <fieldset>
+                                                    <!-- <fieldset>
                                                         <legend>Thông Tin Hợp Đồng</legend>
                                                         <div class="row">
                                                             <div class="col-md-3">
@@ -131,14 +134,14 @@ $modelUser = Model\User::CurentUser();
                                                                 ?>
                                                             </div> 
                                                         </div>
-                                                    </fieldset>
+                                                    </fieldset> -->
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="" >
-                                            <button class="btn btn-primary"  type="reset" >Làm Lại</button>
-                                            <button class="btn btn-success" >Lưu</button>
-                                            <button class="btn btn-success" name="LuuThoat" >Lưu & Thoát</button>
+                                        <div class="">
+                                            <button class="btn btn-primary" type="reset">Làm Lại</button>
+                                            <button class="btn btn-success">Lưu</button>
+                                            <button class="btn btn-success" name="LuuThoat">Lưu & Thoát</button>
                                         </div>
                                     </div>
                                 </div>
@@ -150,35 +153,38 @@ $modelUser = Model\User::CurentUser();
 
                     <div role="tabpanel" class="tab-pane" id="tab">
                         <form method="POST" action="">
-                            <div class="box box-default" >
-                                <div class="box-header" >
-                                    <h3 class="box-title" >Bảo Mật</h3>
+                            <div class="box box-default">
+                                <div class="box-header">
+                                    <h3 class="box-title">Cập nhật thông tin bảo mật</h3>
                                 </div>
-                                <div class="box-body" >
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="" >
-                                                <div class="form-group" >
-                                                    <label>Mật Khẩu Cũ</label>
-                                                    <input required="" class="form-control" name="Password" value="" type="password"  >
-                                                </div>
-                                                <div class="form-group" >
-                                                    <label>Mật Khẩu Mới</label>
-                                                    <input required="" class="form-control" name="NewPassword" value="" type="password"  >
-                                                </div>
-                                                <div class="form-group" >
-                                                    <label>Nhập Lại Mật Khẩu</label>
-                                                    <input required="" class="form-control" name="RePassword" value="" type="password"  >
-                                                </div>
-
+                                <fieldset>
+                                    <legend>Bảo mật</legend>
+                                        <div class="box-body">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="">
+                                                        <div class="form-group">
+                                                            <label>Mật Khẩu Cũ</label>
+                                                            <input required="" class="form-control" name="Password" value="" type="password">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Mật Khẩu Mới</label>
+                                                            <input required="" class="form-control" name="NewPassword" value="" type="password">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Nhập Lại Mật Khẩu</label>
+                                                            <input required="" class="form-control" name="RePassword" value="" type="password">
+                                                        </div>
+                                                    </div>
                                             </div>
                                         </div>
                                     </div>
+                                    </fieldset>
 
-                                </div>
-                                <div class="box-footer" >
-                                    <button class="btn btn-success" >Lưu</button>
-                                </div>
+
+                                    <div class="box-footer">
+                                        <button class="btn btn-success">Lưu thông tin</button>
+                                    </div>
                             </div>
                         </form>
                     </div>

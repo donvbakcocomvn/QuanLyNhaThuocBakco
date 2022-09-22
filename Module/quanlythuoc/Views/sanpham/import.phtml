@@ -9,16 +9,32 @@
     <section class="col-md-6">
         <div class="box box-solid ">
             <div class="box-header ">
-                            <i class="fa fa-download"></i>
+                <i class="fa fa-download"></i>
                 <h3 class="box-title">Import Thuốc </h3>
                 <div class="box-tools">
-                <div class="box-tools">
                     <?php
-
                     use Module\quanlythuoc\Model\SanPham;
                     // Module\quanlythuoc\Model\btnHtml::btnViewSanPham();
                     ?>
-                </div>
+                    <a class="btn btn-warning" target="_self" data-toggle="modal" href='#modal-id'>
+                        <i class="fa fa-info" aria-hidden="true"></i>
+                    </a>
+                    <div class="modal fade" id="modal-id">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <?php
+                                    if (file_exists("public\huongdan\huongdanthemthuoc.html"))
+                                        echo file_get_contents("public\huongdan\huongdanthemthuoc.html");
+                                    ?>
+                                </div>
+                                <div class="modal-footer">
+                                    <a class="btn btn-success" href="/huongdan/huongdanthuoc/huongdanthemthuoc">Sửa hướng dẫn thêm thuốc</a>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng lại</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="box-body">
@@ -35,7 +51,7 @@
                                 <input type="file" style="visibility: hidden;" name="import_file" />
                             </label>
                             <br>
-                            <input type="submit" name="submit" id="import" class="btn btn-success" value="Import File"/>
+                            <input type="submit" name="submit" id="import" class="btn btn-success" value="Import File" />
 
                         </form>
                     </div>
@@ -44,4 +60,3 @@
         </div>
     </section>
 </div>
-

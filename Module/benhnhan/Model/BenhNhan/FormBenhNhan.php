@@ -72,12 +72,12 @@ class FormBenhNhan implements iFormBenhNhan
         function Ngaysinh($val = null)
         {
                 $properties = self::$properties;
-                $properties["value"] = $val != null ? Date("Y-m-d", strtotime($val)) : "";
+                $properties["value"] = $val;
                 // $properties[FormRender::Required] = "true";
-                $properties["type"] = "date";
-		$properties["max"] = date("Y-m-d", time());
+                // $properties["type"] = "date";
+		// $properties["max"] = date("Y-m-d", time());
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-                return new FormRender(new Element\DateTime("Ngày Sinh", $name, $properties));
+                return new FormRender(new Element\Textbox("Ngày Sinh", $name, $properties));
         }
 
         /**

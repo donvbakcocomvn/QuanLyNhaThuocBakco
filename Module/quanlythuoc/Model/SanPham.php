@@ -148,10 +148,15 @@ class SanPham extends \Model\DB implements \Model\IModelService
         $spreadsheet->getActiveSheet()->getColumnDimension('O')->setAutoSize(TRUE);
         $spreadsheet->getActiveSheet()->getColumnDimension('P')->setAutoSize(TRUE);
         $spreadsheet->getActiveSheet()->getColumnDimension('Q')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('R')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('S')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('T')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('U')->setAutoSize(TRUE);
+        $spreadsheet->getActiveSheet()->getColumnDimension('V')->setAutoSize(TRUE);
 
         // Set kiểu chữ
         $spreadsheet->getDefaultStyle()->getFont()->setName('Times New Roman');
-        // $spreadsheet->getActiveSheet()->getDefaultRowDimension()->setRowHeight(50);
+        $spreadsheet->getDefaultStyle()->getFont()->setSize('14');
         foreach ($data as $row => $colums) {
             $colIndex = 0;
             foreach ($colums as  $value) {
@@ -213,9 +218,9 @@ class SanPham extends \Model\DB implements \Model\IModelService
         Common::ToUrl("/{$fileName}");
     }
 
-    public function GetAllThuoc()
+    public function GetThuoc()
     {
-        $sql = "SELECT * FROM `lap1_qlthuoc_thuoc`";
+        $sql = "SELECT `Id`, `Idloaithuoc`, `Name`, `Solo`, `Gianhap`, `Giaban`, `DVT`, `Ngaysx`, `HSD`, `Tacdung`, `Cochetacdung`, `Ghichu`, `Soluong`, `SLXuat`, `SLNhap`, `SLHienTai`,`Canhbao`, `NhaSX`, `NuocSX`, `CachDung`,`CreateRecord` FROM `lap1_qlthuoc_thuoc`";
         $result = $this->GetRows($sql);
         return $result;
     }
@@ -269,13 +274,14 @@ class SanPham extends \Model\DB implements \Model\IModelService
     }
 
     // Tạo Mã Thuốc
-    function CreatId()
+    static function CreatId()
     {
+        $sp = new SanPham();
         $sql = " SELECT COUNT(*) AS `Tong` FROM `lap1_qlthuoc_thuoc` WHERE 1";
-        $result = $this->GetRow($sql);
+        $result = $sp->GetRow($sql);
         $tong = $result["Tong"] + 1;
         $Id = Common::NumberToStringFomatZero($tong, 4);
-        $IdCreate = "MT" . $Id;
+        $IdCreate = "MT". "-" . $Id;
         return $IdCreate;
     }
 

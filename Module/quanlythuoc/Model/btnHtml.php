@@ -121,7 +121,7 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-success" href="/index.php?module=quanlythuoc&controller=danhmuc&action=post">
+        <a class="btn btn-primary" href="/index.php?module=quanlythuoc&controller=danhmuc&action=post">
             <i class="fa fa-plus"></i> Thêm mới</a>
     <?php
     }
