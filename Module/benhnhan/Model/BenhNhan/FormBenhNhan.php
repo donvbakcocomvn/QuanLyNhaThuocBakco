@@ -38,10 +38,12 @@ class FormBenhNhan implements iFormBenhNhan
          *
          * @return mixed
          */
-        function Name($val = null)
+        function Name($val = null, $id = null)
         {
                 $properties = self::$properties;
                 $properties["value"] = $val;
+                $properties["class"] = " form-control changeinfo";
+                $properties["id"] = $id;
                 $properties[FormRender::Required] = "true";
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
                 return new FormRender(new Element\Textbox("Tên Khách Hàng", $name, $properties));
@@ -57,7 +59,8 @@ class FormBenhNhan implements iFormBenhNhan
         {
                 $properties = self::$properties;
                 $properties["value"] = $val;
-                $properties["class"] = "select2 form-control";
+                $properties["id"] = __FUNCTION__;
+                $properties["class"] = " form-control";
                 $options = OptionsService::GetGroupsToSelect("gioitinh");
                 $option1 =  ["" => "--- Chọn giới tính ---"];
 		$options = $option1 + $options;
@@ -76,6 +79,7 @@ class FormBenhNhan implements iFormBenhNhan
         {
                 $properties = self::$properties;
                 $properties["value"] = $val;
+                $properties["id"] = __FUNCTION__;
                 // $properties[FormRender::Required] = "true";
                 // $properties["type"] = "date";
 		// $properties["max"] = date("Y-m-d", time());
@@ -87,6 +91,7 @@ class FormBenhNhan implements iFormBenhNhan
         {
                 $properties = self::$properties;
                 $properties["value"] = $val;
+                $properties["id"] = __FUNCTION__;
                 // $properties[FormRender::Required] = "true";
                 // $properties["type"] = "date";
 		// $properties["max"] = date("Y-m-d", time());
@@ -98,9 +103,10 @@ class FormBenhNhan implements iFormBenhNhan
         {
                 $properties = self::$properties;
                 $properties["value"] = $val;
-                // $properties[FormRender::Required] = "true";
-                // $properties["type"] = "date";
-		// $properties["max"] = date("Y-m-d", time());
+                $properties["id"] = __FUNCTION__;
+                $properties[FormRender::Required] = "true";
+                $properties["type"] = "number";
+		$properties["max"] = date("Y", time());
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
                 return new FormRender(new Element\Textbox("Năm", $name, $properties));
         }
@@ -115,6 +121,7 @@ class FormBenhNhan implements iFormBenhNhan
         {
                 $properties = self::$properties;
                 $properties["value"] = $val;
+                $properties["id"] = __FUNCTION__;
                 // $properties[FormRender::Required] = "true";
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
                 return new FormRender(new Element\Textbox("CMND/CCCD", $name, $properties));
@@ -146,6 +153,7 @@ class FormBenhNhan implements iFormBenhNhan
         {
                 $properties = self::$properties;
                 $properties["value"] = $val;
+                $properties["id"] = __FUNCTION__;
                 $properties[FormRender::Required] = "true";
                 $options = Locations::ToSelect();
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
@@ -158,10 +166,12 @@ class FormBenhNhan implements iFormBenhNhan
          *
          * @return mixed
          */
-        function Phone($val = null)
+        function Phone($val = null, $id = null)
         {
                 $properties = self::$properties;
                 $properties["value"] = $val;
+                $properties["class"] = " form-control changeinfo";
+                $properties["id"] = $id;
                 $properties["type"] = "tel";
                 // $properties[FormRender::Required] = "true";
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";

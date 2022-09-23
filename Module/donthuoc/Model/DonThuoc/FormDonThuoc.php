@@ -36,7 +36,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 		$properties["readonly"] = $val;
 		$properties[FormRender::Required] = "true";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-		return new FormRender(new Textbox("", $name, $properties));
+		return new FormRender(new Textbox("Mã đơn thuốc", $name, $properties));
 	}
 
 	/**
@@ -120,10 +120,10 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 	function ThoiGianKham($val = null)
 	{
 		$properties = self::$properties;
-		$properties["value"] = date("Y-d-m");
+		$properties["value"] = $val;
 		$properties[FormRender::Readonly] = "true";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-		return new FormRender(new Date("Ngày Tạo", $name, $properties));
+		return new FormRender(new Textbox("Ngày Tạo", $name, $properties));
 	}
 
 	function ThoiGianKhamCopy($val = null)
@@ -163,8 +163,10 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 		$properties["data-value"] = $val;
 		$properties[FormRender::Required] = "true";
 		$option = OptionsService::GetGroupsToSelect("optiondonthuoc");
+		$option1 =  ["" => "--- Chọn loại đơn ---"];
+		$options = $option1 + $option;
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-		return new FormRender(new Select("Thuộc Đơn Thuốc", $name, $option, $properties));
+		return new FormRender(new Select("Thuộc Đơn Thuốc", $name, $options, $properties));
 	}
 
 	/**

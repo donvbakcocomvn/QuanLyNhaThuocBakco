@@ -71,12 +71,12 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
     public static function DsThuoc()
     {
         if (!isset($_SESSION["DetailThuoc"])) {
-            for ($i = 0; $i < 20; $i++) {
+            for ($i = 0; $i < 5; $i++) {
                 $_SESSION["DetailThuoc"][] = [];
             }
         }
         if (count($_SESSION["DetailThuoc"]) == 0) {
-            for ($i = 0; $i < 20; $i++) {
+            for ($i = 0; $i < 5; $i++) {
                 $_SESSION["DetailThuoc"][] = [];
             }
         }

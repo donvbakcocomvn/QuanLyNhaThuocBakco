@@ -37,9 +37,8 @@ class FormRender
     public static function HuongDan($id, $title = "Hướng dẫn")
     {
     ?>
-        <a class="btn pull-right btn-primary" target="_self" data-toggle="modal" href='#huongdan<?php echo $id; ?>'>
+        <a class="btn btn-warning" target="_self" data-toggle="modal" href='#huongdan<?php echo $id; ?>'>
             <i class="fa fa-info" aria-hidden="true"></i>
-            
             <?php echo $title ?>
         </a>
         <div class="modal fade" id="huongdan<?php echo $id; ?>">
