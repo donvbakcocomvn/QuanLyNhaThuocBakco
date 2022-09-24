@@ -138,7 +138,7 @@ class DB
                 $strsql .= "`{$col}`= '{$val}',";
         }
         $strsql = substr($strsql, 0, -1);
-        $sql = "UPDATE `{$TableName}` SET {$strsql} WHERE {$where}";
+        echo $sql = "UPDATE `{$TableName}` SET {$strsql} WHERE {$where}";
         $res = self::$Connect->query($sql);
         if (!$res) {
             if (self::$Debug == TRUE)
@@ -150,6 +150,7 @@ class DB
 
     function UpdateRow($model)
     {
+        // self::$Debug = true;
         $where = " `Id` = '{$model["Id"]}' ";
         return $this->Update($model, $where);
     }

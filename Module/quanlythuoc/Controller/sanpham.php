@@ -78,7 +78,7 @@ class sanpham extends \Application implements \Controller\IControllerBE
                 $dataSheet0 = $spreadsheet->getSheet(0)->toArray();
                 $sanpham = new ModelSanPham();
                 foreach ($dataSheet0 as $index => $item) {
-                    // var_dump($item[$index]);
+                    // var_dump($item[1]);
                     if ($index > 0) {
                         $item[7] = str_replace("/", "-", $item[7]);
                         $item[8] = str_replace("/", "-", $item[8]);

@@ -17,7 +17,7 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-info" href="/index.php?module=donthuoc&controller=index&action=viewdonthuoc&id=<?php echo $id; ?>">
+        <a class="btn btn-primary" href="/index.php?module=donthuoc&controller=index&action=viewdonthuoc&id=<?php echo $id; ?>">
             Chi tiết
         </a>
     <?php
@@ -40,7 +40,7 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-primary" href="/index.php?module=donthuoc&controller=index&action=post">
+        <a class="btn btn-primary" href="/index.php?module=donthuoc&controller=index&action=post&isnew=1">
             <i class="fa fa-plus"></i> Thêm Toa Thuốc Mới</a>
     <?php
     }
@@ -63,7 +63,7 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-success" href="/index.php?module=donthuoc&controller=index&action=put&id=<?php echo $id; ?>">
+        <a class="btn btn-success no-print" href="/index.php?module=donthuoc&controller=index&action=put&id=<?php echo $id; ?>">
             Sửa
         </a>
     <?php

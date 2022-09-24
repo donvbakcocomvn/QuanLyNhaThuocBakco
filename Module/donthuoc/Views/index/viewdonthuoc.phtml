@@ -8,6 +8,7 @@ use Module\quanlythuoc\Model\SanPham;
 use Module\benhnhan\Model\BenhNhan;
 use Model\Common;
 use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Sum;
+use Module\donthuoc\Model\DonThuocDetail;
 
 ?>
 <style>
@@ -89,22 +90,22 @@ use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Sum;
 <?php
 $donthuoc  = new DonThuoc($donthuoc);
 $IdDonThuoc = $donthuoc->Id;
-// var_dump($donthuoc);
+
 ?>
 
 <div class="box box-default" style="border: none;">
-<ol class="breadcrumb no-print">
-    <li><a href="/index.php?controller=backend">Home</a></li>
-    <li><a href="/index.php?module=donthuoc&controller=index&action=index">Danh Sách Đơn Thuốc</a></li>
-    <li> Đơn thuốc chi tiết <?php echo $IdDonThuoc; ?> </li>
-</ol>
+    <ol class="breadcrumb no-print">
+        <li><a href="/index.php?controller=backend">Home</a></li>
+        <li><a href="/index.php?module=donthuoc&controller=index&action=index">Danh Sách Đơn Thuốc</a></li>
+        <li> Đơn thuốc chi tiết <?php echo $IdDonThuoc; ?> </li>
+    </ol>
     <div class="main main-body">
         <div class="salesslip">
             <div class="shop">
                 <h4 style="margin: 0px; margin-top:5px;"><b>PHÒNG KHÁM PHƯƠNG UYÊN</b></h4>
                 <span style="font-size: 11px;">ĐC: 176 đường số 18,Bình Hưng Hòa,Bình Tân. Giờ làm việc: Sáng 7h30 - 11h, Chiều 17h - 20h30 (Nghỉ thứ 7)</span>
                 <span><b>ĐƠN THUỐC</b></span>
-                
+
             </div>
             <!---------------------------------->
             <div style="margin: 0; border-bottom: 1px solid #00000042">
@@ -135,7 +136,6 @@ $IdDonThuoc = $donthuoc->Id;
                     </thead>
                 </table>
             </div>
-
             <div style="margin: 0; border-bottom: 1px solid #00000042">
                 <table style="width: 100%;">
                     <thead>
@@ -162,11 +162,14 @@ $IdDonThuoc = $donthuoc->Id;
                                 <td><?php echo Common::ViewPrice($DTdetail['SoLuong'] * $DTdetail['GiaBan']); ?></td>
                                 <td><?php $sum += $DTdetail['SoLuong'] * $DTdetail['GiaBan'] ?></td>
                             </tr>
-                            <tr >
+                            <tr>
                                 <td></td>
-                                <?php echo $DTdetail['Sang']?>
+                                <td><i><?php echo '(' . $DTdetail['GhiChu'] . ')'; ?></i></td>
+                            </tr>
+                            <tr>
+                                <td></td>
                                 <td><i>Sáng:</i> <b><?php echo SanPham::GetDesByVal($DTdetail['Sang'], 'donviquydoi') . ' ' . $DTdetail['DVT']; ?></b></td>
-                                <td><i>Trưa:</i> <b><?php echo SanPham::GetDesByVal($DTdetail['Trua'], 'donviquydoi') . ' ' . $DTdetail['DVT'] ?? 0;?></b></td>
+                                <td><i>Trưa:</i> <b><?php echo SanPham::GetDesByVal($DTdetail['Trua'], 'donviquydoi') . ' ' . $DTdetail['DVT'] ?? 0; ?></b></td>
                                 <td><i>Chiều:</i> <b><?php echo SanPham::GetDesByVal($DTdetail['Chieu'], 'donviquydoi') . ' ' . $DTdetail['DVT'] ?? 0 ?></b></td>
                             </tr>
                         <?php
@@ -176,7 +179,7 @@ $IdDonThuoc = $donthuoc->Id;
                 </table>
             </div>
             <tr>
-                <td><b>Tổng cộng :</b> <?php echo Common::ViewPrice($sum)." "."( ".$common->convert_number_to_words($sum)." )"?></td>
+                <td><b>Tổng cộng :</b> <?php echo Common::ViewPrice($sum) . " " . "( " . $common->convert_number_to_words($sum) . " )" ?></td>
             </tr>
             <!---------------------------------->
             <div class="row">
@@ -198,9 +201,22 @@ $IdDonThuoc = $donthuoc->Id;
                     <b>* Khi tái khám nhớ mang theo đơn thuốc</b>
                 </h5>
             </div>
-            <button type="submit" onclick="window.print()" class="no-print btn">
-                Print
-            </button>
+            <div class="row">
+                <div class="col-xs-6">
+                    <button type="submit" onclick="window.print()" class="no-print btn">
+                        Print
+                    </button>
+                </div>
+                <div class="col-xs-6">
+                    <?php
+                    echo Module\donthuoc\Model\btnHtml::btnSuaDonThuoc($IdDonThuoc);
+                    ?>
+                </div>
+            </div>
+
+
+
+
         </div>
     </div>
 </div>

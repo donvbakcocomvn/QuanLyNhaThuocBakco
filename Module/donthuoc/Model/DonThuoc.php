@@ -6,6 +6,7 @@ use Model\Common;
 use Model\Locations;
 use Model\OptionsService;
 use Module\quanlythuoc\Model\DanhMuc;
+use Module\benhnhan\Model\BenhNhan;
 
 
 class DonThuoc extends \Model\DB implements \Model\IModelService
@@ -43,6 +44,8 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
             }
         }
     }
+
+
 
     // Lấy 1 dòng by Id
     public static function GetItemById($item,$Id)
@@ -105,7 +108,12 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
     {
         $sql = "SELECT `Name` FROM `lap1_benhnhan` WHERE `Id` = '$Id'";
         $result = $this->GetRow($sql);
-        return $result["Name"];
+        return $result["Name"] ?? "";
+    }
+
+    function BenhNhan()
+    {
+        return new BenhNhan($this->IdBenhNhan);
     }
 
     // Lấy Ngày Sinh bệnh nhân bằng Id

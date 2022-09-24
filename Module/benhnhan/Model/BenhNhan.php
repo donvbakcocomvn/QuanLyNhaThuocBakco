@@ -50,9 +50,16 @@ class BenhNhan extends \Model\DB implements \Model\IModelService
         }
     }
 
+    function GetByNameAndPhone($name, $phone)
+    {
+        $sql = "SELECT * FROM `lap1_benhnhan` WHERE `Name` LIKE '$name' or `Phone` LIKE '$phone'";
+        $result = $this->GetRow($sql);
+        return $result;
+    }
+
     public function GetName()
     {
-        echo $sql = "SELECT `Name` FROM `lap1_benhnhan` WHERE 1";
+        $sql = "SELECT `Name` FROM `lap1_benhnhan` WHERE 1";
         $result = $this->GetRows($sql);
         return $result;
     }
