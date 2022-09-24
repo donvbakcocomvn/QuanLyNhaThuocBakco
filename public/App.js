@@ -91,30 +91,28 @@ $(function () {
         console.log(e);
     }
     try {
-        //        lưu tag cuối cùng
+
+        $(".nav-tabs li a").click(function () {
+            var lastTag = $(this).attr("href");
+            sessionStorage.setItem("nav-tabs", lastTag);
+            console.log(lastTag);
+        });
         var lastTag = sessionStorage.getItem("nav-tabs");
         if (lastTag) {
             $(".tab-content .tab-pane").removeClass("active");
             $(".nav-tabs li").removeClass("active");
             $(".nav-tabs li a[href=" + lastTag + "]").parent("li").addClass("active");
-
-            console.log(lastTag);
             $(lastTag).addClass("active");
         }
-        $(".nav-tabs li a").click(function () {
-            var lastTag = $(this).attr("href");
-            sessionStorage.setItem("nav-tabs", lastTag);
 
-        });
     } catch (e) {
-
+        console.log(e);
     }
     try {
         $(".select2").each(function () {
             $(this).select2();
         });
     } catch (e) {
-
     }
     try {
         // console.log(getCookie("sidebar-toggle"));

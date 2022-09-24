@@ -281,7 +281,7 @@ class SanPham extends \Model\DB implements \Model\IModelService
         $result = $sp->GetRow($sql);
         $tong = $result["Tong"] + 1;
         $Id = Common::NumberToStringFomatZero($tong, 4);
-        $IdCreate = "MT". "-" . $Id;
+        $IdCreate = "MT" . "-" . $Id;
         return $IdCreate;
     }
 

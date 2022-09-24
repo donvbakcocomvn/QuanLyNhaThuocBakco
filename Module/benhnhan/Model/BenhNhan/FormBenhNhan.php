@@ -60,7 +60,7 @@ class FormBenhNhan implements iFormBenhNhan
                 $properties["class"] = "select2 form-control";
                 $options = OptionsService::GetGroupsToSelect("gioitinh");
                 $option1 =  ["" => "--- Chọn giới tính ---"];
-		$options = $option1 + $options;
+                $options = $option1 + $options;
                 $properties[FormRender::Required] = "true";
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
                 return new FormRender(new Element\Select("Giới Tính", $name, $options, $properties));
@@ -78,7 +78,7 @@ class FormBenhNhan implements iFormBenhNhan
                 $properties["value"] = $val;
                 // $properties[FormRender::Required] = "true";
                 // $properties["type"] = "date";
-		// $properties["max"] = date("Y-m-d", time());
+                // $properties["max"] = date("Y-m-d", time());
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
                 return new FormRender(new Element\Textbox("Ngày", $name, $properties));
         }
@@ -89,7 +89,7 @@ class FormBenhNhan implements iFormBenhNhan
                 $properties["value"] = $val;
                 // $properties[FormRender::Required] = "true";
                 // $properties["type"] = "date";
-		// $properties["max"] = date("Y-m-d", time());
+                // $properties["max"] = date("Y-m-d", time());
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
                 return new FormRender(new Element\Textbox("Tháng", $name, $properties));
         }
@@ -100,7 +100,7 @@ class FormBenhNhan implements iFormBenhNhan
                 $properties["value"] = $val;
                 // $properties[FormRender::Required] = "true";
                 // $properties["type"] = "date";
-		// $properties["max"] = date("Y-m-d", time());
+                // $properties["max"] = date("Y-m-d", time());
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
                 return new FormRender(new Element\Textbox("Năm", $name, $properties));
         }
@@ -213,32 +213,35 @@ class FormBenhNhan implements iFormBenhNhan
                 $properties[FormRender::Required] = "true";
                 // $options = TinhThanh::TinhThanhToOption();
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-                return new FormRender(new Element\Select("Phường Xã" ,$name ,  $properties));
+                return new FormRender(new Element\Select("Phường Xã", $name,  $properties));
         }
-	/**
-	 *
-	 * @param mixed $val
-	 *
-	 * @return mixed
-	 */
-	function CreateRecord($val = null) {
-	}
-	
-	/**
-	 *
-	 * @param mixed $val
-	 *
-	 * @return mixed
-	 */
-	function UpdateRecord($val = null) {
-	}
-	
-	/**
-	 *
-	 * @param mixed $val
-	 *
-	 * @return mixed
-	 */
-	function isDelete($val = null) {
-	}
+        /**
+         *
+         * @param mixed $val
+         *
+         * @return mixed
+         */
+        function CreateRecord($val = null)
+        {
+        }
+
+        /**
+         *
+         * @param mixed $val
+         *
+         * @return mixed
+         */
+        function UpdateRecord($val = null)
+        {
+        }
+
+        /**
+         *
+         * @param mixed $val
+         *
+         * @return mixed
+         */
+        function isDelete($val = null)
+        {
+        }
 }

@@ -5,6 +5,7 @@
 </ol>
 <?php
 
+use Model\FormRender;
 use Module\quanlythuoc\Model\SanPham;
 
 $roleDetail = new Model\Role();
@@ -15,28 +16,12 @@ $roleDetail = new Model\Role();
             <h3 class="box-title">Thêm Thuốc Mới</h3>
             <div class="box-tools">
                 <!-- <?php
-                Module\quanlythuoc\Model\btnHtml::btnViewSanPham();
-                ?> -->
-                <a class="btn btn-warning" target="_self" data-toggle="modal" href='#modal-id'>
-                    <i class="fa fa-info" aria-hidden="true"></i>
-                </a>
-                <div class="modal fade" id="modal-id">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <?php
-                                if (file_exists("public\huongdan\huongdanthemthuoc.html"))
-                                    echo file_get_contents("public\huongdan\huongdanthemthuoc.html");
-                                ?>
-                            </div>
-                            <div class="modal-footer">
-                                <a class="btn btn-success" href="/huongdan/huongdanthuoc/huongdanthemthuoc">Sửa hướng dẫn thêm thuốc</a>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng lại</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        Module\quanlythuoc\Model\btnHtml::btnViewSanPham();
+                        ?> -->
+                <?php
+                FormRender::HuongDan("huongdanthemthuoc", "");
+                ?>
+        </div>
         </div>
         <!-- <div class="box-body"> -->
         <form action="" method="post" enctype="multipart/form-data">
@@ -108,7 +93,7 @@ $roleDetail = new Model\Role();
                         <button class="btn btn-success" name="LuuThoat">Thêm Mới</button>
                     </div>
                 </div>
+            </div>
         </form>
     </div>
-</div>
 </div>

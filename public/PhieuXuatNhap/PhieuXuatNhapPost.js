@@ -122,6 +122,21 @@ $(document).ready(function () {
             $(".txtTongTien").attr("colspan", 7);
         }
     });
+    // var dataFormString = $("#formXacNhanKichHoat").serialize();
+    // $.ajax({
+    //     url: `/dashboard/yeucaukichhoat/dongy/`,
+    //     type: 'GET',
+    //     data: dataFormString,
+    //     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    //     success: function (response) {
+    //         alert("cập nhật thành công");
+    //         window.location.reload();
+    //     },
+    //     error: function () {
+    //         alert("error");
+    //     }
+    // });
+
     $(".formpostdata").each(function (index, e) {
         $(".formpostdata").change();
         $(this).change(function (param) {

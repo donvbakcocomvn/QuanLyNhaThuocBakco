@@ -2,6 +2,7 @@
 
 namespace Module\quanlythuoc\Model;
 
+use Model\FormRender;
 use Module\quanlythuoc\Permission;
 
 class btnHtml
@@ -14,7 +15,7 @@ class btnHtml
 
     static function btnImportSanPham()
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_Thuoc_Import]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Thuoc_Import]) == false) {
             return;
         }
 ?>
@@ -82,7 +83,7 @@ class btnHtml
 
     public static function btnChiSanPham($id)
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_Thuoc_Detail]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Thuoc_Detail]) == false) {
             return;
         }
     ?>
@@ -94,7 +95,7 @@ class btnHtml
 
     public static function btnXoaSanPham($id)
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_Thuoc_Delete]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Thuoc_Delete]) == false) {
             return;
         }
     ?>
@@ -106,7 +107,7 @@ class btnHtml
 
     public static function btnViewDanhMuc()
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_DanhMuc_DS]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DanhMuc_DS]) == false) {
             return;
         }
     ?>
@@ -128,7 +129,7 @@ class btnHtml
 
     public static function btnSuaDanhMuc($id)
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_DanhMuc_Put]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DanhMuc_Put]) == false) {
             return;
         }
     ?>
@@ -152,7 +153,7 @@ class btnHtml
 
     public static function btnThemPhieuXuatNhap()
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_Phieu_Post]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Phieu_Post]) == false) {
             return;
         }
     ?>
@@ -164,7 +165,7 @@ class btnHtml
 
     public static function btnSuaPhieuXuatNhap($id)
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_Phieu_Put]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Phieu_Put]) == false) {
             return;
         }
     ?>
@@ -176,7 +177,7 @@ class btnHtml
 
     public static function btnXoaPhieuXuatNhap($id)
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_Phieu_Delete]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Phieu_Delete]) == false) {
             return;
         }
     ?>
@@ -188,11 +189,11 @@ class btnHtml
 
     public static function btnChiTietPhieuXuatNhap($id)
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy,Permission::QLT_Phieu_Detail]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Phieu_Detail]) == false) {
             return;
         }
     ?>
-        <a class="btn btn-sm btn-warning" data-toggle="tooltip" data-placement="top" title="Xem phiếu" href="/quanlythuoc/phieuxuatnhap/detail/<?php echo $id; ?>">
+        <a class="btn btn-sm btn-warning" <?php echo FormRender::ToolTip("Xem chi tiết phiếu"); ?> href="/quanlythuoc/phieuxuatnhap/detail/<?php echo $id; ?>">
             Chi Tiết
         </a>
 <?php
