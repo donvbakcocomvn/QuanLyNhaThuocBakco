@@ -17,26 +17,8 @@ $roleDetail = new Model\Role();
             <div class="box-tools">
                 <?php
                 Module\benhnhan\Model\btnHtml::btnViewKhachHang();
+                \Model\FormRender::HuongDan("suabenhnhan", "Hướng dẫn sửa")
                 ?>
-                <a class="btn btn-warning" target="_self" data-toggle="modal" href='#modal-id'>
-                        <i class="fa fa-info" aria-hidden="true"></i>
-                    </a>
-                    <div class="modal fade" id="modal-id">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    <?php
-                                    if (file_exists("public\huongdan\huongdanbenhnhan.html"))
-                                        echo file_get_contents("public\huongdan\huongdanbenhnhan.html");
-                                    ?>
-                                </div>
-                                <div class="modal-footer">
-                                    <a class="btn btn-success" href="/huongdan/huongdanbenhnhan/huongdanbenhnhan">Sửa file hướng dẫn quản lý bệnh nhân</a>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng lại</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
             </div>
         </div>
         <!-- <div class="box-body"> -->

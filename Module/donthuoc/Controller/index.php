@@ -29,7 +29,15 @@ class index extends \Application implements \Controller\IControllerBE
 
     public function themdong()
     {
-        return DonThuocDetail::DsThuoc();
+        $_SESSION["DetailThuoc"][] = [];
+        return $_SESSION["DetailThuoc"];
+    }
+
+    function DeleteSP()
+    {
+        $index = $this->getParams(0);
+        unset($_SESSION["DetailThuoc"][$index]);
+        return $_SESSION["DetailThuoc"];
     }
 
     function index()

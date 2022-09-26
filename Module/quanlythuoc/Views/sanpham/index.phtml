@@ -23,30 +23,12 @@
                     use Model\Common;
                     use Module\quanlythuoc\Model\SanPham;
 
-                    Module\quanlythuoc\Model\btnHtml::btnDongBoSL();
+                    // Module\quanlythuoc\Model\btnHtml::btnDongBoSL();
                     Module\quanlythuoc\Model\btnHtml::btnImportSanPham();
                     Module\quanlythuoc\Model\btnHtml::btnExportSanPham();
                     Module\quanlythuoc\Model\btnHtml::btnThemSanPham();
+                    \Model\FormRender::HuongDan("danhsachthuoc", "Hướng dẫn thuốc")
                     ?>
-                    <a class="btn btn-warning" target="_self" data-toggle="modal" href='#modal-id'>
-                        <i class="fa fa-info" aria-hidden="true"></i>
-                    </a>
-                    <div class="modal fade" id="modal-id">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    <?php
-                                    if (file_exists("public\huongdan\huongdanthemthuoc.html"))
-                                        echo file_get_contents("public\huongdan\huongdanthemthuoc.html");
-                                    ?>
-                                </div>
-                                <div class="modal-footer">
-                                    <a class="btn btn-success" href="/huongdan/huongdanthuoc/huongdanthemthuoc">Sửa hướng dẫn thêm thuốc</a>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng lại</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="box-body">
@@ -79,13 +61,13 @@
                                     echo Module\quanlythuoc\Model\btnHtml::btnChiSanPham($_item->Id);
                                     ?>
                                 </td>
-                                <td><?php echo $index + 1; ?></td>
+                                <td><?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?></td>
                                 <td><?php echo $_item->Id; ?></td>
                                 <td><?php echo $_item->Name; ?></td>
-                                <td><?php echo $_item->SLNhap;?></td>
-                                <td><?php echo $_item->SLXuat;?></td>
-                                <td><?php echo $_item->SLHienTai;?></td>
-                                <td><?php echo $_item->Soluong;?></td>
+                                <td><?php echo $_item->SLNhap; ?></td>
+                                <td><?php echo $_item->SLXuat; ?></td>
+                                <td><?php echo $_item->SLHienTai; ?></td>
+                                <td><?php echo $_item->Soluong; ?></td>
                                 <!-- <td><?php echo $_item->CachDungThuoc(); ?></td> -->
                                 <!-- <td><?php echo $_item->IdLoaiThuoc()->Name; ?></td> -->
                                 <!-- <th><?php echo $_item->DonViQuyDoi(); ?></th> -->

@@ -9,7 +9,7 @@
     <form method="get" action="/quanlythuoc/phieuxuatnhap/index/">
         <div class="form-group d-flex">
             <label class="btn btn-default"><input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox"><i class="fa fa-share" aria-hidden="true"></class=></i></label>
-            <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập Vào Mã Phiếu Cần Tìm Kiếm">
+            <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập vào mã phiếu hoặc nội dung phiếu để tìm kiếm">
             <button class="btn btn-primary no-border-radius" name="btnTim" type="submit">
                 <i class="fa fa-search"></i> Tìm Kiếm
             </button>
@@ -27,7 +27,7 @@
                     use Module\quanlythuoc\Model\PhieuXuatNhap;
 
                     Module\quanlythuoc\Model\btnHtml::btnThemPhieuXuatNhap();
-                    FormRender::HuongDan("huongdanthemthuoc");
+                    FormRender::HuongDan("danhsachphieu",'Hướng dẫn phiếu xuất/nhập');
                     ?>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                                     echo Module\quanlythuoc\Model\btnHtml::btnChiTietPhieuXuatNhap($_item->Id);
                                     ?>
                                 </td>
-                                <td><?php echo $index + 1; ?></td>
+                                <td><?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?></td>
                                 <td><?php echo $_item->IdPhieu; ?></td>
                                 <td><?php echo $_item->XuatNhap(); ?></td>
                                 <td><?php echo $_item->NoiDungPhieu ?></td>

@@ -50,6 +50,13 @@ class BenhNhan extends \Model\DB implements \Model\IModelService
         }
     }
 
+    function GetDSBenhNhanExport()
+    {
+        $sql = "SELECT `Id`, `Name`, `Gioitinh`, `Ngaysinh`, `CMND`,`Phone`, `Address`, `TinhThanh`, `QuanHuyen`, `PhuongXa` FROM `lap1_benhnhan`";
+        $result = $this->GetRows($sql);
+        return $result;
+    }
+
     function GetByNameAndPhone($name, $phone)
     {
         $sql = "SELECT * FROM `lap1_benhnhan` WHERE `Name` LIKE '$name' or `Phone` LIKE '$phone'";

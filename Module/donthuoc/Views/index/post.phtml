@@ -32,7 +32,7 @@ $roleDetail = new Model\Role();
             <h3 class="box-title">Thêm Toa Thuốc</h3>
             <div class="box-tools">
                 <?php
-                FormRender::HuongDan("huongdandonthuoc");
+                \Model\FormRender::HuongDan("themdonthuoc", "Hướng dẫn thêm đơn thuốc");
                 ?>
             </div>
         </div>
@@ -146,11 +146,11 @@ $roleDetail = new Model\Role();
                             $i = 0;
                             foreach (DonThuocDetail::DsThuoc() as $mathuoc => $thuoc) {
                                 $sanPham = new SanPham($thuoc["Id"] ?? null);
-
+                                $i = $mathuoc;
                             ?>
                                 <tr>
                                     <th>
-                                        <button data-toggle="tooltip" data-placement="top" title="" type="button" class="btn  btn-danger deleterow" id="delete0" index="0" data-original-title="Xóa thuốc">
+                                        <button data-toggle="tooltip" data-placement="top" title="Xóa thuốc" type="button" title="Xóa thuốc này?" class="btn  btn-danger deleterows" id="<?php echo 'delete' . $i ?>" index=<?php echo $i ?>>
                                             <i class="fa fa-minus" aria-hidden="true"></i>
                                         </button>
                                     </th>

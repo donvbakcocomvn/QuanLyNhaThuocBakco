@@ -39,7 +39,7 @@ class FormRender
     ?>
         <a class="btn btn-warning" target="_self" data-toggle="modal" href='#huongdan<?php echo $id; ?>'>
             <i class="fa fa-info" aria-hidden="true"></i>
-            <?php echo $title ?>
+            &nbsp;<?php echo $title ?>
         </a>
         <div class="modal fade" id="huongdan<?php echo $id; ?>">
             <div class="modal-dialog modal-lg">
@@ -47,8 +47,10 @@ class FormRender
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">
-                            <i class="fa fa-info"></i>
-                            Hướng dẫn
+                            <i class="fa fa-info"></i>&nbsp;
+                            <?php
+                            echo $title
+                            ?>
                         </h4>
                     </div>
                     <div class="modal-body">
@@ -59,8 +61,8 @@ class FormRender
                         ?>
                     </div>
                     <div class="modal-footer">
-                        <a href="/huongdan/put/<?php echo $id; ?>/" class="btn btn-primary">Sửa</a>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Thoát</button>
+                        <a href="/huongdan/put/<?php echo $id; ?>/" class="btn btn-success">Sửa File hướng dẫn</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Thoát/Đóng lại</button>
                     </div>
                 </div>
             </div>

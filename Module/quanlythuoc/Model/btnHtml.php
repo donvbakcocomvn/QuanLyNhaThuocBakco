@@ -18,7 +18,7 @@ class btnHtml
             return;
         }
 ?>
-        <a class="btn btn-warning" href="/index.php?module=quanlythuoc&controller=sanpham&action=import">
+        <a class="btn btn-primary" href="/index.php?module=quanlythuoc&controller=sanpham&action=import">
             <i class="fa fa-download"></i> Import</a>
     <?php
     }

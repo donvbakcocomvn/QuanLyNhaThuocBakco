@@ -14,31 +14,14 @@ $roleDetail = new Model\Role();
 <div class="container-fluid">
     <div class="box box-primary">
         <div class="box-header">
-            <h3 class="box-title">Thêm Danh Mục</h3>
+            <h3 class="box-title">Sửa Danh Mục</h3>
             <div class="box-tools">
                 <div class="box-tools">
                     <?php
                     Module\quanlythuoc\Model\btnHtml::btnViewDanhMuc();
+                    \Model\FormRender::HuongDan("suadanhmuc","Hướng dẫn sửa danh mục")
                     ?>
-                    <a class="btn btn-warning" target="_self" data-toggle="modal" href='#modal-id'>
-                        <i class="fa fa-info" aria-hidden="true"></i>
-                    </a>
-                    <div class="modal fade" id="modal-id">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    <?php
-                                    if (file_exists("public\huongdan\huongdandanhmuc.html"))
-                                        echo file_get_contents("public\huongdan\huongdandanhmuc.html");
-                                    ?>
-                                </div>
-                                <div class="modal-footer">
-                                    <a class="btn btn-success" href="/huongdan/huongdandanhmuc/huongdandanhmuc">Sửa hướng dẫn danh mục</a>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng lại</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>

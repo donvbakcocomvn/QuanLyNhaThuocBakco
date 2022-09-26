@@ -202,4 +202,25 @@ $(document).ready(function () {
             }
         });
     })
+
+    // Xóa SESSION
+    $(".deleterows").click(function () {
+        var index = $("#" + $(this).attr("id")).attr("index");
+        // var TongNgayDungThuoc = $("#TongNgayDungThuoc").val();
+        $.ajax({
+            url: `/donthuoc/index/DeleteSP/${index}/`,
+            type: 'Get',
+            // data:{$id : $id},
+            //dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                window.location.reload();
+                console.log(response);
+            },
+            complete: function () {
+                //spinner.close();
+            }
+        });
+    });
 });

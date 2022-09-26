@@ -209,7 +209,8 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
         if ($danhmuc) {
             $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
         }
-        $where = " (`IdPhieu` like '%{$name}%' {$danhmucSql}) {$isShowSql} Order By `CreateRecord`  DESC";
+        // self::$Debug = true;
+        $where = " (`NoiDungPhieu` like '%{$name}%' or `IdPhieu` like '%{$name}%' {$danhmucSql}) {$isShowSql} Order By `CreateRecord`  DESC";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 

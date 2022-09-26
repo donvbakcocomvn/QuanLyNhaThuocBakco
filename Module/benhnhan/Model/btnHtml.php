@@ -13,10 +13,10 @@ class btnHtml
 
     public static function btnchitiet($id)
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_BenhNhan_Detail]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_BenhNhan_Detail]) == false) {
             return;
         }
-    ?>
+?>
         <a class="btn btn-warning" href="/index.php?module=benhnhan&controller=index&action=detail&id=<?php echo $id; ?>">
             Chi tiết
         </a>
@@ -25,7 +25,7 @@ class btnHtml
 
     public static function btnViewKhachHang()
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_BenhNhan_DS]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_BenhNhan_DS]) == false) {
             return;
         }
     ?>
@@ -36,7 +36,7 @@ class btnHtml
 
     public static function btnThemKhachHang()
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_BenhNhan_Post]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_BenhNhan_Post]) == false) {
             return;
         }
     ?>
@@ -47,7 +47,7 @@ class btnHtml
 
     public static function btnSuaKhachHang($id)
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_BenhNhan_Put]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_BenhNhan_Put]) == false) {
             return;
         }
     ?>
@@ -57,9 +57,21 @@ class btnHtml
     <?php
     }
 
+    public static function btnExport()
+    {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy]) == false) {
+            return;
+        }
+    ?>
+        <a class="btn btn-primary" href="/index.php?module=benhnhan&controller=index&action=export">
+            <i class="fa fa-filter"></i> Export</a>
+        </a>
+    <?php
+    }
+
     public static function btnXoaKhachHang($id)
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin,\Model\User::QuanLy, Permission::QLT_BenhNhan_Delete]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_BenhNhan_Delete]) == false) {
             return;
         }
     ?>
