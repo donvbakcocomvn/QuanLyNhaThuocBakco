@@ -3,7 +3,6 @@
     <li><a href="/index.php?module=quanlythuoc&controller=sanpham&action=index">Danh Sách Thuốc</a></li>
     <li> Quản Lý Thuốc </li>
 </ol>
-
 <div class="row ">
     <section class="col-md-3"></section>
     <section class="col-md-6">
@@ -15,26 +14,8 @@
                     <?php
                     use Module\quanlythuoc\Model\SanPham;
                     // Module\quanlythuoc\Model\btnHtml::btnViewSanPham();
+                    \Model\FormRender::HuongDan("importthuoc", "Hướng dẫn Import")
                     ?>
-                    <a class="btn btn-warning" target="_self" data-toggle="modal" href='#modal-id'>
-                        <i class="fa fa-info" aria-hidden="true"></i>
-                    </a>
-                    <div class="modal fade" id="modal-id">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    <?php
-                                    if (file_exists("public\huongdan\huongdanthemthuoc.html"))
-                                        echo file_get_contents("public\huongdan\huongdanthemthuoc.html");
-                                    ?>
-                                </div>
-                                <div class="modal-footer">
-                                    <a class="btn btn-success" href="/huongdan/huongdanthuoc/huongdanthemthuoc">Sửa hướng dẫn thêm thuốc</a>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng lại</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="box-body">

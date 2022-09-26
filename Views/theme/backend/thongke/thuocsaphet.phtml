@@ -55,7 +55,7 @@ use Model\ThongKe;
 
 
                             <tr role="row" class="even">
-                                <td class="sorting_1 text-center"><?php echo $index + 1 ?></td>
+                                <td class="sorting_1 text-center"><?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?></td>
                                 <td><?php echo $value['Name'] ?></td>
                                 <td class="text-center"><?php echo $value['SLHienTai'] ." ". $thuoc->DonViTinh(); ?></td>
                                 <td class="text-center"><?php echo $value['Solo'] ?></td>

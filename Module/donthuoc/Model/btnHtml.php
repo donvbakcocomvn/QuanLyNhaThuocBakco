@@ -64,7 +64,7 @@ class btnHtml
         }
     ?>
         <a class="btn btn-success no-print" href="/index.php?module=donthuoc&controller=index&action=put&id=<?php echo $id; ?>">
-            Sửa
+            Sửa đơn
         </a>
     <?php
     }

@@ -31,7 +31,7 @@ use Module\donthuoc\Model\DonThuoc;
                     <a type="button" href="/thongke/donthuoctrongngay" class="btn btn-success"><i class="fa fa-list"></i>&nbsp;Danh sách đơn thuốc trong ngày</a>
                     <?php
                     Module\donthuoc\Model\btnHtml::btnThemDonThuoc();
-                    FormRender::HuongDan("huongdandonthuoc","");
+                    \Model\FormRender::HuongDan("danhsachdonthuoc", "Hướng dẫn đơn thuốc");
                     ?>
                 </div>
             </div>
@@ -59,14 +59,15 @@ use Module\donthuoc\Model\DonThuoc;
                             $_item = new DonThuoc($item);
                         ?>
                             <tr>
-                                <td style="width: 150px;">
+                                <td style="width: 250px;">
                                     <?php
                                     echo Module\donthuoc\Model\btnHtml::btnCopyDonThuoc($_item->Id);
                                     // echo Module\donthuoc\Model\btnHtml::btnXoaDonThuoc($_item->Id);
+                                    echo Module\donthuoc\Model\btnHtml::btnSuaDonThuoc($_item->Id);
                                     echo Module\donthuoc\Model\btnHtml::btnchitiet($_item->Id);
                                     ?>
                                 </td>
-                                <td><?php echo $index + 1; ?></td>
+                                <td><?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?></td>
                                 <td><?php echo $_item->Id; ?></td>
                                 <!-- <td><?php echo $_item->IdBenhNhan; ?></td> -->
                                 <td><?php echo $_item->BenhNhan()->Name; ?></td>

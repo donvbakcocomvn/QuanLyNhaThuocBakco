@@ -5,6 +5,7 @@ namespace Module\benhnhan\Model;
 use Model\Common;
 use Model\Locations;
 use Model\OptionsService;
+use TinhThanh;
 
 class BenhNhan extends \Model\DB implements \Model\IModelService
 {
@@ -48,6 +49,13 @@ class BenhNhan extends \Model\DB implements \Model\IModelService
                 $this->isDelete = isset($bn["isDelete"]) ? $bn["isDelete"] : null;
             }
         }
+    }
+    
+    function GetDSBenhNhanExport()
+    {
+        $sql = "SELECT `Id`, `Name`, `Gioitinh`, `Ngaysinh`, `CMND`,`Phone`, `Address`, `TinhThanh`, `QuanHuyen`, `PhuongXa` FROM `lap1_benhnhan`";
+        $result = $this->GetRows($sql);
+        return $result;
     }
 
     function GetByNameAndPhone($name, $phone)

@@ -2,10 +2,12 @@
 
 namespace Module\benhnhan\Controller;
 
+use Model\Common;
 use Module\benhnhan\Model\BenhNhan as ModelBenhNhan;
 use Module\benhnhan\Model\BenhNhan\FormBenhNhan;
 use Module\benhnhan\Permission;
 use Model\OptionsService;
+use Module\benhnhan\Model\BenhNhan;
 
 class index extends \Application implements \Controller\IControllerBE
 {
@@ -18,6 +20,28 @@ class index extends \Application implements \Controller\IControllerBE
          */
         new \Controller\backend();
         self::$_Theme = "backend";
+    }
+
+    function export()
+    {
+        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy]);
+        $benhnhan = new BenhNhan();
+        $item = $benhnhan->GetDSBenhNhanExport();
+        // var_dump($item);
+        // $data[] = ["BẢNG KÊ THUỐC PHÒNG KHÁM PHƯƠNG UYÊN"];
+        $data[] = [
+            "Mã bệnh nhân", "Tên bệnh nhân", "Giới tính", "Ngày sinh", "CMND/CCCD", "Số điện thoại", "Địa chỉ", "Tỉnh/thành Phố", "Quận/huyện", "Phưỡng/xã"
+        ];
+        if ($item) {
+            foreach ($item as $row) {
+                $row["Gioitinh"] = $benhnhan->Gioitinh();
+                $row["Ngaysinh"] = Common::ForMatDMY($row["Ngaysinh"]);
+                // $row["QuanHuyen"] = Common::ViewNumber($row["SLNhap"]);
+                // $row["PhuongXa"] = Common::ViewNumber($row["SLHienTai"]);
+                $data[] = $row;
+            }
+            \Module\quanlythuoc\Model\SanPham::ExportBangKe($data, "public/Excel/ExportDanhSachBenhNhan.xlsx");
+        }
     }
 
     function index()

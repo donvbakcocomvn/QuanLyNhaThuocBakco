@@ -24,28 +24,11 @@
                     use Model\OptionsService;
                     use Model\TinhThanh;
                     use Module\benhnhan\Model\BenhNhan;
-
+                    Module\benhnhan\Model\btnHtml::btnViewKhachHangTrongNgay();
+                    Module\benhnhan\Model\btnHtml::btnExport();
                     Module\benhnhan\Model\btnHtml::btnThemKhachHang();
+                    \Model\FormRender::HuongDan("danhsachbenhnhan", "Hướng dẫn")
                     ?>
-                    <a class="btn btn-warning" target="_self" data-toggle="modal" href='#modal-id'>
-                        <i class="fa fa-info" aria-hidden="true"></i>
-                    </a>
-                    <div class="modal fade" id="modal-id">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    <?php
-                                    if (file_exists("public\huongdan\huongdanbenhnhan.html"))
-                                        echo file_get_contents("public\huongdan\huongdanbenhnhan.html");
-                                    ?>
-                                </div>
-                                <div class="modal-footer">
-                                    <a class="btn btn-success" href="/huongdan/huongdanbenhnhan/huongdanbenhnhan">Sửa file hướng dẫn quản lý bệnh nhân</a>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng lại</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="box-body">
@@ -57,21 +40,13 @@
                             <th>Mã Khách Hàng</th>
                             <th>Tên Khách Hàng</th>
                             <th>Giới Tính</th>
-                            <!-- <th>Ngày Sinh</th> -->
-                            <!-- <th>CMND</th> -->
                             <th>Địa Chỉ</th>
-                            <!-- <th>Tỉnh/Thành Phố</th> -->
-                            <!-- <th>Quận/Huyện</th> -->
-                            <!-- <th>Phường/Xã</th> -->
                             <th>Điện Thoại</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         $locaiton = new Locations();
-                        // $a = $locaiton->GetById(2357);
-                        // var_dump($a);
-                        // echo $a;
                         foreach ($items as $index => $item) {
                             $_item = new BenhNhan($item);
                         ?>
@@ -83,16 +58,11 @@
                                     echo Module\benhnhan\Model\btnHtml::btnchitiet($_item->Id);
                                     ?>
                                 </td>
-                                <td><?php echo $index + 1; ?></td>
+                                <td><?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?></td>
                                 <td><?php echo $_item->Id; ?></td>
                                 <td><?php echo $_item->Name; ?></td>
                                 <td><?php echo $_item->Gioitinh(); ?></td>
-                                <!-- <td><?php echo $_item->Ngaysinh; ?></td> -->
-                                <!-- <td><?php echo $_item->CMND; ?></td> -->
                                 <td><?php echo $_item->Address; ?></td>
-                                <!-- <th><?php echo $_item->TinhThanh ?></th> -->
-                                <!-- <th><?php echo $_item->QuanHuyen ?></th> -->
-                                <!-- <th><?php echo $_item->PhuongXa; ?></th> -->
                                 <td><?php echo $_item->Phone; ?></td>
                             </tr>
                         <?php

@@ -138,7 +138,7 @@ class DB
                 $strsql .= "`{$col}`= '{$val}',";
         }
         $strsql = substr($strsql, 0, -1);
-        echo $sql = "UPDATE `{$TableName}` SET {$strsql} WHERE {$where}";
+        $sql = "UPDATE `{$TableName}` SET {$strsql} WHERE {$where}";
         $res = self::$Connect->query($sql);
         if (!$res) {
             if (self::$Debug == TRUE)
