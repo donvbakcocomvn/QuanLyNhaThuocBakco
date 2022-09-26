@@ -11,6 +11,17 @@ class btnHtml
     {
     }
 
+    public static function btnViewKhachHangTrongNgay()
+    {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_BenhNhan_DS]) == false) {
+            return;
+        }
+    ?>
+        <a class="btn btn-info" href="/thongke/benhnhantrongngay">
+            <i class="fa fa-list-alt"></i> Danh sách bệnh nhân trong ngày </a>
+    <?php
+    }
+
     public static function btnchitiet($id)
     {
         if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_BenhNhan_Detail]) == false) {

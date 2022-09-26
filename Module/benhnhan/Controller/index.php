@@ -36,7 +36,6 @@ class index extends \Application implements \Controller\IControllerBE
             foreach ($item as $row) {
                 $row["Gioitinh"] = $benhnhan->Gioitinh();
                 $row["Ngaysinh"] = Common::ForMatDMY($row["Ngaysinh"]);
-                // $row["TinhThanh"] = $row["TinhThanh"];
                 // $row["QuanHuyen"] = Common::ViewNumber($row["SLNhap"]);
                 // $row["PhuongXa"] = Common::ViewNumber($row["SLHienTai"]);
                 $data[] = $row;

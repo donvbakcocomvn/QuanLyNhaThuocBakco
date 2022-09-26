@@ -27,20 +27,6 @@ class TinhThanh
         // }
     }
 
-    public static function GetById($id)
-    {
-        $no = new TinhThanh ();
-        $notions = $no->DSTinh();
-        foreach ($notions as $value) {
-            $name = $value["name"];
-            $code = $value["countryCode"];
-            if ($id == $code) {
-                return $name;
-            }
-        }
-        return null;
-    }
-
     public static function TinhThanhToOption()
     {
         $tinhthanh = new TinhThanh();
