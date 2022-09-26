@@ -39,7 +39,7 @@ $roleDetail = new Model\Role();
         <div class="box-body">
             <form action="" method="post" id="formKhachHang" enctype="multipart/form-data">
                 <?php
-                $bn = new FormBenhNhan();
+                $bn = new FormBenhNhan(FormBenhNhan::GetFormData());
                 $benhnhan = new BenhNhan();
                 ?>
                 <div class="col-md-4">
@@ -50,26 +50,27 @@ $roleDetail = new Model\Role();
                             $form = new FormDonThuoc();
                             $donthuoc = new DonThuoc();
                             ?>
-                            <div class="col-md-9">
-                                <?php echo $form->TongNgayDung($_SESSION["SoNgaySDThuoc"] ?? 0)->renderHTML(); ?>
-                            </div>
-                            </br>
-                            <div class="form-group" style="margin-top: 5px;">
-                                <?php btnHtml::btnCapNhatNgayDung(); ?>
-                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Ngày dùng thuốc</label>
+                                    <div class="d-flex">
+                                        <?php echo $form->TongNgayDung($_SESSION["SoNgaySDThuoc"] ?? 0)->render(); ?>
+                                        <?php btnHtml::btnCapNhatNgayDung(); ?>
+                                    </div>
+                                </div>
 
-                            <div class="col-md-12">
-                                <?php echo $form->ThuocLoaiDon()->renderHTML(); ?>
-                            </div>
-                            <div class="col-md-12">
-                                <?php echo $form->ChanDoanBenh()->renderHTML(); ?>
-                            </div>
-                            <div class="col-md-12">
-                                <?php echo $form->Id($donthuoc->CreatId())->renderHTML(); ?>
-                            </div>
-                            <div class="col-md-12">
-                                <?php echo $form->ThoiGianKham(date('Y-m-d H:i:s', time()))->renderHTML(); ?>
-                            </div>
+                                <div>
+                                    <?php echo $form->ThuocLoaiDon()->renderHTML(); ?>
+                                </div>
+                                <div>
+                                    <?php echo $form->ChanDoanBenh()->renderHTML(); ?>
+                                </div>
+                                <div>
+                                    <?php echo $form->Id($donthuoc->CreatId())->renderHTML(); ?>
+                                </div>
+                                <div>
+                                    <?php echo $form->ThoiGianKham(date('Y-m-d H:i:s', time()))->renderHTML(); ?>
+                                </div>
                         </fieldset>
                     </div>
                 </div>
@@ -103,17 +104,19 @@ $roleDetail = new Model\Role();
                                 <?php $bn->Address()->renderHtml();  ?>
                             </div>
                             <div class="col-md-4 form-group">
-                                <label for="">Tỉnh</label>
-                                <select id="tinhThanh" name="BenhNhan[TinhThanh]" class="form-control"></select>
+                                <?php $bn->TinhThanh(null, "TinhThanhBenhNhan", "#QuanHuyenBenhNhan")->renderHtml();  ?>
+                                <!-- <label for="">Tỉnh</label>
+                                <select id="tinhThanh" name="BenhNhan[TinhThanh]" class="form-control"></select> -->
                             </div>
                             <div class="col-md-4 form-group">
-                                <label for="">Huyện</label>
-                                <select id="quanHuyen" name="BenhNhan[QuanHuyen]" class="form-control"> </select>
-
+                                <?php $bn->QuanHuyen(null, "QuanHuyenBenhNhan", "#PhuongXaBenhNhan")->renderHtml();  ?>
+                                <!-- <label for="">Huyện</label>
+                                <select id="quanHuyen" name="BenhNhan[QuanHuyen]" class="form-control"> </select> --> 
                             </div>
                             <div class="col-md-4 form-group">
-                                <label for="">Xã</label>
-                                <select id="phuongXa" name="BenhNhan[PhuongXa]" class="form-control phuong-xa"> </select>
+                                <?php $bn->PhuongXa(null, "PhuongXaBenhNhan")->renderHtml();  ?>
+                                <!-- <label for="">Xã</label>
+                                <select id="phuongXa" name="BenhNhan[PhuongXa]" class="form-control phuong-xa"> </select> -->
                             </div>
                         </fieldset>
                     </div>

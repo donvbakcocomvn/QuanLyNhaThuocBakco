@@ -2,6 +2,7 @@
 
 namespace Model;
 
+
 class FormRender
 {
     const Required = "required";
@@ -10,9 +11,20 @@ class FormRender
     const Placeholder = "placeholder";
     const Autofocus = "autofocus";
     const Autocomplete = "autocomplete";
+    const TinhThanhClass = "TinhThanhClass";
+    const QuanHuyenClass = "QuanHuyenClass";
+    const PhuongXaClass = "PhuongXaClass";
 
     public $element;
 
+
+    public static function GetValue($value, $name, $formData)
+    {
+        if ($value == null) {
+            return $formData[$name] ?? "";
+        }
+        return $value;
+    }
     function __construct($element)
     {
         $this->element = $element;
@@ -37,7 +49,7 @@ class FormRender
     public static function HuongDan($id, $title = "Hướng dẫn")
     {
     ?>
-        <a class="btn btn-warning" target="_self" data-toggle="modal" href='#huongdan<?php echo $id; ?>'>
+        <a class="btn btn-primary" target="_self" data-toggle="modal" href='#huongdan<?php echo $id; ?>'>
             <i class="fa fa-info" aria-hidden="true"></i>
             <?php echo $title ?>
         </a>

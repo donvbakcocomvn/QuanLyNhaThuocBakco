@@ -13,19 +13,29 @@ class FormBenhNhan implements iFormBenhNhan
 
         static $properties = ["class" => "form-control"];
         static $ElementsName = "BenhNhan";
+        static $FormData = [];
 
         //put your code here
-        public function __construct()
+        public function __construct($formData)
         {
+                self::$FormData  = $formData;
         }
+        static public function SetFormData($data, $name = "FormDataBenhNhan")
+        {
+                $_SESSION[$name] = $data;
+        }
+        static public function GetFormData($name = "FormDataBenhNhan")
+        {
 
+                return $_SESSION[$name] ?? [];
+        }
         function Id($val = null)
         {
                 // $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
                 // return new FormRender(new Element\Hidden($name, $val));
 
                 $properties = self::$properties;
-                $properties["value"] = $val;
+                $properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
                 $properties["readonly"] = $val;
                 $properties[FormRender::Required] = "true";
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
@@ -41,7 +51,7 @@ class FormBenhNhan implements iFormBenhNhan
         function Name($val = null, $id = null)
         {
                 $properties = self::$properties;
-                $properties["value"] = $val;
+                $properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
                 $properties["class"] = " form-control changeinfo";
                 $properties["id"] = $id;
                 $properties[FormRender::Required] = "true";
@@ -58,7 +68,7 @@ class FormBenhNhan implements iFormBenhNhan
         function Gioitinh($val = null)
         {
                 $properties = self::$properties;
-                $properties["value"] = $val;
+                $properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
                 $properties["id"] = __FUNCTION__;
                 $properties["class"] = " form-control";
                 $options = OptionsService::GetGroupsToSelect("gioitinh");
@@ -75,38 +85,32 @@ class FormBenhNhan implements iFormBenhNhan
          *
          * @return mixed
          */
-        function Ngaysinh($val = null)
+        function NgaySinh($val = null)
         {
                 $properties = self::$properties;
-                $properties["value"] = $val;
+                $properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
                 $properties["id"] = __FUNCTION__;
-                // $properties[FormRender::Required] = "true";
-                // $properties["type"] = "date";
-                // $properties["max"] = date("Y-m-d", time());
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
                 return new FormRender(new Element\Textbox("Ngày", $name, $properties));
         }
 
-        function Thangsinh($val = null)
+        function ThangSinh($val = null)
         {
                 $properties = self::$properties;
-                $properties["value"] = $val;
+                $properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
                 $properties["id"] = __FUNCTION__;
-                // $properties[FormRender::Required] = "true";
-                // $properties["type"] = "date";
-                // $properties["max"] = date("Y-m-d", time());
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
                 return new FormRender(new Element\Textbox("Tháng", $name, $properties));
         }
 
-        function Namsinh($val = null)
+        function NamSinh($val = null)
         {
                 $properties = self::$properties;
-                $properties["value"] = $val;
+                $properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
                 $properties["id"] = __FUNCTION__;
                 $properties[FormRender::Required] = "true";
                 $properties["type"] = "number";
-		$properties["max"] = date("Y", time());
+                $properties["max"] = date("Y", time());
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
                 return new FormRender(new Element\Textbox("Năm", $name, $properties));
         }
@@ -120,7 +124,7 @@ class FormBenhNhan implements iFormBenhNhan
         function CMND($val = null)
         {
                 $properties = self::$properties;
-                $properties["value"] = $val;
+                $properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
                 $properties["id"] = __FUNCTION__;
                 // $properties[FormRender::Required] = "true";
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
@@ -137,7 +141,7 @@ class FormBenhNhan implements iFormBenhNhan
         {
                 $properties = self::$properties;
                 $properties["id"] = "TinhThanh";
-                $properties["value"] = $val;
+                $properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
                 $properties[FormRender::Required] = "true";
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
                 return new FormRender(new Element\Textbox("Địa Chỉ", $name, $properties));
@@ -152,7 +156,7 @@ class FormBenhNhan implements iFormBenhNhan
         function Quequan($val = null)
         {
                 $properties = self::$properties;
-                $properties["value"] = $val;
+                $properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
                 $properties["id"] = __FUNCTION__;
                 $properties[FormRender::Required] = "true";
                 $options = Locations::ToSelect();
@@ -169,7 +173,7 @@ class FormBenhNhan implements iFormBenhNhan
         function Phone($val = null, $id = null)
         {
                 $properties = self::$properties;
-                $properties["value"] = $val;
+                $properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
                 $properties["class"] = " form-control changeinfo";
                 $properties["id"] = $id;
                 $properties["type"] = "tel";
@@ -183,14 +187,19 @@ class FormBenhNhan implements iFormBenhNhan
          *
          * @return mixed
          */
-        function TinhThanh($val = null)
+        function TinhThanh($val = null, $id = "TinhThanh", $taget = "#QuanHuyen")
         {
+
+
                 $properties = self::$properties;
-                $properties["value"] = $val;
-                $properties["id"] = "TinhThanh";
+                $properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
+                $properties["id"] = $id;
+                $properties["class"] = FormRender::TinhThanhClass . " form-control";
+                $properties["data-value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
+                $properties["data-target"] = $taget;
                 $properties[FormRender::Required] = "true";
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-                return new FormRender(new Element\Select("Tỉnh Thành", $name,  $properties));
+                return new FormRender(new Element\Select("Tỉnh Thành", $name, [],  $properties));
         }
 
         /**
@@ -199,14 +208,19 @@ class FormBenhNhan implements iFormBenhNhan
          *
          * @return mixed
          */
-        function QuanHuyen($val = null)
+        function QuanHuyen($val = null, $id = "QuanHuyen", $taget = "#PhuongXa")
         {
+
                 $properties = self::$properties;
-                $properties["value"] = $val;
-                $properties["id"] = "QuanHuyen";
-                $properties[FormRender::Required] = "true";
+                $properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
+                $properties["id"] = $id;
+                $properties["class"] = FormRender::QuanHuyenClass . " form-control";
+                $properties["data-value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
+                $properties["data-target"] = $taget;
+                $properties["data-tinhthanh"] = FormRender::GetValue(null, "TinhThanh", self::GetFormData());
+                // $properties[FormRender::Required] = "true";
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-                return new FormRender(new Element\Select("Quận Huyện", $name, $properties));
+                return new FormRender(new Element\Select("Quận Huyện", $name, [],  $properties));
         }
 
         /**
@@ -215,15 +229,18 @@ class FormBenhNhan implements iFormBenhNhan
          *
          * @return mixed
          */
-        function PhuongXa($val = null)
+        function PhuongXa($val = null, $id = "PhuongXa")
         {
                 $properties = self::$properties;
-                $properties["value"] = $val;
-                $properties["id"] = "PhuongXa";
-                $properties[FormRender::Required] = "true";
-                // $options = TinhThanh::TinhThanhToOption();
+                $properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
+                $properties["id"] = $id;
+                $properties["class"] = FormRender::PhuongXaClass . " form-control";
+                $properties["data-value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
+                $properties["data-tinhthanh"] = FormRender::GetValue(null, "TinhThanh", self::GetFormData());
+                $properties["data-quanhuyen"] = FormRender::GetValue(null, "QuanHuyen", self::GetFormData());
+                // $properties[FormRender::Required] = "true";
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-                return new FormRender(new Element\Select("Phường Xã", $name,  $properties));
+                return new FormRender(new Element\Select("Phường xã", $name, [],  $properties));
         }
         /**
          *

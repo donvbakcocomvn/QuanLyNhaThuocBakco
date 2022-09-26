@@ -4,6 +4,7 @@ namespace Module\donthuoc\Controller;
 
 use LengthException;
 use Model\Common;
+use Model\FormRender;
 use Model\OptionsService;
 use Module\benhnhan\Model\BenhNhan;
 use Module\benhnhan\Model\BenhNhan\FormBenhNhan;
@@ -208,10 +209,18 @@ class index extends \Application implements \Controller\IControllerBE
     // Call API
     public function timkhachhang()
     {
-        $name = $_POST['Name'];
-        $phone = $_POST['Phone'];
+
+        $benhNhan = $_POST['BenhNhan'];
+        $name = $benhNhan["Name"];
+        $phone = $benhNhan['Phone'];
         $bn = new BenhNhan();
         $a = $bn->GetByNameAndPhone($name, $phone);
+        if ($a != null) {
+            $a["NamSinh"] = date("Y", strtotime($a["Ngaysinh"]));
+            $a["NgaySinh"] = date("d", strtotime($a["Ngaysinh"]));
+            $a["ThangSinh"] = date("m", strtotime($a["Ngaysinh"]));
+            FormBenhNhan::SetFormData($a);
+        }
         echo json_encode($a);
     }
     function put()
@@ -345,7 +354,7 @@ class index extends \Application implements \Controller\IControllerBE
                 $itemDonThuoc["ChanDoanBenh"] = $itemForm["ChanDoanBenh"];
                 $itemDonThuoc["ThuocLoaiDon"] = $itemForm["ThuocLoaiDon"];
                 $itemDonThuoc["TongNgayDung"] = $itemForm["TongNgayDung"];
-                $donthuoc->Post($itemDonThuoc);  
+                $donthuoc->Post($itemDonThuoc);
 
                 $detail = new DonThuocDetail();
                 $iddonthuoc = \Model\Request::Get("id", null);

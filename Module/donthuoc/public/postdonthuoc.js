@@ -134,23 +134,33 @@ $(document).ready(function () {
         });
     });
 
+    function getFormDataByName(name, formData) {
+        var data = {};
+        for (let i = 0; i < formData.length; i++) {
+            var element = formData[i].name;
+            if (element.includes(name)) {
+                data[formData[i].name] = formData[i].value ?? "";
+
+            }
+        }
+        return data;
+    }
 
     $(".changeinfo").each(function (index, e) {
         $(this).change(function (param) {
             $($(this).attr("id")).val();
-            console.log();
+            var formData = $("#formKhachHang").serializeArray();
+            // lấy thông tin theo từng form
+            var dataForm = getFormDataByName("BenhNhan", formData);
             $id = $("#tenbenhnhan").val();
             $sdt = $("#sodienthoai").val();
-            var dataFormString = {
-                "Name": $id,
-                "Phone": $sdt,
-            }
+            var dataFormString = dataForm;
+            // console.log(dataFormString);
             $.ajax({
                 url: `/donthuoc/index/timkhachhang/`,
                 type: 'POST',
                 data: dataFormString,
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-                // dataType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 success: function (response) {
                     console.log(response);

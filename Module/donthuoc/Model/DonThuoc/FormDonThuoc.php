@@ -180,6 +180,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 		$properties = self::$properties;
 		$properties["value"] = $val;
 		$properties["id"] = "TongNgayDungThuoc";
+		$properties["type"] = "number";
 		$properties[FormRender::Required] = "true";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
 		return new FormRender(new Textbox("Số Ngày Sử Dụng Thuốc", $name, $properties));
