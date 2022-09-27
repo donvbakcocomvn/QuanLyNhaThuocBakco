@@ -16,7 +16,7 @@ class FormBenhNhan implements iFormBenhNhan
         static $FormData = [];
 
         //put your code here
-        public function __construct($formData)
+        public function __construct($formData = null)
         {
                 self::$FormData  = $formData;
         }

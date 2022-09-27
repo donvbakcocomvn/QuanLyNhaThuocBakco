@@ -1,15 +1,14 @@
 <ol class="breadcrumb">
     <li><a href="/backend/"><i class="fa fa-dashboard"></i>&nbsp; Dashboard</a></li>
-    <li><a href="/backend/xuatkho/">Danh sách xuất</a></li>
-    <li class="active">Danh sách xuất chi tiết</li>
+    <li class="active">Danh sách thuốc tồn kho</li>
 </ol>
 <section class="content">
     <div class="row">
         <div class="col-md-12">
-            <form method="get" action="/backend/dsxuatchitiet/">
+            <form method="get" action="/backend/tonkho/">
                 <div class="form-group d-flex">
                     <label class="btn btn-default"><input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox"><i class="fa fa-share" aria-hidden="true"></class=></i></label>
-                    <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập vào mã phiếu hoặc mã thuốc để tìm kiếm">
+                    <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập vào mã thuốc, tên danh mục thuốc hoặc tên thuốc để tìm kiếm">
                     <button class="btn btn-primary no-border-radius" name="btnTim" type="submit">
                         <i class="fa fa-search"></i> Tìm Kiếm
                     </button>
@@ -17,35 +16,28 @@
             </form>
             <div class="box box-success">
                 <div class="box-header">
-                    <h3 style="text-align: center;">Danh sách xuất chi tiết</h3>
-                    <div class="box-tools float-left">
-                        <a class="btn btn-success" href="/backend/exportdsxuatchitiet/">
-                            <i class="fa fa-filter"></i>&nbsp;Export danh sách xuất chi tiết</a>
+                    <div class="box-tools">
+                        <div class="box-tools ">
+                            <a class="btn btn-success" href="/thongke/exportDSthuocton">
+                                <i class="fa fa-filter"></i>&nbsp;Export DS thuốc tồn</a>
+                        </div>
                     </div>
+                    <h3 style="text-align: center;" class="text-uppercase">Danh sách thuốc tồn kho</h3>
                 </div>
                 <div class="box-body">
                     <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-                        <div class="row">
-                            <div class="col-sm-6"></div>
-                            <div class="col-sm-6"></div>
-                        </div>
                         <fieldset>
-                            <legend>Danh sách xuất chi tiết</legend>
+                            <legend>Danh sách thuốc tồn kho</legend>
                             <div class="row">
                                 <div class="col-sm-12">
                                     <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                                         <thead>
                                             <tr role="row">
                                                 <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">STT</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Mã phiếu</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Ngày nhập</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Mã thuốc</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Số lô</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Nhà sản xuất</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Số lượng</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Nước sản xuất</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Giá nhập</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Tổng giá nhập</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Mã thuốc</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Thuộc danh mục</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Tên thuốc</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Số lượng hiện tại</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -54,6 +46,7 @@
                                             use Model\Common;
                                             use Model\Notions;
                                             use Model\ThongKe;
+                                            use Module\quanlythuoc\Model\DanhMuc;
                                             use Module\quanlythuoc\Model\SanPham;
 
                                             $index = 0;
@@ -61,19 +54,15 @@
                                             // var_dump($danhsach);
                                             foreach ($danhsach as $value) { ?>
                                                 <?php
-                                                $phieu = new \Module\quanlythuoc\Model\PhieuXuatNhap($value["IdPhieu"]);
+                                                $thuoc = new SanPham($value['Id']);
+                                                $danhmuc = new DanhMuc($value['Idloaithuoc']);
                                                 ?>
                                                 <tr role="row" class="even">
                                                     <td class="sorting_1 text-center"><?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?></td>
-                                                    <td><?php echo $value["IdPhieu"]; ?></td>
-                                                    <td><?php echo Common::ForMatDMYHIS($phieu->NgayNhap); ?></td>
-                                                    <td><?php echo SanPham::GetNameById($value["IdThuoc"]) . "(" . $value["IdThuoc"] . ")"; ?></td>
-                                                    <td><?php echo $value["SoLo"]; ?></td>
-                                                    <td><?php echo $value['NhaSanXuat']; ?></td>
-                                                    <td><?php echo Common::ViewNumber($value['SoLuong']); ?></td>
-                                                    <td><?php echo $value['NuocSanXuat']; ?></td>
-                                                    <td><?php echo Common::ViewPrice($value['Price']); ?></td>
-                                                    <td><?php echo Common::ViewPrice($value['SoLuong'] * $value['Price']); ?></td>
+                                                    <td><?php echo $value['Id']; ?></td>
+                                                    <td><?php echo $danhmuc->Name; ?></td>
+                                                    <td><?php echo $value['Name']; ?></td>
+                                                    <td><?php echo $value['SLHienTai'] . ' ' . $thuoc->DonViTinh(); ?></td>
                                                 </tr>
                                             <?php
                                                 $index++;
@@ -97,13 +86,14 @@
                                             )->render();
                                             ?>
                                             <?php
-                                            $linkPhanTrang = "/index.php?controller=backend&action=dsxuatchitiet&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
+                                            $linkPhanTrang = "/index.php?controller=backend&action=tonkho&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
                                             echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
                                             ?>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                         </fieldset>
                     </div>
                 </div>
@@ -113,7 +103,7 @@
 </section>
 <script type="text/javascript">
     var SoDongHienThi = function(evalue) {
-        var linkPhanTrang = '/index.php?controller=backend&action=dsxuatchitiet&indexPage=1&pageNumber=[j]';
+        var linkPhanTrang = '/index.php?controller=backend&action=tonkho&indexPage=1&pageNumber=[j]';
         linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
         window.location.href = linkPhanTrang;
     }

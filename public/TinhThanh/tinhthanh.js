@@ -35,11 +35,13 @@ $(function () {
       },
     });
   });
+
+
   $(".QuanHuyenClass").each(function () {
     var self = $(this);
     var tinhThanhId = "#" + self.attr("id");
     var dataElement = self.data("tinhthanh");
-    // console.log(dataElement);
+    console.log(dataElement);
     $.ajax({
       type: "get",
       url: `/public/TinhThanh/tinhthanh.php?maTinh=${dataElement}`,
@@ -53,6 +55,8 @@ $(function () {
       },
     });
   });
+
+
   $(".PhuongXaClass").each(function () {
     var self = $(this);
     var phuongXaId = "#" + self.attr("id");

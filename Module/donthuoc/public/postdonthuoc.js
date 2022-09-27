@@ -146,49 +146,49 @@ $(document).ready(function () {
         return data;
     }
 
-    $(".changeinfo").each(function (index, e) {
-        $(this).change(function (param) {
-            $($(this).attr("id")).val();
-            var formData = $("#formKhachHang").serializeArray();
-            // lấy thông tin theo từng form
-            var dataForm = getFormDataByName("BenhNhan", formData);
-            $id = $("#tenbenhnhan").val();
-            $sdt = $("#sodienthoai").val();
-            var dataFormString = dataForm;
-            // console.log(dataFormString);
-            $.ajax({
-                url: `/donthuoc/index/timkhachhang/`,
-                type: 'POST',
-                data: dataFormString,
-                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-                dataType: 'json',
-                success: function (response) {
-                    console.log(response);
-                    console.log(response.QuanHuyen);
-                    $("#tenbenhnhan").val(response.Name);
-                    $("#Namsinh").val((response.Ngaysinh).substring(0, 4));
-                    $("#Thangsinh").val((response.Ngaysinh).substring(5, 7));
-                    $("#Ngaysinh").val((response.Ngaysinh).substring(8, 10));
-                    $("#sodienthoai").val(response.Phone);
-                    $('#CMND').val(response.CMND);
-                    $('#Gioitinh').val(response.Gioitinh);
-                    $('#TinhThanh').val(response.Address);
-                    $('#tinhThanh').val(response.TinhThanh).change();
-                    // $('#quanHuyen').val(response.QuanHuyen);
-                    $(`select#quanHuyen option[value="` + $(response.QuanHuyen) + `"]`).attr("selected", true);
-                    $('#quanHuyen').data('value', response.QuanHuyen);
-                    $('#quanHuyen').change();
+    // $(".changeinfo").each(function (index, e) {
+    //     $(this).change(function (param) {
+    //         $($(this).attr("id")).val();
+    //         var formData = $("#formKhachHang").serializeArray();
+    //         // lấy thông tin theo từng form
+    //         var dataForm = getFormDataByName("BenhNhan", formData);
+    //         $id = $("#tenbenhnhan").val();
+    //         $sdt = $("#sodienthoai").val();
+    //         var dataFormString = dataForm;
+    //         // console.log(dataFormString);
+    //         $.ajax({
+    //             url: `/donthuoc/index/timkhachhang/`,
+    //             type: 'POST',
+    //             data: dataFormString,
+    //             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    //             dataType: 'json',
+    //             success: function (response) {
+    //                 console.log(response);
+    //                 console.log(response.QuanHuyen);
+    //                 $("#tenbenhnhan").val(response.Name);
+    //                 $("#Namsinh").val((response.Ngaysinh).substring(0, 4));
+    //                 $("#Thangsinh").val((response.Ngaysinh).substring(5, 7));
+    //                 $("#Ngaysinh").val((response.Ngaysinh).substring(8, 10));
+    //                 $("#sodienthoai").val(response.Phone);
+    //                 $('#CMND').val(response.CMND);
+    //                 $('#Gioitinh').val(response.Gioitinh);
+    //                 $('#TinhThanh').val(response.Address);
+    //                 $('#tinhThanh').val(response.TinhThanh).change();
+    //                 // $('#quanHuyen').val(response.QuanHuyen);
+    //                 $(`select#quanHuyen option[value="` + $(response.QuanHuyen) + `"]`).attr("selected", true);
+    //                 $('#quanHuyen').data('value', response.QuanHuyen);
+    //                 $('#quanHuyen').change();
 
-                    $(`select#phuongXa option[value="` + $(response.PhuongXa) + `"]`).attr("selected", true);
-                    $('#phuongXa').data('value', response.PhuongXa);
-                    $('#phuongXa').change();
-                },
-                error: function () {
-                    // alert("error");
-                }
-            });
-        });
-    });
+    //                 $(`select#phuongXa option[value="` + $(response.PhuongXa) + `"]`).attr("selected", true);
+    //                 $('#phuongXa').data('value', response.PhuongXa);
+    //                 $('#phuongXa').change();
+    //             },
+    //             error: function () {
+    //                 // alert("error");
+    //             }
+    //         });
+    //     });
+    // });
 
 
     // Thêm SESSION

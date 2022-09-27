@@ -1,6 +1,6 @@
 <ol class="breadcrumb">
     <li><a href="/index.php?controller=backend">Dashboard</a></li>
-    <li><a href="/index.php?controller=thongke">Thống kê</a></li>
+    <!-- <li><a href="/index.php?controller=thongke">Thống kê</a></li> -->
     <li> Danh sách bệnh nhân trong ngày </li>
 </ol>
 <?php
@@ -15,8 +15,8 @@ use Model\ThongKe;
     <form method="get" action="/thongke/benhnhantrongngay/">
         <div class="form-group d-flex">
             <label class="btn btn-default"><input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox"><i class="fa fa-share" aria-hidden="true"></class=></i></label>
-            <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập tên, số điện thoại hoặc địa chỉ để tìm kiếm">                                                              
-            <input name="indate" value="<?php echo date("Y-m-d", time()); ?>" type="hidden">                                                              
+            <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập tên, số điện thoại hoặc địa chỉ để tìm kiếm">
+            <input name="indate" value="<?php echo date("Y-m-d", time()); ?>" type="hidden">
             <button class="btn btn-primary no-border-radius" name="btnTim" type="submit">
                 <i class="fa fa-search"></i> Tìm Kiếm
             </button>
@@ -25,80 +25,70 @@ use Model\ThongKe;
     <div class="clearfix">
         <div class="box box-primary">
             <div class="box-header">
-                <h3 class="box-title">Danh sách bệnh nhân trong ngày</h3>
-                <div class="box-tools">
+                <div class="box-header">
+                    <h3 class="text-center">Danh sách bệnh nhân trong ngày</h3>
+                    <div class="box-tools float-left">
+                        <a class="btn btn-success" href="/thongke/exportbenhnhantrongngay/">
+                            <i class="fa fa-filter"></i>&nbsp;Export danh sách</a>
+                    </div>
                 </div>
             </div>
             <div class="box-body">
-                <table class="table table-hover table-bordered">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>STT</th>
-                            <th>Mã Khách Hàng</th>
-                            <th>Tên Khách Hàng</th>
-                            <th>Giới Tính</th>
-                            <th>Ngày Sinh</th>
-                            <th>CMND</th>
-                            <th>Địa Chỉ</th>
-                            <!-- <th>Tỉnh/Thành Phố</th> -->
-                            <!-- <th>Quận/Huyện</th> -->
-                            <!-- <th>Phường/Xã</th> -->
-                            <th>Điện Thoại</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $danhsach = $data['items'];
-                        // var_dump($danhsach);
-                        // var_dump($danhsach);
-                        // $locaiton = new Locations();
-                        // echo $a;
-                        foreach ($danhsach as $index => $item) {
-                            $_item = new BenhNhan($item);
-                        ?>
-                            <tr>
-                                <td>
+                <fieldset>
+                    <legend>Danh sách bệnh nhân trong ngày</legend>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Mã Khách Hàng</th>
+                                        <th>Tên Khách Hàng</th>
+                                        <th>Giới Tính</th>
+                                        <th>Ngày Sinh</th>
+                                        <th>CMND</th>
+                                        <th>Địa Chỉ</th>
+                                        <!-- <th>Tỉnh/Thành Phố</th> -->
+                                        <!-- <th>Quận/Huyện</th> -->
+                                        <!-- <th>Phường/Xã</th> -->
+                                        <th>Điện Thoại</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
                                     <?php
-                                    // echo Module\benhnhan\Model\btnHtml::btnSuaKhachHang($_item->Id);
-                                    // echo Module\benhnhan\Model\btnHtml::btnXoaKhachHang($_item->Id);
-                                    // echo Module\benhnhan\Model\btnHtml::btnchitiet($_item->Id);
+                                    $danhsach = $data['items'];
+                                    // var_dump($danhsach);
+                                    // var_dump($danhsach);
+                                    // $locaiton = new Locations();
+                                    // echo $a;
+                                    foreach ($danhsach as $index => $item) {
+                                        $_item = new BenhNhan($item);
                                     ?>
-                                    
-                                    <a class="btn btn-primary" data-toggle="modal" href='#modal-id'>Trigger modal</a>
-                                    <div class="modal fade" id="modal-id">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                    <h4 class="modal-title">Modal title</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary">Save changes</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                </td>
-                                <td><?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?></td>
-                                <td><?php echo $_item->Id; ?></td>
-                                <td><?php echo $_item->Name; ?></td>
-                                <td><?php echo $_item->Gioitinh(); ?></td>
-                                <td><?php echo $_item->Ngaysinh; ?></td>
-                                <td><?php echo $_item->CMND; ?></td>
-                                <td><?php echo $_item->Address; ?></td>
-                                <td><?php echo $_item->Phone; ?></td>
-                            </tr>
-                        <?php
-                        }
-                        ?>
-                    </tbody>
-                </table>
+                                        <tr>
+                                            <td>
+                                                <?php
+                                                // echo Module\benhnhan\Model\btnHtml::btnSuaKhachHang($_item->Id);
+                                                // echo Module\benhnhan\Model\btnHtml::btnXoaKhachHang($_item->Id);
+                                                // echo Module\benhnhan\Model\btnHtml::btnchitiet($_item->Id);
+                                                ?>
+                                            </td>
+                                            <td><?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?></td>
+                                            <td><?php echo $_item->Id; ?></td>
+                                            <td><?php echo $_item->Name; ?></td>
+                                            <td><?php echo $_item->Gioitinh(); ?></td>
+                                            <td><?php echo $_item->Ngaysinh; ?></td>
+                                            <td><?php echo $_item->CMND; ?></td>
+                                            <td><?php echo $_item->Address; ?></td>
+                                            <td><?php echo $_item->Phone; ?></td>
+                                        </tr>
+                                    <?php
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </fieldset>
                 <div class="box-footer">
                     <div class="d-flex">
                         <?php
