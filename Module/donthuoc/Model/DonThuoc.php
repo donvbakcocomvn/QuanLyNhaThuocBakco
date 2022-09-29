@@ -20,6 +20,8 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
     public $ChanDoanBenh;
     public $ThuocLoaiDon;
     public $TongNgayDung;
+    public $Status;
+
 
 
     public function __construct($bn = null)
@@ -41,14 +43,24 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
                 $this->ChanDoanBenh = isset($bn["ChanDoanBenh"]) ? $bn["ChanDoanBenh"] : null;
                 $this->ThuocLoaiDon = isset($bn["ThuocLoaiDon"]) ? $bn["ThuocLoaiDon"] : null;
                 $this->TongNgayDung = isset($bn["TongNgayDung"]) ? $bn["TongNgayDung"] : null;
+                $this->Status = isset($bn["Status"]) ? $bn["Status"] : null;
             }
         }
     }
 
-
+    public function Status()
+    {
+        if ($this->Status == 1) {
+            return "<span class='label-danger' style='padding: 5px;border-radius: 5px';>Chưa lấy thuốc</span>";
+        } elseif ($this->Status == 2) {
+            return "<span class='label-warning' style='padding: 5px;border-radius: 5px';>Đang soạn thuốc</span>";
+        } elseif ($this->Status == 3) {
+            return "<span class='label-success' style='padding: 5px;border-radius: 5px';>Đã soạn thuốc xong</span>";
+        }
+    }
 
     // Lấy 1 dòng by Id
-    public static function GetItemById($item,$Id)
+    public static function GetItemById($item, $Id)
     {
         $donthuoc = new DonThuoc();
         $sql = "SELECT `$item` FROM `lap1_benhnhan` WHERE `Id` = '$Id'";
@@ -220,8 +232,65 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
         if ($danhmuc) {
             $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
         }
+        // self::$Debug = true;
+        $where = " `Id` like '%{$name}%' or `IdBenhNhan` like '%{$name}%' or `NameBN` like '%{$name}%' {$danhmucSql}";
+        return $this->SelectPT($where, $indexPage, $pageNumber, $total);
+    }
 
-        $where = " `Id` like '%{$name}%' or `IdBenhNhan` like '%{$name}%' or `NameBN` like '%{$name}%' {$danhmucSql} ";
+    public function GetDonChuaXuLy($params, $indexPage, $pageNumber, &$total)
+    {
+        $name = isset($params["keyword"]) ? $params["keyword"] : '';
+        $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
+        $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
+        $isShowSql = "and `isShow` >= 0 ";
+        $danhmucSql = "";
+
+        if ($isShow) {
+            $isShowSql = "and `isShow` = '{$isShow}' ";
+        }
+        if ($danhmuc) {
+            $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
+        }
+        // self::$Debug = true;
+        $where = " (`Id` like '%{$name}%' or `IdBenhNhan` like '%{$name}%' or `NameBN` like '%{$name}%' {$danhmucSql}) and `Status`  = 1 ORDER BY `Id` DESC";
+        return $this->SelectPT($where, $indexPage, $pageNumber, $total);
+    }
+
+    public function GetDonDangXuLy($params, $indexPage, $pageNumber, &$total)
+    {
+        $name = isset($params["keyword"]) ? $params["keyword"] : '';
+        $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
+        $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
+        $isShowSql = "and `isShow` >= 0 ";
+        $danhmucSql = "";
+
+        if ($isShow) {
+            $isShowSql = "and `isShow` = '{$isShow}' ";
+        }
+        if ($danhmuc) {
+            $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
+        }
+        // self::$Debug = true;
+        $where = " (`Id` like '%{$name}%' or `IdBenhNhan` like '%{$name}%' or `NameBN` like '%{$name}%' {$danhmucSql}) and `Status` = 2 ORDER BY `Id` DESC";
+        return $this->SelectPT($where, $indexPage, $pageNumber, $total);
+    }
+
+    public function GetDonDaXuLy($params, $indexPage, $pageNumber, &$total)
+    {
+        $name = isset($params["keyword"]) ? $params["keyword"] : '';
+        $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
+        $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
+        $isShowSql = "and `isShow` >= 0 ";
+        $danhmucSql = "";
+
+        if ($isShow) {
+            $isShowSql = "and `isShow` = '{$isShow}' ";
+        }
+        if ($danhmuc) {
+            $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
+        }
+        // self::$Debug = true;
+        $where = " (`Id` like '%{$name}%' or `IdBenhNhan` like '%{$name}%' or `NameBN` like '%{$name}%' {$danhmucSql}) and `Status` = 3 ORDER BY `Id` DESC";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 

@@ -9,11 +9,15 @@ use Module\donthuoc\Model\DonThuoc;
 ?>
 <ol class="breadcrumb">
     <li><a href="/index.php?controller=backend">Home</a></li>
-    <li><a href="/index.php?module=donthuoc&controller=index&action=index">Danh Sách Đơn Thuốc</a></li>
-    <li> Quản Lý Đơn Thuốc </li>
+    <li class="active"> Danh Sách Đơn Thuốc </li>
 </ol>
 
 <div class="container-fluid">
+
+
+    
+
+
     <form method="get" action="/donthuoc/index/index/">
         <div class="form-group d-flex">
             <label class="btn btn-default"><input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox"><i class="fa fa-share" aria-hidden="true"></class=></i></label>
@@ -28,7 +32,7 @@ use Module\donthuoc\Model\DonThuoc;
             <div class="box-header">
                 <h3 class="box-title">Danh Sách Đơn Thuốc</h3>
                 <div class="box-tools">
-                    <a type="button" href="/thongke/donthuoctrongngay" class="btn btn-success"><i class="fa fa-list"></i>&nbsp;Danh sách đơn thuốc trong ngày</a>
+                    <!-- <a type="button" href="/thongke/donthuoctrongngay" class="btn btn-success"><i class="fa fa-list"></i>&nbsp;Danh sách đơn thuốc trong ngày</a> -->
                     <?php
                     Module\donthuoc\Model\btnHtml::btnThemDonThuoc();
                     \Model\FormRender::HuongDan("danhsachdonthuoc", "Hướng dẫn đơn thuốc");
@@ -47,19 +51,18 @@ use Module\donthuoc\Model\DonThuoc;
                             <th>Ngày Sinh</th>
                             <th>Thời Gian Khám Bệnh</th>
                             <th>Chẩn Đoán</th>
+                            <!-- <th>Ngày Dùng</th> -->
+                            <th>Tình trạng</th>
                             <th>Thuộc Loại Đơn</th>
-                            <th>Ngày Dùng</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        // var_dump($items);
-                        // echo $a;
                         foreach ($items as $index => $item) {
                             $_item = new DonThuoc($item);
                         ?>
                             <tr>
-                                <td style="width: 250px;">
+                                <td class="text-center">
                                     <?php
                                     echo Module\donthuoc\Model\btnHtml::btnCopyDonThuoc($_item->Id);
                                     // echo Module\donthuoc\Model\btnHtml::btnXoaDonThuoc($_item->Id);
@@ -69,14 +72,14 @@ use Module\donthuoc\Model\DonThuoc;
                                 </td>
                                 <td><?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?></td>
                                 <td><?php echo $_item->Id; ?></td>
-                                <!-- <td><?php echo $_item->IdBenhNhan; ?></td> -->
                                 <td><?php echo $_item->BenhNhan()->Name; ?></td>
                                 <td><?php echo $_item->BenhNhan()->Gioitinh(); ?></td>
-                                <td><?php echo $_item->BenhNhan()->Ngaysinh; ?></td>
+                                <td><?php echo Common::ForMatDMY($_item->BenhNhan()->Ngaysinh); ?></td>
                                 <td><?php echo date("d-m-Y H:i:s", strtotime($_item->ThoiGianKham)); ?></td>
                                 <td><?php echo $_item->ChanDoanBenh ?></td>
+                                <!-- <td><?php echo $_item->TongNgayDung; ?></td> -->
+                                <td><?php echo $_item->Status(); ?></td>
                                 <td><?php echo $_item->ThuocLoaiDon() ?></td>
-                                <td><?php echo $_item->TongNgayDung; ?></td>
 
                             </tr>
                         <?php

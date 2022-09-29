@@ -403,4 +403,21 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
 		return new FormRender(new Textbox("", $name, $properties));
 	}
+	/**
+	 *
+	 * @param mixed $val
+	 *
+	 * @return mixed
+	 */
+	function Status($val = null) {
+		$properties = self::$properties;
+		$properties["value"] = $val;
+		$properties["data-value"] = $val;
+		$properties[FormRender::Required] = "true";
+		$option = OptionsService::GetGroupsToSelect("optiondonthuoc");
+		$option1 =  ["" => "--- Tình trạng ---"];
+		$options = $option1 + $option;
+		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
+		return new FormRender(new Select("Tình trạng", $name, $options, $properties));
+	}
 }

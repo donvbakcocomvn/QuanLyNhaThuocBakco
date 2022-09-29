@@ -1,33 +1,31 @@
 <ol class="breadcrumb">
     <li><a href="/index.php?controller=backend">Dashboard</a></li>
     <!-- <li><a href="/index.php?controller=thongke">Thống kê</a></li> -->
-    <li> Danh sách đơn thuốc kê toa trong ngày </li>
+    <li class="text-capitalize"> Danh sách đơn thuốc trong ngày </li>
 </ol>
 <?php
-
-use Model\Common;
-use Module\benhnhan\Model\BenhNhan;
-use Model\Locations;
-use Model\ThongKe;
 use Module\donthuoc\Model\DonThuoc;
 
 ?>
 <div class="container-fluid">
-    <form method="get" action="/thongke/donthuoctrongngay/">
-        <div class="form-group d-flex">
-            <label class="btn btn-default"><input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox"><i class="fa fa-share" aria-hidden="true"></class=></i></label>
-            <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập vào mã đơn thuốc, tên bệnh nhân hoặc loại đơn thuốc để tìm kiếm">
-            <input name="indate" value="<?php echo date("Y-m-d", time()); ?>" type="hidden">
-            <button class="btn btn-primary no-border-radius" name="btnTim" type="submit">
-                <i class="fa fa-search"></i> Tìm Kiếm
-            </button>
-        </div>
-    </form>
+
     <div class="clearfix">
         <div class="box box-primary">
             <div class="box-header">
+                <div class="box-primary">
+                    <form method="get" action="/thongke/donthuoctrongngay/">
+                        <div class="form-group d-flex">
+                            <label class="btn btn-default"><input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox"><i class="fa fa-share" aria-hidden="true"></class=></i></label>
+                            <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập vào mã đơn thuốc, tên bệnh nhân hoặc loại đơn thuốc để tìm kiếm">
+                            <input name="indate" value="<?php echo date("Y-m-d", time()); ?>" type="hidden">
+                            <button class="btn btn-primary no-border-radius" name="btnTim" type="submit">
+                                <i class="fa fa-search"></i> Tìm Kiếm
+                            </button>
+                        </div>
+                    </form>
+                </div>
                 <div class="box-header">
-                    <h3 class="text-center">Danh sách đơn thuốc kê toa trong ngày</h3>
+                    <h3 class="text-center text-uppercase">Danh sách đơn thuốc trong ngày</h3>
                     <div class="box-tools float-left">
                         <a class="btn btn-success" href="/thongke/exportdonthuoctrongngay/">
                             <i class="fa fa-filter"></i>&nbsp;Export danh sách</a>
@@ -51,7 +49,7 @@ use Module\donthuoc\Model\DonThuoc;
                                         <th>Ngày Sinh</th>
                                         <th>Thời gian khám bệnh</th>
                                         <th>Chẩn đoán</th>
-                                        <th>Số ngày dùng</th>
+                                        <th>Tình trạng</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -64,11 +62,9 @@ use Module\donthuoc\Model\DonThuoc;
                                         <tr>
                                             <td>
                                                 <?php
-                                                echo Module\benhnhan\Model\btnHtml::btnSuaKhachHang($_item->Id);
-                                                // echo Module\benhnhan\Model\btnHtml::btnXoaKhachHang($_item->Id);
-                                                echo Module\benhnhan\Model\btnHtml::btnchitiet($_item->Id);
+                                                echo \Module\donthuoc\Model\btnHtml::btnSuaDonThuoc($_item->Id);
+                                                echo \Module\donthuoc\Model\btnHtml::btnchitiet($_item->Id);
                                                 ?>
-
                                             </td>
                                             <td><?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?></td>
                                             <td><?php echo $_item->Id; ?></td>
@@ -78,7 +74,8 @@ use Module\donthuoc\Model\DonThuoc;
                                             <td><?php echo $_item->NgaySinh; ?></td>
                                             <td><?php echo $_item->ThoiGianKham; ?></td>
                                             <td><?php echo $_item->ChanDoanBenh; ?></td>
-                                            <td><?php echo $_item->TongNgayDung . " " . "Ngày"; ?></td>
+                                            <!-- <td><?php echo $_item->TongNgayDung . " " . "Ngày"; ?></td> -->
+                                            <td><?php echo $_item->Status(); ?></td>
                                         </tr>
                                     <?php
                                     }

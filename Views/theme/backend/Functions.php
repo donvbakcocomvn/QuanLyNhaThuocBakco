@@ -229,20 +229,17 @@ class Functions
                     </li>
                     <li class="<?php echo \Application::$_Controller == "dashboard" ? 'active' : '' ?> treeview">
                         <a href="/profile/">
-                            <i class="fa fa-info"></i> <span>Thông Tin</span>
+                            <i class="fa fa-info-circle"></i> <span>Thông Tin</span>
                         </a>
                     </li>
-                    <li class="<?php echo \Application::$_Controller == "dashboard" ? 'active' : '' ?> treeview">
+                    <!-- <li class="<?php echo \Application::$_Controller == "dashboard" ? 'active' : '' ?> treeview">
                         <a href="/thongke/">
                             <i class="fa fa-bar-chart"></i> <span>Thống Kê</span>
                         </a>
-                    </li>
-                    <?php
+                    </li> -->
 
-                    ?>
-
+                    <!-- Check quyền từng menu -->
                     <?php
-                    // ----------------------------
                     if (\Model\Permission::CheckPremision([Permission::QLT_Thuoc_DS, Permission::QLT_DanhMuc_DS, Permission::QLT_Phieu_DS, User::Admin], []) == true) {
                     ?>
                         <li class="treeview <?php echo \Application::$_Module == "quanlythuoc" ? 'active' : '' ?>">
@@ -281,7 +278,6 @@ class Functions
                         </li>
                     <?php
                     }
-
                     // ----------------------------
                     if (\Model\Permission::CheckPremision([User::QuanLy, User::Admin, BenhnhanPermission::QLT_BenhNhan_DS, BenhnhanPermission::QLT_BenhNhan_Post, BenhnhanPermission::QLT_BenhNhan_Delete, BenhnhanPermission::QLT_BenhNhan_Put, BenhnhanPermission::QLT_BenhNhan_Detail], []) == true) {
                     ?>
@@ -302,10 +298,83 @@ class Functions
                     ?>
                         <li class="<?php echo \Application::$_Module == "khachhang" ? 'active' : '' ?>">
                             <a href="/donthuoc/">
-                                <i class="fa fa-user-plus"></i>
+                                <i class="fa fa-pencil-square-o"></i>
                                 <span>Quản lý đơn thuốc</span>
                             </a>
+                        </li>
+                    <?php
+                    }
+                    // Thêm đơn thuốc
+                    if (\Model\Permission::CheckPremision([
+                        User::QuanLy, User::Admin, DonthuocPermission::QLT_DonThuoc_DS, DonthuocPermission::QLT_DonThuoc_Post,
+                        DonthuocPermission::QLT_DonThuoc_Put, DonthuocPermission::QLT_DonThuoc_Detail, DonthuocPermission::QLT_DonThuoc_Delete, DonthuocPermission::QLT_DonThuoc_Export, DonthuocPermission::QLT_DonThuoc_Copy
+                    ], []) == true) {
+                    ?>
+                        <li class="<?php echo \Application::$_Module == "khachhang" ? 'active' : '' ?>">
+                            <a href="/donthuoc/index/post">
+                                <i class="fa fa-plus-square"></i>
+                                <span>Thêm đơn thuốc</span>
+                            </a>
+                        </li>
+                    <?php
+                    }
 
+                    // Danh sách đơn trong ngày
+                    if (\Model\Permission::CheckPremision([
+                        User::QuanLy, User::Admin, DonthuocPermission::QLT_DonThuoc_DS, DonthuocPermission::QLT_DonThuoc_Post,
+                        DonthuocPermission::QLT_DonThuoc_Put, DonthuocPermission::QLT_DonThuoc_Detail, DonthuocPermission::QLT_DonThuoc_Delete, DonthuocPermission::QLT_DonThuoc_Export, DonthuocPermission::QLT_DonThuoc_Copy
+                    ], []) == true) {
+                    ?>
+                        <li class="<?php echo \Application::$_Module == "khachhang" ? 'active' : '' ?>">
+                            <a href="/thongke/donthuoctrongngay">
+                                <i class="fa fa-list-alt"></i>
+                                <span>Đơn thuốc trong ngày</span>
+                            </a>
+                        </li>
+                    <?php
+                    }
+
+                    // Đơn chưa xử lý
+                    if (\Model\Permission::CheckPremision([
+                        User::QuanLy, User::Admin, DonthuocPermission::QLT_DonThuoc_DS, DonthuocPermission::QLT_DonThuoc_Post,
+                        DonthuocPermission::QLT_DonThuoc_Put, DonthuocPermission::QLT_DonThuoc_Detail, DonthuocPermission::QLT_DonThuoc_Delete, DonthuocPermission::QLT_DonThuoc_Export, DonthuocPermission::QLT_DonThuoc_Copy
+                    ], []) == true) {
+                    ?>
+                        <li class="<?php echo \Application::$_Module == "khachhang" ? 'active' : '' ?>">
+                            <a href="/donthuoc/index/donchuaxuly/">
+                                <i class="fa fa-th-list"></i>
+                                <span>Đơn chưa xử lý</span>
+                            </a>
+                        </li>
+                    <?php
+                    }
+
+                    // Đơn đang xử lý
+                    if (\Model\Permission::CheckPremision([
+                        User::QuanLy, User::Admin, DonthuocPermission::QLT_DonThuoc_DS, DonthuocPermission::QLT_DonThuoc_Post,
+                        DonthuocPermission::QLT_DonThuoc_Put, DonthuocPermission::QLT_DonThuoc_Detail, DonthuocPermission::QLT_DonThuoc_Delete, DonthuocPermission::QLT_DonThuoc_Export, DonthuocPermission::QLT_DonThuoc_Copy
+                    ], []) == true) {
+                    ?>
+                        <li class="<?php echo \Application::$_Module == "khachhang" ? 'active' : '' ?>">
+                            <a href="/donthuoc/index/dondangxuly/">
+                                <i class="fa fa-list"></i>
+                                <span>Đơn đang xử lý</span>
+                            </a>
+                        </li>
+                    <?php
+                    }
+
+                    // Đơn đã soạn thuốc xong
+                    if (\Model\Permission::CheckPremision([
+                        User::QuanLy, User::Admin, DonthuocPermission::QLT_DonThuoc_DS, DonthuocPermission::QLT_DonThuoc_Post,
+                        DonthuocPermission::QLT_DonThuoc_Put, DonthuocPermission::QLT_DonThuoc_Detail, DonthuocPermission::QLT_DonThuoc_Delete, DonthuocPermission::QLT_DonThuoc_Export, DonthuocPermission::QLT_DonThuoc_Copy
+                    ], []) == true) {
+                    ?>
+                        <li class="<?php echo \Application::$_Module == "khachhang" ? 'active' : '' ?>">
+                            <a href="/donthuoc/index/dondaxuly/">
+                                <i class="fa fa-list-ul"></i>
+                                <span>Đơn đã xử lý</span>
+                            </a>
                         </li>
                     <?php
                     }
@@ -338,7 +407,7 @@ class Functions
                     ?>
                         <li class="<?php echo \Application::$_Controller == "quanlyquyen" ? 'active' : '' ?> treeview">
                             <a href="/quanlyquyen/">
-                                <i class="fa fa-dashboard"></i> <span>Quản Lý Quyền</span>
+                                <i class="fa fa-magic"></i> <span>Quản Lý Quyền</span>
                             </a>
                         </li>
                     <?php
@@ -351,7 +420,7 @@ class Functions
                     ?>
                         <li class="<?php echo \Application::$_Controller == "quanlyusers" ? 'active' : '' ?> treeview">
                             <a href="/quanlyusers/">
-                                <i class="fa fa-dashboard"></i> <span>Quản Lý Tài Khoản</span>
+                                <i class="fa fa-users"></i> <span>Quản Lý Tài Khoản</span>
                             </a>
                         </li>
                     <?php
@@ -366,17 +435,18 @@ class Functions
                                 <!-- <span class="label label-primary pull-right">4</span> -->
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="/locations/index"><i class="fa fa-circle-o"></i> Tỉnh Thành Phố</a></li>
-                                <li><a href="/options/donvitinh/"><i class="fa fa-circle-o"></i> Đơn Vị Tính</a></li>
+                                <li><a href="/locations/index"><i class="fa fa-circle-o"></i> Tỉnh/Thành phố</a></li>
+                                <li><a href="/options/donvitinh/"><i class="fa fa-circle-o"></i> Đơn vị tính</a></li>
                                 <!-- <li><a href="/options/congty/"><i class="fa fa-circle-o"></i> Công Ty</a></li>
                                 <li><a href="/options/index/phongban/"><i class="fa fa-circle-o"></i> Phòng Ban</a></li>
                                 <li><a href="/options/hopdong/"><i class="fa fa-circle-o"></i> Hợp Đồng</a></li>
                                 <li><a href="/options/tinhtrang/"><i class="fa fa-circle-o"></i>Tinh trạng Hợp Đồng</a></li>
                                 <li><a href="/options/hinhthuchd/"><i class="fa fa-circle-o"></i> Hình Thức Hợp Đồng</a></li> -->
-                                <li><a href="/options/gioitinh/"><i class="fa fa-circle-o"></i> Giới Tính</a></li>
-                                <li><a href="/options/cachdungthuoc/"><i class="fa fa-circle-o"></i> Cách Dùng Thuốc</a></li>
+                                <li><a href="/options/gioitinh/"><i class="fa fa-circle-o"></i> Giới tính</a></li>
+                                <li><a href="/options/cachdungthuoc/"><i class="fa fa-circle-o"></i> Cách dùng thuốc</a></li>
                                 <li><a href="/options/donviquydoi/"><i class="fa fa-circle-o"></i> Đơn vị quy đổi</a></li>
-                                <li><a href="/options/optiondonthuoc/"><i class="fa fa-circle-o"></i> Cài Đặt Loại Đơn </a></li>
+                                <li><a href="/options/optiondonthuoc/"><i class="fa fa-circle-o"></i> Cài đặt loại đơn </a></li>
+                                <li><a href="/options/trangthai/"><i class="fa fa-circle-o"></i> Trạng thái đơn thuốc </a></li>
                                 <!-- <li><a href="/options/chucvu/"><i class="fa fa-circle-o"></i> Chức Vụ</a></li>
                                 <li><a href="/options/index/NameFunction/"><i class="fa fa-circle-o"></i> Module</a></li> -->
                             </ul>

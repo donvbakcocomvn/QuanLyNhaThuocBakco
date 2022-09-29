@@ -7,7 +7,7 @@ use Model\ThongKe;
 ?>
 <div class="container-fluid">
     <div class="box box-primary">
-        <div class="box-header">
+        <div class="box-header text-center">
             <h3 class="box-title">TÙY CHỌN</h3>
             <div class="box-tools">
             </div>
@@ -43,7 +43,9 @@ use Model\ThongKe;
                 <div class="col-lg-3 col-xs-6">
                     <div class="small-box bg-yellow">
                         <div class="inner">
-                            <h3>44</h3>
+                            <h3>
+                                <?php echo \Model\Common::ViewNumber(\Model\ThongKe::TotalThuocTong()); ?>
+                            </h3>
                             <p><i>SỐ LƯỢNG TỒN KHO</i></p>
                         </div>
                         <div class="icon">
@@ -55,13 +57,15 @@ use Model\ThongKe;
                 <div class="col-lg-3 col-xs-6">
                     <div class="small-box bg-red">
                         <div class="inner">
-                            <h3>0</h3>
+                            <h3>
+                                <?php echo \Model\Common::ViewNumber(\Model\ThongKe::TotalThuocTong()); ?>
+                            </h3>
                             <p><i>SỐ LƯỢNG TỔNG</i></p>
                         </div>
                         <div class="icon">
                             <i class="fa fa-pie-chart"></i>
                         </div>
-                        <a href="#" class="small-box-footer">Xem thêm <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="/backend/dstong" class="small-box-footer">Xem thêm <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -69,21 +73,22 @@ use Model\ThongKe;
     </div>
     <!-- -------------------------------------------------- -->
     <div class="box box-primary">
-        <div class="box-header">
-            <h3 class="box-title">THỐNG KÊ DANH SÁCH</h3>
-            <div class="box-tools">
-            </div>
+
+        <div class="box-header text-center">
+            <h2 class="box-title">THỐNG KÊ DANH SÁCH</h2>
         </div>
-        <div class="box-body">
+        <fieldset>
+            <legend>Thống kê các danh sách</legend>
+        <div class="box-body" style="background-color: #dddddd69;">
             <div class="row">
                 <div class="col-lg-6 col-xs-6">
-                    <div class="panel box box-warning">
+                    <div class="panel box box-info">
                         <div class="box-header with-border">
                             <ul class="nav nav-pills nav-stacked">
                                 <li>
                                     <a href="/thongke/thuocsaphet">
                                         <i class="fa fa-calendar-minus-o"></i>Danh sách thuốc có số lượng sắp hết
-                                        <span class="label label-primary pull-right">
+                                        <span class="label label-info pull-right">
                                             <?php
                                             $date = date('Y-m-d', time());
                                             echo ThongKe::TotalThuocsaphet();
@@ -102,7 +107,7 @@ use Model\ThongKe;
                                 <li>
                                     <a href="/thongke/benhnhantrongngay">
                                         <i class="fa fa-user-secret"></i> Danh sách bệnh nhân trong ngày
-                                        <span class="label label-primary pull-right">
+                                        <span class="label label-warning pull-right">
                                             <?php
                                             echo ThongKe::TotalBNTrongNgay($date);
                                             ?>
@@ -116,13 +121,13 @@ use Model\ThongKe;
             </div>
             <div class="row">
                 <div class="col-lg-6 col-xs-6">
-                    <div class="panel box box-warning">
+                    <div class="panel box box-danger">
                         <div class="box-header with-border">
                             <ul class="nav nav-pills nav-stacked">
                                 <li>
                                     <a href="/thongke/donthuoctrongngay">
                                         <i class="fa fa-book"></i> Danh sách đơn thuốc trong ngày
-                                        <span class="label label-primary pull-right">
+                                        <span class="label label-danger pull-right">
                                             <?php
                                             echo ThongKe::TotalDonThuocTrongNgay($date);
                                             ?>
@@ -134,13 +139,17 @@ use Model\ThongKe;
                     </div>
                 </div>
                 <div class="col-lg-6 col-xs-6">
-                    <div class="panel box box-warning">
+                    <div class="panel box box-success">
                         <div class="box-header with-border">
                             <ul class="nav nav-pills nav-stacked">
                                 <li>
-                                    <a href="#">
-                                        <i class="fa fa-calendar-plus-o"></i> Danh sách thuốc cận Date ( Sắp hết hạn ) 
-                                        <span class="label label-primary pull-right">12</span>
+                                    <a href="/thongke/thuocsaphethan/">
+                                        <i class="fa fa-calendar-plus-o"></i> Danh sách thuốc cận Date ( Sắp hết hạn )
+                                        <span class="label label-success pull-right">
+                                            <?php
+                                            echo ThongKe::TotalThuocSapHetHan($date);
+                                            ?>
+                                        </span>
                                     </a>
                                 </li>
                             </ul>
@@ -149,5 +158,7 @@ use Model\ThongKe;
                 </div>
             </div>
         </div>
-    </div>
+    
+        </fieldset>
+        </div>
 </div>

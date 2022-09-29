@@ -19,7 +19,7 @@ class btnHtml
             return;
         }
 ?>
-        <a class="btn btn-primary" href="/index.php?module=quanlythuoc&controller=sanpham&action=import">
+        <a class="btn btn-warning" href="/index.php?module=quanlythuoc&controller=sanpham&action=import">
             <i class="fa fa-download"></i> Import</a>
     <?php
     }
@@ -63,8 +63,8 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-sm btn-success" href="/index.php?module=quanlythuoc&controller=sanpham&action=put&id=<?php echo $id; ?>">
-            Sửa
+        <a class="btn btn-default" <?php echo FormRender::ToolTip("Sửa thuốc"); ?> href="/index.php?module=quanlythuoc&controller=sanpham&action=put&id=<?php echo $id; ?>">
+            <i class="fa fa-pencil text-primary"></i>
         </a>
     <?php
     }
@@ -81,14 +81,14 @@ class btnHtml
     <?php
     }
 
-    public static function btnChiSanPham($id)
+    public static function btnChiTietSanPham($id)
     {
         if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Thuoc_Detail]) == false) {
             return;
         }
     ?>
-        <a class="btn btn-sm btn-warning" href="/index.php?module=quanlythuoc&controller=sanpham&action=detail&id=<?php echo $id; ?>">
-            Chi Tiết
+        <a class="btn btn-default" <?php echo FormRender::ToolTip("Xem chi tiết thuốc"); ?> href="/index.php?module=quanlythuoc&controller=sanpham&action=detail&id=<?php echo $id; ?>">
+            <i class="fa fa-eye text-yellow"></i>
         </a>
     <?php
     }
@@ -99,8 +99,8 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-sm btn-danger" title="Bạn có muốn xóa danh mục này?" href="/index.php?module=quanlythuoc&controller=sanpham&action=isdelete&id=<?php echo $id; ?>">
-            Xóa
+        <a class="btn btn-default" <?php echo FormRender::ToolTip("Xóa thuốc"); ?> title="Bạn có muốn xóa danh mục này?" href="/index.php?module=quanlythuoc&controller=sanpham&action=isdelete&id=<?php echo $id; ?>">
+            <i class="fa fa-trash-o text-red"></i>
         </a>
     <?php
     }
@@ -122,7 +122,7 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-primary" href="/index.php?module=quanlythuoc&controller=danhmuc&action=post">
+        <a class="btn btn-info" href="/index.php?module=quanlythuoc&controller=danhmuc&action=post">
             <i class="fa fa-plus"></i> Thêm mới</a>
     <?php
     }
@@ -133,8 +133,8 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-success" href="/index.php?module=quanlythuoc&controller=danhmuc&action=put&id=<?php echo $id; ?>">
-            Sửa
+        <a class="btn btn-default" <?php echo FormRender::ToolTip("Sửa danh mục thuốc"); ?> href="/index.php?module=quanlythuoc&controller=danhmuc&action=put&id=<?php echo $id; ?>">
+            <i class="fa fa-pencil text-blue"></i>
         </a>
     <?php
     }
@@ -145,8 +145,8 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-danger" title="Bạn có muốn xóa danh mục này?" href="/index.php?module=quanlythuoc&controller=danhmuc&action=isdelete&id=<?php echo $id; ?>">
-            Xóa
+        <a class="btn btn-default" <?php echo FormRender::ToolTip("Xóa danh mục thuốc"); ?> title="Bạn có muốn xóa danh mục này?" href="/index.php?module=quanlythuoc&controller=danhmuc&action=isdelete&id=<?php echo $id; ?>">
+            <i class="fa fa-trash-o text-red"></i>
         </a>
     <?php
     }
@@ -157,7 +157,7 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-success" href="/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=post&isnews=1">
+        <a class="btn btn-info" href="/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=post&isnews=1">
             <i class="fa fa-plus"></i> Thêm Phiếu Mới
         </a>
     <?php
@@ -193,8 +193,8 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-sm btn-warning" <?php echo FormRender::ToolTip("Xem chi tiết phiếu"); ?> href="/quanlythuoc/phieuxuatnhap/detail/<?php echo $id; ?>">
-            Chi Tiết
+        <a class="btn btn-default" <?php echo FormRender::ToolTip("Xem chi tiết phiếu"); ?> href="/quanlythuoc/phieuxuatnhap/detail/<?php echo $id; ?>">
+            <i class="fa fa-eye text-yellow"></i>
         </a>
 <?php
     }

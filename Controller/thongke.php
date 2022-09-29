@@ -91,6 +91,26 @@ class thongke extends \Application
         $this->View($data);
     }
 
+    function thuocsaphethan()
+    {
+        $modelItem = new \Model\ThongKe();
+        $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
+        $params["danhmuc"] = isset($_REQUEST["danhmuc"]) ? \Model\Common::TextInput($_REQUEST["danhmuc"]) : "";
+        $params["isShow"] = isset($_REQUEST["isShow"]) ? \Model\Common::TextInput($_REQUEST["isShow"]) : "";
+        $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
+        $indexPage = max(1, $indexPage);
+        $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;
+        $pageNumber = max(1, $pageNumber);
+        $total = 0;
+        $DanhSachTaiKhoan = $modelItem->GetDSThuocSapHetHan($params, $indexPage, $pageNumber, $total);
+        $data["items"] = $DanhSachTaiKhoan;
+        $data["indexPage"] = $indexPage;
+        $data["pageNumber"] = $pageNumber;
+        $data["params"] = $params;
+        $data["total"] = $total;
+        $this->View($data);
+    }
+
     function exportthuocsaphet()
     {
         $thongke = new \Model\ThongKe();
@@ -153,6 +173,26 @@ class thongke extends \Application
                 $data[] = $row;
             }
             \Module\quanlythuoc\Model\SanPham::ExportBangKe($data, "public/thongke/ExportDSThuocTon.xlsx");
+        }
+    }
+
+    function exportDStongthuoc()
+    {
+        $thongke = new \Model\ThongKe();
+        $item = $thongke->GetDSTongThuocTrongKhoExport();
+        // var_dump($item);
+        $data[] = [
+            "Mã thuốc", "Danh mục thuốc", "Tên thuốc", "Số lượng tổng"
+        ];
+        if ($item) {
+            foreach ($item as $row) {
+                $thuoc = new SanPham($row['Id']);
+                $dm = new DanhMuc($row["Idloaithuoc"]);
+                $row["Idloaithuoc"] = $dm->Name;
+                $row["TongThuoc"] = $row["TongThuoc"].' '.$thuoc->DonViTinh();
+                $data[] = $row;
+            }
+            \Module\quanlythuoc\Model\SanPham::ExportBangKe($data, "public/thongke/ExportDSTongThuoc.xlsx");
         }
     }
 

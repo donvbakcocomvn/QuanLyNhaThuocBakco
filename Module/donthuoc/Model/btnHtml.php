@@ -11,14 +11,38 @@ class btnHtml
     {
     }
 
+    public static function btnsoanthuoc($id)
+    {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy]) == false) {
+            return;
+        }
+?>
+        <a type="button" class="btn btn-default text-blue btn-outline-primary" href="/index.php?module=donthuoc&controller=index&action=soanthuoc&id=<?php echo $id; ?>">
+            Soạn đơn
+        </a>
+    <?php
+    }
+
+    public static function btnhoanthanhsoandon($id)
+    {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy]) == false) {
+            return;
+        }
+    ?>
+        <a class="btn btn-info no-print" href="/index.php?module=donthuoc&controller=index&action=giaothuoc&id=<?php echo $id; ?>">
+            Giao thuốc
+        </a>
+    <?php
+    }
+
     public static function btnchitiet($id)
     {
         if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DonThuoc_Detail]) == false) {
             return;
         }
-?>
-        <a class="btn btn-primary" href="/index.php?module=donthuoc&controller=index&action=viewdonthuoc&id=<?php echo $id; ?>">
-            Chi tiết
+    ?>
+        <a class="btn btn-default" <?php echo \Model\FormRender::ToolTip("Chi tiết đơn thuốc"); ?> href="/index.php?module=donthuoc&controller=index&action=viewdonthuoc&id=<?php echo $id; ?>">
+            <i class="fa fa-eye text-yellow"></i>
         </a>
     <?php
     }
@@ -40,8 +64,8 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-primary" href="/index.php?module=donthuoc&controller=index&action=post&isnew=1">
-            <i class="fa fa-plus"></i> Thêm Toa Thuốc Mới</a>
+        <a class="btn btn-info" href="/index.php?module=donthuoc&controller=index&action=post&isnew=1">
+            <i class="fa fa-plus"></i> Thêm đơn thuốc</a>
     <?php
     }
 
@@ -51,8 +75,8 @@ class btnHtml
             return;
         }
     ?>
-        <button type="button" class="btn btn-success" id="btn-capnhattongngaydungthuoc">
-            Cập Nhật
+        <button type="button" class="btn btn-info" id="btn-capnhattongngaydungthuoc">
+            Cập nhật
         </button>
     <?php
     }
@@ -63,8 +87,8 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-success no-print" href="/index.php?module=donthuoc&controller=index&action=put&id=<?php echo $id; ?>">
-            Sửa đơn
+        <a class="btn btn-default no-print" <?php echo \Model\FormRender::ToolTip("Sửa đơn thuốc"); ?> href="/index.php?module=donthuoc&controller=index&action=put&id=<?php echo $id; ?>">
+            <i class="fa fa-pencil text-blue"></i>
         </a>
     <?php
     }
@@ -75,8 +99,8 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-warning" href="/index.php?module=donthuoc&controller=index&action=copy&id=<?php echo $id; ?>">
-            Copy
+        <a class="btn btn-default" <?php echo \Model\FormRender::ToolTip("Sao chép đơn thuốc"); ?> href="/index.php?module=donthuoc&controller=index&action=copy&id=<?php echo $id; ?>">
+            <i class="fa fa-files-o text-purple"></i>
         </a>
     <?php
     }
