@@ -189,7 +189,7 @@ class ThongKe extends DB
             $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
         }
         // self::$Debug = true;
-        $where = " (`NameBN` like '%{$name}%' {$danhmucSql}) {$indateSql} ";
+        $where = " (`NameBN` like '%{$name}%' {$danhmucSql}) {$indateSql} ORDER BY `CreateRecord` DESC";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 

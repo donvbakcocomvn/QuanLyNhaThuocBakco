@@ -3,6 +3,7 @@
 namespace Module\benhnhan\Model;
 
 use Module\benhnhan\Permission;
+use Module\donthuoc\Permission as DonthuocPermission;
 
 class btnHtml
 {
@@ -36,7 +37,7 @@ class btnHtml
 
     public static function btnViewKhachHang()
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_BenhNhan_DS]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, DonthuocPermission::QLT_DonThuoc_Copy, DonthuocPermission::QLT_DonThuoc_Delete,DonthuocPermission::QLT_DonThuoc_Detail,DonthuocPermission::QLT_DonThuoc_DS,DonthuocPermission::QLT_DonThuoc_Export,DonthuocPermission::QLT_DonThuoc_Post,DonthuocPermission::QLT_DonThuoc_Put]) == false) {
             return;
         }
     ?>

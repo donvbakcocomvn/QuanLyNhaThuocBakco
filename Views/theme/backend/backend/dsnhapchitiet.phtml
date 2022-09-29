@@ -17,11 +17,19 @@
             </form>
             <div class="box box-success">
                 <div class="box-header">
-                    <h3 class="text-center text-uppercase" >Danh sách nhập chi tiết</h3>
-                    <div class="box-tools float-left">
-                        <a class="btn btn-success" href="/backend/exportdsnhapchitiet">
-                            <i class="fa fa-filter"></i>&nbsp;Export danh sách nhập chi tiết</a>
-                    </div>
+                    <h3 class="text-center text-uppercase">Danh sách nhập chi tiết</h3>
+                    <?php
+                    if (\Model\Permission::CheckPremision([
+                        \Model\User::QuanLy, \Model\User::Admin
+                    ], []) == true) {
+                    ?>
+                        <div class="box-tools float-left">
+                            <a class="btn btn-success" href="/backend/exportdsnhapchitiet">
+                                <i class="fa fa-filter"></i>&nbsp;Export danh sách nhập chi tiết</a>
+                        </div>
+                    <?php
+                    }
+                    ?>
                 </div>
                 <div class="box-body">
                     <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">

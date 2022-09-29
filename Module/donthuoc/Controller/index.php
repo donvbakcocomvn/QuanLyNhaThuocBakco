@@ -335,8 +335,8 @@ class index extends \Application implements \Controller\IControllerBE
                             $SanPham->Post($itemFormDetail);
                         }
                     }
-                    DonThuocDetail::ClearSession();
                 }
+                DonThuocDetail::ClearSession();
                 new \Model\Error(\Model\Error::success, "Đã Thêm Toa Thuốc");
                 $donthuoc = new DonThuoc($itemDonThuoc["Id"]);
                 \Model\Common::ToUrl("/donthuoc/index/viewdonthuoc/?id=" . $donthuoc->Id . "");
@@ -398,8 +398,9 @@ class index extends \Application implements \Controller\IControllerBE
                 $itemBN["Gioitinh"] = $itemBenhNhan["Gioitinh"];
                 $ngay = $itemBenhNhan["NgaySinh"] ? $itemBenhNhan["Ngaysinh"] : '01';
                 $thang = $itemBenhNhan["ThangSinh"] ? $itemBenhNhan["Thangsinh"] : '01';
-                $nam = $itemBenhNhan["NamSinh"] ? $itemBenhNhan["Namsinh"] : date('Y');
-                $itemBN["Ngaysinh"] = date('Y-m-d', strtotime($nam . '-' . $thang . '-' . $ngay));
+                $nam = $itemBenhNhan["NamSinh"] ?? date('Y');
+                // $itemBN["Ngaysinh"] = date('Y-m-d', strtotime($nam . '-' . $thang . '-' . $ngay));
+                $itemBN["Ngaysinh"] = $nam . '-' . $thang . '-' . $ngay;
                 $itemBN["CMND"] = $itemBenhNhan["CMND"];
                 $itemBN["Address"] = $itemBenhNhan["Address"];
                 $itemBN["TinhThanh"] = $itemBenhNhan["TinhThanh"] ?? '';
@@ -490,10 +491,10 @@ class index extends \Application implements \Controller\IControllerBE
                 $itemBN["Id"] = $benhnhan->CreatId();
                 $itemBN["Name"] = $itemBenhNhan["Name"];
                 $itemBN["Gioitinh"] = $itemBenhNhan["Gioitinh"];
-                $ngay = $itemBenhNhan["NgaySinh"] ? $itemBenhNhan["Ngaysinh"] : '01';
-                $thang = $itemBenhNhan["ThangSinh"] ? $itemBenhNhan["Thangsinh"] : '01';
-                $nam = $itemBenhNhan["NamSinh"] ? $itemBenhNhan["Namsinh"] : date('Y');
-                $itemBN["Ngaysinh"] = date('Y-m-d', strtotime($nam . '-' . $thang . '-' . $ngay));
+                $ngay = $itemBenhNhan["NgaySinh"] ? $itemBenhNhan["NgaySinh"] : '01';
+                $thang = $itemBenhNhan["ThangSinh"] ? $itemBenhNhan["ThangSinh"] : '01';
+                $nam = $itemBenhNhan["NamSinh"] ?? date('Y');
+                $itemBN["Ngaysinh"] = $nam . '-' . $thang . '-' . $ngay;
                 $itemBN["CMND"] = $itemBenhNhan["CMND"];
                 $itemBN["Address"] = $itemBenhNhan["Address"];
                 $itemBN["TinhThanh"] = $itemBenhNhan["TinhThanh"] ?? '';
@@ -512,6 +513,7 @@ class index extends \Application implements \Controller\IControllerBE
                 $itemDonThuoc["ChanDoanBenh"] = $itemForm["ChanDoanBenh"];
                 $itemDonThuoc["ThuocLoaiDon"] = $itemForm["ThuocLoaiDon"];
                 $itemDonThuoc["TongNgayDung"] = $itemForm["TongNgayDung"];
+                $itemDonThuoc["Status"] = 1;
                 $donthuoc->Post($itemDonThuoc);
 
                 $detail = new DonThuocDetail();

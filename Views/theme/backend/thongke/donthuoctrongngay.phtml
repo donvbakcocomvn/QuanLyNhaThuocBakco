@@ -4,6 +4,7 @@
     <li class="text-capitalize"> Danh sách đơn thuốc trong ngày </li>
 </ol>
 <?php
+
 use Module\donthuoc\Model\DonThuoc;
 
 ?>
@@ -23,87 +24,94 @@ use Module\donthuoc\Model\DonThuoc;
                             </button>
                         </div>
                     </form>
-                </div>
-                <div class="box-header">
-                    <h3 class="text-center text-uppercase">Danh sách đơn thuốc trong ngày</h3>
+                    <h3 class="text-center text-uppercase mg-0">Danh sách đơn thuốc trong ngày</h3>
                     <div class="box-tools float-left">
-                        <a class="btn btn-success" href="/thongke/exportdonthuoctrongngay/">
-                            <i class="fa fa-filter"></i>&nbsp;Export danh sách</a>
+                        <?php
+                        if (\Model\Permission::CheckPremision([
+                            \Model\User::QuanLy, \Model\User::Admin
+                        ], []) == true) {
+                        ?>
+                            <a class="btn btn-success" href="/thongke/exportdonthuoctrongngay/">
+                                <i class="fa fa-filter"></i>&nbsp;Export danh sách</a>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </div>
-            </div>
-            <div class="box-body">
-                <fieldset>
-                    <legend>Danh sách đơn thuốc trong ngày</legend>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <table class="table table-hover table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>STT</th>
-                                        <th>Mã đơn thuốc</th>
-                                        <th>Thuộc loại đơn</th>
-                                        <th>Tên bệnh nhân</th>
-                                        <th>Giới Tính</th>
-                                        <th>Ngày Sinh</th>
-                                        <th>Thời gian khám bệnh</th>
-                                        <th>Chẩn đoán</th>
-                                        <th>Tình trạng</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $danhsach = $data['items'];
-                                    foreach ($danhsach as $index => $item) {
-                                        $_item = new DonThuoc($item);
-                                        // var_dump($_item);
-                                    ?>
+                <div class="box-body">
+                    <fieldset>
+                        <legend>Danh sách đơn thuốc trong ngày</legend>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-hover table-bordered">
+                                    <thead>
                                         <tr>
-                                            <td>
-                                                <?php
-                                                echo \Module\donthuoc\Model\btnHtml::btnSuaDonThuoc($_item->Id);
-                                                echo \Module\donthuoc\Model\btnHtml::btnchitiet($_item->Id);
-                                                ?>
-                                            </td>
-                                            <td><?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?></td>
-                                            <td><?php echo $_item->Id; ?></td>
-                                            <td><?php echo $_item->ThuocLoaiDon(); ?></td>
-                                            <td><?php echo $_item->NameBN; ?></td>
-                                            <td><?php echo $_item->Gioitinh(); ?></td>
-                                            <td><?php echo $_item->NgaySinh; ?></td>
-                                            <td><?php echo $_item->ThoiGianKham; ?></td>
-                                            <td><?php echo $_item->ChanDoanBenh; ?></td>
-                                            <!-- <td><?php echo $_item->TongNgayDung . " " . "Ngày"; ?></td> -->
-                                            <td><?php echo $_item->Status(); ?></td>
+                                            <th></th>
+                                            <th>STT</th>
+                                            <th>Mã đơn thuốc</th>
+                                            <th>Thuộc loại đơn</th>
+                                            <th>Tên bệnh nhân</th>
+                                            <th>Giới Tính</th>
+                                            <th>Ngày Sinh</th>
+                                            <th>Thời gian khám bệnh</th>
+                                            <th>Chẩn đoán</th>
+                                            <th>Tình trạng</th>
                                         </tr>
-                                    <?php
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $danhsach = $data['items'];
+                                        foreach ($danhsach as $index => $item) {
+                                            $_item = new DonThuoc($item);
+                                            // var_dump($_item);
+                                        ?>
+                                            <tr>
+                                                <td class="text-center">
+                                                    <?php
+                                                    echo \Module\donthuoc\Model\btnHtml::btnCopyDonThuoc($_item->Id);
+                                                    echo \Module\donthuoc\Model\btnHtml::btnSuaDonThuoc($_item->Id);
+                                                    echo \Module\donthuoc\Model\btnHtml::btnchitiet($_item->Id);
+                                                    ?>
+                                                </td>
+                                                <td><?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?></td>
+                                                <td><?php echo $_item->Id; ?></td>
+                                                <td><?php echo $_item->ThuocLoaiDon(); ?></td>
+                                                <td><?php echo $_item->NameBN; ?></td>
+                                                <td><?php echo $_item->Gioitinh(); ?></td>
+                                                <td><?php echo $_item->NgaySinh; ?></td>
+                                                <td><?php echo $_item->ThoiGianKham; ?></td>
+                                                <td><?php echo $_item->ChanDoanBenh; ?></td>
+                                                <!-- <td><?php echo $_item->TongNgayDung . " " . "Ngày"; ?></td> -->
+                                                <td><?php echo $_item->Status(); ?></td>
+                                            </tr>
+                                        <?php
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
-                </fieldset>
-                <div class="box-footer">
-                    <div class="d-flex">
-                        <?php
-                        \Model\FormCommon::Select(
-                            "",
-                            "",
-                            [10, 20, 50, 100],
-                            [
-                                "style" => "max-width:150px;",
-                                "class" => "form-control",
-                                "value" => $pageNumber,
-                                "onchange" => "SoDongHienThi(this.value)",
-                            ]
-                        )->render();
-                        ?>
-                        <?php
-                        $linkPhanTrang = "/index.php?controller=thongke&action=donthuoctrongngay&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
-                        echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
-                        ?>
+                    </fieldset>
+                    <div class="box-footer">
+                        <div class="d-flex">
+                            <?php
+                            \Model\FormCommon::Select(
+                                "",
+                                "",
+                                [10, 20, 50, 100],
+                                [
+                                    "style" => "max-width:150px;",
+                                    "class" => "form-control",
+                                    "value" => $pageNumber,
+                                    "onchange" => "SoDongHienThi(this.value)",
+                                ]
+                            )->render();
+                            ?>
+                            <?php
+                            $linkPhanTrang = "/index.php?controller=thongke&action=donthuoctrongngay&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
+                            echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
+                            ?>
+                        </div>
                     </div>
                 </div>
             </div>

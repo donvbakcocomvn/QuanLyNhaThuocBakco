@@ -232,7 +232,7 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
             $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
         }
         // self::$Debug = true;
-        $where = " `Id` like '%{$name}%' or `IdBenhNhan` like '%{$name}%' or `NameBN` like '%{$name}%' {$danhmucSql}";
+        $where = " `Id` like '%{$name}%' or `IdBenhNhan` like '%{$name}%' or `NameBN` like '%{$name}%' {$danhmucSql}ORDER BY `CreateRecord` DESC";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 
@@ -251,7 +251,7 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
             $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
         }
         // self::$Debug = true;
-        $where = " (`Id` like '%{$name}%' or `IdBenhNhan` like '%{$name}%' or `NameBN` like '%{$name}%' {$danhmucSql}) and `Status`  = 1 ORDER BY `Id` DESC";
+        $where = " (`Id` like '%{$name}%' or `IdBenhNhan` like '%{$name}%' or `NameBN` like '%{$name}%' {$danhmucSql}) and `Status`  = 1 ORDER BY `CreateRecord` DESC";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 

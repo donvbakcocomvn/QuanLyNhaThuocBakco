@@ -31,8 +31,16 @@ use Model\ThongKe;
                         <?php
                         Module\benhnhan\Model\btnHtml::btnViewKhachHang();
                         ?>
-                        <a class="btn btn-success" href="/thongke/exportbenhnhantrongngay/">
-                            <i class="fa fa-filter"></i>&nbsp;Export danh sách</a>
+                        <?php
+                        if (\Model\Permission::CheckPremision([
+                            \Model\User::QuanLy, \Model\User::Admin
+                        ], []) == true) {
+                        ?>
+                            <a class="btn btn-success" href="/thongke/exportbenhnhantrongngay/">
+                                <i class="fa fa-filter"></i>&nbsp;Export danh sách</a>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </div>
             </div>

@@ -18,8 +18,17 @@
                 <div class="box-header">
                     <div class="box-tools">
                         <div class="box-tools ">
-                            <a class="btn btn-success" href="/thongke/exportDSthuocton">
-                                <i class="fa fa-filter"></i>&nbsp;Export DS thuốc tồn</a>
+                            <?php
+                            if (\Model\Permission::CheckPremision([
+                                \Model\User::QuanLy, \Model\User::Admin
+                            ], []) == true) {
+                            ?>
+                                <a class="btn btn-success" href="/thongke/exportDSthuocton">
+                                    <i class="fa fa-filter"></i>&nbsp;Export DS thuốc tồn
+                                </a>
+                            <?php
+                            }
+                            ?>
                         </div>
                     </div>
                     <h3 style="text-align: center;" class="text-uppercase">Danh sách thuốc tồn kho</h3>

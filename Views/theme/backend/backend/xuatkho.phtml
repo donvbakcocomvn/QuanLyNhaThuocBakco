@@ -20,8 +20,18 @@
                     <div class="box-tools float-left">
                         <a class="btn btn-warning" href="/backend/dsxuatchitiet">
                             <i class="fa fa-history"></i>&nbsp;Lịch sử nhập chi tiết</a>
-                        <a class="btn btn-success" href="/thongke/ExportDSPhieuXuat">
-                            <i class="fa fa-filter"></i>&nbsp;Export danh sách phiếu xuất</a>
+
+                        <?php
+                        if (\Model\Permission::CheckPremision([
+                            \Model\User::QuanLy, \Model\User::Admin
+                        ], []) == true) {
+                        ?>
+                            <a class="btn btn-success" href="/thongke/ExportDSPhieuXuat">
+                                <i class="fa fa-filter"></i>&nbsp;Export danh sách phiếu xuất
+                            </a>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </div>
                 <div class="box-body">
