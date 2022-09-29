@@ -12,7 +12,7 @@ class TinhThanh
     }
 
 
-    public function DSTinh()
+    public  function DSTinh()
     {
         $file = fopen("local.json", "r");
         $content = fread($file, filesize("local.json"));
@@ -40,7 +40,7 @@ class TinhThanh
     {
         // districts
         $huyen = new TinhThanh();
-        $dsTinh = self::DSTinh();
+        $dsTinh = $huyen->DSTinh();
         foreach ($dsTinh as $key => $tinh) {
             if ($tinh["id"] == $maTinh) {
                 return $tinh["districts"];

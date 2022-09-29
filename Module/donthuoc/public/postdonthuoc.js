@@ -163,25 +163,27 @@ $(document).ready(function () {
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 dataType: 'json',
                 success: function (response) {
-                    console.log(response);
-                    console.log(response.QuanHuyen);
-                    $("#tenbenhnhan").val(response.Name);
-                    $("#Namsinh").val((response.Ngaysinh).substring(0, 4));
-                    $("#Thangsinh").val((response.Ngaysinh).substring(5, 7));
-                    $("#Ngaysinh").val((response.Ngaysinh).substring(8, 10));
-                    $("#sodienthoai").val(response.Phone);
-                    $('#CMND').val(response.CMND);
-                    $('#Gioitinh').val(response.Gioitinh);
-                    $('#TinhThanh').val(response.Address);
-                    $('#tinhThanh').val(response.TinhThanh).change();
-                    // $('#quanHuyen').val(response.QuanHuyen);
-                    $(`select#quanHuyen option[value="` + $(response.QuanHuyen) + `"]`).attr("selected", true);
-                    $('#quanHuyen').data('value', response.QuanHuyen);
-                    $('#quanHuyen').change();
+                    if (response.Name != null) {
 
-                    $(`select#phuongXa option[value="` + $(response.PhuongXa) + `"]`).attr("selected", true);
-                    $('#phuongXa').data('value', response.PhuongXa);
-                    $('#phuongXa').change();
+                        $("#tenbenhnhan").val(response.Name);
+                        $("#Namsinh").val((response.Ngaysinh).substring(0, 4));
+                        $("#Thangsinh").val((response.Ngaysinh).substring(5, 7));
+                        $("#Ngaysinh").val((response.Ngaysinh).substring(8, 10));
+                        $("#sodienthoai").val(response.Phone);
+                        $('#CMND').val(response.CMND);
+                        $('#Gioitinh').val(response.Gioitinh);
+                        $('#TinhThanh').val(response.Address);
+                        $('#tinhThanh').val(response.TinhThanh).change();
+                        // $('#quanHuyen').val(response.QuanHuyen);
+                        $(`select#quanHuyen option[value="` + $(response.QuanHuyen) + `"]`).attr("selected", true);
+                        $('#quanHuyen').data('value', response.QuanHuyen);
+                        $('#quanHuyen').change();
+
+                        $(`select#phuongXa option[value="` + $(response.PhuongXa) + `"]`).attr("selected", true);
+                        $('#phuongXa').data('value', response.PhuongXa);
+                        $('#phuongXa').change();
+                    }
+
                 },
                 error: function () {
                     // alert("error");

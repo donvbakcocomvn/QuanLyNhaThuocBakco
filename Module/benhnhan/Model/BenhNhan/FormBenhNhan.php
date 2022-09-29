@@ -210,7 +210,6 @@ class FormBenhNhan implements iFormBenhNhan
          */
         function QuanHuyen($val = null, $id = "QuanHuyen", $taget = "#PhuongXa")
         {
-
                 $properties = self::$properties;
                 $properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
                 $properties["id"] = $id;

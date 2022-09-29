@@ -42,85 +42,86 @@ $roleDetail = new Model\Role();
                 $bn = new FormBenhNhan(FormBenhNhan::GetFormData());
                 $benhnhan = new BenhNhan();
                 ?>
-                <div class="col-md-4">
+                <div class="col-md-12">
                     <div class="row">
-                        <fieldset>
-                            <legend>Thông tin đơn thuốc</legend>
-                            <?php
-                            $form = new FormDonThuoc();
-                            $donthuoc = new DonThuoc();
-                            ?>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Ngày dùng thuốc</label>
-                                    <div class="d-flex">
-                                        <?php echo $form->TongNgayDung($_SESSION["SoNgaySDThuoc"] ?? 0)->render(); ?>
-                                        <?php btnHtml::btnCapNhatNgayDung(); ?>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <fieldset>
+                                    <legend>Thông tin đơn thuốc</legend>
+                                    <?php
+                                    $form = new FormDonThuoc();
+                                    $donthuoc = new DonThuoc();
+                                    ?>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Ngày dùng thuốc</label>
+                                            <div class="d-flex">
+                                                <?php echo $form->TongNgayDung($_SESSION["SoNgaySDThuoc"] ?? 0)->render(); ?>
+                                                <?php btnHtml::btnCapNhatNgayDung(); ?>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <?php echo $form->ThuocLoaiDon()->renderHTML(); ?>
+                                        </div>
+                                        <div>
+                                            <?php echo $form->ChanDoanBenh()->renderHTML(); ?>
+                                        </div>
+                                        <div>
+                                            <?php echo $form->Id($donthuoc->CreatId())->renderHTML(); ?>
+                                        </div>
+                                        <div>
+                                            <?php echo $form->ThoiGianKham(date('Y-m-d H:i:s', time()))->renderHTML(); ?>
+                                        </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row">
+                                <fieldset>
+                                    <legend>Thông tin bệnh nhân</legend>
+                                    <div class="col-md-6">
+                                        <?php $bn->Name(null, 'tenbenhnhan')->renderHtml();  ?>
                                     </div>
-                                </div>
+                                    <div class="col-md-6">
+                                        <?php $bn->Phone(null, 'sodienthoai')->renderHtml();  ?>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <?php $bn->CMND()->renderHtml();  ?>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <?php $bn->Gioitinh()->renderHtml();  ?>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <?php $bn->Namsinh()->renderHtml();  ?>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <?php $bn->Thangsinh()->renderHtml();  ?>
+                                    </div>
 
-                                <div>
-                                    <?php echo $form->ThuocLoaiDon()->renderHTML(); ?>
-                                </div>
-                                <div>
-                                    <?php echo $form->ChanDoanBenh()->renderHTML(); ?>
-                                </div>
-                                <div>
-                                    <?php echo $form->Id($donthuoc->CreatId())->renderHTML(); ?>
-                                </div>
-                                <div>
-                                    <?php echo $form->ThoiGianKham(date('Y-m-d H:i:s', time()))->renderHTML(); ?>
-                                </div>
-                        </fieldset>
+                                    <div class="col-md-4">
+                                        <?php $bn->Ngaysinh()->renderHtml();  ?>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <?php $bn->Address()->renderHtml();  ?>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <?php $bn->TinhThanh(null, "TinhThanhBenhNhan", "#QuanHuyenBenhNhan")->renderHtml();  ?>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <?php $bn->QuanHuyen(null, "QuanHuyenBenhNhan", "#PhuongXaBenhNhan")->renderHtml();  ?>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <?php $bn->PhuongXa(null, "PhuongXaBenhNhan")->renderHtml();  ?>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="row">
-                        <fieldset>
-                            <legend>Thông tin bệnh nhân</legend>
-                            <div class="col-md-6">
-                                <?php $bn->Name(null, 'tenbenhnhan')->renderHtml();  ?>
-                            </div>
-                            <div class="col-md-6">
-                                <?php $bn->Phone(null, 'sodienthoai')->renderHtml();  ?>
-                            </div>
-                            <div class="col-md-6">
-                                <?php $bn->CMND()->renderHtml();  ?>
-                            </div>
-                            <div class="col-md-6">
-                                <?php $bn->Gioitinh()->renderHtml();  ?>
-                            </div>
-                            <div class="col-md-4">
-                                <?php $bn->Namsinh()->renderHtml();  ?>
-                            </div>
-                            <div class="col-md-4">
-                                <?php $bn->Thangsinh()->renderHtml();  ?>
-                            </div>
 
-                            <div class="col-md-4">
-                                <?php $bn->Ngaysinh()->renderHtml();  ?>
-                            </div>
-                            <div class="col-md-12">
-                                <?php $bn->Address()->renderHtml();  ?>
-                            </div>
-                            <div class="col-md-4 form-group">
-                                <?php $bn->TinhThanh(null, "TinhThanhBenhNhan", "#QuanHuyenBenhNhan")->renderHtml();  ?>
-                                <!-- <label for="">Tỉnh</label>
-                                <select id="tinhThanh" name="BenhNhan[TinhThanh]" class="form-control"></select> -->
-                            </div>
-                            <div class="col-md-4 form-group">
-                                <?php $bn->QuanHuyen(null, "QuanHuyenBenhNhan", "#PhuongXaBenhNhan")->renderHtml();  ?>
-                                <!-- <label for="">Huyện</label>
-                                <select id="quanHuyen" name="BenhNhan[QuanHuyen]" class="form-control"> </select> --> 
-                            </div>
-                            <div class="col-md-4 form-group">
-                                <?php $bn->PhuongXa(null, "PhuongXaBenhNhan")->renderHtml();  ?>
-                                <!-- <label for="">Xã</label>
-                                <select id="phuongXa" name="BenhNhan[PhuongXa]" class="form-control phuong-xa"> </select> -->
-                            </div>
-                        </fieldset>
-                    </div>
                 </div>
+
+
                 <fieldset>
                     <table class="table table-bordered">
                         <thead>
