@@ -16,8 +16,8 @@ class btnHtml
         if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_BenhNhan_DS]) == false) {
             return;
         }
-    ?>
-        <a class="btn btn-info" href="/thongke/benhnhantrongngay">
+?>
+        <a class="btn btn-warning" href="/thongke/benhnhantrongngay">
             <i class="fa fa-list-alt"></i> Danh sách bệnh nhân trong ngày </a>
     <?php
     }
@@ -27,9 +27,9 @@ class btnHtml
         if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_BenhNhan_Detail]) == false) {
             return;
         }
-?>
-        <a class="btn btn-warning" href="/index.php?module=benhnhan&controller=index&action=detail&id=<?php echo $id; ?>">
-            Chi tiết
+    ?>
+        <a class="btn btn-default" <?php echo \Model\FormRender::ToolTip("Thông tin chi tiết"); ?> href="/index.php?module=benhnhan&controller=index&action=detail&id=<?php echo $id; ?>">
+            <i class="fa fa-eye text-yellow"></i>
         </a>
     <?php
     }
@@ -41,7 +41,7 @@ class btnHtml
         }
     ?>
         <a class="btn btn-primary" href="/benhnhan">
-            <i class="fa fa-plus"></i> Xem danh mục</a>
+            &nbsp;<i class="fa fa-th-list"></i> Danh sách bệnh nhân</a>
     <?php
     }
 
@@ -51,7 +51,7 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-success" href="/index.php?module=benhnhan&controller=index&action=post">
+        <a class="btn btn-info" href="/index.php?module=benhnhan&controller=index&action=post">
             <i class="fa fa-plus"></i> Thêm mới</a>
     <?php
     }
@@ -62,8 +62,8 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-success" href="/index.php?module=benhnhan&controller=index&action=put&id=<?php echo $id; ?>">
-            Sửa
+        <a class="btn btn-default" <?php echo \Model\FormRender::ToolTip("Sửa bệnh nhân"); ?> href="/index.php?module=benhnhan&controller=index&action=put&id=<?php echo $id; ?>">
+            <i class="fa fa-pencil text-blue"></i>
         </a>
     <?php
     }
@@ -74,7 +74,7 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-primary" href="/index.php?module=benhnhan&controller=index&action=export">
+        <a class="btn btn-success" href="/index.php?module=benhnhan&controller=index&action=export">
             <i class="fa fa-filter"></i> Export</a>
         </a>
     <?php
@@ -86,8 +86,8 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-danger" title="Bạn có muốn xóa danh mục này?" href="/index.php?module=benhnhan&controller=index&action=isdelete&id=<?php echo $id; ?>">
-            Xóa
+        <a class="btn btn-default" <?php echo \Model\FormRender::ToolTip("Xóa bệnh nhân"); ?> title="Bạn có muốn xóa danh mục này?" href="/index.php?module=benhnhan&controller=index&action=isdelete&id=<?php echo $id; ?>">
+            <i class="fa fa-trash-o text-red"></i>
         </a>
 <?php
     }

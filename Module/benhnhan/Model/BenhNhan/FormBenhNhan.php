@@ -16,7 +16,7 @@ class FormBenhNhan implements iFormBenhNhan
         static $FormData = [];
 
         //put your code here
-        public function __construct($formData)
+        public function __construct($formData = null)
         {
                 self::$FormData  = $formData;
         }
@@ -91,7 +91,7 @@ class FormBenhNhan implements iFormBenhNhan
                 $properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
                 $properties["id"] = __FUNCTION__;
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-                return new FormRender(new Element\Textbox("Ngày", $name, $properties));
+                return new FormRender(new Element\Textbox("Ngày sinh", $name, $properties));
         }
 
         function ThangSinh($val = null)

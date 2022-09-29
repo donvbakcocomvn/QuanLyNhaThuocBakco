@@ -1,59 +1,43 @@
-<?php
-?>
 <ol class="breadcrumb">
     <li><a href="/backend/"><i class="fa fa-dashboard"></i>&nbsp; Dashboard</a></li>
-    <li><a href="/backend/nhapkho/"><i class="fa fa-dashboard"></i>&nbsp; Danh sách phiếu nhập kho</a></li>
-    <li class="active">Danh sách phiếu nhập kho</li>
+    <li><a href="/backend/nhapkho/" class="text-capitalize">Danh sách phiếu nhập</a></li>
+    <li class="active text-capitalize">Danh sách nhập chi tiết</li>
 </ol>
-<div class="container-fluid">
-    <section class="content">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="box box-warning">
-                    <div class="box-header">
-                        <form method="get" action="/backend/dsnhapchitiet/">
-                            <div class="form-group d-flex">
-                                <label class="btn btn-default"><input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox"><i class="fa fa-share" aria-hidden="true"></class=></i></label>
-                                <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập tên thuốc để tìm kiếm">
-                                <button class="btn btn-primary no-border-radius" name="btnTim" type="submit">
-                                    <i class="fa fa-search"></i> Tìm Kiếm
-                                </button>
-                            </div>
-                        </form>
-                        <!-- <input id="keyword" class="form-control" name="keyword" autocomplete="off" type="" placeholder="Nhập tên thuốc để tìm kiếm">
-                        <div id="searchresult"></div> -->
-                        <!-- <form action="">
-                            <div class="row">
-                                <div class="col-md-3 form-group">
-                                    <label>Từ Ngày</label>
-                                    <input type="date" value="<?php echo $fromDate ?>" name="fromDate" class="form-control">
-                                </div>
-                                <div class="col-md-3 form-group">
-                                    <label>Đến Ngày</label>
-                                    <input type="date" value="<?php echo $toDate ?>" name="toDate" class="form-control">
-                                </div>
-                                <div class="col-md-3 form-group">
-                                    <button style="margin-top: 25px;" class="btn btn-primary">Lọc</button>
-                                </div>
-                                
-                            </div>
-                        </form> -->
-                        <h3 style="text-align: center;">Lịch sử nhập thuốc chi tiết</h3>
-                        <a class="btn btn-warning" href="/thongke/ExportLichSuNhap">
-                            <i class="fa fa-filter"></i> Export lịch sử nhập</a>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <form method="get" action="/backend/dsnhapchitiet/">
+                <div class="form-group d-flex">
+                    <label class="btn btn-default"><input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox"><i class="fa fa-share" aria-hidden="true"></class=></i></label>
+                    <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập vào mã phiếu hoặc mã thuốc để tìm kiếm">
+                    <button class="btn btn-primary no-border-radius" name="btnTim" type="submit">
+                        <i class="fa fa-search"></i> Tìm Kiếm
+                    </button>
+                </div>
+            </form>
+            <div class="box box-success">
+                <div class="box-header">
+                    <h3 class="text-center text-uppercase" >Danh sách nhập chi tiết</h3>
+                    <div class="box-tools float-left">
+                        <a class="btn btn-success" href="/backend/exportdsnhapchitiet">
+                            <i class="fa fa-filter"></i>&nbsp;Export danh sách nhập chi tiết</a>
                     </div>
-                    <div class="box-body">
-                        <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-                            <div class="row">
-                                <div class="col-sm-6"></div>
-                                <div class="col-sm-6"></div>
-                            </div>
+                </div>
+                <div class="box-body">
+                    <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                        <div class="row">
+                            <div class="col-sm-6"></div>
+                            <div class="col-sm-6"></div>
+                        </div>
+                        <fieldset>
+                            <legend>Danh sách nhập chi tiết</legend>
                             <div class="row">
                                 <div class="col-sm-12">
                                     <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                                         <thead>
                                             <tr role="row">
                                                 <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">STT</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Mã phiếu</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Ngày nhập</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Mã thuốc</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Số lô</th>
@@ -63,7 +47,6 @@
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Giá nhập</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Tổng giá nhập</th>
                                             </tr>
-
                                         </thead>
                                         <tbody>
                                             <?php
@@ -74,23 +57,23 @@
                                             use Module\quanlythuoc\Model\SanPham;
 
                                             $index = 0;
-                                            $thongke = ThongKe::LichSuNhapXuatChiTiet(1);
-                                            $sanpham = new SanPham();
-                                            // var_dump($thongke);
-                                            // echo $thongke['IdThuoc'];
-                                            foreach ($thongke as $value) { ?>
+                                            $danhsach = $data['items'];
+                                            // var_dump($danhsach);
+                                            foreach ($danhsach as $value) { ?>
                                                 <?php
+                                                $phieu = new \Module\quanlythuoc\Model\PhieuXuatNhap($value["IdPhieu"]);
                                                 ?>
                                                 <tr role="row" class="even">
-                                                    <td class="sorting_1 text-center"><?php echo $index + 1 ?></td>
-                                                    <td><?php echo Common::ForMatDMYHIS($value['NgayNhap']); ?></td>
-                                                    <td><?php echo $sanpham->GetNameById($value["IdThuoc"]); ?></td>
+                                                    <td class="sorting_1 text-center"><?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?></td>
+                                                    <td><?php echo $value["IdPhieu"]; ?></td>
+                                                    <td><?php echo Common::ForMatDMYHIS($phieu->NgayNhap); ?></td>
+                                                    <td><?php echo SanPham::GetNameById($value["IdThuoc"]) . "(" . $value["IdThuoc"] . ")"; ?></td>
                                                     <td><?php echo $value["SoLo"]; ?></td>
                                                     <td><?php echo $value['NhaSanXuat']; ?></td>
                                                     <td><?php echo Common::ViewNumber($value['SoLuong']); ?></td>
                                                     <td><?php echo $value['NuocSanXuat']; ?></td>
                                                     <td><?php echo Common::ViewPrice($value['Price']); ?></td>
-                                                    <td><?php echo Common::ViewPrice($value['Tong']); ?></td>
+                                                    <td><?php echo Common::ViewPrice($value['SoLuong'] * $value['Price']); ?></td>
                                                 </tr>
                                             <?php
                                                 $index++;
@@ -98,64 +81,40 @@
                                             ?>
                                         </tbody>
                                     </table>
+                                    <div class="box-footer">
+                                        <div class="d-flex">
+                                            <?php
+                                            \Model\FormCommon::Select(
+                                                "",
+                                                "",
+                                                [10, 20, 50, 100],
+                                                [
+                                                    "style" => "max-width:150px;",
+                                                    "class" => "form-control",
+                                                    "value" => $pageNumber,
+                                                    "onchange" => "SoDongHienThi(this.value)",
+                                                ]
+                                            )->render();
+                                            ?>
+                                            <?php
+                                            $linkPhanTrang = "/index.php?controller=backend&action=dsnhapchitiet&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
+                                            echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
+                                            ?>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="box-footer">
-                                <div class="d-flex">
-                                    <?php
-                                    \Model\FormCommon::Select(
-                                        "",
-                                        "",
-                                        [10, 20, 50, 100],
-                                        [
-                                            "style" => "max-width:150px;",
-                                            "class" => "form-control",
-                                            "value" => $pageNumber,
-                                            "onchange" => "SoDongHienThi(this.value)",
-                                        ]
-                                    )->render();
-                                    ?>
-                                    <?php
-                                    $linkPhanTrang = "/backend/dsnhapchitiet/?keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
-                                    echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
-                                    ?>
-                                </div>
-                            </div>
-                        </div>
+                        </fieldset>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-</div>
+    </div>
+</section>
 <script type="text/javascript">
     var SoDongHienThi = function(evalue) {
-        var linkPhanTrang = '/backend/dsnhapchitiet/?keyword=&indexPage=1&pageNumber=[j]';
+        var linkPhanTrang = '/index.php?controller=backend&action=dsnhapchitiet&indexPage=1&pageNumber=[j]';
         linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
         window.location.href = linkPhanTrang;
     }
 </script>
-
-<!-- <script type="text/javascript">
-    $(document).ready(function() {
-        $("#keyword").keyup(function() {
-            var input = $(this).val();
-            // alert(input);
-            if (input != "") {
-                $.ajax({
-                    // type: "method",
-                    url: "/backend/livesearch/",
-                    method: "POST",
-                    data: {
-                        input: input
-                    },
-                    success: function(data) {
-                        $("#searchresult").html(data);
-                    }
-                });
-            } else {
-                $("#searchresult").css("display", "none");
-            }
-        });
-    });
-</script> -->

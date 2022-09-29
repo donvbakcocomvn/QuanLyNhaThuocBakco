@@ -14,4 +14,5 @@ interface iFormDonThuoc {
     public function ChanDoanBenh($val = null);
     public function ThuocLoaiDon($val = null);
     public function TongNgayDung($val = null);
+    public function Status($val = null);
 }

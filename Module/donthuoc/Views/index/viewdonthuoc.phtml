@@ -9,6 +9,7 @@ use Module\benhnhan\Model\BenhNhan;
 use Model\Common;
 use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Sum;
 use Module\donthuoc\Model\DonThuocDetail;
+use Module\donthuoc\Permission;
 
 ?>
 <style>
@@ -97,7 +98,7 @@ $IdDonThuoc = $donthuoc->Id;
     <ol class="breadcrumb no-print">
         <li><a href="/index.php?controller=backend">Home</a></li>
         <li><a href="/index.php?module=donthuoc&controller=index&action=index">Danh Sách Đơn Thuốc</a></li>
-        <li> Đơn thuốc chi tiết <?php echo $IdDonThuoc; ?> </li>
+        <li class="text-capitalize"> Đơn thuốc chi tiết <?php echo $IdDonThuoc; ?> </li>
     </ol>
     <div class="main main-body">
         <div class="salesslip">
@@ -139,15 +140,28 @@ $IdDonThuoc = $donthuoc->Id;
             <div style="margin: 0; border-bottom: 1px solid #00000042">
                 <table style="width: 100%;">
                     <thead>
-                        <tr>
-                            <th>STT</th>
-                            <th class="text-center">Tên thuốc</th>
+                        <tr style="border-bottom: 1px solid #00000042;">
+                            <th class="text-center">STT</th>
+                            <th>Tên thuốc</th>
                             <th>Số lượng</th>
-                            <th>Đơn giá</th>
-                            <th>Thành Tiền</th>
+                            <?php
+                            if (\Model\Permission::CheckPremision([Permission::QLT_DonThuoc_DS,Permission::QLT_DonThuoc_Post,Permission::QLT_DonThuoc_Put,Permission::QLT_DonThuoc_Copy,Permission::QLT_DonThuoc_Detail]) == true) {
+                            ?>
+                                <th>Đơn vị tính</th>
+                            <?php
+                            }
+                            ?>
+                            <?php
+                            if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy]) == true) {
+                            ?>
+                                <th>Đơn giá</th>
+                                <th>Thành Tiền</th>
+                            <?php
+                            }
+                            ?>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody >
                         <?php
                         $detail = DonThuoc::GetDetailById($IdDonThuoc);
                         $common = new Common();
@@ -155,22 +169,35 @@ $IdDonThuoc = $donthuoc->Id;
                         $sum = 0;
                         foreach ($detail as $index => $DTdetail) { ?>
                             <tr>
-                                <td class="text-center"><b><?php echo $index + 1 ?></b></td>
+                                <td></td>
                                 <th><?php echo SanPham::GetNameById($DTdetail['IdThuoc']); ?></th>
                                 <td><span style="font-weight: 400 !important;"><?php echo $DTdetail['SoLuong'] . ' ' . $DTdetail['DVT']; ?></span></td>
-                                <td><?php echo Common::ViewNumber($DTdetail['GiaBan']); ?></td>
-                                <td><?php echo Common::ViewPrice($DTdetail['SoLuong'] * $DTdetail['GiaBan']); ?></td>
+                                <?php
+                            if (\Model\Permission::CheckPremision([Permission::QLT_DonThuoc_DS,Permission::QLT_DonThuoc_Post,Permission::QLT_DonThuoc_Put,Permission::QLT_DonThuoc_Copy,Permission::QLT_DonThuoc_Detail]) == true) {
+                            ?>
+                                <td><?php echo $DTdetail['DVT']; ?></td>
+                            <?php
+                            }
+                            ?>
+                                <?php
+                                if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy]) == true) {
+                                ?>
+                                    <td><?php echo Common::ViewNumber($DTdetail['GiaBan']); ?></td>
+                                    <td><?php echo Common::ViewPrice($DTdetail['SoLuong'] * $DTdetail['GiaBan']); ?></td>
+                                    <?php
+                                }
+                                ?>
                                 <td><?php $sum += $DTdetail['SoLuong'] * $DTdetail['GiaBan'] ?></td>
                             </tr>
                             <tr>
-                                <td></td>
+                                <td class="text-center"><b><?php echo $index + 1 ?></b></td>
                                 <td><i><?php echo '(' . $DTdetail['GhiChu'] . ')'; ?></i></td>
                             </tr>
-                            <tr>
+                            <tr style="border-bottom: 1px solid #00000042;">
                                 <td></td>
-                                <td><i>Sáng:</i> <b><?php echo SanPham::GetDesByVal($DTdetail['Sang'], 'donviquydoi') . ' ' . $DTdetail['DVT']; ?></b></td>
-                                <td><i>Trưa:</i> <b><?php echo SanPham::GetDesByVal($DTdetail['Trua'], 'donviquydoi') . ' ' . $DTdetail['DVT'] ?? 0; ?></b></td>
-                                <td><i>Chiều:</i> <b><?php echo SanPham::GetDesByVal($DTdetail['Chieu'], 'donviquydoi') . ' ' . $DTdetail['DVT'] ?? 0 ?></b></td>
+                                <td><i>Sáng: <b><?php echo SanPham::GetDesByVal($DTdetail['Sang'], 'donviquydoi') . ' ' . $DTdetail['DVT']; ?></b></i></td>
+                                <td><i>Trưa: <b><?php echo SanPham::GetDesByVal($DTdetail['Trua'], 'donviquydoi') . ' ' . $DTdetail['DVT'] ?? 0; ?></b></i></td>
+                                <td><i>Chiều: <b><?php echo SanPham::GetDesByVal($DTdetail['Chieu'], 'donviquydoi') . ' ' . $DTdetail['DVT'] ?? 0 ?></b></i></td>
                             </tr>
                         <?php
                         }
@@ -179,7 +206,7 @@ $IdDonThuoc = $donthuoc->Id;
                 </table>
             </div>
             <tr>
-                <td><b>Tổng cộng :</b> <?php echo Common::ViewPrice($sum) . " " . "( " . $common->convert_number_to_words($sum) . " )" ?></td>
+                <td><b>Tổng cộng :</b><span style="float : right; font-weight: bold;"><?php echo Common::ViewPrice($sum) . " " . "( " . $common->convert_number_to_words($sum) . " )" ?></span></td>
             </tr>
             <!---------------------------------->
             <div class="row">
@@ -202,21 +229,22 @@ $IdDonThuoc = $donthuoc->Id;
                 </h5>
             </div>
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-xs-4">
                     <button type="submit" onclick="window.print()" class="no-print btn">
                         Print
                     </button>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-xs-4">
+                    <?php
+                    echo Module\donthuoc\Model\btnHtml::btnhoanthanhsoandon($IdDonThuoc);
+                    ?>
+                </div>
+                <div class="col-xs-4">
                     <?php
                     echo Module\donthuoc\Model\btnHtml::btnSuaDonThuoc($IdDonThuoc);
                     ?>
                 </div>
             </div>
-
-
-
-
         </div>
     </div>
 </div>

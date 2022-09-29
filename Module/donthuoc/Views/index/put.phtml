@@ -9,8 +9,8 @@
 </style>
 <ol class="breadcrumb">
     <li><a href="/index.php?controller=backend">Home</a></li>
-    <li><a href="/index.php?module=donthuoc&controller=index&action=index"> Danh Sách Toa Thuốc</a></li>
-    <li> Sửa Toa Thuốc </li>
+    <li><a href="/index.php?module=donthuoc&controller=index&action=index"> Danh Sách Đơn Thuốc</a></li>
+    <li> Sửa Đơn Thuốc </li>
 </ol>
 <?php
 
@@ -34,7 +34,7 @@ $benhnhan = new BenhNhan($donthuoc->IdBenhNhan);
 <div class="container-fluid">
     <div class="box box-primary">
         <div class="box-header">
-            <h3 class="box-title">Sửa Toa Thuốc</h3>
+            <h3 class="box-title">Sửa Đơn Thuốc</h3>
             <div class="box-tools">
                 <div class="box-tools">
                     <?php 
@@ -190,12 +190,12 @@ $benhnhan = new BenhNhan($donthuoc->IdBenhNhan);
                     </table>
                 </fieldset>
                 <div class="col-md-12 ">
-                    <button class="btn btn-warning" type="reset">Làm Lại</button>
-                    <button class="btn btn-success" name="LuuThoat">Lưu Toa Thuốc</button>
+                    <button class="btn btn-warning" type="reset">Làm lại</button>
+                    <button class="btn btn-success" name="LuuThoat">Lưu đơn thuốc</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-<script src="/public/TinhThanh/tinhthanh.js"></script>
 <script src="/Module/donthuoc/public/postdonthuoc.js"></script>
+<script src="/public/TinhThanh/tinhthanh.js"></script>

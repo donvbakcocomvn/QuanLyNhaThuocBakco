@@ -69,7 +69,7 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
 
     public function XuatNhap()
     {
-        return $this->XuatNhap == 1 ? "<span class='label-success'>Phiếu Nhập</span>" : "<span class='label-danger'>Phiếu Xuất</span>";
+        return $this->XuatNhap == 1 ? "<span class='label-success' style='padding:5px; border-radius: 5px'>Phiếu Nhập</span>" : "<span class='label-danger' style='padding:5px; border-radius: 5px'>Phiếu Xuất</span>";
     }
     public function getTongTien()
     {

@@ -1,169 +1,164 @@
 <ol class="breadcrumb">
     <li><a href="">Dashboard</a></li>
 </ol>
+<?php
+
+use Model\ThongKe;
+?>
 <div class="container-fluid">
     <div class="box box-primary">
-        <div class="box-header">
-            <h3 class="box-title">Tủy Chọn</h3>
+        <div class="box-header text-center">
+            <h3 class="box-title">TÙY CHỌN</h3>
             <div class="box-tools">
             </div>
         </div>
         <div class="box-body">
-        <div class="row">
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-aqua">
-                    <div class="inner">
-                        <h3><?php
-                            echo \Model\Common::ViewNumber(\Model\ThongKe::GetSumSLPhieuNhap()); ?></h3>
-                        <p><i>SỐ LƯỢNG PHIẾU NHẬP</i></p>
+            <div class="row">
+                <div class="col-lg-3 col-xs-6">
+                    <div class="small-box bg-aqua">
+                        <div class="inner">
+                            <h3>
+                                <?php echo \Model\Common::ViewNumber(\Model\ThongKe::GetSumSLPhieuNhap()); ?>
+                            </h3>
+                            <p><i>SỐ LƯỢNG PHIẾU NHẬP</i></p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-reply-all"></i>
+                        </div>
+                        <a href="/backend/nhapkho/" class="small-box-footer">Xem thêm <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
-                    <div class="icon">
-                        <i class="fa fa-reply-all"></i>
-                    </div>
-                    <a href="/backend/nhapkho/" class="small-box-footer">Xem thêm <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-green">
-                    <div class="inner">
-                        <h3><?php echo \Model\Common::ViewNumber(\Model\ThongKe::GetSumSLPhieuXuat()); ?></h3>
-                        <p><i>SỐ LƯỢNG PHIẾU XUẤT</i></p>
+                <div class="col-lg-3 col-xs-6">
+                    <div class="small-box bg-green">
+                        <div class="inner">
+                            <h3><?php echo \Model\Common::ViewNumber(\Model\ThongKe::GetSumSLPhieuXuat()); ?></h3>
+                            <p><i>SỐ LƯỢNG PHIẾU XUẤT</i></p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-paper-plane"></i>
+                        </div>
+                        <a href="/backend/xuatkho/" class="small-box-footer">Xem thêm <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
-                    <div class="icon">
-                        <i class="fa fa-paper-plane"></i>
-                    </div>
-                    <a href="/backend/xuatkho/" class="small-box-footer">Xem thêm <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-yellow">
-                    <div class="inner">
-                        <h3>44</h3>
-                        <p>Tồn kho</p>
+                <div class="col-lg-3 col-xs-6">
+                    <div class="small-box bg-yellow">
+                        <div class="inner">
+                            <h3>
+                                <?php echo \Model\Common::ViewNumber(\Model\ThongKe::TotalThuocTong()); ?>
+                            </h3>
+                            <p><i>SỐ LƯỢNG TỒN KHO</i></p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-cubes"></i>
+                        </div>
+                        <a href="/backend/tonkho/" class="small-box-footer">Xem thêm <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
-                    <div class="icon">
-                        <i class="fa fa-cubes"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">Xem thêm <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-red">
-                    <div class="inner">
-                        <h3>0</h3>
-                        <p><i>SỐ LƯỢNG TỔNG</i></p>
+                <div class="col-lg-3 col-xs-6">
+                    <div class="small-box bg-red">
+                        <div class="inner">
+                            <h3>
+                                <?php echo \Model\Common::ViewNumber(\Model\ThongKe::TotalThuocTong()); ?>
+                            </h3>
+                            <p><i>SỐ LƯỢNG TỔNG</i></p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-pie-chart"></i>
+                        </div>
+                        <a href="/backend/dstong" class="small-box-footer">Xem thêm <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
-                    <div class="icon">
-                        <i class="fa fa-pie-chart"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">Xem thêm <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-            </div><!-- ./col -->
+            </div>
         </div>
-
-        </div>
-        
-        <div class="box box-info">
-            <div class="box-header with-border">
-                <h3 class="box-title">Những Sản Phẩm Sắp Hết</h3>
-                <div class="box-tools pull-right">
-                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                </div>
-            </div><!-- /.box-header -->
-            <div class="box-body">
-                <div class="table-responsive">
-                    <table class="table no-margin">
-                        <thead>
-                            <tr>
-                                <th>STT</th>
-                                <th>Tên Thuốc</th>
-                                <th>Tên Biệt Dược</th>
-                                <th>Còn Lại</th>
-                                <th>Số Lô</th>
-                                <th>Nhà Sản Xuất</th>
-                                <th>Nước Sản Xuất</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-
-                            use Module\quanlythuoc\Model\SanPham;
-
-                            $sp = new SanPham();
-                            $a = $sp->GetSpCanhBao();
-                            // var_dump($a);
-
-                            foreach ($a as $key => $value) { ?>
-                                <tr>
-                                    <td><?php echo $key + 1 ?></td>
-                                    <td><a href="#"><?php echo $value['Name'] ?></a></td>
-                                    <td><?php echo $value['Namebietduoc'] ?></td>
-                                    <td><span class="label label-danger"><?php echo $value['Soluong'] ?></span></td>
-                                    <td><?php echo $value['Solo'] ?></td>
-                                    <td><?php echo $value['NhaSX'] ?></td>
-                                    <td><?php echo $value['NuocSX'] ?></td>
-                                    <td>
-                                        <div class="sparkbar" data-color="#00a65a" data-height="20"><canvas width="34" height="20" style="display: inline-block; width: 34px; height: 20px; vertical-align: top;"></canvas></div>
-                                    </td>
-                                </tr>
-                            <?php
-                            }
-                            ?>
-
-                        </tbody>
-                    </table>
-                </div><!-- /.table-responsive -->
-            </div><!-- /.box-body -->
-            <div class="box-footer clearfix">
-                <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
-                <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
-            </div><!-- /.box-footer -->
-        </div>
-
-        <div class="box box-info">
-            <div class="box-header with-border">
-                <h3 class="box-title">Lịch Sử Nhập Kho</h3>
-                <div class="box-tools pull-right">
-                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                </div>
-            </div><!-- /.box-header -->
-            <div class="box-body">
-                <div class="table-responsive">
-                    <table class="table no-margin">
-                        <thead>
-                            <tr>
-                                <th>STT</th>
-                                <th>Mã Phiếu</th>
-                                <th>Thời Gian</th>
-                                <th>Nội Dung</th>
-                                <th>Loại Phiếu</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                                <td>Call of Duty IV</td>
-                                <td><span class="label label-success">Shipped</span></td>
-                                <td>
-                                    <div class="sparkbar" data-color="#00a65a" data-height="20"><canvas width="34" height="20" style="display: inline-block; width: 34px; height: 20px; vertical-align: top;"></canvas></div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div><!-- /.table-responsive -->
-            </div><!-- /.box-body -->
-            <div class="box-footer clearfix">
-                <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
-                <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
-            </div><!-- /.box-footer -->
-        </div>
-
     </div>
+    <!-- -------------------------------------------------- -->
+    <div class="box box-primary">
 
+        <div class="box-header text-center">
+            <h2 class="box-title">THỐNG KÊ DANH SÁCH</h2>
+        </div>
+        <fieldset>
+            <legend>Thống kê các danh sách</legend>
+        <div class="box-body" style="background-color: #dddddd69;">
+            <div class="row">
+                <div class="col-lg-6 col-xs-6">
+                    <div class="panel box box-info">
+                        <div class="box-header with-border">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li>
+                                    <a href="/thongke/thuocsaphet">
+                                        <i class="fa fa-calendar-minus-o"></i>Danh sách thuốc có số lượng sắp hết
+                                        <span class="label label-info pull-right">
+                                            <?php
+                                            $date = date('Y-m-d', time());
+                                            echo ThongKe::TotalThuocsaphet();
+                                            ?>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xs-6">
+                    <div class="panel box box-warning">
+                        <div class="box-header with-border">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li>
+                                    <a href="/thongke/benhnhantrongngay">
+                                        <i class="fa fa-user-secret"></i> Danh sách bệnh nhân trong ngày
+                                        <span class="label label-warning pull-right">
+                                            <?php
+                                            echo ThongKe::TotalBNTrongNgay($date);
+                                            ?>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-xs-6">
+                    <div class="panel box box-danger">
+                        <div class="box-header with-border">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li>
+                                    <a href="/thongke/donthuoctrongngay">
+                                        <i class="fa fa-book"></i> Danh sách đơn thuốc trong ngày
+                                        <span class="label label-danger pull-right">
+                                            <?php
+                                            echo ThongKe::TotalDonThuocTrongNgay($date);
+                                            ?>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xs-6">
+                    <div class="panel box box-success">
+                        <div class="box-header with-border">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li>
+                                    <a href="/thongke/thuocsaphethan/">
+                                        <i class="fa fa-calendar-plus-o"></i> Danh sách thuốc cận Date ( Sắp hết hạn )
+                                        <span class="label label-success pull-right">
+                                            <?php
+                                            echo ThongKe::TotalThuocSapHetHan($date);
+                                            ?>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        </fieldset>
+        </div>
 </div>

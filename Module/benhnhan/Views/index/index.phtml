@@ -1,6 +1,6 @@
 <ol class="breadcrumb">
     <li><a href="/index.php?controller=backend">Home</a></li>
-    <li> Quản Lý Khách Hàng </li>
+    <li> Danh Sách Bệnh Nhân </li>
 </ol>
 
 <div class="container-fluid">
@@ -16,7 +16,7 @@
     <div class="clearfix">
         <div class="box box-primary">
             <div class="box-header">
-                <h3 class="box-title">Danh Sách Khách Hàng</h3>
+                <h3 class="box-title">Danh sách bệnh nhân</h3>
                 <div class="box-tools">
                     <?php
 
@@ -27,7 +27,7 @@
                     Module\benhnhan\Model\btnHtml::btnViewKhachHangTrongNgay();
                     Module\benhnhan\Model\btnHtml::btnExport();
                     Module\benhnhan\Model\btnHtml::btnThemKhachHang();
-                    \Model\FormRender::HuongDan("danhsachbenhnhan", "Hướng dẫn")
+                    \Model\FormRender::HuongDan("danhsachbenhnhan", "Hướng dẫn bệnh nhân")
                     ?>
                 </div>
             </div>
@@ -51,7 +51,7 @@
                             $_item = new BenhNhan($item);
                         ?>
                             <tr>
-                                <td style="width: 200px;">
+                                <td style="width: 150px;" class="text-center">
                                     <?php
                                     echo Module\benhnhan\Model\btnHtml::btnSuaKhachHang($_item->Id);
                                     echo Module\benhnhan\Model\btnHtml::btnXoaKhachHang($_item->Id);

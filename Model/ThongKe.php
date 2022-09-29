@@ -4,6 +4,123 @@ namespace Model;
 
 class ThongKe extends DB
 {
+    public function DSThuocTongKho($params, $indexPage, $pageNumber, &$total)
+    {
+        self::$TableName = prefixTable . "qlthuoc_thuoc";
+        $name = isset($params["keyword"]) ? $params["keyword"] : '';
+        $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
+        $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
+        $isShowSql = "and `isShow` >= 0 ";
+        $danhmucSql = "";
+        if ($isShow) {
+            $isShowSql = "and `isShow` = '{$isShow}' ";
+        }
+        if ($danhmuc) {
+            $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
+        }
+        // self::$Debug = true;
+        $where = " (`Name` like '%{$name}%' or `Id` like '%{$name}%' or `Idloaithuoc` like '%{$name}%' {$danhmucSql}) and `isDelete` = 0";
+        return $this->SelectPT($where, $indexPage, $pageNumber, $total);
+    }
+
+    public function ThuocTonKho($params, $indexPage, $pageNumber, &$total)
+    {
+        self::$TableName = prefixTable . "qlthuoc_thuoc";
+        $name = isset($params["keyword"]) ? $params["keyword"] : '';
+        $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
+        $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
+        $isShowSql = "and `isShow` >= 0 ";
+        $danhmucSql = "";
+        if ($isShow) {
+            $isShowSql = "and `isShow` = '{$isShow}' ";
+        }
+        if ($danhmuc) {
+            $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
+        }
+        // self::$Debug = true;
+        $where = " (`Name` like '%{$name}%' or `Id` like '%{$name}%' or `Idloaithuoc` like '%{$name}%' {$danhmucSql}) and `isDelete` = 0 ORDER BY `Name` DESC ";
+        return $this->SelectPT($where, $indexPage, $pageNumber, $total);
+    }
+
+    public function PhieuXuatKho($params, $indexPage, $pageNumber, &$total)
+    {
+        self::$TableName = prefixTable . "qlthuoc_phieuxuatnhap";
+        $name = isset($params["keyword"]) ? $params["keyword"] : '';
+        $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
+        $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
+        $isShowSql = "and `isShow` >= 0 ";
+        $indateSql = "";
+        $danhmucSql = "";
+        if ($isShow) {
+            $isShowSql = "and `isShow` = '{$isShow}' ";
+        }
+        if ($danhmuc) {
+            $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
+        }
+        // self::$Debug = true;
+        $where = " (`NoiDungPhieu` like '%{$name}%' or `IdPhieu` like '%{$name}%' {$danhmucSql}) and `isDelete` = 0 and `XuatNhap` = -1 ";
+        return $this->SelectPT($where, $indexPage, $pageNumber, $total);
+    }
+
+    public function DanhSachNhapChiTiet($params, $indexPage, $pageNumber, &$total)
+    {
+        self::$TableName = prefixTable . "qlthuoc_phieuxuatnhap_chitiet";
+        $name = isset($params["keyword"]) ? $params["keyword"] : '';
+        $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
+        $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
+        $isShowSql = "and `isShow` >= 0 ";
+        $indateSql = "";
+        $danhmucSql = "";
+        if ($isShow) {
+            $isShowSql = "and `isShow` = '{$isShow}' ";
+        }
+        if ($danhmuc) {
+            $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
+        }
+        // self::$Debug = true;
+        $where = " (`IdThuoc` like '%{$name}%' {$danhmucSql}) and `isDelete` = 0 and `XuatNhap` = 1 ";
+        return $this->SelectPT($where, $indexPage, $pageNumber, $total);
+    }
+
+    public function DanhSachXuatChiTiet($params, $indexPage, $pageNumber, &$total)
+    {
+        self::$TableName = prefixTable . "qlthuoc_phieuxuatnhap_chitiet";
+        $name = isset($params["keyword"]) ? $params["keyword"] : '';
+        $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
+        $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
+        $isShowSql = "and `isShow` >= 0 ";
+        $indateSql = "";
+        $danhmucSql = "";
+        if ($isShow) {
+            $isShowSql = "and `isShow` = '{$isShow}' ";
+        }
+        if ($danhmuc) {
+            $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
+        }
+        // self::$Debug = true;
+        $where = " (`IdThuoc` like '%{$name}%' {$danhmucSql}) and `isDelete` = 0 and `XuatNhap` = -1 ";
+        return $this->SelectPT($where, $indexPage, $pageNumber, $total);
+    }
+
+    public function PhieuNhapKho($params, $indexPage, $pageNumber, &$total)
+    {
+        self::$TableName = prefixTable . "qlthuoc_phieuxuatnhap";
+        $name = isset($params["keyword"]) ? $params["keyword"] : '';
+        $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
+        $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
+        $isShowSql = "and `isShow` >= 0 ";
+        $indateSql = "";
+        $danhmucSql = "";
+        if ($isShow) {
+            $isShowSql = "and `isShow` = '{$isShow}' ";
+        }
+        if ($danhmuc) {
+            $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
+        }
+        // self::$Debug = true;
+        $where = " (`NoiDungPhieu` like '%{$name}%' or `IdPhieu` like '%{$name}%' {$danhmucSql}) {$indateSql} and `isDelete` = 0 and `XuatNhap` =1 ";
+        return $this->SelectPT($where, $indexPage, $pageNumber, $total);
+    }
 
     public function GetThuocSapHet($params, $indexPage, $pageNumber, &$total)
     {
@@ -76,11 +193,62 @@ class ThongKe extends DB
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 
-    static function DSBenhNhanTrongNgay($date)
+    public function GetDSThuocSapHetHan($params, $indexPage, $pageNumber, &$total)
     {
-        $thongke = new ThongKe();
-        $sql = "SELECT * FROM `lap1_benhnhan` WHERE `CreateRecord` LIKE '%$date%'";
-        $result = $thongke->GetRows($sql);
+        self::$TableName = prefixTable . "qlthuoc_phieuxuatnhap_chitiet";
+        $name = isset($params["keyword"]) ? $params["keyword"] : '';
+        $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
+        $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
+        $isShowSql = "and `isShow` >= 0 ";
+        $indateSql = "";
+        $danhmucSql = "";
+        if ($isShow) {
+            $isShowSql = "and `isShow` = '{$isShow}' ";
+        }
+        if ($danhmuc) {
+            $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
+        }
+        // self::$Debug = true;
+        $where = " (`IdThuoc` like '%{$name}%' {$danhmucSql}) {$indateSql} and DATEDIFF(`HanSuDung`,CURDATE()) >= 0 AND DATEDIFF(`HanSuDung`,CURDATE()) <= 60 AND `XuatNhap` = 1";
+        return $this->SelectPT($where, $indexPage, $pageNumber, $total);
+    }
+
+    public function GetDSThuocTonExport()
+    {
+        $table = prefixTable;
+        $sql = "SELECT `Id`, `Idloaithuoc`, `Name`, `SLHienTai` FROM `{$table}qlthuoc_thuoc` ORDER BY `Name` DESC";
+        $result = $this->GetRows($sql);
+        return $result;
+    }
+
+    public function GetDSTongThuocTrongKhoExport()
+    {
+        $table = prefixTable;
+        $sql = "SELECT `Id`, `Idloaithuoc`, `Name`, `SLHienTai` + `Soluong` AS 'TongThuoc' FROM `{$table}qlthuoc_thuoc`";
+        $result = $this->GetRows($sql);
+        return $result;
+    }
+
+    public function GetDSBNTrongNgay()
+    {
+        $date = date('Y-m-d', time());
+        $sql = "SELECT `Id`, `Name`, `Gioitinh`, `Ngaysinh`, `CMND`, `Address`, `Phone`,`TinhThanh`, `QuanHuyen`, `PhuongXa` FROM `lap1_benhnhan` WHERE `CreateRecord` LIKE '%$date%' and `isDelete` = 0 limit 0,10";
+        $result = $this->GetRows($sql);
+        return $result;
+    }
+
+    public function GetDSDonThuocTrongNgay()
+    {
+        $date = date('Y-m-d', time());
+        $sql = "SELECT `Id`, `IdBenhNhan`, `NameBN`, `GioiTinh`, `NgaySinh`, `ThoiGianKham`, `ChanDoanBenh`, `ThuocLoaiDon`, `TongNgayDung` FROM `lap1_toathuoc` WHERE `ThoiGianKham` LIKE '%$date%'";
+        $result = $this->GetRows($sql);
+        return $result;
+    }
+
+    public function GetDSXuatNhapExportChiTiet($xuatnhap)
+    {
+        $sql = "SELECT `IdPhieu`, `IdThuoc`, `SoLo`, `NhaSanXuat`, `SoLuong`, `NuocSanXuat`, `Price`, `Price`*`SoLuong` as `Tong` FROM `lap1_qlthuoc_phieuxuatnhap_chitiet` WHERE `isDelete` = 0 and `XuatNhap` = '$xuatnhap'";
+        $result = $this->GetRows($sql);
         return $result;
     }
 
@@ -98,17 +266,10 @@ class ThongKe extends DB
         $result = $thongke->GetRows($sql);
         return $result;
     }
- 
+
     public function GetSpCanhBao()
     {
         $sql = "SELECT `Id`,`Name`, `Namebietduoc`, `Solo`, `Gianhap`, `Giaban`, `DVT`, `Ngaysx`, `HSD`, `Tacdung`, `Cochetacdung`, `Ghichu`, `Soluong`, `NhaSX`, `NuocSX`,`CachDung`, `Canhbao` FROM `lap1_qlthuoc_thuoc`WHERE `Soluong` < `Canhbao` ORDER BY `Name` ASC";
-        $result = $this->GetRows($sql);
-        return $result;
-    }
-
-    public function GetThuoc1000()
-    {
-        $sql = "SELECT * FROM `lap1_qlthuoc_thuoc` WHERE `Soluong` = 1000 ORDER BY `Name` ASC";
         $result = $this->GetRows($sql);
         return $result;
     }
@@ -129,6 +290,46 @@ class ThongKe extends DB
         return $result['TongRow'];
     }
 
+    public static function TotalThuocsaphet()
+    {
+        $thongke = new ThongKe();
+        $sql = "SELECT COUNT(*) as `Total` FROM `lap1_qlthuoc_thuoc` WHERE `SLHienTai` <= `Canhbao` and `isDelete` = 0";
+        $result = $thongke->GetRow($sql);
+        return $result['Total'];
+    }
+
+    public static function TotalThuocTong()
+    {
+        $thongke = new ThongKe();
+        $sql = "SELECT COUNT(*) as `Total` FROM `lap1_qlthuoc_thuoc` WHERE `isDelete` = 0";
+        $result = $thongke->GetRow($sql);
+        return $result['Total'];
+    }
+
+    public static function TotalBNTrongNgay($date)
+    {
+        $thongke = new ThongKe();
+        $sql = "SELECT COUNT(*) as `Total` FROM `lap1_benhnhan` WHERE `CreateRecord` LIKE '%$date%' and `isDelete` = 0";
+        $result = $thongke->GetRow($sql);
+        return $result['Total'];
+    }
+
+    public static function TotalThuocSapHetHan()
+    {
+        $thongke = new ThongKe();
+        $sql = "SELECT COUNT(*) as `Total` FROM `lap1_qlthuoc_phieuxuatnhap_chitiet` WHERE DATEDIFF(`HanSuDung`,CURDATE()) >= 0 AND DATEDIFF(`HanSuDung`,CURDATE()) <= 60 AND `XuatNhap` = 1";
+        $result = $thongke->GetRow($sql);
+        return $result['Total'];
+    }
+
+    public static function TotalDonThuocTrongNgay($date)
+    {
+        $thongke = new ThongKe();
+        $sql = "SELECT COUNT(*) as `Total` FROM `lap1_toathuoc` WHERE `CreateRecord` LIKE '%$date%'";
+        $result = $thongke->GetRow($sql);
+        return $result['Total'];
+    }
+
     public static function TongNhapTheoThuoc()
     {
         $thongke = new ThongKe();
@@ -141,23 +342,6 @@ class ThongKe extends DB
     {
         $thongke = new ThongKe();
         $sql = "SELECT `IdThuoc`,`XuatNhap`, SUM(`SoLuong`)AS TongSoLuong, SUM(`SoLuong` * `Price`) AS TongGia  FROM `lap1_qlthuoc_phieuxuatnhap_chitiet` WHERE `XuatNhap` = -1 AND `IsDelete` = 0 GROUP BY `IdThuoc`";
-        $result = $thongke->GetRows($sql);
-        return $result;
-    }
-
-    public static function LichSuNhapXuatChiTiet($value)
-    {
-        $thongke = new ThongKe();
-        $sql = "SELECT b.NgayNhap, a.IdThuoc,a.SoLo,a.NhaSanXuat,a.SoLuong,a.NuocSanXuat, a.Price, a.SoLuong * a.Price AS 'Tong' FROM `lap1_qlthuoc_phieuxuatnhap_chitiet` AS a, `lap1_qlthuoc_phieuxuatnhap` b WHERE a.IdPhieu = b.IdPhieu and a.XuatNhap = $value and b.XuatNhap = $value ORDER BY a.IdThuoc ASC";
-        $result = $thongke->GetRows($sql);
-        return $result;
-    }
-
-
-    public static function LichSuXuatById($id)
-    {
-        $thongke = new ThongKe();
-        $sql = "SELECT b.NgayNhap, a.IdThuoc,a.SoLo,a.NhaSanXuat,a.SoLuong,a.NuocSanXuat, a.Price, a.SoLuong * a.Price AS 'Tong' FROM `lap1_qlthuoc_phieuxuatnhap_chitiet` AS a, `lap1_qlthuoc_phieuxuatnhap` b WHERE a.IdPhieu = b.IdPhieu and a.XuatNhap = -1 and b.XuatNhap = -1 and a.IdThuoc = '$id' ORDER BY b.NgayNhap DESC";
         $result = $thongke->GetRows($sql);
         return $result;
     }
@@ -181,7 +365,6 @@ class ThongKe extends DB
     public static function GetTongXuatNhap()
     {
         $thongke = new ThongKe();
-        // $sql = "SELECT `TongNhap`.`IdThuoc`, `TongSLNhap`,`TongSLXuat` FROM (SELECT `IdThuoc`, SUM(`SoLuong`) as 'TongSLNhap' FROM `lap1_qlthuoc_phieuxuatnhap_chitiet` WHERE `XuatNhap` = 1 and `IsDelete` = 0 GROUP BY `IdThuoc`) AS TongNhap JOIN (SELECT `IdThuoc`, SUM(`SoLuong`) as 'TongSLXuat' FROM `lap1_qlthuoc_phieuxuatnhap_chitiet` WHERE `XuatNhap` = -1 and `IsDelete` = 0 GROUP BY `IdThuoc`) AS TongXuat ON `TongNhap`.`IdThuoc` = `TongXuat`.`IdThuoc`";
         $table = prefixTable;
         $sql = "Select `IdThuoc`, 
         SUM(CASE When `XuatNhap`= 1 Then`SoLuong` Else 0 End ) as 'TongSLNhap', 
@@ -195,7 +378,6 @@ class ThongKe extends DB
     public static function GetTongXuatNhapById($idThuoc)
     {
         $thongke = new ThongKe();
-        // $sql = "SELECT `TongNhap`.`IdThuoc`, `TongSLNhap`,`TongSLXuat` FROM (SELECT `IdThuoc`, SUM(`SoLuong`) as 'TongSLNhap' FROM `lap1_qlthuoc_phieuxuatnhap_chitiet` WHERE `XuatNhap` = 1 and `IsDelete` = 0 GROUP BY `IdThuoc`) AS TongNhap JOIN (SELECT `IdThuoc`, SUM(`SoLuong`) as 'TongSLXuat' FROM `lap1_qlthuoc_phieuxuatnhap_chitiet` WHERE `XuatNhap` = -1 and `IsDelete` = 0 GROUP BY `IdThuoc`) AS TongXuat ON `TongNhap`.`IdThuoc` = `TongXuat`.`IdThuoc`";
         $table = prefixTable;
         $sql = "Select `IdThuoc`, 
         SUM(CASE When `XuatNhap`= 1 Then`SoLuong` Else 0 End ) as 'TongSLNhap', 

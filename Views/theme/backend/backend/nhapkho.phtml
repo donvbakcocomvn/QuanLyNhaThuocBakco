@@ -1,28 +1,40 @@
 <ol class="breadcrumb">
     <li><a href="/backend/"><i class="fa fa-dashboard"></i>&nbsp; Dashboard</a></li>
-    <li class="active">Danh sách phiếu nhập kho</li>
+    <li class="active text-capitalize">Danh sách phiếu nhập kho</li>
 </ol>
 <section class="content">
     <div class="row">
         <div class="col-md-12">
+        <form method="get" action="/backend/nhapkho/">
+            <div class="form-group d-flex">
+                <label class="btn btn-default"><input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox"><i class="fa fa-share" aria-hidden="true"></class=></i></label>
+                <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập vào mã phiếu hoặc nội dung phiếu để tìm kiếm">
+                <button class="btn btn-primary no-border-radius" name="btnTim" type="submit">
+                    <i class="fa fa-search"></i> Tìm Kiếm
+                </button>
+            </div>
+        </form>
             <div class="box box-success">
                 <div class="box-header">
-                    <h3 style="text-align: center;">Danh sách phiếu nhập kho</h3>
-                    <div class="box-tools float-left">
-                        <a class="btn btn-warning" href="/backend/dsnhapchitiet">
-                            <i class="fa fa-history"></i> Lịch sử nhập chi tiết</a>
-                        <a class="btn btn-success" href="/thongke/ExportDSPhieuNhap">
-                            <i class="fa fa-filter"></i> Export danh sách phiếu</a>
+                    <div class="box-tools">
+                        <div class="box-tools ">
+                            <a class="btn btn-warning" href="/backend/dsnhapchitiet">
+                                <i class="fa fa-history"></i> Lịch sử nhập chi tiết</a>
+                            <a class="btn btn-success" href="/thongke/ExportDSPhieuNhap">
+                                <i class="fa fa-filter"></i> Export danh sách phiếu nhập</a>
+                        </div>
                     </div>
+                    <h3 style="text-align: center;" class="text-uppercase">Danh sách phiếu nhập kho</h3>
                 </div>
-
                 <div class="box-body">
                     <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                         <div class="row">
                             <div class="col-sm-6"></div>
                             <div class="col-sm-6"></div>
                         </div>
-                        <div class="row">
+                        <fieldset>
+                            <legend>Danh sách phiếu nhập</legend>
+                            <div class="row">
                             <div class="col-sm-12">
                                 <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                                     <thead>
@@ -46,13 +58,12 @@
                                         use Module\quanlythuoc\Model\SanPham;
 
                                         $index = 0;
-                                        $thongke = ThongKe::GetDSPhieuNhap(1);
-                                        // var_dump($thongke);
-                                        foreach ($thongke as $value) { ?>
+                                        $danhsach = $data['items'];
+                                        foreach ($danhsach as $value) { ?>
                                             <?php
                                             ?>
                                             <tr role="row" class="even">
-                                                <td class="sorting_1 text-center"><?php echo $index + 1 ?></td>
+                                                <td class="sorting_1 text-center"><?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?></td>
                                                 <td><?php echo $value['IdPhieu']; ?></td>
                                                 <td><?php echo $value["NoiDungPhieu"]; ?></td>
                                                 <td><?php echo Common::ForMatDMYHIS($value["NgayNhap"]); ?></td>
@@ -69,11 +80,41 @@
                                         ?>
                                     </tbody>
                                 </table>
+                                <div class="box-footer">
+                                    <div class="d-flex">
+                                        <?php
+                                        \Model\FormCommon::Select(
+                                            "",
+                                            "",
+                                            [10, 20, 50, 100],
+                                            [
+                                                "style" => "max-width:150px;",
+                                                "class" => "form-control",
+                                                "value" => $pageNumber,
+                                                "onchange" => "SoDongHienThi(this.value)",
+                                            ]
+                                        )->render();
+                                        ?>
+                                        <?php
+                                        $linkPhanTrang = "/index.php?controller=backend&action=nhapkho&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
+                                        echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
+                                        ?>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    
+                        </fieldset>
+                        </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+<script type="text/javascript">
+    var SoDongHienThi = function(evalue) {
+        var linkPhanTrang = '/index.php?controller=backend&action=nhapkho&indexPage=1&pageNumber=[j]';
+        linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
+        window.location.href = linkPhanTrang;
+    }
+</script>

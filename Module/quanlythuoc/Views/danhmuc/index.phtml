@@ -1,15 +1,15 @@
 <ol class="breadcrumb">
     <li><a href="/index.php?controller=backend">Home</a></li>
-    <li> Quản Lý Danh Mục Thuốc </li>
+    <li> Danh Sách Danh Mục Thuốc </li>
 </ol>
 
 <div class="container-fluid">
     <form method="get" action="/quanlythuoc/danhmuc/index/">
         <div class="form-group d-flex">
             <label class="btn btn-default"><input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox"><i class="fa fa-share" aria-hidden="true"></class=></i></label>
-            <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập Vào Danh Mục Thuốc Tìm Kiếm">
+            <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập vào tên danh mục thuốc để tìm kiếm...">
             <button class="btn btn-primary no-border-radius" name="btnTim" type="submit">
-                <i class="fa fa-search"></i> Tìm Kiếm
+                &nbsp;<i class="fa fa-search"></i> Tìm Kiếm
             </button>
         </div>
     </form>
@@ -48,7 +48,7 @@
                             // echo $_item->Id;
                         ?>
                             <tr>
-                                <td>
+                                <td class="text-center">
                                     <?php
                                     echo Module\quanlythuoc\Model\btnHtml::btnSuaDanhMuc($_item->Id);
                                     echo Module\quanlythuoc\Model\btnHtml::btnXoaDanhMuc($_item->Id);

@@ -1,7 +1,7 @@
 <ol class="breadcrumb">
     <li><a href="/index.php?controller=backend">Dashboard</a></li>
     <!-- <li><a href="/index.php?controller=thongke">Thống kê</a></li> -->
-    <li class="text-capitalize"> Danh sách thuốc sắp hết </li>
+    <li class="text-capitalize"> Danh sách thuốc cận date ( Sắp hết hạn ) </li>
 </ol>
 <?php
 
@@ -11,10 +11,10 @@ use Model\Locations;
 use Model\ThongKe;
 ?>
 <div class="container-fluid">
-    <form method="get" action="/thongke/thuocsaphet/">
+    <form method="get" action="/thongke/thuocsaphethan/">
         <div class="form-group d-flex">
             <label class="btn btn-default"><input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox"><i class="fa fa-share" aria-hidden="true"></class=></i></label>
-            <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập vào tên thuốc để tìm kiếm">
+            <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập vào mã phiếu hoặc mã thuốc để tìm kiếm">
             <button class="btn btn-primary no-border-radius" name="btnTim" type="submit">
                 <i class="fa fa-search"></i> Tìm Kiếm
             </button>
@@ -23,7 +23,7 @@ use Model\ThongKe;
     <div class="clearfix">
         <div class="box box-primary">
             <div class="box-header">
-                <h3 class="text-center text-uppercase">Danh sách thuốc sắp hết</h3>
+                <h3 class="text-center text-uppercase">Danh sách thuốc cận date ( Sắp hết hạn )</h3>
                 <div class="box-tools float-left">
                     <a class="btn btn-success" href="/thongke/exportthuocsaphet/">
                         <i class="fa fa-filter"></i>&nbsp;Export danh sách</a>
@@ -31,19 +31,18 @@ use Model\ThongKe;
             </div>
             <div class="box-body">
                 <fieldset>
-                    <legend>Danh sách thuốc sắp hết</legend>
+                    <legend>Danh sách thuốc sắp hết hạn</legend>
                     <div class="row">
                         <div class="col-sm-12">
                             <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                                 <thead>
                                     <tr role="row">
                                         <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">STT</th>
-                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Tên thuốc</th>
-
-                                        <th class="sorting text-center" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Còn lại</th>
+                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Thuộc mã phiếu</th>
+                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Tên thuốc</th>
                                         <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Số lô</th>
-                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Nhà sản xuất</th>
                                         <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Nước sản xuất</th>
+                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Hạn sử dụng</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -56,15 +55,15 @@ use Model\ThongKe;
                                     $danhsach = $data['items'];
                                     // var_dump($danhsach);
                                     foreach ($danhsach as $value) {
-                                        $thuoc = new SanPham($value["Id"]);
+                                        $thuoc = new SanPham($value["IdThuoc"]);
                                     ?>
                                         <tr role="row" class="even">
                                             <td class="sorting_1 text-center"><?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?></td>
-                                            <td><?php echo $value['Name'] ?></td>
-                                            <td class="text-center"><?php echo $value['SLHienTai'] . " " . $thuoc->DonViTinh(); ?></td>
-                                            <td class="text-center"><?php echo $value['Solo'] ?></td>
-                                            <td><?php echo $value['NhaSX'] ?></td>
-                                            <td><?php echo Notions::GetById($value['NuocSX']) ?></td>
+                                            <td><?php echo $value['IdPhieu'] ?></td>
+                                            <td><?php echo $thuoc->Name.' ('.$value['IdThuoc'].')';?></td>
+                                            <td><?php echo $value['SoLo'] ?></td>
+                                            <td><?php echo $value['NuocSanXuat'] ?></td>
+                                            <td><?php echo Common::ForMatDMY($value['HanSuDung']) ?></td>
                                         </tr>
                                     <?php
                                         $index++;
@@ -91,7 +90,7 @@ use Model\ThongKe;
                         )->render();
                         ?>
                         <?php
-                        $linkPhanTrang = "/index.php?controller=thongke&action=thuocsaphet&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
+                        $linkPhanTrang = "/index.php?controller=thongke&action=thuocsaphethan&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
                         echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
                         ?>
                     </div>
@@ -102,7 +101,7 @@ use Model\ThongKe;
 </div>
 <script type="text/javascript">
     var SoDongHienThi = function(evalue) {
-        var linkPhanTrang = '/index.php?controller=thongke&action=thuocsaphet&indexPage=1&pageNumber=[j]';
+        var linkPhanTrang = '/index.php?controller=thongke&action=thuocsaphethan&indexPage=1&pageNumber=[j]';
         linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
         window.location.href = linkPhanTrang;
     }

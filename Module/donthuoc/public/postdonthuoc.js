@@ -145,7 +145,24 @@ $(document).ready(function () {
         }
         return data;
     }
+    $(".saveinfor").change(() => {
+        var formData = $("#formKhachHang").serializeArray();
+        var dataFormBenhNhan = getFormDataByName("BenhNhan", formData);
+        var dataFormDonThuoc = getFormDataByName("DonThuoc", formData);
+        $.ajax({
+            url: `/donthuoc/index/saveFormKhachHang/`,
+            type: 'POST',
+            data: formData,
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            dataType: 'json',
+            success: function (response) {
 
+            },
+            error: function () {
+                // alert("error");
+            }
+        });
+    });
     $(".changeinfo").each(function (index, e) {
         $(this).change(function (param) {
             $($(this).attr("id")).val();

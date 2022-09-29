@@ -37,6 +37,8 @@ $(function () {
     });
 
   });
+
+
   $(".QuanHuyenClass").each(function () {
     var self = $(this);
     var quanHuyenId = "#" + self.attr("id");
@@ -77,6 +79,8 @@ $(function () {
 
     });
   });
+
+
   $(".PhuongXaClass").each(function () {
     var self = $(this);
     var phuongXaId = "#" + self.attr("id");
