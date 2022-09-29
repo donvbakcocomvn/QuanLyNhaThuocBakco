@@ -44,7 +44,7 @@ use Module\donthuoc\Model\DonThuoc;
                     <thead>
                         <tr>
                             <th></th>
-                            <th>STT</th>
+                            <th class="text-center">STT</th>
                             <th>Mã Đơn Thuốc</th>
                             <th>Tên Bệnh Nhân</th>
                             <th>Giới Tính</th>
@@ -70,7 +70,7 @@ use Module\donthuoc\Model\DonThuoc;
                                     echo Module\donthuoc\Model\btnHtml::btnchitiet($_item->Id);
                                     ?>
                                 </td>
-                                <td><?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?></td>
+                                <td class="text-center"><?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?></td>
                                 <td><?php echo $_item->Id; ?></td>
                                 <td><?php echo $_item->BenhNhan()->Name; ?></td>
                                 <td><?php echo $_item->BenhNhan()->Gioitinh(); ?></td>
@@ -80,7 +80,6 @@ use Module\donthuoc\Model\DonThuoc;
                                 <!-- <td><?php echo $_item->TongNgayDung; ?></td> -->
                                 <td><?php echo $_item->Status(); ?></td>
                                 <td><?php echo $_item->ThuocLoaiDon() ?></td>
-
                             </tr>
                         <?php
                         }

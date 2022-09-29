@@ -18,10 +18,18 @@
                 <div class="box-header">
                     <div class="box-tools">
                         <div class="box-tools ">
+                            <?php 
+                            if (\Model\Permission::CheckPremision([
+                                \Model\User::QuanLy, \Model\User::Admin 
+                            ], []) == true) {
+                            ?>
+                                <a class="btn btn-success" href="/thongke/ExportDSPhieuNhap">
+                                <i class="fa fa-filter"></i> Export danh sách phiếu nhập</a>
+                            <?php
+                            }
+                            ?>
                             <a class="btn btn-warning" href="/backend/dsnhapchitiet">
                                 <i class="fa fa-history"></i> Lịch sử nhập chi tiết</a>
-                            <a class="btn btn-success" href="/thongke/ExportDSPhieuNhap">
-                                <i class="fa fa-filter"></i> Export danh sách phiếu nhập</a>
                         </div>
                     </div>
                     <h3 style="text-align: center;" class="text-uppercase">Danh sách phiếu nhập kho</h3>

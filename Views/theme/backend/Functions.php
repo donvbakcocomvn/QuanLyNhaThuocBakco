@@ -342,13 +342,12 @@ class Functions
                     ?>
                         <li class="<?php echo \Application::$_Module == "khachhang" ? 'active' : '' ?>">
                             <a href="/donthuoc/index/donchuaxuly/">
-                                <i class="fa fa-th-list"></i>
-                                <span>Đơn chưa xử lý</span>
+                                <i class="fa fa-question-circle"></i>
+                                <span>Đơn thuốc chưa soạn</span>
                             </a>
                         </li>
                     <?php
                     }
-
                     // Đơn đang xử lý
                     if (\Model\Permission::CheckPremision([
                         User::QuanLy, User::Admin, DonthuocPermission::QLT_DonThuoc_DS, DonthuocPermission::QLT_DonThuoc_Post,
@@ -357,13 +356,12 @@ class Functions
                     ?>
                         <li class="<?php echo \Application::$_Module == "khachhang" ? 'active' : '' ?>">
                             <a href="/donthuoc/index/dondangxuly/">
-                                <i class="fa fa-list"></i>
-                                <span>Đơn đang xử lý</span>
+                                <i class="fa fa-spinner"></i>
+                                <span>Đơn thuốc đang soạn</span>
                             </a>
                         </li>
                     <?php
                     }
-
                     // Đơn đã soạn thuốc xong
                     if (\Model\Permission::CheckPremision([
                         User::QuanLy, User::Admin, DonthuocPermission::QLT_DonThuoc_DS, DonthuocPermission::QLT_DonThuoc_Post,
@@ -372,8 +370,8 @@ class Functions
                     ?>
                         <li class="<?php echo \Application::$_Module == "khachhang" ? 'active' : '' ?>">
                             <a href="/donthuoc/index/dondaxuly/">
-                                <i class="fa fa-list-ul"></i>
-                                <span>Đơn đã xử lý</span>
+                                <i class="fa fa-check-square-o"></i>
+                                <span>Đơn thuốc đã soạn xong</span>
                             </a>
                         </li>
                     <?php
