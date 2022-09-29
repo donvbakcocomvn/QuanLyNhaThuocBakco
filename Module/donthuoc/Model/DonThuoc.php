@@ -50,13 +50,12 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
 
     public function Status()
     {
-        if ($this->Status == 1) {
-            return "<span class='label-danger' style='padding: 5px;border-radius: 5px';>Chưa lấy thuốc</span>";
-        } elseif ($this->Status == 2) {
-            return "<span class='label-warning' style='padding: 5px;border-radius: 5px';>Đang soạn thuốc</span>";
-        } elseif ($this->Status == 3) {
-            return "<span class='label-success' style='padding: 5px;border-radius: 5px';>Đã soạn thuốc xong</span>";
-        }
+        $status = [
+            1 => "<span class='label-danger' style='padding: 5px;border-radius: 5px';>Chưa lấy thuốc</span>",
+            2 => "<span class='label-warning' style='padding: 5px;border-radius: 5px';>Đang soạn thuốc</span>",
+            3 => "<span class='label-success' style='padding: 5px;border-radius: 5px';>Đã soạn thuốc xong</span>",
+        ];
+        return $status[$this->Status] ?? "";
     }
 
     // Lấy 1 dòng by Id

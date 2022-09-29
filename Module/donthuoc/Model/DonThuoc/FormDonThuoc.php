@@ -16,12 +16,12 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 
 	static $properties = ["class" => "form-control"];
 	static $ElementsName = "DonThuoc";
-
+	static $FormData = [];
 	//put your code here
-	public function __construct()
+	public function __construct($dataValue = null)
 	{
+		self::$FormData  = $dataValue;
 	}
-
 
 	/**
 	 *
@@ -32,13 +32,22 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 	function Id($val = null)
 	{
 		$properties = self::$properties;
-		$properties["value"] = $val;
+		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
+
 		$properties["readonly"] = $val;
 		$properties[FormRender::Required] = "true";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
 		return new FormRender(new Textbox("Mã đơn thuốc", $name, $properties));
 	}
 
+	public static function SetFormData($data)
+	{
+		$_SESSION["FormDataDonThuoc"] = $data;
+	}
+	public static function GetFormData()
+	{
+		return $_SESSION["FormDataDonThuoc"] ?? [];
+	}
 	/**
 	 *
 	 * @param mixed $val
@@ -48,7 +57,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 	function IdBenhNhan($val = null)
 	{
 		$properties = self::$properties;
-		$properties["value"] = $val;
+		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		$properties["data-value"] = $val;
 		$properties[FormRender::Required] = "true";
 		$option = BenhNhan::CapChaTpOptions();
@@ -69,7 +78,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 		$option = SanPham::CapChaTpOptions();
 		$option = ["" => ""] + $option;
 		// $properties = ["class" => "assl"+"sdfsdfsd"];
-		$properties["value"] =  $val;
+		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		$properties["id"] = $id;
 		$properties["index"] = $index;
 		$properties["class"] = "select2 form-control changename ";
@@ -89,7 +98,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 	function GioiTinh($val = null)
 	{
 		$properties = self::$properties;
-		$properties["value"] = $val;
+		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		// $properties[FormRender::Required] = "true";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
 		$options = OptionsService::GetGroupsToSelect("gioitinh");
@@ -105,7 +114,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 	function NgaySinh($val = null)
 	{
 		$properties = self::$properties;
-		$properties["value"] = $val;
+		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		// $properties[FormRender::Required] = "true";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
 		return new FormRender(new Date("", $name, $properties));
@@ -120,7 +129,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 	function ThoiGianKham($val = null)
 	{
 		$properties = self::$properties;
-		$properties["value"] = $val;
+		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		$properties[FormRender::Readonly] = "true";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
 		return new FormRender(new Textbox("Ngày Tạo", $name, $properties));
@@ -129,7 +138,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 	function ThoiGianKhamCopy($val = null)
 	{
 		$properties = self::$properties;
-		$properties["value"] = $val;
+		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		// $properties[FormRender::Required] = "true";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
 		return new FormRender(new Textbox("Ngày Tạo", $name, $properties));
@@ -144,7 +153,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 	function ChanDoanBenh($val = null)
 	{
 		$properties = self::$properties;
-		$properties["value"] = $val;
+		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		$properties[FormRender::Required] = "true";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
 		return new FormRender(new Textbox("Chẩn Đoán Bệnh", $name, $properties));
@@ -159,7 +168,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 	function ThuocLoaiDon($val = null)
 	{
 		$properties = self::$properties;
-		$properties["value"] = $val;
+		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		$properties["data-value"] = $val;
 		$properties[FormRender::Required] = "true";
 		$option = OptionsService::GetGroupsToSelect("optiondonthuoc");
@@ -178,7 +187,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 	function TongNgayDung($val = null)
 	{
 		$properties = self::$properties;
-		$properties["value"] = $val;
+		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		$properties["id"] = "TongNgayDungThuoc";
 		$properties["type"] = "number";
 		$properties[FormRender::Required] = "true";
@@ -214,7 +223,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 	function SoNgaySDThuoc($val = null, $id = null, $index = null)
 	{
 		$properties = self::$properties;
-		$properties["value"] = $val;
+		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		$properties["id"] = $id;
 		$properties["index"] = $index;
 		$properties["class"] = "form-control changenumber ";
@@ -232,7 +241,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 	function DVT($val = null, $id = null, $index = null)
 	{
 		$properties = self::$properties;
-		$properties["value"] = $val;
+		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		$properties["Id"] = $id;
 		$properties["index"] = $index;
 		$properties[FormRender::Disabled] = "true";
@@ -251,7 +260,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 	function SoLuong($val = null, $id = null, $index = null)
 	{
 		$properties = self::$properties;
-		$properties["value"] = $val;
+		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		$properties["id"] = $id;
 		$properties["index"] = $index;
 		$properties[FormRender::Disabled] = "true";
@@ -261,7 +270,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 	function SLHienTai($val = null, $id = null, $index = null)
 	{
 		$properties = self::$properties;
-		$properties["value"] = $val;
+		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		$properties["id"] = $id;
 		$properties["index"] = $index;
 		$properties[FormRender::Disabled] = "true";
@@ -278,7 +287,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 	function CachDung($val = null, $id = null, $index = null)
 	{
 		$properties = self::$properties;
-		$properties["value"] = $val;
+		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		$properties["Id"] = $id;
 		$properties["index"] = $index;
 		$properties[FormRender::Disabled] = "true";
@@ -296,7 +305,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 	function Sang($val = null, $id = null, $index = null)
 	{
 		$properties = self::$properties;
-		$properties["value"] = $val;
+		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		$properties["id"] = $id;
 		$properties["index"] = $index;
 		$properties["class"] = "form-control changenumber select2 ";
@@ -318,7 +327,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 	function Trua($val = null, $id = null, $index = null)
 	{
 		$properties = self::$properties;
-		$properties["value"] = $val;
+		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		$properties["id"] = $id;
 		$properties["index"] = $index;
 		$properties["class"] = "form-control changenumber select2";
@@ -341,7 +350,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 	function Chieu($val = null, $id = null, $index = null)
 	{
 		$properties = self::$properties;
-		$properties["value"] = $val;
+		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		$properties["id"] = $id;
 		$properties["index"] = $index;
 		$properties["class"] = "form-control changenumber select2";
@@ -363,7 +372,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 	function GiaBan($val = null, $id = null, $index = null)
 	{
 		$properties = self::$properties;
-		$properties["value"] = $val;
+		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		$properties["id"] = $id;
 		$properties["index"] = $index;
 		$properties[FormRender::Disabled] = "true";
@@ -381,7 +390,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 	function GhiChu($val = null, $id = null, $index = null)
 	{
 		$properties = self::$properties;
-		$properties["value"] = $val;
+		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		$properties["id"] = $id;
 		$properties["index"] = $index;
 		$properties[FormRender::Disabled] = "true";
@@ -397,7 +406,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 	function IdDetail($val = null)
 	{
 		$properties = self::$properties;
-		$properties["value"] = $val;
+		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		$properties["readonly"] = $val;
 		$properties[FormRender::Required] = "true";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
@@ -409,9 +418,10 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 	 *
 	 * @return mixed
 	 */
-	function Status($val = null) {
+	function Status($val = null)
+	{
 		$properties = self::$properties;
-		$properties["value"] = $val;
+		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		$properties["data-value"] = $val;
 		$properties[FormRender::Required] = "true";
 		$option = OptionsService::GetGroupsToSelect("optiondonthuoc");

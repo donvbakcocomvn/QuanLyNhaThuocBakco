@@ -301,15 +301,14 @@ class index extends \Application implements \Controller\IControllerBE
                     }
                     // DonThuocDetail::ClearSession();
                 }
-
                 $phieu = new PhieuXuatNhap();
                 if ($itemDonThuoc["ThuocLoaiDon"] == 3) {
                     $Phieu["TongTien"] = $sum;
                     $Phieu["DoViCungCap"] = "";
                     $Phieu["IdPhieu"] = $phieu->getIdPhieu();
                     $Phieu["XuatNhap"] = -1;
-                    $Phieu["NoiDungPhieu"] = "Đơn thuốc ".$itemDonThuoc['ChanDoanBenh']." của ".$itemDonThuoc["NameBN"];
-                    $Phieu["GhiChu"] = "Đơn thuốc ".$itemDonThuoc['ChanDoanBenh']." của ".$itemDonThuoc["NameBN"] ;
+                    $Phieu["NoiDungPhieu"] = "Đơn thuốc " . $itemDonThuoc['ChanDoanBenh'] . " của " . $itemDonThuoc["NameBN"];
+                    $Phieu["GhiChu"] = "Đơn thuốc " . $itemDonThuoc['ChanDoanBenh'] . " của " . $itemDonThuoc["NameBN"];
                     $Phieu["NgayNhap"] = Date("Y-m-d H:i:s", time());
                     $Phieu["CreateRecord"] = Date("Y-m-d H:i:s", time());
                     $Phieu["UpdateRecord"] = Date("Y-m-d H:i:s", time());
@@ -324,6 +323,7 @@ class index extends \Application implements \Controller\IControllerBE
                             $itemFormDetail["IdThuoc"] = $idThuoc;
                             $itemFormDetail["SoLuong"] = $thuoc["Soluong"];
                             $itemFormDetail["NhaSanXuat"] = "";
+                            $itemFormDetail["SoLo"] = $thuoc["SoLo"] ?? "";
                             $itemFormDetail["NuocSanXuat"] = "";
                             $itemFormDetail["Price"] = $itemDetail["GiaBan"];
                             $itemFormDetail["XuatNhap"] = -1;
@@ -334,7 +334,7 @@ class index extends \Application implements \Controller\IControllerBE
                             $SanPham = new \Module\quanlythuoc\Model\PhieuXuatNhapChiTiet();
                             $SanPham->Post($itemFormDetail);
                         }
-                    }  
+                    }
                     DonThuocDetail::ClearSession();
                 }
                 new \Model\Error(\Model\Error::success, "Đã Thêm Toa Thuốc");
@@ -352,22 +352,34 @@ class index extends \Application implements \Controller\IControllerBE
         $this->View();
     }
 
+    public function saveFormKhachHang()
+    {
+        $benhNhan = $_POST['BenhNhan'];
+        $donThuoc = $_POST['DonThuoc'];
+        FormDonThuoc::SetFormData($donThuoc);
+        FormBenhNhan::SetFormData($benhNhan);
+        echo json_encode($_POST);
+    }
     // Call API
     public function timkhachhang()
     {
 
         $benhNhan = $_POST['BenhNhan'];
+
         $name = $benhNhan["Name"];
         $phone = $benhNhan['Phone'];
         $bn = new BenhNhan();
-        $a = $bn->GetByNameAndPhone($name, $phone);
+        $a = $bn->GetByNameAndPhone($name, "");
         if ($a != null) {
             $a["NamSinh"] = date("Y", strtotime($a["Ngaysinh"]));
             $a["NgaySinh"] = date("d", strtotime($a["Ngaysinh"]));
             $a["ThangSinh"] = date("m", strtotime($a["Ngaysinh"]));
             FormBenhNhan::SetFormData($a);
+        } else {
+            FormBenhNhan::SetFormData($benhNhan);
         }
-        echo json_encode($a);
+
+        echo json_encode($_POST);
     }
     function put()
     {
