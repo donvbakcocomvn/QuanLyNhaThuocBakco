@@ -24,12 +24,16 @@ use Module\quanlythuoc\Model\SanPham;
 
 $roleDetail = new Model\Role();
 $form = new FormDonThuoc();
-$bn = new FormBenhNhan();
+
 $donthuoc  = new DonThuoc($donthuoc);
 // var_dump($donthuoc);
 $benhnhan = new BenhNhan($donthuoc->IdBenhNhan);
+
 // echo $benhnhan->Ngaysinh;
 // echo $a = substr($benhnhan->Ngaysinh,5,2)
+FormBenhNhan::SetFormData(json_encode($benhnhan, JSON_OBJECT_AS_ARRAY));
+$bn = new FormBenhNhan();
+
 ?>
 <div class="container-fluid">
     <div class="box box-primary">
@@ -37,7 +41,7 @@ $benhnhan = new BenhNhan($donthuoc->IdBenhNhan);
             <h3 class="box-title">Sửa Đơn Thuốc</h3>
             <div class="box-tools">
                 <div class="box-tools">
-                    <?php 
+                    <?php
                     \Model\FormRender::HuongDan("suadonthuoc", "Hướng dẫn sửa đơn thuốc")
                     ?>
                 </div>
@@ -91,29 +95,25 @@ $benhnhan = new BenhNhan($donthuoc->IdBenhNhan);
                                 <?php $bn->Gioitinh($benhnhan->Gioitinh)->renderHtml();  ?>
                             </div>
                             <div class="col-md-4">
-                                <?php $bn->Namsinh(substr($benhnhan->Ngaysinh, 0, 4))->renderHtml();  ?>
+                                <?php $bn->Namsinh(date("Y", strtotime($benhnhan->Ngaysinh)))->renderHtml();  ?>
                             </div>
                             <div class="col-md-4">
-                                <?php $bn->Thangsinh(substr($benhnhan->Ngaysinh, 5, 2))->renderHtml();  ?>
+                                <?php $bn->Thangsinh(date("m", strtotime($benhnhan->Ngaysinh)))->renderHtml();  ?>
                             </div>
                             <div class="col-md-4">
-                                <?php $bn->Ngaysinh(substr($benhnhan->Ngaysinh, 8, 2))->renderHtml();  ?>
+                                <?php $bn->Ngaysinh(date("d", strtotime($benhnhan->Ngaysinh)))->renderHtml();  ?>
                             </div>
                             <div class="col-md-12">
                                 <?php $bn->Address($benhnhan->Address)->renderHtml();  ?>
                             </div>
                             <div class="col-md-4 form-group">
-                                <label for="">Tỉnh</label>
-                                <select id="tinhThanh" name="BenhNhan[TinhThanh]" data-value='<?php echo $benhnhan->TinhThanh; ?>' class="form-control"></select>
+                                <?php $bn->TinhThanh(null, "TinhThanhBenhNhan", "#QuanHuyenBenhNhan")->renderHtml();  ?>
                             </div>
                             <div class="col-md-4 form-group">
-                                <label for="">Huyện</label>
-                                <select id="quanHuyen" name="BenhNhan[QuanHuyen]" data-value='<?php echo $benhnhan->QuanHuyen; ?>' class="form-control"> </select>
-
+                                <?php $bn->QuanHuyen(null, "QuanHuyenBenhNhan", "#PhuongXaBenhNhan")->renderHtml();  ?>
                             </div>
                             <div class="col-md-4 form-group">
-                                <label for="">Xã</label>
-                                <select id="phuongXa" name="BenhNhan[PhuongXa]" data-value='<?php echo $benhnhan->PhuongXa; ?>' class="form-control"> </select>
+                                <?php $bn->PhuongXa(null, "PhuongXaBenhNhan")->renderHtml();  ?>
                             </div>
                         </fieldset>
                     </div>

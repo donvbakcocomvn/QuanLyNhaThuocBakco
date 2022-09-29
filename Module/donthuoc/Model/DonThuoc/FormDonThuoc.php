@@ -33,7 +33,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 	{
 		$properties = self::$properties;
 		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
-
+		$properties["class"] = " form-control saveinfor";
 		$properties["readonly"] = $val;
 		$properties[FormRender::Required] = "true";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
@@ -131,6 +131,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 		$properties = self::$properties;
 		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		$properties[FormRender::Readonly] = "true";
+		$properties["class"] = " form-control saveinfor";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
 		return new FormRender(new Textbox("Ngày Tạo", $name, $properties));
 	}
@@ -155,6 +156,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 		$properties = self::$properties;
 		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		$properties[FormRender::Required] = "true";
+		$properties["class"] = " form-control saveinfor";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
 		return new FormRender(new Textbox("Chẩn Đoán Bệnh", $name, $properties));
 	}
@@ -170,6 +172,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 		$properties = self::$properties;
 		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		$properties["data-value"] = $val;
+		$properties["class"] = " form-control saveinfor";
 		$properties[FormRender::Required] = "true";
 		$option = OptionsService::GetGroupsToSelect("optiondonthuoc");
 		$option1 =  ["" => "--- Chọn loại đơn ---"];
@@ -190,6 +193,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		$properties["id"] = "TongNgayDungThuoc";
 		$properties["type"] = "number";
+		$properties["class"] = " form-control saveinfor";
 		$properties[FormRender::Required] = "true";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
 		return new FormRender(new Textbox("Số Ngày Sử Dụng Thuốc", $name, $properties));

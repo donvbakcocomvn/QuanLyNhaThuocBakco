@@ -26,7 +26,6 @@ class FormBenhNhan implements iFormBenhNhan
         }
         static public function GetFormData($name = "FormDataBenhNhan")
         {
-
                 return $_SESSION[$name] ?? [];
         }
         function Id($val = null)
@@ -69,7 +68,7 @@ class FormBenhNhan implements iFormBenhNhan
         {
                 $properties = self::$properties;
                 $properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
-                $properties["id"] = __FUNCTION__; 
+                $properties["id"] = __FUNCTION__;
                 $properties["class"] = " form-control saveinfor";
                 $options = OptionsService::GetGroupsToSelect("gioitinh");
                 $option1 =  ["" => "--- Chọn giới tính ---"];
@@ -90,6 +89,9 @@ class FormBenhNhan implements iFormBenhNhan
                 $properties = self::$properties;
                 $properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
                 $properties["id"] = __FUNCTION__;
+                $properties["min"] = 1;
+                $properties["max"] = 31;
+                $properties["type"] = 'number';
                 $properties["class"] = " form-control saveinfor";
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
                 return new FormRender(new Element\Textbox("Ngày sinh", $name, $properties));
@@ -101,8 +103,26 @@ class FormBenhNhan implements iFormBenhNhan
                 $properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
                 $properties["id"] = __FUNCTION__;
                 $properties["class"] = " form-control saveinfor";
+                $properties["min"] = 1;
+                $properties["max"] = 12;
+                $properties["type"] = 'number';
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-                return new FormRender(new Element\Textbox("Tháng", $name, $properties));
+                $optionThang = [
+                        "" => "Chọn tháng",
+                        1 => "Tháng 1",
+                        2 => "Tháng 2",
+                        3 => "Tháng 3",
+                        4 => "Tháng 4",
+                        5 => "Tháng 5",
+                        6 => "Tháng 6",
+                        7 => "Tháng 7",
+                        8 => "Tháng 8",
+                        9 => "Tháng 9",
+                        10 => "Tháng 10",
+                        11 => "Tháng 11",
+                        12 => "Tháng 12",
+                ];
+                return new FormRender(new Element\Textbox("Tháng", $name,  $properties));
         }
 
         function NamSinh($val = null)
@@ -200,7 +220,6 @@ class FormBenhNhan implements iFormBenhNhan
                 $properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
                 $properties["id"] = $id;
                 $properties["class"] = FormRender::TinhThanhClass . " form-control saveinfor";
-                
                 $properties["data-value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
                 $properties["data-target"] = $taget;
                 $properties[FormRender::Required] = "true";

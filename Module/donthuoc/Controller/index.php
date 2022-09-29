@@ -15,6 +15,8 @@ use Module\donthuoc\Permission;
 use Module\donthuoc\Model\DonThuocDetail;
 use Module\quanlythuoc\Model\PhieuXuatNhap;
 use Module\quanlythuoc\Model\SanPham;
+use PhpOffice\PhpSpreadsheet\Exception;
+use Model\Error;
 
 class index extends \Application implements \Controller\IControllerBE
 {
@@ -248,13 +250,21 @@ class index extends \Application implements \Controller\IControllerBE
         try {
             // DonThuocDetail::ClearSession();
             if (\Model\Request::Post(FormDonThuoc::$ElementsName, null) && \Model\Request::Post(FormBenhNhan::$ElementsName, null)) {
+
+                if (DonThuocDetail::DsThuoc() == false) {
+                    throw new Exception("Chưa có thuốc.");
+                }
                 $benhnhan = new BenhNhan();
                 $itemBenhNhan = \Model\Request::Post(FormBenhNhan::$ElementsName, null);
                 $itemBN["Id"] = $benhnhan->CreatId();
                 $itemBN["Name"] = $itemBenhNhan["Name"];
                 $itemBN["Gioitinh"] = $itemBenhNhan["Gioitinh"];
-                $ngay = $itemBenhNhan["NgaySinh"] ?? "01";
-                $thang = $itemBenhNhan["ThangSinh"] ?? "01";
+                $ngay = intval($itemBenhNhan["NgaySinh"]);
+                $ngay = max($ngay, 1);
+                $ngay = min($ngay, 31);
+                $thang = intval($itemBenhNhan["ThangSinh"]);
+                $thang = max($thang, 1);
+                $thang = min($thang, 12);
                 $nam = $itemBenhNhan["NamSinh"] ?? date('Y');
                 $itemBN["Ngaysinh"] = date('Y-m-d', strtotime($nam . '-' . $thang . '-' . $ngay));
                 $itemBN["CMND"] = $itemBenhNhan["CMND"];
@@ -342,7 +352,7 @@ class index extends \Application implements \Controller\IControllerBE
                 \Model\Common::ToUrl("/donthuoc/index/viewdonthuoc/?id=" . $donthuoc->Id . "");
             }
         } catch (\Exception $exc) {
-            echo $exc->getMessage();
+            new Error(Error::danger, $exc->getMessage());
         }
         $isnew = \Model\Request::Get("isnew", null);
         if ($isnew != null) {

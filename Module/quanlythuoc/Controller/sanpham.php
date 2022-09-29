@@ -84,29 +84,31 @@ class sanpham extends \Application implements \Controller\IControllerBE
                         $item[8] = str_replace("/", "-", $item[8]);
                         // them vào database  
                         $itemInsert["Id"] = $sanpham->CreatId();
-                        $itemInsert["Idloaithuoc"] = $item[1] ? DanhMuc::GetIdByName($item[1]) : '';
-                        $itemInsert["Name"] = Common::CheckName($item[2]);
-                        $itemInsert["Solo"] = $item[3] ? intval($item[3]) : '';
-                        $itemInsert["Gianhap"] = $item[4] ? $item[4] : '';
-                        $itemInsert["Giaban"] = $item[5] ? $item[5] : '';
-                        $a = $sanpham->GetValByDesDVT($item[6]);
-                        $b = $sanpham->GetValByDesCachDung($item[16]);
-                        $itemInsert["DVT"] = $a["Val"] ?? "";
-                        $itemInsert["Ngaysx"] = date("Y-m-d", strtotime($item[7])) ?? "";
-                        $itemInsert["HSD"] = date("Y-m-d", strtotime($item[8])) ?? "";
-                        $itemInsert["Tacdung"] = $item[9] ?? "";
-                        $itemInsert["Cochetacdung"] = $item[10] ?? "";
-                        $itemInsert["Ghichu"] = $item[11] ?? "";
-                        $itemInsert["NhaSX"] = $item[12] ?? "";
-                        $itemInsert["NuocSX"] = $item[13] ?? "";
-                        $itemInsert["Soluong"] = $item[14] ?? "";
-                        $itemInsert["DVQuyDoi"] = $item[15];
-                        $itemInsert["CachDung"] = $b["Val"] ?? "";
-                        $itemInsert["Canhbao"] = $item[17];
-                        $sanpham->Post($itemInsert);
-                        new \Model\Error(\Model\Error::success, "Import Thành Công");
+                        if ($item[2] != "") {
+                            $itemInsert["Idloaithuoc"] = $item[1] ? DanhMuc::GetIdByName($item[1]) : '';
+                            $itemInsert["Name"] = Common::CheckName($item[2]);
+                            $itemInsert["Solo"] = $item[3] ? intval($item[3]) : '';
+                            $itemInsert["Gianhap"] = $item[4] ? $item[4] : '';
+                            $itemInsert["Giaban"] = $item[5] ? $item[5] : '';
+                            $a = $sanpham->GetValByDesDVT($item[6]);
+                            $b = $sanpham->GetValByDesCachDung($item[16]);
+                            $itemInsert["DVT"] = $a["Val"] ?? "";
+                            $itemInsert["Ngaysx"] = date("Y-m-d", strtotime($item[7])) ?? "";
+                            $itemInsert["HSD"] = date("Y-m-d", strtotime($item[8])) ?? "";
+                            $itemInsert["Tacdung"] = $item[9] ?? "";
+                            $itemInsert["Cochetacdung"] = $item[10] ?? "";
+                            $itemInsert["Ghichu"] = $item[11] ?? "";
+                            $itemInsert["NhaSX"] = $item[12] ?? "";
+                            $itemInsert["NuocSX"] = $item[13] ?? "";
+                            $itemInsert["Soluong"] = $item[14] ?? "";
+                            $itemInsert["DVQuyDoi"] = $item[15];
+                            $itemInsert["CachDung"] = $b["Val"] ?? "";
+                            $itemInsert["Canhbao"] = $item[17];
+                            $sanpham->Post($itemInsert);
+                        }
                     }
                 }
+                new \Model\Error(\Model\Error::success, "Import Thành Công");
                 Common::ToUrl("/index.php?module=quanlythuoc&controller=sanpham&action=index");
                 // die();
             }
