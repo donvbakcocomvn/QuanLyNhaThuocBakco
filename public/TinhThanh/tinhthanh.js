@@ -80,7 +80,6 @@ $(function () {
     });
   });
 
-
   $(".PhuongXaClass").each(function () {
     var self = $(this);
     var phuongXaId = "#" + self.attr("id");

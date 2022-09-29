@@ -130,7 +130,6 @@ class index extends \Application implements \Controller\IControllerBE
                 $benhnhan->Post($itemForm);
                 new \Model\Error(\Model\Error::success, "Thêm Thông Tin Khách Hàng Thành Công");
                 \Model\Common::ToUrl("/index.php?module=benhnhan&controller=index&action=index");
-                
             }
         } catch (\Exception $exc) {
             echo $exc->getMessage();
@@ -153,7 +152,7 @@ class index extends \Application implements \Controller\IControllerBE
 
                 // $op = new OptionsService();
                 // $nameGioiTinh = $op->GetGroupsToSelect("gioitinh");
-                
+
                 // $model["GhiChu"] = strip_tags($itemHtml["GhiChu"]);
                 $model["Id"] = $itemHtml["Id"];
                 $model["Name"] = $itemHtml["Name"];

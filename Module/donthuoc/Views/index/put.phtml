@@ -31,8 +31,8 @@ $benhnhan = new BenhNhan($donthuoc->IdBenhNhan);
 
 // echo $benhnhan->Ngaysinh;
 // echo $a = substr($benhnhan->Ngaysinh,5,2)
-FormBenhNhan::SetFormData(json_encode($benhnhan, JSON_OBJECT_AS_ARRAY));
-$bn = new FormBenhNhan();
+
+$bn = new FormBenhNhan(json_decode(json_encode($benhnhan, JSON_UNESCAPED_UNICODE), JSON_OBJECT_AS_ARRAY));
 
 ?>
 <div class="container-fluid">
