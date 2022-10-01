@@ -143,8 +143,6 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
 
         $sanpham = new \Module\quanlythuoc\Model\SanPham();
         $spThuoc = $sanpham->GetById($detailThuoc["Id"]);
-        // echo $spThuoc['Soluong'];
-
         $detailThuoc["Id"] = $detailThuoc["Id"];
         $detailThuoc["IdThuoc"] = $detailThuoc["Id"];
         $detailThuoc["DVT"] = $sp->DVT;
@@ -173,8 +171,18 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
         // var_dump($Chieu);
         // var_dump($Trua);
         $detailThuoc["Soluong"] = ceil(($Sang + $Chieu + $Trua) * $detailThuoc["SoNgaySDThuoc"]);
+        if ($detailThuoc["Soluong"] > $spThuoc['SLHienTai']) {
+            // return $_SESSION["DetailThuoc"][$index] = null;
+            $detailThuoc["Sang"] = 0;
+            $detailThuoc["Trua"] =  0;
+            $detailThuoc["Chieu"] =  0;
+            $detailThuoc["Soluong"] = 0;
+            $_SESSION["DetailThuoc"][$index] = $detailThuoc;
+            return false;
+        }
 
-        return $_SESSION["DetailThuoc"][$index] = $detailThuoc;
+        $_SESSION["DetailThuoc"][$index] = $detailThuoc;
+        return true;
     }
 
     public function GetName()
@@ -246,8 +254,8 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
 
     public function Delete($Id)
     {
-        $DM = new DonThuocDetail();
-        return $DM->DeleteById($Id);
+        // $DM = new DonThuocDetail();
+        // return $DM->DeleteById($Id);
     }
 
     public function GetById($Id)

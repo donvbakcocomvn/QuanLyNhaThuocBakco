@@ -60,10 +60,10 @@ class danhmuc extends \Application implements \Controller\IControllerBE
                 $itemForm["GhiChu"] = $itemForm["GhiChu"];
 
                 $danhmuc = new ModelDanhMuc();
-                // $danhmuc->Post($itemForm);
+                $danhmuc->Post($itemForm);
+                new \Model\Error(\Model\Error::success, "Thêm danh mục thuốc thành công");
                 // \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=danhmuc&action=put&id=" . $itemForm["Code"]);
-                // \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=danhmuc&action=index");
-
+                \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=danhmuc&action=index");
             }
         } catch (\Exception $exc) {
             echo $exc->getMessage();
@@ -84,7 +84,7 @@ class danhmuc extends \Application implements \Controller\IControllerBE
 
                 $itemHtml = \Model\Request::Post(FormDanhMuc::$ElementsName, null);
 
-                $model["Id"] = $itemHtml["Id"]; 
+                $model["Id"] = $itemHtml["Id"];
                 $model["Name"] = $itemHtml["Name"];
                 $model["Link"] = $itemHtml["Link"];
                 $model["GhiChu"] = strip_tags($itemHtml["GhiChu"]);

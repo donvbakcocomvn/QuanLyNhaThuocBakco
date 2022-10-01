@@ -6,34 +6,71 @@ use Model\Locations;
 use Model\OptionsService;
 use Model\TinhThanh;
 use Module\donthuoc\Model\DonThuoc;
+use Module\donthuoc\Model\DonThuoc\FormDonThuoc;
+
 ?>
 <ol class="breadcrumb">
     <li><a href="/index.php?controller=backend">Home</a></li>
     <li class="active"> Danh Sách Đơn Thuốc </li>
 </ol>
-
 <div class="container-fluid">
-
-
-    
-
-
-    <form method="get" action="/donthuoc/index/index/">
-        <div class="form-group d-flex">
-            <label class="btn btn-default"><input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox"><i class="fa fa-share" aria-hidden="true"></class=></i></label>
-            <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập mã đơn thuốc hoặc tên bệnh nhân để tìm kiếm">
-            <button class="btn btn-primary no-border-radius" name="btnTim" type="submit">
-                <i class="fa fa-search"></i> Tìm Kiếm
-            </button>
-        </div>
-    </form>
     <div class="clearfix">
-        <div class="box box-primary">
+        <div class="box box-success">
+            <div class="">
+                <div class="box-header">
+                    <!-- <h3 class="box-title text-uppercase">Tìm kiếm theo bộ lọc</h3> -->
+                    <form method="get" action="/donthuoc/index/index/">
+                        <div class="row">
+                            <div class="col-md-3 form-group">
+                                <div class="form-group has-success has-feedback">
+                                    <label for="inputSuccess2" class="text-capitalize"><em>Mã đơn hoặc tên bệnh nhân</em></label>
+                                    <input type="text" style="border-radius: 5px;" class="form-control" name="keyword" id="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>">
+                                    <span class="	glyphicon glyphicon-user form-control-feedback"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <div class="form-group has-success has-feedback">
+                                    <label for="inputSuccess2" class="text-capitalize"><em>Tìm Theo Loại Đơn</em></label>
+                                    <?php
+                                    $form = new FormDonThuoc();
+                                    ?>
+                                    <input style="border-radius: 5px;" class="form-control" name="status" id="keyword" value="<?php echo isset($_GET["status"]) ? \Model\Common::TextInput($_GET["status"]) : "" ?>">
+                                    <span class="glyphicon glyphicon-pushpin form-control-feedback"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 form-group">
+                                <div class="form-group has-success has-feedback">
+                                    <label for="inputSuccess2" class="text-capitalize"><em>Từ ngày</em></label>
+                                    <input type="date" style="border-radius: 5px;" class="form-control" name="fromdate" id="keyword" value="<?php echo isset($_GET["fromdate"]) ? \Model\Common::TextInput($_GET["fromdate"]) : "" ?>">
+                                    <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 form-group">
+                                <div class="form-group has-success has-feedback">
+                                    <label for="inputSuccess2" class="text-capitalize"><em>Đến ngày</em></label>
+                                    <input type="date" style="border-radius: 5px;" class="form-control" name="todate" id="keyword" value="<?php echo isset($_GET["todate"]) ? \Model\Common::TextInput($_GET["todate"]) : "" ?>">
+                                    <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 form-group">
+                                <div class="form-group has-success has-feedback">
+                                    <label for="inputSuccess2" class="text-capitalize"><em>Nhấn vào đây&nbsp;   </em><i class="fa fa-check"></i></label>
+                                    <button type="submit" style="border-radius: 5px;" class="form-control btn btn-success" name="btnTim" id="keyword">
+                                        <i class="fa fa-filter"></i>&nbsp; Tìm kiếm theo bộ lọc
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            <hr style="border-top: 2px solid #00a65a; margin-top:0px" width="90%" noshade="noshade">
+            </div>
             <div class="box-header">
                 <h3 class="box-title">Danh Sách Đơn Thuốc</h3>
                 <div class="box-tools">
                     <!-- <a type="button" href="/thongke/donthuoctrongngay" class="btn btn-success"><i class="fa fa-list"></i>&nbsp;Danh sách đơn thuốc trong ngày</a> -->
                     <?php
+                    Module\donthuoc\Model\btnHtml::btnExportBySearch();
                     Module\donthuoc\Model\btnHtml::btnThemDonThuoc();
                     \Model\FormRender::HuongDan("danhsachdonthuoc", "Hướng dẫn đơn thuốc");
                     ?>

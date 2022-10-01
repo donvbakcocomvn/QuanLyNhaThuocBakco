@@ -37,7 +37,7 @@ class backend extends \Application {
     }
 
     function index() {
-
+        // \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy]);
         $this->View();
     }
 

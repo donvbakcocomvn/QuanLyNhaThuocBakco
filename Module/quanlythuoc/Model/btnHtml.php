@@ -19,7 +19,7 @@ class btnHtml
             return;
         }
 ?>
-        <a class="btn btn-warning" href="/index.php?module=quanlythuoc&controller=sanpham&action=import">
+        <a class="btn btn-warning" <?php echo FormRender::ToolTip("Import danh sách thuốc từ File Excel"); ?> href="/index.php?module=quanlythuoc&controller=sanpham&action=import">
             <i class="fa fa-download"></i> Import</a>
     <?php
     }
@@ -30,7 +30,7 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-success" href="/index.php?module=quanlythuoc&controller=sanpham&action=export">
+        <a class="btn btn-success" <?php echo FormRender::ToolTip("Export danh sách thuốc ra Excel"); ?> href="/index.php?module=quanlythuoc&controller=sanpham&action=export">
             <i class="fa fa-filter"></i> Export</a>
     <?php
     }
@@ -41,7 +41,7 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-info" href="/index.php?module=quanlythuoc&controller=sanpham&action=post">
+        <a class="btn btn-info" <?php echo FormRender::ToolTip("Thêm thuốc mới vào kho"); ?> href="/index.php?module=quanlythuoc&controller=sanpham&action=post">
             <i class="fa fa-plus"></i> Thêm mới</a>
     <?php
     }
@@ -122,7 +122,7 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-info" href="/index.php?module=quanlythuoc&controller=danhmuc&action=post">
+        <a class="btn btn-info" <?php echo FormRender::ToolTip("Thêm danh mục thuốc mới "); ?> href="/index.php?module=quanlythuoc&controller=danhmuc&action=post">
             <i class="fa fa-plus"></i> Thêm mới</a>
     <?php
     }
@@ -145,7 +145,7 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-default" <?php echo FormRender::ToolTip("Xóa danh mục thuốc"); ?> title="Bạn có muốn xóa danh mục này?" href="/index.php?module=quanlythuoc&controller=danhmuc&action=isdelete&id=<?php echo $id; ?>">
+        <a class="btn btn-default" <?php echo FormRender::ToolTip("Xóa danh mục thuốc"); ?> title="Bạn có muốn xóa danh mục này?" href="/index.php?module=quanlythuoc&controller=danhmuc&action=delete&id=<?php echo $id; ?>">
             <i class="fa fa-trash-o text-red"></i>
         </a>
     <?php
@@ -157,7 +157,7 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-info" href="/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=post&isnews=1">
+        <a class="btn btn-info" <?php echo FormRender::ToolTip("Thêm phiếu Xuất/Nhập mới"); ?> href="/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=post&isnews=1">
             <i class="fa fa-plus"></i> Thêm Phiếu Mới
         </a>
     <?php

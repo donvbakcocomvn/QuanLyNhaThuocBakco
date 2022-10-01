@@ -222,11 +222,17 @@ class Functions
                     </div>
                 </div>
                 <ul class="sidebar-menu">
-                    <li class="<?php echo \Application::$_Controller == "dashboard" ? 'active' : '' ?> treeview">
-                        <a href="/backend/">
-                            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-                        </a>
-                    </li>
+                    <?php
+                    if (\Model\Permission::CheckPremision([User::QuanLy, User::Admin], []) == true) {
+                    ?>
+                        <li class="<?php echo \Application::$_Controller == "dashboard" ? 'active' : '' ?> treeview">
+                            <a href="/backend/">
+                                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                            </a>
+                        </li>
+                    <?php
+                    }
+                    ?>
                     <li class="<?php echo \Application::$_Controller == "dashboard" ? 'active' : '' ?> treeview">
                         <a href="/profile/">
                             <i class="fa fa-info-circle"></i> <span>Thông Tin</span>
@@ -238,14 +244,14 @@ class Functions
                         </a>
                     </li> -->
 
-                    <!-- Check quyền từng menu -->
+                    <!-- Quản lý thuốc -->
                     <?php
                     if (\Model\Permission::CheckPremision([Permission::QLT_Thuoc_DS, Permission::QLT_DanhMuc_DS, Permission::QLT_Phieu_DS, User::Admin], []) == true) {
                     ?>
                         <li class="treeview <?php echo \Application::$_Module == "quanlythuoc" ? 'active' : '' ?>">
                             <a href="#">
                                 <i class="fa fa-medkit"></i>
-                                <span>Quản lý thuốc</span>
+                                <span>Quản lý thuốc &nbsp;<i class="fa fa-angle-down"></i></span>
                             </a>
                             <ul class="treeview-menu">
                                 <?php
@@ -261,7 +267,8 @@ class Functions
                                 <?php
                                 if (\Model\Permission::CheckPremision([User::Admin, User::QuanLy, Permission::QLT_DanhMuc_Post, Permission::QLT_DanhMuc_Put, Permission::QLT_DanhMuc_Delete, Permission::QLT_DanhMuc_DS], []) == true) {
                                 ?>
-                                    <li><a href="/quanlythuoc/danhmuc/"><i class="fa fa-circle-o"></i>
+                                    <li>
+                                        <a href="/quanlythuoc/danhmuc/"><i class="fa fa-circle-o"></i>
                                             Danh Mục Thuốc
                                         </a>
                                     </li>
@@ -272,6 +279,73 @@ class Functions
                                 ?>
                                     <li><a href="/quanlythuoc/phieuxuatnhap/"><i class="fa fa-circle-o"></i>
                                             Xuất/Nhập Thuốc
+                                        </a></li>
+                                <?php  } ?>
+                            </ul>
+                        </li>
+                        <!-- Quản lý đơn thuốc -->
+                    <?php
+                    }
+                    if (\Model\Permission::CheckPremision([User::Admin, User::QuanLy,  DonthuocPermission::QLT_DonThuoc_Post, DonthuocPermission::QLT_DonThuoc_Put, DonthuocPermission::QLT_DonThuoc_Copy, DonthuocPermission::QLT_DonThuoc_Detail, DonthuocPermission::QLT_DonThuoc_Export], []) == true) {
+                    ?>
+                        <li class="treeview <?php echo \Application::$_Module == "donthuoc" ? 'active' : '' ?>">
+                            <a href="#">
+                                <i class="fa fa-pencil-square-o"></i>
+                                <span class="text-capitalize">Quản lý đơn thuốc &nbsp;<i class="fa fa-angle-down"></i></span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <?php
+                                if (\Model\Permission::CheckPremision([
+                                    User::QuanLy, User::Admin, DonthuocPermission::QLT_DonThuoc_DS, DonthuocPermission::QLT_DonThuoc_Post,
+                                    DonthuocPermission::QLT_DonThuoc_Put, DonthuocPermission::QLT_DonThuoc_Detail, DonthuocPermission::QLT_DonThuoc_Delete, DonthuocPermission::QLT_DonThuoc_Export, DonthuocPermission::QLT_DonThuoc_Copy
+                                ], []) == true) {
+                                ?>
+                                    <li class="text-capitalize"><a href="/donthuoc/"><i class="fa fa-circle-o"></i>
+                                            Danh sách đơn thuốc
+                                        </a></li>
+                                <?php  } ?>
+                                <?php
+                                if (\Model\Permission::CheckPremision([
+                                    User::QuanLy, User::Admin, DonthuocPermission::QLT_DonThuoc_DS, DonthuocPermission::QLT_DonThuoc_Post,
+                                    DonthuocPermission::QLT_DonThuoc_Put, DonthuocPermission::QLT_DonThuoc_Detail, DonthuocPermission::QLT_DonThuoc_Delete, DonthuocPermission::QLT_DonThuoc_Export, DonthuocPermission::QLT_DonThuoc_Copy
+                                ], []) == true) {
+                                ?>
+                                    <li class="text-capitalize">
+                                        <a href="/thongke/donthuoctrongngay"><i class="fa fa-circle-o"></i>
+                                            Đơn trong ngày
+                                        </a>
+                                    </li>
+                                <?php  } ?>
+
+                                <?php
+                                if (\Model\Permission::CheckPremision([
+                                    User::QuanLy, User::Admin, DonthuocPermission::QLT_DonThuoc_DS, DonthuocPermission::QLT_DonThuoc_Post,
+                                    DonthuocPermission::QLT_DonThuoc_Put, DonthuocPermission::QLT_DonThuoc_Detail, DonthuocPermission::QLT_DonThuoc_Delete, DonthuocPermission::QLT_DonThuoc_Export, DonthuocPermission::QLT_DonThuoc_Copy
+                                ], []) == true) {
+                                ?>
+                                    <li class="text-capitalize"><a href="/donthuoc/index/donchuaxuly/"><i class="fa fa-circle-o"></i>
+                                            Đơn chưa lấy thuốc
+                                        </a></li>
+                                <?php  } ?>
+
+                                <?php
+                                if (\Model\Permission::CheckPremision([
+                                    User::QuanLy, User::Admin, DonthuocPermission::QLT_DonThuoc_DS, DonthuocPermission::QLT_DonThuoc_Post,
+                                    DonthuocPermission::QLT_DonThuoc_Put, DonthuocPermission::QLT_DonThuoc_Detail, DonthuocPermission::QLT_DonThuoc_Delete, DonthuocPermission::QLT_DonThuoc_Export, DonthuocPermission::QLT_DonThuoc_Copy
+                                ], []) == true) {
+                                ?>
+                                    <li class="text-capitalize"><a href="/donthuoc/index/dondangxuly/"><i class="fa fa-circle-o"></i>
+                                            Đơn đang lấy thuốc
+                                        </a></li>
+                                <?php  } ?>
+                                <?php
+                                if (\Model\Permission::CheckPremision([
+                                    User::QuanLy, User::Admin, DonthuocPermission::QLT_DonThuoc_DS, DonthuocPermission::QLT_DonThuoc_Post,
+                                    DonthuocPermission::QLT_DonThuoc_Put, DonthuocPermission::QLT_DonThuoc_Detail, DonthuocPermission::QLT_DonThuoc_Delete, DonthuocPermission::QLT_DonThuoc_Export, DonthuocPermission::QLT_DonThuoc_Copy
+                                ], []) == true) {
+                                ?>
+                                    <li class="text-capitalize"><a href="/donthuoc/index/dondaxuly/"><i class="fa fa-circle-o"></i>
+                                            Đơn đã lấy thuốc
                                         </a></li>
                                 <?php  } ?>
                             </ul>
@@ -290,88 +364,16 @@ class Functions
                         </li>
                     <?php
                     }
-
-                    if (\Model\Permission::CheckPremision([
-                        User::QuanLy, User::Admin, DonthuocPermission::QLT_DonThuoc_DS, DonthuocPermission::QLT_DonThuoc_Post,
-                        DonthuocPermission::QLT_DonThuoc_Put, DonthuocPermission::QLT_DonThuoc_Detail, DonthuocPermission::QLT_DonThuoc_Delete, DonthuocPermission::QLT_DonThuoc_Export, DonthuocPermission::QLT_DonThuoc_Copy
-                    ], []) == true) {
-                    ?>
-                        <li class="<?php echo \Application::$_Module == "khachhang" ? 'active' : '' ?>">
-                            <a href="/donthuoc/">
-                                <i class="fa fa-pencil-square-o"></i>
-                                <span>Quản lý đơn thuốc</span>
-                            </a>
-                        </li>
-                    <?php
-                    }
                     // Thêm đơn thuốc
                     if (\Model\Permission::CheckPremision([
                         User::QuanLy, User::Admin, DonthuocPermission::QLT_DonThuoc_DS, DonthuocPermission::QLT_DonThuoc_Post,
                         DonthuocPermission::QLT_DonThuoc_Put, DonthuocPermission::QLT_DonThuoc_Detail, DonthuocPermission::QLT_DonThuoc_Delete, DonthuocPermission::QLT_DonThuoc_Export, DonthuocPermission::QLT_DonThuoc_Copy
                     ], []) == true) {
                     ?>
-                        <li class="<?php echo \Application::$_Module == "khachhang" ? 'active' : '' ?>">
+                        <li class="">
                             <a href="/donthuoc/index/post">
                                 <i class="fa fa-plus-square"></i>
                                 <span>Thêm đơn thuốc</span>
-                            </a>
-                        </li>
-                    <?php
-                    }
-
-                    // Danh sách đơn trong ngày
-                    if (\Model\Permission::CheckPremision([
-                        User::QuanLy, User::Admin, DonthuocPermission::QLT_DonThuoc_DS, DonthuocPermission::QLT_DonThuoc_Post,
-                        DonthuocPermission::QLT_DonThuoc_Put, DonthuocPermission::QLT_DonThuoc_Detail, DonthuocPermission::QLT_DonThuoc_Delete, DonthuocPermission::QLT_DonThuoc_Export, DonthuocPermission::QLT_DonThuoc_Copy
-                    ], []) == true) {
-                    ?>
-                        <li class="<?php echo \Application::$_Module == "khachhang" ? 'active' : '' ?>">
-                            <a href="/thongke/donthuoctrongngay">
-                                <i class="fa fa-list-alt"></i>
-                                <span>Đơn thuốc trong ngày</span>
-                            </a>
-                        </li>
-                    <?php
-                    }
-
-                    // Đơn chưa xử lý
-                    if (\Model\Permission::CheckPremision([
-                        User::QuanLy, User::Admin, DonthuocPermission::QLT_DonThuoc_DS, DonthuocPermission::QLT_DonThuoc_Post,
-                        DonthuocPermission::QLT_DonThuoc_Put, DonthuocPermission::QLT_DonThuoc_Detail, DonthuocPermission::QLT_DonThuoc_Delete, DonthuocPermission::QLT_DonThuoc_Export, DonthuocPermission::QLT_DonThuoc_Copy
-                    ], []) == true) {
-                    ?>
-                        <li class="<?php echo \Application::$_Module == "khachhang" ? 'active' : '' ?>">
-                            <a href="/donthuoc/index/donchuaxuly/">
-                                <i class="fa fa-question-circle"></i>
-                                <span>Đơn thuốc chưa soạn</span>
-                            </a>
-                        </li>
-                    <?php
-                    }
-                    // Đơn đang xử lý
-                    if (\Model\Permission::CheckPremision([
-                        User::QuanLy, User::Admin, DonthuocPermission::QLT_DonThuoc_DS, DonthuocPermission::QLT_DonThuoc_Post,
-                        DonthuocPermission::QLT_DonThuoc_Put, DonthuocPermission::QLT_DonThuoc_Detail, DonthuocPermission::QLT_DonThuoc_Delete, DonthuocPermission::QLT_DonThuoc_Export, DonthuocPermission::QLT_DonThuoc_Copy
-                    ], []) == true) {
-                    ?>
-                        <li class="<?php echo \Application::$_Module == "khachhang" ? 'active' : '' ?>">
-                            <a href="/donthuoc/index/dondangxuly/">
-                                <i class="fa fa-spinner"></i>
-                                <span>Đơn thuốc đang soạn</span>
-                            </a>
-                        </li>
-                    <?php
-                    }
-                    // Đơn đã soạn thuốc xong
-                    if (\Model\Permission::CheckPremision([
-                        User::QuanLy, User::Admin, DonthuocPermission::QLT_DonThuoc_DS, DonthuocPermission::QLT_DonThuoc_Post,
-                        DonthuocPermission::QLT_DonThuoc_Put, DonthuocPermission::QLT_DonThuoc_Detail, DonthuocPermission::QLT_DonThuoc_Delete, DonthuocPermission::QLT_DonThuoc_Export, DonthuocPermission::QLT_DonThuoc_Copy
-                    ], []) == true) {
-                    ?>
-                        <li class="<?php echo \Application::$_Module == "khachhang" ? 'active' : '' ?>">
-                            <a href="/donthuoc/index/dondaxuly/">
-                                <i class="fa fa-check-square-o"></i>
-                                <span>Đơn thuốc đã soạn xong</span>
                             </a>
                         </li>
                     <?php

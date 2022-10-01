@@ -220,19 +220,24 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
     public function GetItems($params, $indexPage, $pageNumber, &$total)
     {
         $name = isset($params["keyword"]) ? $params["keyword"] : '';
-        $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
         $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
-        $isShowSql = "and `isShow` >= 0 ";
-        $danhmucSql = "";
-
-        if ($isShow) {
-            $isShowSql = "and `isShow` = '{$isShow}' ";
+        $fromdate = isset($params["fromdate"]) ? $params["fromdate"] : null;
+        $todate = isset($params["todate"]) ? $params["todate"] : null;
+        $status = isset($params["status"]) ? $params["status"] : null;
+        $fromdateSql = "";
+        $todateSql = "";
+        $statusSql = "";
+        if ($status) {
+            $statusSql = "and `status` = '{$status}' ";
         }
-        if ($danhmuc) {
-            $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
+        if ($fromdate) {
+            $fromdateSql = "and `CreateRecord` >= '{$fromdate}' ";
+        }
+        if ($todate) {
+            $todateSql = "and `CreateRecord` <= '{$todate}' ";
         }
         // self::$Debug = true;
-        $where = " `Id` like '%{$name}%' or `IdBenhNhan` like '%{$name}%' or `NameBN` like '%{$name}%' {$danhmucSql}ORDER BY `CreateRecord` DESC";
+        $where = " (`Id` like '%{$name}%' or `NameBN` like '%{$name}%') {$fromdateSql}{$statusSql}{$todateSql} ORDER BY `CreateRecord` DESC";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 

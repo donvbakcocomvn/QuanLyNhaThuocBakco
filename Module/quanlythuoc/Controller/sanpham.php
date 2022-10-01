@@ -262,28 +262,33 @@ class sanpham extends \Application implements \Controller\IControllerBE
                 $SanPham = new ModelSanPham();
                 $SanPham->Delete($Id);
                 new \Model\Error(\Model\Error::success, "Xóa Thuốc Thành Công");
+                Common::ToUrl("/index.php?module=quanlythuoc&controller=sanpham&action=index");
             }
-        } catch (Exception $ex) {
-            new \Model\Error(\Model\Error::danger, $ex->getMessage());
+        } catch (Exception $exc) {
+            echo $exc->getMessage();
+            // new \Model\Error(\Model\Error::danger, $ex->getMessage());
         }
-        Common::ToUrl("/index.php?module=quanlythuoc&controller=sanpham&action=index");
     }
 
     public function isdelete()
     {
         \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Thuoc_Delete]);
-        if (\Model\Request::Get("id", [])) {
-            $DSMaSanPham = \Model\Request::Get("id", []);
-            $modelItem = new ModelSanPham();
-            $modelItem->isDelete([$DSMaSanPham]);
+        try {
+            if (\Model\Request::Get("id", [])) {
+                $DSMaSanPham = \Model\Request::Get("id", []);
+                $modelItem = new ModelSanPham();
+                $modelItem->isDelete([$DSMaSanPham]);
+            }
+            if (\Model\Request::Post("SanPham", [])) {
+                $DSMaSanPham = \Model\Request::Post("SanPham", []);
+                $DSMaSanPham = array_keys($DSMaSanPham);
+                $modelItem = new ModelSanPham();
+                $modelItem->isDelete($DSMaSanPham);
+            }
+            new \Model\Error(\Model\Error::success, "Xóa Thuốc Thành Công");
+            \Model\Common::ToUrl($_SERVER["HTTP_REFERER"]);
+        } catch (Exception $exc) {
+            echo $exc->getMessage();
         }
-        if (\Model\Request::Post("SanPham", [])) {
-            $DSMaSanPham = \Model\Request::Post("SanPham", []);
-            $DSMaSanPham = array_keys($DSMaSanPham);
-            $modelItem = new ModelSanPham();
-            $modelItem->isDelete($DSMaSanPham);
-        }
-        new \Model\Error(\Model\Error::success, "Xóa Thuốc Thành Công");
-        \Model\Common::ToUrl($_SERVER["HTTP_REFERER"]);
     }
 }

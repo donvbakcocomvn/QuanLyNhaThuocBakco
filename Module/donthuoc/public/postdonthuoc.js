@@ -36,12 +36,21 @@ $(document).ready(function () {
                 processData: false,
                 success: function (response) {
                     console.log(response);
-                    $(idGiaBan).val(response.Giaban);
-                    $(idSang).val(response.Sang);
-                    $(idTrua).val(response.Trua);
-                    $(idChieu).val(response.Chieu);
-                    $(idSoNgaySD).val(response.SoNgaySDThuoc);
-                    $(idSoLuong).val(response.Soluong);
+                    if (response) {
+                        $(idGiaBan).val(response.Giaban);
+                        $(idSang).val(response.Sang);
+                        $(idTrua).val(response.Trua);
+                        $(idChieu).val(response.Chieu);
+                        $(idSoNgaySD).val(response.SoNgaySDThuoc);
+                        $(idSoLuong).val(response.Soluong);
+                    }
+                    else {
+                        alert("Thuốc này đã hết trong kho");
+                        $(idSang).val(0).change();
+                        $(idTrua).val(0).change();
+                        $(idChieu).val(0).change();
+                        $(idSoLuong).val(0);
+                    }
                 },
                 complete: function () {
                     //spinner.close();

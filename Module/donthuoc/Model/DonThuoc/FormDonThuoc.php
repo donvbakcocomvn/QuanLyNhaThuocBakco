@@ -78,7 +78,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 		$option = SanPham::CapChaTpOptions();
 		$option = ["" => ""] + $option;
 		// $properties = ["class" => "assl"+"sdfsdfsd"];
-		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
+		$properties["value"] =$val;
 		$properties["id"] = $id;
 		$properties["index"] = $index;
 		$properties["class"] = "select2 form-control changename ";
@@ -312,7 +312,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		$properties["id"] = $id;
 		$properties["index"] = $index;
-		$properties["class"] = "form-control changenumber select2 ";
+		$properties["class"] = "form-control changenumber ";
 		// $properties[FormRender::Required] = "true";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]" . "[]";
 		// $option = OptionsService::GetGroupsToSelect("donviquydoi");
@@ -334,7 +334,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		$properties["id"] = $id;
 		$properties["index"] = $index;
-		$properties["class"] = "form-control changenumber select2";
+		$properties["class"] = "form-control changenumber";
 
 		// $properties[FormRender::Required] = "true";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]" . "[]";
@@ -357,7 +357,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		$properties["id"] = $id;
 		$properties["index"] = $index;
-		$properties["class"] = "form-control changenumber select2";
+		$properties["class"] = "form-control changenumber";
 
 		// $properties[FormRender::Required] = "true";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]" . "[]";

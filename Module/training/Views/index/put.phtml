@@ -1,0 +1,91 @@
+<ol class="breadcrumb">
+    <li><a href="/index.php?controller=backend">Home</a></li>
+    <li><a href="/index.php?module=benhnhan&controller=index&action=index"> Danh Sách Khách Hàng</a></li>
+    <li> Sửa Khách Hàng </li>
+</ol>
+<?php
+
+use Module\benhnhan\Model\BenhNhan\FormBenhNhan;
+use Module\benhnhan\Model\BenhNhan;
+
+$roleDetail = new Model\Role();
+?>
+<div class="container-fluid">
+    <div class="box box-primary">
+        <div class="box-header">
+            <h3 class="box-title">Sửa Khách Hàng</h3>
+            <div class="box-tools">
+                <?php
+                // Module\benhnhan\Model\btnHtml::btnViewKhachHang();
+                \Model\FormRender::HuongDan("suabenhnhan", "Hướng dẫn sửa bệnh nhân")
+                ?>
+            </div>
+        </div>
+        <!-- <div class="box-body"> -->
+        <form action="" method="post" enctype="multipart/form-data">
+            <div class="box-body">
+                <?php
+                $bn = new FormBenhNhan();
+                $itemBN = new BenhNhan($data);
+                // var_dump($itemBN);
+                ?>
+                <div class="">
+                    <div class="col-md-4">
+                        <?php $bn->Id($itemBN->Id)->renderHTML(); ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php $bn->Name($itemBN->Name)->renderHTML();  ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php
+                        $bn->Gioitinh($itemBN->Gioitinh)->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php $bn->Ngaysinh($itemBN->Ngaysinh)->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php $bn->CMND($itemBN->CMND)->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php $bn->Phone($itemBN->Phone)->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-12">
+                        <?php $bn->Address($itemBN->Address)->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label for="">Tỉnh</label>
+                        <select id="tinhThanh" name="BenhNhan[TinhThanh]" data-value="<?php echo $itemBN->TinhThanh; ?>" class="form-control"></select>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label for="">Huyện</label>
+                        <select id="quanHuyen" name="BenhNhan[QuanHuyen]" data-value="<?php echo $itemBN->QuanHuyen; ?>" class="form-control"> </select>
+
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label for="">Xã</label>
+                        <select id="phuongXa" name="BenhNhan[PhuongXa]" data-value="<?php echo $itemBN->PhuongXa; ?>" class="form-control"> </select>
+                    </div>
+                    <!-- <div class="col-md-6">
+                        <?php $bn->TinhThanh($itemBN->TinhThanh)->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?php $bn->QuanHuyen($itemBN->QuanHuyen)->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?php $bn->PhuongXa($itemBN->PhuongXa)->renderHtml();  ?>
+                    </div> -->
+                    
+                    <div class="col-md-12 ">
+                        <button class="btn btn-warning" type="reset">Làm Lại</button>
+                        <!-- <button class="btn btn-success">Lưu</button> -->
+                        <button class="btn btn-success" name="LuuThoat">Sửa Khách Hàng</button>
+                    </div>
+                </div>
+        </form>
+    </div>
+</div>
+</form>
+</div>
+</div>
+</div>
+<script src="/public/TinhThanh/tinhthanh.js"></script>

@@ -33,7 +33,7 @@ class index extends \Application implements \Controller\IControllerBE
 
     function soanthuoc()
     {
-        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DonThuoc_Put]);
+        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy]);
         try {
             $idDonThuoc = \Model\Request::Get("id", null);
             $donthuoc = new DonThuoc($idDonThuoc);
@@ -51,7 +51,7 @@ class index extends \Application implements \Controller\IControllerBE
 
     function giaothuoc()
     {
-        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DonThuoc_Put]);
+        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy]);
         try {
             $idDonThuoc = \Model\Request::Get("id", null);
             $donthuoc = new DonThuoc($idDonThuoc);
@@ -86,6 +86,9 @@ class index extends \Application implements \Controller\IControllerBE
         \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DonThuoc_DS]);
         $modelItem = new DonThuoc();
         $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
+        $params["fromdate"] = isset($_REQUEST["fromdate"]) ? date("Y-m-d H:i:s", strtotime($_REQUEST["fromdate"])) : "";
+        $params["todate"] = isset($_REQUEST["todate"]) ? date("Y-m-d H:i:s", strtotime($_REQUEST["todate"])) : "";
+        $params["status"] = isset($_REQUEST["status"]) ? \Model\Common::TextInput($_REQUEST["status"]) : "";
         $params["danhmuc"] = isset($_REQUEST["danhmuc"]) ? \Model\Common::TextInput($_REQUEST["danhmuc"]) : "";
         $params["isShow"] = isset($_REQUEST["isShow"]) ? \Model\Common::TextInput($_REQUEST["isShow"]) : "";
         $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
@@ -99,8 +102,12 @@ class index extends \Application implements \Controller\IControllerBE
         $data["pageNumber"] = $pageNumber;
         $data["params"] = $params;
         $data["total"] = $total;
-        // var_dump($data);
         $this->View($data);
+    }
+
+    function export()
+    {
+        
     }
 
     function donchuaxuly()
@@ -183,9 +190,12 @@ class index extends \Application implements \Controller\IControllerBE
         // var_dump($thuoc["Trua"]);
         // var_dump($thuoc["Chieu"]);
         // die();
-        $donthuocdetail->CapNhatThuoc($thuoc, $data["index"]);
+        $result = $donthuocdetail->CapNhatThuoc($thuoc, $data["index"]);
+        if ($result == false) {
+            echo json_encode(null, JSON_UNESCAPED_UNICODE);
+            return;
+        }
         $thuoc = DonThuocDetail::DsThuoc()[$data["index"]];
-
         echo json_encode($thuoc, JSON_UNESCAPED_UNICODE);
     }
 
@@ -357,6 +367,7 @@ class index extends \Application implements \Controller\IControllerBE
         $isnew = \Model\Request::Get("isnew", null);
         if ($isnew != null) {
             DonThuocDetail::ClearSession();
+            FormBenhNhan::SetFormData([]);
             Common::ToUrl('/index.php?module=donthuoc&controller=index&action=post');
         }
         $this->View();
@@ -475,7 +486,7 @@ class index extends \Application implements \Controller\IControllerBE
 
     function viewdonthuoc()
     {
-        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DonThuoc_Detail]);
+        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DonThuoc_Detail, Permission::QLT_DonThuoc_DS, Permission::QLT_DonThuoc_Post, Permission::QLT_DonThuoc_Put]);
         $id = \Model\Request::Get("id", null);
         if ($id == null) {
         }
@@ -525,12 +536,10 @@ class index extends \Application implements \Controller\IControllerBE
                 $itemDonThuoc["TongNgayDung"] = $itemForm["TongNgayDung"];
                 $itemDonThuoc["Status"] = 1;
                 $donthuoc->Post($itemDonThuoc);
-
                 $detail = new DonThuocDetail();
                 $iddonthuoc = \Model\Request::Get("id", null);
                 $DonThuocModel = new DonThuoc($iddonthuoc);
                 $detail->DeleteDetail($DonThuocModel->Id);
-
                 foreach (DonThuocDetail::DsThuoc() as $mathuoc => $thuoc) {
                     $sp = new SanPham();
                     if (isset($thuoc["Id"]) == true) {
