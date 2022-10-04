@@ -94,7 +94,7 @@ class FormRender
         if ($tooltip != "") {
         ?>
             <i class="fa fa-info" <?php echo self::ToolTip("$tooltip", $placement); ?> aria-hidden="true"></i>
-<?php
+        <?php
         }
         // data-toggle="tooltip" data-placement="top"
 
@@ -107,6 +107,31 @@ HTML;
         echo $htmlTemplate;
         $this->element->render();
         echo "</div>";
+    }
+
+    function renderHtml2($tooltip = "", $placement = "top", $icon = 'glyphicon glyphicon-pushpin form-control-feedback')
+    {
+        $label = $this->element->getLabel();
+        $attrStr =  $this->element->getAttributes();
+        $required = "";
+        if (strpos($attrStr, FormRender::Required) > 0) {
+            $required = "(*)";
+        }
+        if ($tooltip != "") {
+        ?>
+            <i class="fa fa-info" <?php echo self::ToolTip("$tooltip", $placement); ?> aria-hidden="true"></i>
+<?php
+        }
+        // data-toggle="tooltip" data-placement="top"
+
+        $htmlTemplate = <<<HTML
+                <div class="form-group has-success has-feedback">
+                                    <label for="inputSuccess2" class="text-capitalize"><em>$label</em></label>
+HTML;
+        echo $htmlTemplate;
+        $this->element->render();
+        echo '<span class="' . $icon . '"></span>
+        </div>';
     }
 
     public function renderHTMLIcon($icon)

@@ -58,6 +58,16 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
         return $status[$this->Status] ?? "";
     }
 
+    public function LoaiDonThuoc()
+    {
+        $status = [
+            1 => "<span class='label-info' style='padding: 5px; border-radius: 5px';>Đơn lưu cố định</span>",
+            2 => "<span class='label-warning' style='padding: 5px; border-radius: 5px';>Đơn in cho bệnh nhân</span>",
+            3 => "<span class='label-success' style='padding: 5px; border-radius: 5px';>Đơn in cho nhà thuốc</span>",
+        ];
+        return $status[$this->ThuocLoaiDon] ?? "";
+    }
+
     // Lấy 1 dòng by Id
     public static function GetItemById($item, $Id)
     {
@@ -203,8 +213,6 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
 
     public function Delete($Id)
     {
-        $DM = new DonThuoc();
-        return $DM->DeleteById($Id);
     }
 
     public function GetById($Id)
@@ -220,20 +228,20 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
     public function GetItems($params, $indexPage, $pageNumber, &$total)
     {
         $name = isset($params["keyword"]) ? $params["keyword"] : '';
-        $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
-        $fromdate = isset($params["fromdate"]) ? $params["fromdate"] : null;
-        $todate = isset($params["todate"]) ? $params["todate"] : null;
-        $status = isset($params["status"]) ? $params["status"] : null;
+        $isShow = isset($params["isShow"]) ? $params["isShow"] : '';
+        $fromdate = isset($params["fromdate"]) ? $params["fromdate"] : '';
+        $todate = isset($params["todate"]) ? $params["todate"] : '';
+        $status = isset($params["status"]) ? $params["status"] : '';
         $fromdateSql = "";
         $todateSql = "";
         $statusSql = "";
         if ($status) {
-            $statusSql = "and `status` = '{$status}' ";
+            $statusSql = "and `ThuocLoaiDon` = '{$status}' ";
         }
-        if ($fromdate) {
+        if ($fromdate != "") {
             $fromdateSql = "and `CreateRecord` >= '{$fromdate}' ";
         }
-        if ($todate) {
+        if ($todate != "") {
             $todateSql = "and `CreateRecord` <= '{$todate}' ";
         }
         // self::$Debug = true;
@@ -295,6 +303,25 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
         }
         // self::$Debug = true;
         $where = " (`Id` like '%{$name}%' or `IdBenhNhan` like '%{$name}%' or `NameBN` like '%{$name}%' {$danhmucSql}) and `Status` = 3 ORDER BY `Id` DESC";
+        return $this->SelectPT($where, $indexPage, $pageNumber, $total);
+    }
+
+    public function GetDonCoDinh($params, $indexPage, $pageNumber, &$total)
+    {
+        $name = isset($params["keyword"]) ? $params["keyword"] : '';
+        $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
+        $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
+        $isShowSql = "and `isShow` >= 0 ";
+        $danhmucSql = "";
+
+        if ($isShow) {
+            $isShowSql = "and `isShow` = '{$isShow}' ";
+        }
+        if ($danhmuc) {
+            $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
+        }
+        // self::$Debug = true;
+        $where = " (`Id` like '%{$name}%' or `IdBenhNhan` like '%{$name}%' or `NameBN` like '%{$name}%' {$danhmucSql}) and `ThuocLoaiDon` = 1 ORDER BY `Id` DESC";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 

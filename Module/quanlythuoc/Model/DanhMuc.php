@@ -60,7 +60,19 @@ class DanhMuc extends \Model\DB implements \Model\IModelService
 
     public function GetItems($params, $indexPage, $pageNumber, &$total)
     {
-        $where = "`Name` like '%{$params["keyword"]}%'";
+        $idDM = isset($params["idDM"]) ? $params["idDM"] : '';
+        $name = isset($params["name"]) ? $params["name"] : '';
+        $link = isset($params["link"]) ? $params["link"] : '';
+        $nameSql = "";
+        $linkSql = "";
+        if ($name) {
+            $nameSql = " and `Name` LIKE '%$name%'";
+        }
+        if ($link) {
+            $linkSql = " and `Link` LIKE '%$link%'";
+        }
+        // self::$Debug = true;
+        $where = " (`Id` like '%{$idDM}%' {$nameSql}{$linkSql}) and `isDelete` = 0 ";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 

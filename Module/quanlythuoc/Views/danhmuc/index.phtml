@@ -4,17 +4,44 @@
 </ol>
 
 <div class="container-fluid">
-    <form method="get" action="/quanlythuoc/danhmuc/index/">
-        <div class="form-group d-flex">
-            <label class="btn btn-default"><input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox"><i class="fa fa-share" aria-hidden="true"></class=></i></label>
-            <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập vào tên danh mục thuốc để tìm kiếm...">
-            <button class="btn btn-primary no-border-radius" name="btnTim" type="submit">
-                &nbsp;<i class="fa fa-search"></i> Tìm Kiếm
-            </button>
-        </div>
-    </form>
     <div class="clearfix">
         <div class="box box-primary">
+            <div>
+                <div class="box-header">
+                    <div class="">
+                        <div class="box-header">
+                            <form method="get" action="/quanlythuoc/danhmuc/index/">
+                                <div class="row">
+                                    <div class="col-sm-3 form-group">
+                                        <?php
+                                        \Model\FormSearch::MaDanhMuc($_GET['idDM'] ?? null)->renderHtml2(null, null, 'glyphicon glyphicon-barcode form-control-feedback');
+                                        ?>
+                                    </div>
+                                    <div class="col-sm-3 form-group">
+                                        <?php
+                                        \Model\FormSearch::NameDanhMuc($_GET['name'] ?? null)->renderHtml2(null, null, 'glyphicon glyphicon-list-alt form-control-feedback');
+                                        ?>
+                                    </div>
+                                    <div class="col-sm-3 form-group">
+                                        <?php
+                                        \Model\FormSearch::LinkDanhMuc($_GET['link'] ?? null)->renderHtml2(null, null, 'glyphicon glyphicon-link form-control-feedback');
+                                        ?>
+                                    </div>
+                                    <div class="col-sm-3 form-group">
+                                        <div class="form-group has-success has-feedback">
+                                            <label for="inputSuccess2" class="text-capitalize"><em>Nhấn vào đây&nbsp; </em><i class="fa fa-check"></i></label>
+                                            <button type="submit" style="border-radius: 5px;" class="form-control btn btn-success" name="btnTim" id="keyword">
+                                                <i class="fa fa-filter"></i>&nbsp; Tìm kiếm theo bộ lọc
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <hr style="border-top: 2px solid #00a65a; margin-top:0px" width="90%" noshade="noshade">
+                    </div>
+                </div>
+            </div>
             <div class="box-header">
                 <h3 class="box-title">Danh Mục Thuốc</h3>
                 <div class="box-tools">
@@ -23,7 +50,7 @@
                     use Module\quanlythuoc\Model\DanhMuc;
 
                     Module\quanlythuoc\Model\btnHtml::btnThemDanhMuc();
-                    \Model\FormRender::HuongDan("danhmucthuoc","Hướng dẫn danh mục thuốc")
+                    \Model\FormRender::HuongDan("danhmucthuoc", "Hướng dẫn danh mục thuốc")
                     ?>
                 </div>
             </div>
@@ -34,7 +61,7 @@
                         <tr>
                             <th></th>
                             <th>STT</th>
-                            <th>Mã Loại Thuốc</th>
+                            <th>Mã Danh Mục</th>
                             <th>Tên Danh Mục</th>
                             <th>Đường Dẫn</th>
                             <th>Ghi Chú</th>
@@ -81,7 +108,7 @@
                         )->render();
                         ?>
                         <?php
-                        $linkPhanTrang = "/index.php?module=quanlythuoc&controller=danhmuc&action=index&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
+                        $linkPhanTrang = "/index.php?module=quanlythuoc&controller=danhmuc&action=index&idDM={$params["idDM"]}&name={$params["name"]}&link={$params["link"]}&indexPage=[i]&pageNumber={$pageNumber}";
                         echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
                         ?>
                     </div>

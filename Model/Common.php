@@ -118,7 +118,6 @@ class Common
     {
         return date(\Model\Common::DateFomatDatabase(), strtotime($strdate));
     }
-     
 
     public static function ForMatDMY($strdate)
     {

@@ -47,9 +47,7 @@ class Functions
         <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
         <!-- Theme style -->
         <link href="/public/plugins/select2/select2.min.css" rel="stylesheet" type="text/css" />
-
         <link rel="stylesheet" href="/public/dist/css/AdminLTE.min.css">
-
         <link rel="stylesheet" href="/public/dist/css/skins/_all-skins.min.css">
         <!-- iCheck -->
         <link rel="stylesheet" href="/public/plugins/iCheck/flat/blue.css">
@@ -81,6 +79,8 @@ class Functions
         <script src="/public/Ang1/angular-sanitize.min.js" type="text/javascript"></script>
         <script src="/public/Ang1/angular-route.min.js" type="text/javascript"></script>
         <script src="/public/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+        <script src="/public/plugins/sweetalert/dist/sweetalert2.all.min.js"></script>
+        <!-- <script src="/public/plugins/sweetalert/dist/sweetalert2.all.js"></script> -->
 
 
         <script src="/public/Ang1/App.js?v=<?php echo filemtime("public/Ang1/App.js"); ?>" type="text/javascript"></script>
@@ -311,6 +311,18 @@ class Functions
                                 ], []) == true) {
                                 ?>
                                     <li class="text-capitalize">
+                                        <a href="/donthuoc/index/doncodinh"><i class="fa fa-circle-o"></i>
+                                            Đơn lưu cố định
+                                        </a>
+                                    </li>
+                                <?php  } ?>
+                                <?php
+                                if (\Model\Permission::CheckPremision([
+                                    User::QuanLy, User::Admin, DonthuocPermission::QLT_DonThuoc_DS, DonthuocPermission::QLT_DonThuoc_Post,
+                                    DonthuocPermission::QLT_DonThuoc_Put, DonthuocPermission::QLT_DonThuoc_Detail, DonthuocPermission::QLT_DonThuoc_Delete, DonthuocPermission::QLT_DonThuoc_Export, DonthuocPermission::QLT_DonThuoc_Copy
+                                ], []) == true) {
+                                ?>
+                                    <li class="text-capitalize">
                                         <a href="/thongke/donthuoctrongngay"><i class="fa fa-circle-o"></i>
                                             Đơn trong ngày
                                         </a>
@@ -371,7 +383,7 @@ class Functions
                     ], []) == true) {
                     ?>
                         <li class="">
-                            <a href="/donthuoc/index/post">
+                            <a href="/donthuoc/index/post/?isnew=1">
                                 <i class="fa fa-plus-square"></i>
                                 <span>Thêm đơn thuốc</span>
                             </a>

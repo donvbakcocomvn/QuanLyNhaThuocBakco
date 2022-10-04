@@ -84,30 +84,27 @@ class index extends \Application implements \Controller\IControllerBE
     function index()
     {
         \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DonThuoc_DS]);
-        $modelItem = new DonThuoc();
-        $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
-        $params["fromdate"] = isset($_REQUEST["fromdate"]) ? date("Y-m-d H:i:s", strtotime($_REQUEST["fromdate"])) : "";
-        $params["todate"] = isset($_REQUEST["todate"]) ? date("Y-m-d H:i:s", strtotime($_REQUEST["todate"])) : "";
-        $params["status"] = isset($_REQUEST["status"]) ? \Model\Common::TextInput($_REQUEST["status"]) : "";
-        $params["danhmuc"] = isset($_REQUEST["danhmuc"]) ? \Model\Common::TextInput($_REQUEST["danhmuc"]) : "";
-        $params["isShow"] = isset($_REQUEST["isShow"]) ? \Model\Common::TextInput($_REQUEST["isShow"]) : "";
-        $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
-        $indexPage = max(1, $indexPage);
-        $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;
-        $pageNumber = max(1, $pageNumber);
-        $total = 0;
-        $DanhSachTaiKhoan = $modelItem->GetItems($params, $indexPage, $pageNumber, $total);
-        $data["items"] = $DanhSachTaiKhoan;
-        $data["indexPage"] = $indexPage;
-        $data["pageNumber"] = $pageNumber;
-        $data["params"] = $params;
-        $data["total"] = $total;
+            $modelItem = new DonThuoc();
+            $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
+            $params["fromdate"] = isset($_REQUEST["fromdate"]) && $_REQUEST["fromdate"] != null ? date('Y-m-d H:i:s', strtotime($_REQUEST["fromdate"])) : "";
+            $params["todate"] = isset($_REQUEST["todate"]) && $_REQUEST["todate"] != null ? date('Y-m-d H:i:s', strtotime($_REQUEST["todate"])) : "";
+            $params["status"] = isset($_REQUEST["status"]) ? \Model\Common::TextInput($_REQUEST["status"]) : "";
+            $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
+            $indexPage = max(1, $indexPage);
+            $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;
+            $pageNumber = max(1, $pageNumber);
+            $total = 0;
+            $DanhSachTaiKhoan = $modelItem->GetItems($params, $indexPage, $pageNumber, $total);
+            $data["items"] = $DanhSachTaiKhoan;
+            $data["indexPage"] = $indexPage;
+            $data["pageNumber"] = $pageNumber;
+            $data["params"] = $params;
+            $data["total"] = $total;
         $this->View($data);
     }
 
     function export()
     {
-        
     }
 
     function donchuaxuly()
@@ -165,6 +162,27 @@ class index extends \Application implements \Controller\IControllerBE
         $pageNumber = max(1, $pageNumber);
         $total = 0;
         $DanhSachTaiKhoan = $modelItem->GetDonDaXuLy($params, $indexPage, $pageNumber, $total);
+        $data["items"] = $DanhSachTaiKhoan;
+        $data["indexPage"] = $indexPage;
+        $data["pageNumber"] = $pageNumber;
+        $data["params"] = $params;
+        $data["total"] = $total;
+        $this->View($data);
+    }
+
+    function doncodinh()
+    {
+        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DonThuoc_DS]);
+        $modelItem = new DonThuoc();
+        $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
+        $params["danhmuc"] = isset($_REQUEST["danhmuc"]) ? \Model\Common::TextInput($_REQUEST["danhmuc"]) : "";
+        $params["isShow"] = isset($_REQUEST["isShow"]) ? \Model\Common::TextInput($_REQUEST["isShow"]) : "";
+        $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
+        $indexPage = max(1, $indexPage);
+        $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;
+        $pageNumber = max(1, $pageNumber);
+        $total = 0;
+        $DanhSachTaiKhoan = $modelItem->GetDonCoDinh($params, $indexPage, $pageNumber, $total);
         $data["items"] = $DanhSachTaiKhoan;
         $data["indexPage"] = $indexPage;
         $data["pageNumber"] = $pageNumber;

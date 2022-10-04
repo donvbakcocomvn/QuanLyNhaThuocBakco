@@ -49,8 +49,11 @@ class index extends \Application implements \Controller\IControllerBE
 
         \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_BenhNhan_DS]);
         $modelItem = new ModelBenhNhan();
-        $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
-        $params["danhmuc"] = isset($_REQUEST["danhmuc"]) ? \Model\Common::TextInput($_REQUEST["danhmuc"]) : "";
+        $params["id"] = isset($_REQUEST["id"]) ? \Model\Common::TextInput($_REQUEST["id"]) : "";
+        $params["nameBN"] = isset($_REQUEST["nameBN"]) ? \Model\Common::TextInput($_REQUEST["nameBN"]) : "";
+        $params["gioitinh"] = isset($_REQUEST["gioitinh"]) ? \Model\Common::TextInput($_REQUEST["gioitinh"]) : "";
+        $params["address"] = isset($_REQUEST["address"]) ? \Model\Common::TextInput($_REQUEST["address"]) : "";
+        $params["phone"] = isset($_REQUEST["phone"]) ? \Model\Common::TextInput($_REQUEST["phone"]) : "";
         $params["isShow"] = isset($_REQUEST["isShow"]) ? \Model\Common::TextInput($_REQUEST["isShow"]) : "";
         $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
         $indexPage = max(1, $indexPage);

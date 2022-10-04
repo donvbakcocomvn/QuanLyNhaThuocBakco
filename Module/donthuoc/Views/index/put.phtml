@@ -107,13 +107,13 @@ $bn = new FormBenhNhan();
                                 <?php $bn->Address($benhnhan->Address)->renderHtml();  ?>
                             </div>
                             <div class="col-md-4 form-group">
-                                <?php $bn->TinhThanh(null, "TinhThanhBenhNhan", "#QuanHuyenBenhNhan")->renderHtml();  ?>
+                                <?php $bn->TinhThanh($benhnhan->TinhThanh, "TinhThanhBenhNhan", "#QuanHuyenBenhNhan")->renderHtml();  ?>
                             </div>
                             <div class="col-md-4 form-group">
-                                <?php $bn->QuanHuyen(null, "QuanHuyenBenhNhan", "#PhuongXaBenhNhan")->renderHtml();  ?>
+                                <?php $bn->QuanHuyen($benhnhan->QuanHuyen, "QuanHuyenBenhNhan", "#PhuongXaBenhNhan")->renderHtml();  ?>
                             </div>
                             <div class="col-md-4 form-group">
-                                <?php $bn->PhuongXa(null, "PhuongXaBenhNhan")->renderHtml();  ?>
+                                <?php $bn->PhuongXa($benhnhan->PhuongXa, "PhuongXaBenhNhan")->renderHtml();  ?>
                             </div>
                         </fieldset>
                     </div>

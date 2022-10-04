@@ -97,17 +97,13 @@ $itemBN = new BenhNhan($data);
                                                 <?php $bn->Address($itemBN->Address)->renderHtml();  ?>
                                             </div>
                                             <div class="col-md-4 form-group">
-                                                <label for="">Tỉnh</label>
-                                                <select id="tinhThanh" name="BenhNhan[TinhThanh]" data-value="<?php echo $itemBN->TinhThanh; ?>" class="form-control"></select>
+                                                <?php $bn->TinhThanh($itemBN->TinhThanh, "TinhThanhBenhNhan", "#QuanHuyenBenhNhan")->renderHtml();  ?>
                                             </div>
                                             <div class="col-md-4 form-group">
-                                                <label for="">Huyện</label>
-                                                <select id="quanHuyen" name="BenhNhan[QuanHuyen]" data-value="<?php echo $itemBN->QuanHuyen; ?>" class="form-control"> </select>
-
+                                                <?php $bn->QuanHuyen($itemBN->QuanHuyen, "QuanHuyenBenhNhan", "#PhuongXaBenhNhan")->renderHtml();  ?>
                                             </div>
                                             <div class="col-md-4 form-group">
-                                                <label for="">Xã</label>
-                                                <select id="phuongXa" name="BenhNhan[PhuongXa]" data-value="<?php echo $itemBN->PhuongXa; ?>" class="form-control"> </select>
+                                                <?php $bn->PhuongXa($itemBN->PhuongXa, "PhuongXaBenhNhan")->renderHtml();  ?>
                                             </div>
                                             <div class="col-md-12 ">
                                                 <!-- <button class="btn btn-success">Lưu</button> -->

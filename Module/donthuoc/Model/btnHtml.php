@@ -79,8 +79,8 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-success" <?php echo \Model\FormRender::ToolTip("Export danh sách theo bộ lọc tìm kiếm"); ?> href="<?php?>">
-            <i class="fa fa-filter"></i>&nbsp;Export danh sách</a>
+        <button class="btn btn-success" name="btnExport" type="submit" <?php echo \Model\FormRender::ToolTip("Export danh sách theo bộ lọc tìm kiếm"); ?>>
+            <i class="fa fa-filter"></i>&nbsp;Export danh sách</button>
     <?php
     }
 

@@ -45,7 +45,13 @@ $(document).ready(function () {
                         $(idSoLuong).val(response.Soluong);
                     }
                     else {
-                        alert("Thuốc này đã hết trong kho");
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Phòng Khám Phương Uyên',
+                            text: 'Không đủ thuốc trong kho rồi',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
                         $(idSang).val(0).change();
                         $(idTrua).val(0).change();
                         $(idChieu).val(0).change();
@@ -117,7 +123,13 @@ $(document).ready(function () {
                     console.log(response);
                     // console.log("ádasdsadsdadasdsd");
                     if (response.SoNgaySDThuoc == null) {
-                        alert("Thuốc đã có trong danh sách");
+                        // alert("Thuốc đã có trong danh sách");
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong!',
+                            footer: '<a href="">Why do I have this issue?</a>'
+                        });
                         console.log(idName);
                         window.location.reload();
                         $(idName).val("");

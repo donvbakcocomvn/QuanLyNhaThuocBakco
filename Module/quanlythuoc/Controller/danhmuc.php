@@ -26,9 +26,9 @@ class danhmuc extends \Application implements \Controller\IControllerBE
 
         \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DanhMuc_DS]);
         $modelItem = new ModelDanhMuc();
-        $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
-        $params["danhmuc"] = isset($_REQUEST["danhmuc"]) ? \Model\Common::TextInput($_REQUEST["danhmuc"]) : "";
-        $params["isShow"] = isset($_REQUEST["isShow"]) ? \Model\Common::TextInput($_REQUEST["isShow"]) : "";
+        $params["idDM"] = isset($_REQUEST["idDM"]) ? \Model\Common::TextInput($_REQUEST["idDM"]) : "";
+        $params["name"] = isset($_REQUEST["name"]) ? \Model\Common::TextInput($_REQUEST["name"]) : "";
+        $params["link"] = isset($_REQUEST["link"]) ? \Model\Common::TextInput($_REQUEST["link"]) : "";
         $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
         $indexPage = max(1, $indexPage);
         $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;

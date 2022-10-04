@@ -138,26 +138,30 @@ class BenhNhan extends \Model\DB implements \Model\IModelService
 
     public function GetItems($params, $indexPage, $pageNumber, &$total)
     {
-        $name = isset($params["keyword"]) ? $params["keyword"] : '';
-        $fromdate = isset($params["fromdate"]) ? $params["fromdate"] : null;
-        $todate = isset($params["todate"]) ? $params["todate"] : null;
-        $indate = isset($params["indate"]) ? $params["indate"] : null;
-        $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
-        $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
-        $isShowSql = "and `isShow` >= 0 ";
-        $indateSql = "";
-        $danhmucSql = "";
-        if ($indate) {
-            $indateSql = " and `CreateRecord` LIKE '%$indate%'";
+        $id = isset($params["id"]) ? $params["id"] : '';
+        $name = isset($params["nameBN"]) ? $params["nameBN"] : '';
+        $gioitinh = isset($params["gioitinh"]) ? $params["gioitinh"] : '';
+        $address = isset($params["address"]) ? $params["address"] : '';
+        $phone = isset($params["phone"]) ? $params["phone"] : '';
+        $idSql = "";
+        $nameSql = "";
+        $gioitinhSql = "";
+        $addressSql = "";
+        $phoneSql = "";
+        if ($name) {
+            $nameSql = " and `Name` LIKE '%$name%'";
         }
-        if ($isShow) {
-            $isShowSql = "and `isShow` = '{$isShow}' ";
+        if ($gioitinh) {
+            $gioitinhSql = " and `Gioitinh` LIKE '%$gioitinh%'";
         }
-        if ($danhmuc) {
-            $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
+        if ($address) {
+            $addressSql = " and `Address` LIKE '%$address%'";
+        }
+        if ($phone) {
+            $phoneSql = " and `Phone` LIKE '%$phone%'";
         }
         // self::$Debug = true;
-        $where = " (`Name` like '%{$name}%' or `Phone` like '%{$name}%' {$danhmucSql}) {$indateSql} and `isDelete` = 0 ";
+        $where = " (`Id` like '%{$id}%' {$nameSql}{$gioitinhSql}{$phoneSql}) and `isDelete` = 0 ";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 
