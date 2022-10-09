@@ -38,7 +38,7 @@ class FormBenhNhan implements iFormBenhNhan
                 $properties["readonly"] = $val;
                 $properties[FormRender::Required] = "true";
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-                return new FormRender(new Element\Textbox("Mã Khách Hàng", $name, $properties));
+                return new FormRender(new Element\Textbox("Mã Bệnh Nhân", $name, $properties));
         }
 
         /**
@@ -55,7 +55,7 @@ class FormBenhNhan implements iFormBenhNhan
                 $properties["id"] = $id;
                 $properties[FormRender::Required] = "true";
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-                return new FormRender(new Element\Textbox("Tên Khách Hàng", $name, $properties));
+                return new FormRender(new Element\Textbox("Tên Bệnh Nhân", $name, $properties));
         }
 
         /**
@@ -130,6 +130,8 @@ class FormBenhNhan implements iFormBenhNhan
                 $properties = self::$properties;
                 $properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
                 $properties["id"] = __FUNCTION__;
+                $properties["min"] = 1850;
+                $properties["max"] = date('Y');
                 $properties["class"] = " form-control saveinfor";
                 $properties[FormRender::Required] = "true";
                 $properties["type"] = "number";

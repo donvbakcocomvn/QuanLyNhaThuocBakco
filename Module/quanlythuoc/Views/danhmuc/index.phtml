@@ -6,40 +6,36 @@
 <div class="container-fluid">
     <div class="clearfix">
         <div class="box box-primary">
-            <div>
-                <div class="box-header">
-                    <div class="">
-                        <div class="box-header">
-                            <form method="get" action="/quanlythuoc/danhmuc/index/">
-                                <div class="row">
-                                    <div class="col-sm-3 form-group">
-                                        <?php
-                                        \Model\FormSearch::MaDanhMuc($_GET['idDM'] ?? null)->renderHtml2(null, null, 'glyphicon glyphicon-barcode form-control-feedback');
-                                        ?>
-                                    </div>
-                                    <div class="col-sm-3 form-group">
-                                        <?php
-                                        \Model\FormSearch::NameDanhMuc($_GET['name'] ?? null)->renderHtml2(null, null, 'glyphicon glyphicon-list-alt form-control-feedback');
-                                        ?>
-                                    </div>
-                                    <div class="col-sm-3 form-group">
-                                        <?php
-                                        \Model\FormSearch::LinkDanhMuc($_GET['link'] ?? null)->renderHtml2(null, null, 'glyphicon glyphicon-link form-control-feedback');
-                                        ?>
-                                    </div>
-                                    <div class="col-sm-3 form-group">
-                                        <div class="form-group has-success has-feedback">
-                                            <label for="inputSuccess2" class="text-capitalize"><em>Nhấn vào đây&nbsp; </em><i class="fa fa-check"></i></label>
-                                            <button type="submit" style="border-radius: 5px;" class="form-control btn btn-success" name="btnTim" id="keyword">
-                                                <i class="fa fa-filter"></i>&nbsp; Tìm kiếm theo bộ lọc
-                                            </button>
-                                        </div>
-                                    </div>
+            <div class="box-header">
+                <div class="">
+                    <form method="get" action="/quanlythuoc/danhmuc/index/">
+                        <div class="row">
+                            <div class="col-sm-3 form-group">
+                                <?php
+                                \Model\FormSearch::MaDanhMuc($_GET['idDM'] ?? null)->renderHtml2(null, null, 'glyphicon glyphicon-barcode form-control-feedback');
+                                ?>
+                            </div>
+                            <div class="col-sm-3 form-group">
+                                <?php
+                                \Model\FormSearch::NameDanhMuc($_GET['name'] ?? null)->renderHtml2(null, null, 'glyphicon glyphicon-list-alt form-control-feedback');
+                                ?>
+                            </div>
+                            <div class="col-sm-3 form-group">
+                                <?php
+                                \Model\FormSearch::LinkDanhMuc($_GET['link'] ?? null)->renderHtml2(null, null, 'glyphicon glyphicon-link form-control-feedback');
+                                ?>
+                            </div>
+                            <div class="col-sm-3 form-group">
+                                <div class="form-group has-success has-feedback">
+                                    <label for="inputSuccess2" class="text-capitalize"><em>Nhấn vào đây&nbsp; </em><i class="fa fa-check"></i></label>
+                                    <button type="submit" style="border-radius: 5px;" class="form-control btn btn-success" name="btnTim" id="keyword">
+                                        <i class="fa fa-filter"></i>&nbsp; Tìm kiếm theo bộ lọc
+                                    </button>
                                 </div>
-                            </form>
+                            </div>
                         </div>
-                        <hr style="border-top: 2px solid #00a65a; margin-top:0px" width="90%" noshade="noshade">
-                    </div>
+                    </form>
+                    <hr style="border-top: 2px solid #00a65a; margin-top:0px" width="90%" noshade="noshade">
                 </div>
             </div>
             <div class="box-header">

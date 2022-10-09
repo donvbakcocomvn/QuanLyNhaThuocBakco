@@ -51,9 +51,9 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
     public function Status()
     {
         $status = [
-            1 => "<span class='label-danger' style='padding: 5px;border-radius: 5px';>Chưa lấy thuốc</span>",
-            2 => "<span class='label-warning' style='padding: 5px;border-radius: 5px';>Đang soạn thuốc</span>",
-            3 => "<span class='label-success' style='padding: 5px;border-radius: 5px';>Đã soạn thuốc xong</span>",
+            1 => "<span class='label-danger' style='padding: 5px;border-radius: 5px';>Chưa lấy</span>",
+            2 => "<span class='label-warning' style='padding: 5px;border-radius: 5px';>Đang soạn</span>",
+            3 => "<span class='label-success' style='padding: 5px;border-radius: 5px';>Đã xong</span>",
         ];
         return $status[$this->Status] ?? "";
     }
@@ -61,9 +61,9 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
     public function LoaiDonThuoc()
     {
         $status = [
-            1 => "<span class='label-info' style='padding: 5px; border-radius: 5px';>Đơn lưu cố định</span>",
-            2 => "<span class='label-warning' style='padding: 5px; border-radius: 5px';>Đơn in cho bệnh nhân</span>",
-            3 => "<span class='label-success' style='padding: 5px; border-radius: 5px';>Đơn in cho nhà thuốc</span>",
+            1 => "<span class='label-info' style='padding: 5px; border-radius: 5px';>Đơn cố định</span>",
+            2 => "<span class='label-warning' style='padding: 5px; border-radius: 5px';>Đơn in BN</span>",
+            3 => "<span class='label-success' style='padding: 5px; border-radius: 5px';>Đơn in PK</span>",
         ];
         return $status[$this->ThuocLoaiDon] ?? "";
     }
@@ -308,20 +308,33 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
 
     public function GetDonCoDinh($params, $indexPage, $pageNumber, &$total)
     {
-        $name = isset($params["keyword"]) ? $params["keyword"] : '';
-        $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
-        $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
-        $isShowSql = "and `isShow` >= 0 ";
-        $danhmucSql = "";
-
-        if ($isShow) {
-            $isShowSql = "and `isShow` = '{$isShow}' ";
+        $name = isset($params["nameBN"]) ? $params["nameBN"] : '';
+        $gioitinh = isset($params["gioitinh"]) ? $params["gioitinh"] : '';
+        $address = isset($params["address"]) ? $params["address"] : '';
+        $phone = isset($params["phone"]) ? $params["phone"] : '';
+        $chandoan = isset($params["chandoan"]) ? $params["chandoan"] : '';
+        $nameSql = "";
+        $gioitinhSql = "";
+        $addressSql = "";
+        $phoneSql = "";
+        $chandoanSql = "";
+        if ($name) {
+            $nameSql = " and `Name` LIKE '%$name%'";
         }
-        if ($danhmuc) {
-            $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
+        if ($gioitinh) {
+            $gioitinhSql = " and `Gioitinh` LIKE '%$gioitinh%'";
+        }
+        if ($address) {
+            $addressSql = " and `Address` LIKE '%$address%'";
+        }
+        if ($phone) {
+            $phoneSql = " and `Phone` LIKE '%$phone%'";
+        }
+        if ($chandoan) {
+            $chandoanSql = " and `ChanDoanBenh` LIKE '%$chandoan%'";
         }
         // self::$Debug = true;
-        $where = " (`Id` like '%{$name}%' or `IdBenhNhan` like '%{$name}%' or `NameBN` like '%{$name}%' {$danhmucSql}) and `ThuocLoaiDon` = 1 ORDER BY `Id` DESC";
+        $where = " (`NameBN` like '%{$name}%' {$addressSql}{$gioitinhSql}{$phoneSql}{$chandoanSql}) and `ThuocLoaiDon` = 1 ";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 

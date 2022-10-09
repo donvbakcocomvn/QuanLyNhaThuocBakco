@@ -15,21 +15,29 @@ use Module\donthuoc\Model\DonThuoc;
 
 <div class="container-fluid">
     <div class="clearfix">
-        <div class="box box-primary">
+        <div class="box box-success">
             <div class="box-header">
                 <form method="get" action="/donthuoc/index/dondaxuly/">
-                    <div class="form-group d-flex">
-                        <label class="btn btn-default"><input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox"><i class="fa fa-share" aria-hidden="true"></class=></i></label>
-                        <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập mã đơn thuốc hoặc tên bệnh nhân để tìm kiếm">
-                        <button class="btn btn-primary no-border-radius" name="btnTim" type="submit">
-                            <i class="fa fa-search"></i> Tìm Kiếm
-                        </button>
+                    <div class="form-group d-flex" style="margin-bottom: 0px;">
+                        <div class="col-sm-12 form-group" style="margin-bottom: 0px;">
+                            <?php
+                            \Model\FormSearch::KeyWordDashboard("Mã đơn thuốc hoặc tên bệnh nhân", $_REQUEST['keyword'] ?? null, "Nhập vào mã đơn thuốc hoặc tên bệnh nhân để tìm kiếm")->renderHtml2(null, null, 'glyphicon glyphicon-barcode form-control-feedback');
+                            ?>
+                        </div>
+                        <div class="col-sm-2 form-group" style="margin-bottom: 0px;">
+                            <div class="form-group has-success has-feedback">
+                                <label for="inputSuccess2" class="text-capitalize"><em>Nhấn vào đây&nbsp; </em><i class="fa fa-check"></i></label>
+                                <button type="submit" style="border-radius: 5px;" class="form-control btn btn-success" name="btnTim">
+                                    <i class="fa fa-search-plus"></i>&nbsp;&nbsp; Tìm kiếm
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </form>
                 <h3 class="text-center text-uppercase">Danh sách đơn thuốc đã xử lý </h3>
             </div>
             <fieldset>
-                <legend class="text-green text-uppercase">Đơn đã xử lý</legend>
+                <legend class="text-green text-uppercase" style="letter-spacing: 1px;">Đơn đã xử lý</legend>
                 <div class="box-body">
                     <table class="table table-hover table-bordered">
                         <thead>

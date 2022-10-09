@@ -7,6 +7,42 @@ use PFBC\Element\Textbox;
 
 class FormSearch
 {
+    static function KeyWordDashboard($label, $value = null, $placehol)
+    {
+        return new FormRender(new Textbox($label, 'keyword', ['value' => $value, 'placeholder' => $placehol, 'style' => 'border-radius: 5px', 'class' => 'form-control']));
+    }
+
+    static function LoaiPhieu($value = null)
+    {
+        $option1 = ["" => ""];
+        $option2 = [
+            1 => "Phiếu nhập",
+            -1 => "Phiếu xuất"
+        ];
+        $options = $option1 + $option2;
+        return new FormRender(new Select('Loại phiếu', 'loaiphieu', $options, ['value' => $value, 'style' => 'border-radius: 5px', 'class' => 'form-control ']));
+    }
+
+    static function MaPhieu($value = null)
+    {
+        return new FormRender(new Textbox('Mã phiếu', 'idPhieu', ['value' => $value,'style' => 'border-radius: 5px', 'class' => 'form-control']));
+    }
+
+    static function NoiDungPhieu($value = null)
+    {
+        return new FormRender(new Textbox('Nội dung phiếu', 'content', ['value' => $value, 'placeholder' => 'Nhập nội dung', 'style' => 'border-radius: 5px', 'class' => 'form-control']));
+    }
+
+    static function ChanDoanBenh($value = null)
+    {
+        return new FormRender(new Textbox('Chẩn đoán bệnh', 'chandoan', ['value' => $value, 'placeholder' => 'Tên bệnh', 'style' => 'border-radius: 5px', 'class' => 'form-control']));
+    }
+
+    static function KeyWordThuoc($value = null)
+    {
+        return new FormRender(new Textbox('Mã thuốc hoặc tên thuốc', 'keyword', ['value' => $value, 'placeholder' => 'Nhập vào mã thuốc hoặc tên thuốc để tìm kiếm', 'style' => 'border-radius: 5px', 'class' => 'form-control']));
+    }
+
     static function MaDanhMuc($value = null)
     {
         return new FormRender(new Textbox('Mã danh mục', 'idDM', ['value' => $value, 'placeholder' => 'Nhập mã danh mục', 'style' => 'border-radius: 5px', 'class' => 'form-control']));
@@ -40,9 +76,14 @@ class FormSearch
         return new FormRender(new Textbox('Mã bệnh nhân', 'id', ['value' => $value, 'placeholder' => 'Nhập mã bệnh nhân', 'style' => 'border-radius: 5px', 'class' => 'form-control']));
     }
 
+    static function MaDonThuoc($value = null)
+    {
+        return new FormRender(new Textbox('Mã đơn thuốc', 'id', ['value' => $value, 'placeholder' => 'Nhập mã đơn thuốc', 'style' => 'border-radius: 5px', 'class' => 'form-control']));
+    }
+
     static function PhoneBenhNhan($value = null)
     {
-        return new FormRender(new Textbox('SĐT', 'phone', ['value' => $value, 'placeholder' => 'Nhập SĐT', 'style' => 'border-radius: 5px', 'class' => 'form-control']));
+        return new FormRender(new Textbox('Số điện thoại', 'phone', ['value' => $value, 'placeholder' => 'Nhập SĐT', 'style' => 'border-radius: 5px', 'class' => 'form-control']));
     }
 
     static function AddressBenhNhan($value = null)

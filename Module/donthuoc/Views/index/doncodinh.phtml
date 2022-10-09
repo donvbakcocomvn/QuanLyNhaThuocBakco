@@ -22,27 +22,32 @@ use PFBC\Element\Textbox;
             <div class="">
                 <div class="box-header">
                     <!-- <h3 class="box-title text-uppercase">Tìm kiếm theo bộ lọc</h3> -->
-                    <form method="get" action="/donthuoc/index/index/">
+                    <form method="get" action="/donthuoc/index/doncodinh/">
                         <div class="row">
-                            <div class="col-sm-3 form-group">
+                            <div class="col-sm-2 form-group">
                                 <?php
 
-                                FormSearch::Keyword($_GET['keyword'] ?? null)->renderHtml2(null, null, 'glyphicon glyphicon-user form-control-feedback');
-                                ?>
-                            </div>
-                            <div class="col-sm-3 form-group">
-                                <?php
-                                FormSearch::SelectStatus($_GET['status'] ?? null)->renderHtml2(null, null, '');
+                                FormSearch::NameBenhNhan($_GET['nameBN'] ?? null)->renderHtml2(null, null, 'glyphicon glyphicon-user form-control-feedback');
                                 ?>
                             </div>
                             <div class="col-sm-2 form-group">
                                 <?php
-                                FormSearch::Fromdate($_REQUEST['fromdate'] ?? null)->renderHtml2(null, null, 'glyphicon glyphicon-calendar form-control-feedback');
+                                FormSearch::GioiTinhBenhNhan($_GET['gioitinh'] ?? null)->renderHtml2(null, null, '');
                                 ?>
                             </div>
                             <div class="col-sm-2 form-group">
                                 <?php
-                                FormSearch::Todate($_GET['todate'] ?? "")->renderHtml2(null, null, 'glyphicon glyphicon-calendar form-control-feedback');
+                                FormSearch::AddressBenhNhan($_REQUEST['address'] ?? null)->renderHtml2(null, null, 'glyphicon glyphicon-home form-control-feedback');
+                                ?>
+                            </div>
+                            <div class="col-sm-2 form-group">
+                                <?php
+                                FormSearch::PhoneBenhNhan($_GET['phone'] ?? "")->renderHtml2(null, null, 'glyphicon glyphicon-calendar form-control-feedback');
+                                ?>
+                            </div>
+                            <div class="col-sm-2 form-group">
+                                <?php
+                                FormSearch::ChanDoanBenh($_GET['chandoan'] ?? "")->renderHtml2(null, null, 'glyphicon glyphicon-calendar form-control-feedback');
                                 ?>
                             </div>
                             <div class="col-sm-2 form-group">
@@ -58,17 +63,19 @@ use PFBC\Element\Textbox;
                 </div>
                 <hr style="border-top: 2px solid #00a65a; margin-top:0px" width="90%" noshade="noshade">
             </div>
-            <div class="box-header">
-                <h3 class="box-title">Danh Sách Đơn Thuốc Cố Định</h3>
-                <div class="box-tools">
-                    <!-- <a type="button" href="/thongke/donthuoctrongngay" class="btn btn-success"><i class="fa fa-list"></i>&nbsp;Danh sách đơn thuốc trong ngày</a> -->
+                <h3 class="text-center text-uppercase mg-0">Danh Sách Đơn Thuốc Cố Định</h3>
+                <div class="box-header pull-right">
                     <?php
-                    // Module\donthuoc\Model\btnHtml::btnExportBySearch();
-                    Module\donthuoc\Model\btnHtml::btnThemDonThuoc();
-                    \Model\FormRender::HuongDan("danhsachdonthuoc", "Hướng dẫn đơn thuốc");
+                    if (\Model\Permission::CheckPremision([
+                        \Model\User::QuanLy, \Model\User::Admin
+                    ], []) == true) {
+                    ?>
+                        <a class="btn btn-warning" href="/thongke/exportdonthuoctrongngay/">
+                            <i class="fa fa-filter"></i>&nbsp;Export Đơn Cố Định</a>
+                    <?php
+                    }
                     ?>
                 </div>
-            </div>
             <div class="box-body">
                 <table class="table table-hover table-bordered">
                     <thead>
@@ -133,7 +140,7 @@ use PFBC\Element\Textbox;
                         )->render();
                         ?>
                         <?php
-                        $linkPhanTrang = "/index.php?module=donthuoc&controller=index&action=index&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
+                        $linkPhanTrang = "/index.php?module=donthuoc&controller=index&action=doncodinh&nameBN={$params["nameBN"]}&gioitinh={$params["gioitinh"]}&address={$params["address"]}&phone={$params["phone"]}&chandoan={$params["chandoan"]}&indexPage=[i]&pageNumber={$pageNumber}";
                         echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
                         ?>
                     </div>
@@ -144,7 +151,7 @@ use PFBC\Element\Textbox;
 </div>
 <script type="text/javascript">
     var SoDongHienThi = function(evalue) {
-        var linkPhanTrang = '/index.php?module=donthuoc&controller=index&action=index&indexPage=1&pageNumber=[j]';
+        var linkPhanTrang = '/index.php?module=donthuoc&controller=index&action=doncodinh&indexPage=1&pageNumber=[j]';
         linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
         window.location.href = linkPhanTrang;
     }

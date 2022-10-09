@@ -85,14 +85,17 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
 
     public static function setDsThuoc($IdDonThuoc)
     {
-
-        $_SESSION["DetailThuoc"] = [];
-        self::DsThuoc();
-
+        // ??
+        $isReset = \Model\Request::Get("isreset", null);
+        $_SESSION["DetailThuoc"] = $_SESSION["DetailThuoc"]??[];
+        if ($isReset != null) {
+            $_SESSION["DetailThuoc"] = [];
+            Common::ToUrl('/index.php?module=donthuoc&controller=index&action=put&id='.$IdDonThuoc);
+        }
+        self::DsThuoc(); 
         $detail = new DonThuocDetail();
-        $danhSachThuoc = $detail->getByIdDonThuoc($IdDonThuoc);
-
-        foreach ($danhSachThuoc as $key => $thuoc) {
+        $danhSachThuoc = $detail->getByIdDonThuoc($IdDonThuoc); 
+        foreach ($danhSachThuoc as $key => $thuoc) { 
             $thuocDetail = new ModelSanPham($thuoc["IdThuoc"]);
             $item = $thuocDetail->GetById($thuoc["IdThuoc"]);
             // var_dump($thuoc);

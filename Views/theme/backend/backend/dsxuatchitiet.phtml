@@ -6,25 +6,35 @@
 <section class="content">
     <div class="row">
         <div class="col-md-12">
-            <form method="get" action="/backend/dsxuatchitiet/">
-                <div class="form-group d-flex">
-                    <label class="btn btn-default"><input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox"><i class="fa fa-share" aria-hidden="true"></class=></i></label>
-                    <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập vào mã phiếu hoặc mã thuốc để tìm kiếm">
-                    <button class="btn btn-primary no-border-radius" name="btnTim" type="submit">
-                        <i class="fa fa-search"></i> Tìm Kiếm
-                    </button>
-                </div>
-            </form>
             <div class="box box-success">
                 <div class="box-header">
-                    <h3 class="text-center text-uppercase">Danh sách xuất chi tiết</h3>
-                    <div class="box-tools float-left">
+                    <form method="get" action="/backend/dsxuatchitiet/">
+                        <div class="form-group d-flex" style="margin-bottom: 0px;">
+                            <div class="col-sm-10 form-group" style="margin-bottom: 0px;">
+                                <?php
+                                \Model\FormSearch::KeyWordDashboard("Mã phiếu hoặc mã thuốc", $_REQUEST['keyword'] ?? null, "Nhập vào mã phiếu hoặc mã thuốc để tìm kiếm")->renderHtml2(null, null, 'glyphicon glyphicon-barcode form-control-feedback');
+                                ?>
+                            </div>
+                            <div class="col-sm-2 form-group" style="margin-bottom: 0px;">
+                                <div class="form-group has-success has-feedback">
+                                    <label for="inputSuccess2" class="text-capitalize"><em>Nhấn vào đây&nbsp; </em><i class="fa fa-check"></i></label>
+                                    <button type="submit" style="border-radius: 5px;" class="form-control btn btn-success" name="btnTim">
+                                        <i class="fa fa-search-plus"></i>&nbsp;&nbsp; Tìm kiếm
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="box-header">
+                    <h3 class="text-center text-uppercase" style="margin: 0px;">Danh sách xuất chi tiết</h3>
+                    <div class="box-title float-left">
                         <?php
                         if (\Model\Permission::CheckPremision([
                             \Model\User::QuanLy, \Model\User::Admin
                         ], []) == true) {
                         ?>
-                            <a class="btn btn-success" href="/backend/exportdsxuatchitiet/">
+                            <a class="btn btn-success" <?php echo \Model\FormRender::ToolTip("Xuất Excel danh sách chi tiết tất cả phiếu xuất"); ?> href="/backend/exportdsxuatchitiet/">
                                 <i class="fa fa-filter"></i>&nbsp;Export danh sách xuất chi tiết
                             </a>
                         <?php
@@ -76,7 +86,7 @@
                                                     <td class="sorting_1 text-center"><?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?></td>
                                                     <td><?php echo $value["IdPhieu"]; ?></td>
                                                     <td><?php echo Common::ForMatDMYHIS($phieu->NgayNhap); ?></td>
-                                                    <td><?php echo SanPham::GetNameById($value["IdThuoc"]) . "(" . $value["IdThuoc"] . ")"; ?></td>
+                                                    <td><?php echo SanPham::GetNameById($value["IdThuoc"])." "."(" . $value["IdThuoc"] . ")"; ?></td>
                                                     <td><?php echo $value["SoLo"]; ?></td>
                                                     <td><?php echo $value['NhaSanXuat']; ?></td>
                                                     <td><?php echo Common::ViewNumber($value['SoLuong']); ?></td>

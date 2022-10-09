@@ -88,11 +88,6 @@ class SanPham extends \Model\DB implements \Model\IModelService
         // số lượng ban đầu + số lượng nhập
         return $this->Soluong + $this->SLNhap;
     }
-    public function SLi()
-    {
-        // số lượng ban đầu + số lượng nhập
-        return $this->Soluong + $this->SLNhap;
-    }
 
     function DongBoThuocNhap()
     {
@@ -259,16 +254,9 @@ class SanPham extends \Model\DB implements \Model\IModelService
         return $b;
     }
 
-    public function GetValByDesDVT($des)
+    public function GetValByDes($des, $group)
     {
-        $sql = "SELECT `Val` FROM `lap1_options` WHERE `Des` = '$des' and `GroupsId` = 'donvitinh'";
-        $result = $this->GetRow($sql);
-        return $result;
-    }
-
-    public function GetValByDesCachDung($des)
-    {
-        $sql = "SELECT `Val` FROM `lap1_options` WHERE `Des` = '$des' and `GroupsId` = 'cachdungthuoc'";
+        $sql = "SELECT `Val` FROM `lap1_options` WHERE `Des` = '$des' and `GroupsId` = '$group'";
         $result = $this->GetRow($sql);
         return $result;
     }
@@ -317,6 +305,14 @@ class SanPham extends \Model\DB implements \Model\IModelService
         $op = new OptionsService();
         $nameDVT = $op->GetGroupsToSelect("donvitinh");
         return $nameDVT[$this->DVT] ?? "";
+    }
+
+    public function GetIdDMByName($name)
+    {
+        $dm = new DanhMuc();
+        $sql = "SELECT `Id` FROM `lap1_qlthuoc_danhmuc` WHERE `Name` = '$name'";
+        $result = $dm->GetRow($sql);
+        return $result['Id'];
     }
 
     public function CachDungThuoc()
@@ -402,7 +398,7 @@ class SanPham extends \Model\DB implements \Model\IModelService
         }
 
         // self::$Debug = true;
-        $where = " (`Name` like '%{$name}%' or `Namebietduoc` like '%{$name}%' {$danhmucSql}) and `isDelete` = 0 ";
+        $where = " (`Name` like '%{$name}%' or `Id` like '%{$name}%' {$danhmucSql}) and `isDelete` = 0 ";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 

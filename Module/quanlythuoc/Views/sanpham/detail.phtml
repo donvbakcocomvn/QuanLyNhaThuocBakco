@@ -11,6 +11,7 @@ use Module\benhnhan\Model\BenhNhan\FormBenhNhan;
 use Module\quanlythuoc\Model\SanPham;
 use Module\quanlythuoc\Model\SanPham\FormSanPham;
 use Model\OptionsService;
+use Module\quanlythuoc\Model\PhieuXuatNhapChiTiet;
 
 $roleDetail = new Model\Role();
 ?>
@@ -37,9 +38,10 @@ $roleDetail = new Model\Role();
                 </ul>
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane" id="ThongTin">
-                        <form action="" method="post" enctype="multipart/form-data"> 
+                        <form action="" method="post" enctype="multipart/form-data">
                             <?php
                             $itemSP = new SanPham($data);
+                            // var_dump($itemSP);
                             ?>
                             <div class="">
                                 <div class="col-md-3">
@@ -101,7 +103,7 @@ $roleDetail = new Model\Role();
                                 <div class="col-md-3">
                                     <label for="">Hạn Sử Dụng</label>
                                     <input readonly value="<?php echo Common::ForMatDMY($itemSP->HSD); ?>" class="form-control">
-                                </div> 
+                                </div>
                                 <div class="col-md-3">
                                     <label for="">Số Lượng Cảnh Báo</label>
                                     <input readonly value="<?php echo $itemSP->Canhbao; ?>" class="form-control">
@@ -119,17 +121,49 @@ $roleDetail = new Model\Role();
                                     <textarea rows="5" readonly class="form-control"><?php echo $itemSP->Ghichu; ?></textarea>
                                 </div>
                             </div>
-                        </form> 
+                        </form>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="LichSu">
                         <div class="col-md-12">
                             <fieldset>
-                                <legend>Lịch sử xuất nhập thuốc</legend>
+                                <legend>Lịch sử xuất nhập phiếu</legend>
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">STT</th>
+                                            <th>Mã Phiếu</th>
+                                            <th>Loại Phiếu</th>
+                                            <th>Số Lượng</th>
+                                            <th>Giá Tiền</th>
+                                            <th>Thành Tiền</th>
+                                            <th>Ghi Chú</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $phieuxuatnhap = new PhieuXuatNhapChiTiet();
+                                        $DSPhieu = $phieuxuatnhap->GetByIdThuoc($data['Id']);
+                                        foreach ($DSPhieu as $index => $item) {
+                                        ?>
+                                            <tr>
+                                                <th class="text-center"><?php echo $index + 1;?></th>
+                                                <td><?php echo $item['IdPhieu']; ?></td>
+                                                <td><?php echo $phieuxuatnhap->GetXuatNhap($item['XuatNhap']);?></td>
+                                                <td><?php echo Common::ViewNumber($item['SoLuong']);?></td>
+                                                <td><?php echo Common::ViewPrice($item['Price']);?></td>
+                                                <td><?php echo Common::ViewPrice($item['SoLuong'] * $item['Price']);?></td>
+                                                <td><?php echo $item['GhiChu'];?></td>
+                                            </tr>
+                                        <?php
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
                             </fieldset>
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>
         </div>
     </div>
 </div>

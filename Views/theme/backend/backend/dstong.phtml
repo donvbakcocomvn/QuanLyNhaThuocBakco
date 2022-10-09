@@ -5,109 +5,117 @@
 <section class="content">
     <div class="row">
         <div class="col-md-12">
-            <form method="get" action="/backend/dstong/">
-                <div class="form-group d-flex">
-                    <label class="btn btn-default"><input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox"><i class="fa fa-share" aria-hidden="true"></class=></i></label>
-                    <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập vào mã thuốc, tên danh mục thuốc hoặc tên thuốc để tìm kiếm">
-                    <button class="btn btn-primary no-border-radius" name="btnTim" type="submit">
-                        <i class="fa fa-search"></i> Tìm Kiếm
-                    </button>
-                </div>
-            </form>
             <div class="box box-success">
                 <div class="box-header">
-                    <div class="box-tools">
-                        <div class="box-tools ">
-                            <?php
-                            if (\Model\Permission::CheckPremision([
-                                \Model\User::QuanLy, \Model\User::Admin
-                            ], []) == true) {
-                            ?>
-                                <a class="btn btn-success" href="/thongke/exportDStongthuoc">
-                                    <i class="fa fa-filter"></i>&nbsp;Export danh sách
-                                </a>
-                            <?php
-                            }
-                            ?>
+                    <form method="get" action="/backend/dstong/">
+                        <div class="form-group d-flex" style="margin-bottom: 0px;">
+                            <div class="col-sm-10 form-group" style="margin-bottom: 0px;">
+                                <?php
+                                \Model\FormSearch::KeyWordDashboard("Mã thuốc hoặc tên thuốc", $_REQUEST['keyword'] ?? null, "Nhập vào mã thuốc hoặc tên thuốc để tìm kiếm")->renderHtml2(null, null, 'glyphicon glyphicon-barcode form-control-feedback');
+                                ?>
+                            </div>
+                            <div class="col-sm-2 form-group" style="margin-bottom: 0px;">
+                                <div class="form-group has-success has-feedback">
+                                    <label for="inputSuccess2" class="text-capitalize"><em>Nhấn vào đây&nbsp; </em><i class="fa fa-check"></i></label>
+                                    <button type="submit" style="border-radius: 5px;" class="form-control btn btn-success" name="btnTim">
+                                        <i class="fa fa-search-plus"></i>&nbsp;&nbsp; Tìm kiếm
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <h3 style="text-align: center;" class="text-uppercase">Danh sách tổng các thuốc trong kho</h3>
+                    </form>
                 </div>
-                <div class="box-body">
-                    <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-                        <fieldset>
-                            <legend>Danh sách tổng thuốc trong kho</legend>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
-                                        <thead>
-                                            <tr role="row">
-                                                <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">STT</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Mã thuốc</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Thuộc danh mục</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Tên thuốc</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Số lượng tổng</th>
+                <div class="box-header">
+                    <h3 style="margin: 0px;" class="text-uppercase text-center">Danh sách tổng các thuốc trong kho</h3>
+                    <div class="box-title ">
+                        <?php
+                        if (\Model\Permission::CheckPremision([
+                            \Model\User::QuanLy, \Model\User::Admin
+                        ], []) == true) {
+                        ?>
+                            <a class="btn btn-warning" <?php echo \Model\FormRender::ToolTip("Xuất Excel danh sách thuốc với số lượng tổng trong kho"); ?> href="/thongke/exportDStongthuoc">
+                                <i class="fa fa-filter"></i>&nbsp;Export danh sách
+                            </a>
+                        <?php
+                        }
+                        ?>
+                </div>
+            </div>
+            <div class="box-body">
+                <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                    <fieldset>
+                        <legend>Danh sách tổng thuốc trong kho</legend>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">STT</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Mã thuốc</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Thuộc danh mục</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Tên thuốc</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Số lượng tổng</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+
+                                        use Model\Common;
+                                        use Model\Notions;
+                                        use Model\ThongKe;
+                                        use Module\quanlythuoc\Model\DanhMuc;
+                                        use Module\quanlythuoc\Model\SanPham;
+
+                                        $index = 0;
+                                        $danhsach = $data['items'];
+                                        // var_dump($danhsach);
+                                        foreach ($danhsach as $value) { ?>
+                                            <?php
+                                            $thuoc = new SanPham($value['Id']);
+                                            $danhmuc = new DanhMuc($value['Idloaithuoc']);
+                                            ?>
+                                            <tr role="row" class="even">
+                                                <td class="sorting_1 text-center"><?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?></td>
+                                                <td><?php echo $value['Id']; ?></td>
+                                                <td><?php echo $danhmuc->Name; ?></td>
+                                                <td><?php echo $value['Name']; ?></td>
+                                                <td><?php echo ($value['SLHienTai'] + $value['Soluong']) . ' ' . $thuoc->DonViTinh(); ?></td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-
-                                            use Model\Common;
-                                            use Model\Notions;
-                                            use Model\ThongKe;
-                                            use Module\quanlythuoc\Model\DanhMuc;
-                                            use Module\quanlythuoc\Model\SanPham;
-
-                                            $index = 0;
-                                            $danhsach = $data['items'];
-                                            // var_dump($danhsach);
-                                            foreach ($danhsach as $value) { ?>
-                                                <?php
-                                                $thuoc = new SanPham($value['Id']);
-                                                $danhmuc = new DanhMuc($value['Idloaithuoc']);
-                                                ?>
-                                                <tr role="row" class="even">
-                                                    <td class="sorting_1 text-center"><?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?></td>
-                                                    <td><?php echo $value['Id']; ?></td>
-                                                    <td><?php echo $danhmuc->Name; ?></td>
-                                                    <td><?php echo $value['Name']; ?></td>
-                                                    <td><?php echo ($value['SLHienTai'] + $value['Soluong']) . ' ' . $thuoc->DonViTinh(); ?></td>
-                                                </tr>
-                                            <?php
-                                                $index++;
-                                            }
-                                            ?>
-                                        </tbody>
-                                    </table>
-                                    <div class="box-footer">
-                                        <div class="d-flex">
-                                            <?php
-                                            \Model\FormCommon::Select(
-                                                "",
-                                                "",
-                                                [10, 20, 50, 100],
-                                                [
-                                                    "style" => "max-width:150px;",
-                                                    "class" => "form-control",
-                                                    "value" => $pageNumber,
-                                                    "onchange" => "SoDongHienThi(this.value)",
-                                                ]
-                                            )->render();
-                                            ?>
-                                            <?php
-                                            $linkPhanTrang = "/index.php?controller=backend&action=dstong&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
-                                            echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
-                                            ?>
-                                        </div>
+                                        <?php
+                                            $index++;
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                                <div class="box-footer">
+                                    <div class="d-flex">
+                                        <?php
+                                        \Model\FormCommon::Select(
+                                            "",
+                                            "",
+                                            [10, 20, 50, 100],
+                                            [
+                                                "style" => "max-width:150px;",
+                                                "class" => "form-control",
+                                                "value" => $pageNumber,
+                                                "onchange" => "SoDongHienThi(this.value)",
+                                            ]
+                                        )->render();
+                                        ?>
+                                        <?php
+                                        $linkPhanTrang = "/index.php?controller=backend&action=dstong&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
+                                        echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
+                                        ?>
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                        </fieldset>
-                    </div>
+                    </fieldset>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </section>
 <script type="text/javascript">

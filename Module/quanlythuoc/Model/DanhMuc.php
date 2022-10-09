@@ -57,7 +57,6 @@ class DanhMuc extends \Model\DB implements \Model\IModelService
         return $result['Id'];
     }
 
-
     public function GetItems($params, $indexPage, $pageNumber, &$total)
     {
         $idDM = isset($params["idDM"]) ? $params["idDM"] : '';
@@ -86,6 +85,14 @@ class DanhMuc extends \Model\DB implements \Model\IModelService
         }
         $DM = new danhmuc();
         return $DM->DeleteById($Id);
+    }
+
+    function isdelete($DSMaSanPham)
+    {
+        $model["IsDelete"] = 1;
+        $DSMaSanPham = implode("','", $DSMaSanPham);
+        $where = "`Id` in ('{$DSMaSanPham}') ";
+        $this->Update($model, $where);
     }
 
     public function Post($model)

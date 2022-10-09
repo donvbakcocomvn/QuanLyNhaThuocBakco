@@ -84,27 +84,48 @@ class index extends \Application implements \Controller\IControllerBE
     function index()
     {
         \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DonThuoc_DS]);
-            $modelItem = new DonThuoc();
-            $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
-            $params["fromdate"] = isset($_REQUEST["fromdate"]) && $_REQUEST["fromdate"] != null ? date('Y-m-d H:i:s', strtotime($_REQUEST["fromdate"])) : "";
-            $params["todate"] = isset($_REQUEST["todate"]) && $_REQUEST["todate"] != null ? date('Y-m-d H:i:s', strtotime($_REQUEST["todate"])) : "";
-            $params["status"] = isset($_REQUEST["status"]) ? \Model\Common::TextInput($_REQUEST["status"]) : "";
-            $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
-            $indexPage = max(1, $indexPage);
-            $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;
-            $pageNumber = max(1, $pageNumber);
-            $total = 0;
-            $DanhSachTaiKhoan = $modelItem->GetItems($params, $indexPage, $pageNumber, $total);
-            $data["items"] = $DanhSachTaiKhoan;
-            $data["indexPage"] = $indexPage;
-            $data["pageNumber"] = $pageNumber;
-            $data["params"] = $params;
-            $data["total"] = $total;
+        $modelItem = new DonThuoc();
+        $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
+        $params["fromdate"] = isset($_REQUEST["fromdate"]) && $_REQUEST["fromdate"] != null ? date('Y-m-d H:i:s', strtotime($_REQUEST["fromdate"])) : "";
+        $params["todate"] = isset($_REQUEST["todate"]) && $_REQUEST["todate"] != null ? date('Y-m-d H:i:s', strtotime($_REQUEST["todate"])) : "";
+        $params["status"] = isset($_REQUEST["status"]) ? \Model\Common::TextInput($_REQUEST["status"]) : "";
+        $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
+        $indexPage = max(1, $indexPage);
+        $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;
+        $pageNumber = max(1, $pageNumber);
+        $total = 0;
+        $DanhSachTaiKhoan = $modelItem->GetItems($params, $indexPage, $pageNumber, $total);
+        $data["items"] = $DanhSachTaiKhoan;
+        $data["indexPage"] = $indexPage;
+        $data["pageNumber"] = $pageNumber;
+        $data["params"] = $params;
+        $data["total"] = $total;
         $this->View($data);
     }
 
     function export()
     {
+    }
+
+    function donthuoctrongngay()
+    {
+        $modelItem = new \Model\ThongKe();
+        $params["id"] = isset($_REQUEST["id"]) ? \Model\Common::TextInput($_REQUEST["id"]) : "";
+        $params["status"] = isset($_REQUEST["status"]) ? \Model\Common::TextInput($_REQUEST["status"]) : "";
+        $params["nameBN"] = isset($_REQUEST["nameBN"]) ? \Model\Common::TextInput($_REQUEST["nameBN"]) : "";
+        $params["indate"] = isset($_REQUEST["indate"]) ? date('Y-m-d', strtotime($_REQUEST["indate"])) : date('Y-m-d', time());
+        $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
+        $indexPage = max(1, $indexPage);
+        $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;
+        $pageNumber = max(1, $pageNumber);
+        $total = 0;
+        $DanhSachTaiKhoan = $modelItem->GetDonThuocTrongNgay($params, $indexPage, $pageNumber, $total);
+        $data["items"] = $DanhSachTaiKhoan;
+        $data["indexPage"] = $indexPage;
+        $data["pageNumber"] = $pageNumber;
+        $data["params"] = $params;
+        $data["total"] = $total;
+        $this->View($data);
     }
 
     function donchuaxuly()
@@ -174,9 +195,11 @@ class index extends \Application implements \Controller\IControllerBE
     {
         \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DonThuoc_DS]);
         $modelItem = new DonThuoc();
-        $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
-        $params["danhmuc"] = isset($_REQUEST["danhmuc"]) ? \Model\Common::TextInput($_REQUEST["danhmuc"]) : "";
-        $params["isShow"] = isset($_REQUEST["isShow"]) ? \Model\Common::TextInput($_REQUEST["isShow"]) : "";
+        $params["nameBN"] = isset($_REQUEST["nameBN"]) ? \Model\Common::TextInput($_REQUEST["nameBN"]) : "";
+        $params["gioitinh"] = isset($_REQUEST["gioitinh"]) ? \Model\Common::TextInput($_REQUEST["gioitinh"]) : "";
+        $params["address"] = isset($_REQUEST["address"]) ? \Model\Common::TextInput($_REQUEST["address"]) : "";
+        $params["phone"] = isset($_REQUEST["phone"]) ? \Model\Common::TextInput($_REQUEST["phone"]) : "";
+        $params["chandoan"] = isset($_REQUEST["chandoan"]) ? \Model\Common::TextInput($_REQUEST["chandoan"]) : "";
         $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
         $indexPage = max(1, $indexPage);
         $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;
@@ -276,7 +299,6 @@ class index extends \Application implements \Controller\IControllerBE
     {
         \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DonThuoc_Post]);
         try {
-            // DonThuocDetail::ClearSession();
             if (\Model\Request::Post(FormDonThuoc::$ElementsName, null) && \Model\Request::Post(FormBenhNhan::$ElementsName, null)) {
 
                 if (DonThuocDetail::DsThuoc() == false) {
@@ -287,13 +309,15 @@ class index extends \Application implements \Controller\IControllerBE
                 $itemBN["Id"] = $benhnhan->CreatId();
                 $itemBN["Name"] = $itemBenhNhan["Name"];
                 $itemBN["Gioitinh"] = $itemBenhNhan["Gioitinh"];
-                $ngay = intval($itemBenhNhan["NgaySinh"]);
-                $ngay = max($ngay, 1);
-                $ngay = min($ngay, 31);
-                $thang = intval($itemBenhNhan["ThangSinh"]);
-                $thang = max($thang, 1);
-                $thang = min($thang, 12);
-                $nam = $itemBenhNhan["NamSinh"] ?? date('Y');
+                $ngay = intval($itemBenhNhan["NgaySinh"]) ? intval($itemBenhNhan["NgaySinh"]) : 1;
+                // $ngay = max($ngay, 1);
+                // $ngay = min($ngay, 31);
+                $thang = intval($itemBenhNhan["ThangSinh"]) ? intval($itemBenhNhan["ThangSinh"]) : 1;
+                // $thang = max($thang, 1);
+                // $thang = min($thang, 12);
+                $nam = intval($itemBenhNhan["NamSinh"]) ?? date('Y');
+                // $nam = max($nam, 1);
+                // $nam = min($nam, date('Y'));
                 $itemBN["Ngaysinh"] = date('Y-m-d', strtotime($nam . '-' . $thang . '-' . $ngay));
                 $itemBN["CMND"] = $itemBenhNhan["CMND"];
                 $itemBN["Address"] = $itemBenhNhan["Address"];
@@ -301,7 +325,7 @@ class index extends \Application implements \Controller\IControllerBE
                 $itemBN["QuanHuyen"] = $itemBenhNhan["QuanHuyen"] ?? '';
                 $itemBN["PhuongXa"] = $itemBenhNhan["PhuongXa"] ?? '';
                 $itemBN["Phone"] = $itemBenhNhan["Phone"];
-                $benhnhan->Post($itemBN);
+                // $benhnhan->Post($itemBN);
 
                 $itemForm = \Model\Request::Post(FormDonThuoc::$ElementsName, null);
                 $donthuoc = new DonThuoc();
@@ -314,7 +338,7 @@ class index extends \Application implements \Controller\IControllerBE
                 $itemDonThuoc["ThuocLoaiDon"] = $itemForm["ThuocLoaiDon"];
                 $itemDonThuoc["TongNgayDung"] = $itemForm["TongNgayDung"];
                 $itemDonThuoc["Status"] = 1;
-                $donthuoc->Post($itemDonThuoc);
+                // $donthuoc->Post($itemDonThuoc);
 
                 $sum = 0;
                 foreach (DonThuocDetail::DsThuoc() as $mathuoc => $thuoc) {
@@ -335,7 +359,7 @@ class index extends \Application implements \Controller\IControllerBE
                         $itemDetail["GhiChu"] = $thuoc["Ghichu"] ?? "";
                         $sum += $itemDetail['SoLuong'] * $itemDetail['GiaBan'];
                         $detail = new DonThuocDetail();
-                        $detail->Post($itemDetail);
+                        // $detail->Post($itemDetail);
                     }
                     // DonThuocDetail::ClearSession();
                 }
@@ -352,9 +376,8 @@ class index extends \Application implements \Controller\IControllerBE
                     $Phieu["UpdateRecord"] = Date("Y-m-d H:i:s", time());
                     $Phieu["IsDelete"] = 0;
                     $phieuXuatNhap = new \Module\quanlythuoc\Model\PhieuXuatNhap();
-                    $phieuXuatNhap->Post($Phieu);
+                    // $phieuXuatNhap->Post($Phieu);
                     foreach (DonThuocDetail::DsThuoc() as $mathuoc => $thuoc) {
-                        $sp = new SanPham();
                         if (isset($thuoc["Id"]) == true) {
                             $idThuoc = $thuoc["Id"];
                             $itemFormDetail["IdPhieu"] = $Phieu["IdPhieu"];
@@ -370,14 +393,17 @@ class index extends \Application implements \Controller\IControllerBE
                             $itemFormDetail["GhiChu"] = $itemDetail["GhiChu"];
                             $itemFormDetail["IsDelete"] = 0;
                             $SanPham = new \Module\quanlythuoc\Model\PhieuXuatNhapChiTiet();
-                            $SanPham->Post($itemFormDetail);
+                            // $SanPham->Post($itemFormDetail);
                         }
+                        $sp = new SanPham();
+                        $sp->DongBoThuocNhapByID($idThuoc);
                     }
                 }
-                DonThuocDetail::ClearSession();
-                new \Model\Error(\Model\Error::success, "Đã Thêm Toa Thuốc");
+
+                // DonThuocDetail::ClearSession();
+                // new \Model\Error(\Model\Error::success, "Đã Thêm Toa Thuốc");
                 $donthuoc = new DonThuoc($itemDonThuoc["Id"]);
-                \Model\Common::ToUrl("/donthuoc/index/viewdonthuoc/?id=" . $donthuoc->Id . "");
+                // \Model\Common::ToUrl("/donthuoc/index/viewdonthuoc/?id=" . $donthuoc->Id . "");
             }
         } catch (\Exception $exc) {
             new Error(Error::danger, $exc->getMessage());
@@ -435,11 +461,10 @@ class index extends \Application implements \Controller\IControllerBE
                 $itemBN["Id"] = $benhnhan->Id;
                 $itemBN["Name"] = $itemBenhNhan["Name"];
                 $itemBN["Gioitinh"] = $itemBenhNhan["Gioitinh"];
-                $ngay = $itemBenhNhan["NgaySinh"] ? $itemBenhNhan["Ngaysinh"] : '01';
-                $thang = $itemBenhNhan["ThangSinh"] ? $itemBenhNhan["Thangsinh"] : '01';
-                $nam = $itemBenhNhan["NamSinh"] ?? date('Y');
-                // $itemBN["Ngaysinh"] = date('Y-m-d', strtotime($nam . '-' . $thang . '-' . $ngay));
-                $itemBN["Ngaysinh"] = $nam . '-' . $thang . '-' . $ngay;
+                $ngay = intval($itemBenhNhan["NgaySinh"]) ? intval($itemBenhNhan["NgaySinh"]) : 1;
+                $thang = intval($itemBenhNhan["ThangSinh"]) ? intval($itemBenhNhan["ThangSinh"]) : 1;
+                $nam = intval($itemBenhNhan["NamSinh"]) ?? date('Y');
+                $itemBN["Ngaysinh"] = date('Y-m-d', strtotime($nam . '-' . $thang . '-' . $ngay));
                 $itemBN["CMND"] = $itemBenhNhan["CMND"];
                 $itemBN["Address"] = $itemBenhNhan["Address"];
                 $itemBN["TinhThanh"] = $itemBenhNhan["TinhThanh"] ?? '';
@@ -481,7 +506,6 @@ class index extends \Application implements \Controller\IControllerBE
                         $itemDetail["GhiChu"] = $thuoc["Ghichu"] ?? "";
                         $detail = new DonThuocDetail();
                         $detail->Post($itemDetail);
-                        // var_dump($thuoc);
                     }
                     DonThuocDetail::ClearSession();
                 }
@@ -497,6 +521,7 @@ class index extends \Application implements \Controller\IControllerBE
         }
         $DM = new DonThuoc();
         $data["donthuoc"] = $DM->GetById($id);
+        // var_dump($data["donthuoc"]);
         DonThuocDetail::setDsThuoc($id);
         $this->View($data);
     }
@@ -521,19 +546,17 @@ class index extends \Application implements \Controller\IControllerBE
     function copy()
     {
         \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DonThuoc_Copy]);
-
         try {
-            // DonThuocDetail::ClearSession();
             if (\Model\Request::Post(FormDonThuoc::$ElementsName, null) && \Model\Request::Post(FormBenhNhan::$ElementsName, null)) {
                 $benhnhan = new BenhNhan();
                 $itemBenhNhan = \Model\Request::Post(FormBenhNhan::$ElementsName, null);
                 $itemBN["Id"] = $benhnhan->CreatId();
                 $itemBN["Name"] = $itemBenhNhan["Name"];
                 $itemBN["Gioitinh"] = $itemBenhNhan["Gioitinh"];
-                $ngay = $itemBenhNhan["NgaySinh"] ? $itemBenhNhan["NgaySinh"] : '01';
-                $thang = $itemBenhNhan["ThangSinh"] ? $itemBenhNhan["ThangSinh"] : '01';
-                $nam = $itemBenhNhan["NamSinh"] ?? date('Y');
-                $itemBN["Ngaysinh"] = $nam . '-' . $thang . '-' . $ngay;
+                $ngay = intval($itemBenhNhan["NgaySinh"]) ?? 1;
+                $thang = intval($itemBenhNhan["ThangSinh"]) ?? 1;
+                $nam = intval($itemBenhNhan["NamSinh"]) ?? date('Y');
+                $itemBN["Ngaysinh"] = date('Y-m-d', strtotime($nam . '-' . $thang . '-' . $ngay));
                 $itemBN["CMND"] = $itemBenhNhan["CMND"];
                 $itemBN["Address"] = $itemBenhNhan["Address"];
                 $itemBN["TinhThanh"] = $itemBenhNhan["TinhThanh"] ?? '';
@@ -541,7 +564,6 @@ class index extends \Application implements \Controller\IControllerBE
                 $itemBN["PhuongXa"] = $itemBenhNhan["PhuongXa"] ?? '';
                 $itemBN["Phone"] = $itemBenhNhan["Phone"];
                 $benhnhan->Post($itemBN);
-
                 $donthuoc = new DonThuoc();
                 $itemForm = \Model\Request::Post(FormDonThuoc::$ElementsName, null);
                 $itemDonThuoc["Id"] = $donthuoc->CreatId();
@@ -558,6 +580,7 @@ class index extends \Application implements \Controller\IControllerBE
                 $iddonthuoc = \Model\Request::Get("id", null);
                 $DonThuocModel = new DonThuoc($iddonthuoc);
                 $detail->DeleteDetail($DonThuocModel->Id);
+                $sum = 0;
                 foreach (DonThuocDetail::DsThuoc() as $mathuoc => $thuoc) {
                     $sp = new SanPham();
                     if (isset($thuoc["Id"]) == true) {
@@ -574,14 +597,50 @@ class index extends \Application implements \Controller\IControllerBE
                         $itemDetail["Chieu"] = $thuoc["Chieu"];
                         $itemDetail["GiaBan"] = $thuoc["Giaban"];
                         $itemDetail["GhiChu"] = $thuoc["Ghichu"] ?? "";
+                        $sum += $itemDetail['SoLuong'] * $itemDetail['GiaBan'];
                         $detail = new DonThuocDetail();
                         $detail->Post($itemDetail);
                     }
-                    DonThuocDetail::ClearSession();
                 }
-                new \Model\Error(\Model\Error::success, "Đã sao chép đơn thuốc");
+                $phieu = new PhieuXuatNhap();
+                if ($itemDonThuoc["ThuocLoaiDon"] == 3) {
+                    $Phieu["TongTien"] = $sum;
+                    $Phieu["DoViCungCap"] = "";
+                    $Phieu["IdPhieu"] = $phieu->getIdPhieu();
+                    $Phieu["XuatNhap"] = -1;
+                    $Phieu["NoiDungPhieu"] = "Đơn thuốc " . $itemDonThuoc['ChanDoanBenh'] . " của " . $itemDonThuoc["NameBN"];
+                    $Phieu["GhiChu"] = "Đơn thuốc " . $itemDonThuoc['ChanDoanBenh'] . " của " . $itemDonThuoc["NameBN"];
+                    $Phieu["NgayNhap"] = Date("Y-m-d H:i:s", time());
+                    $Phieu["CreateRecord"] = Date("Y-m-d H:i:s", time());
+                    $Phieu["UpdateRecord"] = Date("Y-m-d H:i:s", time());
+                    $Phieu["IsDelete"] = 0;
+                    $phieuXuatNhap = new \Module\quanlythuoc\Model\PhieuXuatNhap();
+                    $phieuXuatNhap->Post($Phieu);
+                    foreach (DonThuocDetail::DsThuoc() as $mathuoc => $thuoc) {
+                        $sp = new SanPham();
+                        if (isset($thuoc["Id"]) == true) {
+                            $idThuoc = $thuoc["Id"];
+                            $itemFormDetail["IdPhieu"] = $Phieu["IdPhieu"];
+                            $itemFormDetail["IdThuoc"] = $idThuoc;
+                            $itemFormDetail["SoLuong"] = $thuoc["Soluong"];
+                            $itemFormDetail["NhaSanXuat"] = "";
+                            $itemFormDetail["SoLo"] = $thuoc["SoLo"] ?? "";
+                            $itemFormDetail["NuocSanXuat"] = "";
+                            $itemFormDetail["Price"] = $itemDetail["GiaBan"];
+                            $itemFormDetail["XuatNhap"] = -1;
+                            $itemFormDetail["CreateRecord"] = Date("Y-m-d H:i:s", time());
+                            $itemFormDetail["UpdateRecord"] = Date("Y-m-d H:i:s", time());
+                            $itemFormDetail["GhiChu"] = $itemDetail["GhiChu"];
+                            $itemFormDetail["IsDelete"] = 0;
+                            $SanPham = new \Module\quanlythuoc\Model\PhieuXuatNhapChiTiet();
+                            $SanPham->Post($itemFormDetail);
+                        }
+                    }
+                }
+                // DonThuocDetail::ClearSession();
+                // new \Model\Error(\Model\Error::success, "Đã sao chép đơn thuốc");
                 $donthuoc = new DonThuoc($itemDonThuoc["Id"]);
-                \Model\Common::ToUrl("/donthuoc/index/viewdonthuoc/?id=" . $donthuoc->Id . "");
+                // \Model\Common::ToUrl("/donthuoc/index/viewdonthuoc/?id=" . $donthuoc->Id . "");
             }
         } catch (\Exception $exc) {
             echo $exc->getMessage();

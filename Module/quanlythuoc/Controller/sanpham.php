@@ -83,15 +83,16 @@ class sanpham extends \Application implements \Controller\IControllerBE
                         $item[7] = str_replace("/", "-", $item[7]);
                         $item[8] = str_replace("/", "-", $item[8]);
                         // them vào database  
+                        $nameDM = DanhMuc::GetIdByName($item[2]);
                         $itemInsert["Id"] = $sanpham->CreatId();
-                        if ($item[2] != "") {
-                            $itemInsert["Idloaithuoc"] = $item[1] ? DanhMuc::GetIdByName($item[1]) : '';
-                            $itemInsert["Name"] = Common::CheckName($item[2]);
+                        if ($item[1] != "") {
+                            $itemInsert["Name"] = Common::CheckName($item[1]);
+                            $itemInsert["Idloaithuoc"] = $nameDM ?? '';
                             $itemInsert["Solo"] = $item[3] ? intval($item[3]) : '';
                             $itemInsert["Gianhap"] = $item[4] ? $item[4] : '';
                             $itemInsert["Giaban"] = $item[5] ? $item[5] : '';
-                            $a = $sanpham->GetValByDesDVT($item[6]);
-                            $b = $sanpham->GetValByDesCachDung($item[16]);
+                            $a = $sanpham->GetValByDes($item[6],'donvitinh');
+                            $b = $sanpham->GetValByDes($item[16],'cachdungthuoc');
                             $itemInsert["DVT"] = $a["Val"] ?? "";
                             $itemInsert["Ngaysx"] = date("Y-m-d", strtotime($item[7])) ?? "";
                             $itemInsert["HSD"] = date("Y-m-d", strtotime($item[8])) ?? "";
@@ -101,10 +102,15 @@ class sanpham extends \Application implements \Controller\IControllerBE
                             $itemInsert["NhaSX"] = $item[12] ?? "";
                             $itemInsert["NuocSX"] = $item[13] ?? "";
                             $itemInsert["Soluong"] = $item[14] ?? "";
-                            $itemInsert["DVQuyDoi"] = $item[15];
+                            $c = $sanpham->GetValByDes($item[15], 'donviquydoi');
+                            $itemInsert["DVQuyDoi"] = $c["Val"] ?? "";
                             $itemInsert["CachDung"] = $b["Val"] ?? "";
                             $itemInsert["Canhbao"] = $item[17];
+                            $itemInsert["SLXuat"] = 0;
+                            $itemInsert["SLNhap"] = 0;
+                            $itemInsert["SLHienTai"] = 0;
                             $sanpham->Post($itemInsert);
+                            $sanpham->DongBoThuocNhapByID($itemInsert["Id"]);
                         }
                     }
                 }
@@ -142,7 +148,7 @@ class sanpham extends \Application implements \Controller\IControllerBE
     function dongboSL()
     {
         $sp = new \Module\quanlythuoc\Model\SanPham();
-        $sp->DongBoThuocNhap();
+        $sp->DongBoThuocNhapByID();
         new Error(Error::success, "Đã đồng bộ xong phiếu xuất nhập.");
         Common::ToUrl("/quanlythuoc/sanpham/index/");
     }
@@ -190,9 +196,10 @@ class sanpham extends \Application implements \Controller\IControllerBE
                 $item["Canhbao"] = $itemForm["Canhbao"];
                 $item["IsDelete"] = 0;
                 $sanpham->Post($item);
+                $sanpham->DongBoThuocNhapByID($item["Id"]);
                 new \Model\Error(\Model\Error::success, "Thêm thuốc thành công");
-                // \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=danhmuc&action=put&id=" . $itemForm["Code"]);
                 Common::ToUrl("/index.php?module=quanlythuoc&controller=sanpham&action=index");
+                // \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=danhmuc&action=put&id=" . $itemForm["Code"]);
             }
         } catch (Exception $exc) {
             echo $exc->getMessage();

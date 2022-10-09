@@ -198,19 +198,20 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
 
     public function GetItems($params, $indexPage, $pageNumber, &$total)
     {
-        $name = isset($params["keyword"]) ? $params["keyword"] : '';
-        $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
-        $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
-        $isShowSql = "and `IsDelete` = 0 ";
-        $danhmucSql = "";
-        if ($isShow) {
-            $isShowSql = "and `IsDelete` = '{$isShow}' ";
+        $idphieu = isset($params["idPhieu"]) ? $params["idPhieu"] : '';
+        $loaiphieu = isset($params["loaiphieu"]) ? $params["loaiphieu"] : null;
+        $content = isset($params["content"]) ? $params["content"] : null;
+        $idphieuSql = "";
+        $loaiphieuSql = "";
+        $contentSql = "";
+        if ($loaiphieu) {
+            $loaiphieuSql = "and `XuatNhap` = '{$loaiphieu}' ";
         }
-        if ($danhmuc) {
-            $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
+        if ($content) {
+            $contentSql = "and `NoiDungPhieu` = '{$content}' ";
         }
         // self::$Debug = true;
-        $where = " (`NoiDungPhieu` like '%{$name}%' or `IdPhieu` like '%{$name}%' {$danhmucSql}) {$isShowSql} Order By `CreateRecord`  DESC";
+        $where = " (`IdPhieu` like '%{$idphieu}%'{$loaiphieuSql}{$contentSql} ) and `IsDelete` = 0 Order By `CreateRecord`  DESC";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 
@@ -243,6 +244,12 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
     {
         // DB::$Debug = true;
         return $this->SelectRow("`IdPhieu` = '{$Id}'");
+    }
+
+    public function GetByIdThuoc($Id)
+    {
+        // DB::$Debug = true;
+        return $this->SelectRow("`IdThuoc` = '{$Id}'");
     }
 
     public static function getIdPhieu()

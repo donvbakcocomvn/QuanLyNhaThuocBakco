@@ -12,36 +12,54 @@ use Model\ThongKe;
 
 ?>
 <div class="container-fluid">
-    <form method="get" action="/thongke/benhnhantrongngay/">
-        <div class="form-group d-flex">
-            <label class="btn btn-default"><input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox"><i class="fa fa-share" aria-hidden="true"></class=></i></label>
-            <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập tên, số điện thoại hoặc địa chỉ để tìm kiếm">
-            <input name="indate" value="<?php echo date("Y-m-d", time()); ?>" type="hidden">
-            <button class="btn btn-primary no-border-radius" name="btnTim" type="submit">
-                <i class="fa fa-search"></i> Tìm Kiếm
-            </button>
-        </div>
-    </form>
     <div class="clearfix">
         <div class="box box-primary">
             <div class="box-header">
-                <div class="box-header">
-                    <h3 class="text-center text-uppercase">Danh sách bệnh nhân trong ngày</h3>
-                    <div class="box-tools float-left">
-                        <?php
-                        Module\benhnhan\Model\btnHtml::btnViewKhachHang();
-                        ?>
-                        <?php
-                        if (\Model\Permission::CheckPremision([
-                            \Model\User::QuanLy, \Model\User::Admin
-                        ], []) == true) {
-                        ?>
-                            <a class="btn btn-success" href="/thongke/exportbenhnhantrongngay/">
-                                <i class="fa fa-filter"></i>&nbsp;Export danh sách</a>
-                        <?php
-                        }
-                        ?>
+                <form method="get" action="/thongke/benhnhantrongngay/">
+                    <div class="form-group d-flex" style="margin-bottom: 0px;">
+                        <input name="indate" value="<?php echo date("Y-m-d", time()); ?>" type="hidden">
+                        <div class="col-sm-3 form-group">
+                            <?php
+                            \Model\FormSearch::NameBenhNhan($_GET['nameBN'] ?? null)->renderHtml2(null, null, 'glyphicon glyphicon-user form-control-feedback');
+                            ?>
+                        </div>
+                        <div class="col-sm-3 form-group">
+                            <?php
+                            \Model\FormSearch::AddressBenhNhan($_REQUEST['address'] ?? null)->renderHtml2(null, null, 'glyphicon glyphicon-home form-control-feedback');
+                            ?>
+                        </div>
+                        <div class="col-sm-3 form-group">
+                            <?php
+                            \Model\FormSearch::PhoneBenhNhan($_GET['phone'] ?? "")->renderHtml2(null, null, 'glyphicon glyphicon-phone form-control-feedback');
+                            ?>
+                        </div>
+                        <div class="col-sm-3 form-group" style="margin-bottom: 0px;">
+                            <div class="form-group has-success has-feedback">
+                                <label for="inputSuccess2" class="text-capitalize"><em>Nhấn vào đây&nbsp; </em><i class="fa fa-check"></i></label>
+                                <button type="submit" style="border-radius: 5px;" class="form-control btn btn-success" name="btnTim">
+                                    <i class="fa fa-search-plus"></i>&nbsp;&nbsp; Tìm kiếm
+                                </button>
+                            </div>
+                        </div>
                     </div>
+                </form>
+            </div>
+            <div class="box-header">
+                <h3 style="margin: 0px;" class="text-center text-uppercase">Danh sách bệnh nhân trong ngày</h3>
+                <div class="box-title">
+                    <?php
+                    Module\benhnhan\Model\btnHtml::btnViewKhachHang();
+                    ?>
+                    <?php
+                    if (\Model\Permission::CheckPremision([
+                        \Model\User::QuanLy, \Model\User::Admin
+                    ], []) == true) {
+                    ?>
+                        <a class="btn btn-warning" <?php echo \Model\FormRender::ToolTip("Xuất Excel danh sách bệnh nhân trong ngày"); ?> href="/thongke/exportbenhnhantrongngay/">
+                            <i class="fa fa-filter"></i>&nbsp;Export danh sách</a>
+                    <?php
+                    }
+                    ?>
                 </div>
             </div>
             <div class="box-body">
@@ -84,7 +102,7 @@ use Model\ThongKe;
                                             <td><?php echo $_item->Id; ?></td>
                                             <td><?php echo $_item->Name; ?></td>
                                             <td><?php echo $_item->Gioitinh(); ?></td>
-                                            <td><?php echo $_item->Ngaysinh; ?></td>
+                                            <td><?php echo Common::ForMatDMY($_item->Ngaysinh); ?></td>
                                             <td><?php echo $_item->CMND; ?></td>
                                             <td><?php echo $_item->Address; ?></td>
                                             <td><?php echo $_item->Phone; ?></td>
@@ -113,7 +131,7 @@ use Model\ThongKe;
                         )->render();
                         ?>
                         <?php
-                        $linkPhanTrang = "/index.php?controller=thongke&action=benhnhantrongngay&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
+                        $linkPhanTrang = "/index.php?controller=thongke&action=benhnhantrongngay&keyword={$params["nameBN"]}&keyword={$params["address"]}&keyword={$params["phone"]}&indexPage=[i]&pageNumber={$pageNumber}";
                         echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
                         ?>
                     </div>

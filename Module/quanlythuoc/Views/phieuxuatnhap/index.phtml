@@ -6,17 +6,44 @@
 
 
 <div class="container-fluid">
-    <form method="get" action="/quanlythuoc/phieuxuatnhap/index/">
-        <div class="form-group d-flex">
-            <label class="btn btn-default"><input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox"><i class="fa fa-share" aria-hidden="true"></class=></i></label>
-            <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập vào mã phiếu hoặc nội dung phiếu để tìm kiếm">
-            <button class="btn btn-primary no-border-radius" name="btnTim" type="submit">
-                <i class="fa fa-search"></i> Tìm Kiếm
-            </button>
-        </div>
-    </form>
+
     <div class="clearfix">
-        <div class="box box-primary">
+        <div class="box box-success">
+            <div class="">
+                <div class="box-header">
+                    <form method="get" action="/quanlythuoc/phieuxuatnhap/index/">
+                        <div class="row">
+                            <div class="col-sm-3 form-group">
+                                <?php
+                                \Model\FormSearch::MaPhieu($_GET['idPhieu'] ?? null)->renderHtml2(null, null, 'glyphicon glyphicon-barcode form-control-feedback');
+                                ?>
+                            </div>
+                            <div class="col-sm-3 form-group">
+                                <?php
+                                \Model\FormSearch::LoaiPhieu($_GET['loaiphieu'] ?? null)->renderHtml2(null, null, '');
+                                ?>
+                            </div>
+                            <div class="col-sm-3 form-group">
+                                <?php
+                                \Model\FormSearch::NoiDungPhieu($_GET['content'] ?? null)->renderHtml2(null, null, 'glyphicon glyphicon-folder-open form-control-feedback');
+                                ?>
+                            </div>
+                            <div class="col-sm-3 form-group">
+                                <div class="form-group has-success has-feedback">
+                                    <label for="inputSuccess2" class="text-capitalize"><em>Nhấn vào đây&nbsp; </em><i class="fa fa-check"></i></label>
+                                    <button type="submit" style="border-radius: 5px;" class="form-control btn btn-success" name="btnTim" id="keyword">
+                                        <i class="fa fa-filter"></i>&nbsp; Tìm kiếm theo bộ lọc
+                                    </button>
+                                    <button type="submit" style="border-radius: 5px;" class="form-control btn btn-success" name="btnsubmit" id="keyword">
+                                        <i class="fa fa-filter"></i>&nbsp;Hello
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <hr style="border-top: 2px solid #00a65a; margin-top:0px" width="90%" noshade="noshade">
+            </div>
             <div class="box-header">
                 <h3 class="box-title">Danh Sách Phiếu</h3>
                 <div class="box-tools">
@@ -27,7 +54,7 @@
                     use Module\quanlythuoc\Model\PhieuXuatNhap;
 
                     Module\quanlythuoc\Model\btnHtml::btnThemPhieuXuatNhap();
-                    FormRender::HuongDan("danhsachphieu",'Hướng dẫn phiếu xuất/nhập');
+                    FormRender::HuongDan("danhsachphieu", 'Hướng dẫn phiếu xuất/nhập');
                     ?>
                 </div>
             </div>
@@ -85,7 +112,7 @@
                         )->render();
                         ?>
                         <?php
-                        $linkPhanTrang = "/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=index&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
+                        $linkPhanTrang = "/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=index&idPhieu={$params["idPhieu"]}&loaiphieu={$params["loaiphieu"]}&content={$params["content"]}&indexPage=[i]&pageNumber={$pageNumber}";
                         echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
                         ?>
                     </div>

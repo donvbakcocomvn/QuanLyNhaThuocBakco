@@ -14,7 +14,7 @@ use Module\donthuoc\Model\DonThuoc;
     <div class="clearfix">
         <div class="box box-success">
             <div class="box-header">
-                <form method="get" action="/thongke/donthuoctrongngay/">
+                <form method="get" action="/donthuoc/index/donthuoctrongngay/">
                     <div class="row">
                         <input name="indate" value="<?php echo date("Y-m-d", time()); ?>" type="hidden">
                         <div class="col-sm-3 form-group">
@@ -130,7 +130,7 @@ use Module\donthuoc\Model\DonThuoc;
                         )->render();
                         ?>
                         <?php
-                        $linkPhanTrang = "/index.php?controller=thongke&action=donthuoctrongngay&id={$params["id"]}&status={$params["status"]}&nameBN={$params["nameBN"]}&indexPage=[i]&pageNumber={$pageNumber}";
+                        $linkPhanTrang = "/index.php?module=donthuoc&controller=index&action=donthuoctrongngay&id={$params["id"]}&status={$params["status"]}&nameBN={$params["nameBN"]}&indexPage=[i]&pageNumber={$pageNumber}";
                         echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
                         ?>
                     </div>
@@ -141,7 +141,7 @@ use Module\donthuoc\Model\DonThuoc;
 </div>
 <script type="text/javascript">
     var SoDongHienThi = function(evalue) {
-        var linkPhanTrang = '/index.php?controller=thongke&action=donthuoctrongngay&indexPage=1&pageNumber=[j]';
+        var linkPhanTrang = '/index.php?module=donthuoc&controller=index&action=donthuoctrongngay&indexPage=1&pageNumber=[j]';
         linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
         window.location.href = linkPhanTrang;
     }

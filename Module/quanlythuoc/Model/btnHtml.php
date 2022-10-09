@@ -99,7 +99,7 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-default" <?php echo FormRender::ToolTip("Xóa thuốc"); ?> title="Bạn có muốn xóa danh mục này?" href="/index.php?module=quanlythuoc&controller=sanpham&action=isdelete&id=<?php echo $id; ?>">
+        <a class="btn btn-default" onclick="return confirm('Bạn có muốn xóa thuốc này không ?')" <?php echo FormRender::ToolTip("Xóa thuốc"); ?> title="Bạn có muốn xóa danh mục này?" href="/index.php?module=quanlythuoc&controller=sanpham&action=isdelete&id=<?php echo $id; ?>">
             <i class="fa fa-trash-o text-red"></i>
         </a>
     <?php
@@ -145,7 +145,7 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-default" <?php echo FormRender::ToolTip("Xóa danh mục thuốc"); ?> title="Bạn có muốn xóa danh mục này?" href="/index.php?module=quanlythuoc&controller=danhmuc&action=delete&id=<?php echo $id; ?>">
+        <a onclick="return confirm('Bạn có muốn xóa danh mục thuốc này không ?')" class="btn btn-default" <?php echo FormRender::ToolTip("Xóa danh mục thuốc"); ?> title="Bạn có muốn xóa danh mục này?" href="/index.php?module=quanlythuoc&controller=danhmuc&action=isdelete&id=<?php echo $id; ?>">
             <i class="fa fa-trash-o text-red"></i>
         </a>
     <?php

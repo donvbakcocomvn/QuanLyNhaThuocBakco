@@ -75,11 +75,13 @@ use PFBC\Element\Textbox;
                         <tr>
                             <th></th>
                             <th class="text-center">STT</th>
-                            <th>Mã Đơn Thuốc</th>
-                            <th>Tên Bệnh Nhân</th>
-                            <th>Giới Tính</th>
+                            <th class="text-center" style="width: 100px;">Mã&nbsp;
+                                <?php FormRender::ToolTipElement("Mã đơn thuốc"); ?>
+                            </th>
+                            <th class="text-center">Tên Bệnh Nhân</th>
+                            <th class="text-center"><i class="fa fa-venus-mars" aria-hidden="true"></i></th>
                             <th>Ngày Sinh</th>
-                            <th>Thời Gian Khám Bệnh</th>
+                            <th style="width: 100px;">TG Khám</th>
                             <th>Chẩn Đoán</th>
                             <!-- <th>Ngày Dùng</th> -->
                             <th>Tình trạng</th>
@@ -93,7 +95,7 @@ use PFBC\Element\Textbox;
                             // var_dump($_item);
                         ?>
                             <tr>
-                                <td class="text-center">
+                                <td class="text-center" style="width: 130px;">
                                     <?php
                                     echo Module\donthuoc\Model\btnHtml::btnCopyDonThuoc($_item->Id);
                                     // echo Module\donthuoc\Model\btnHtml::btnXoaDonThuoc($_item->Id);
@@ -104,9 +106,9 @@ use PFBC\Element\Textbox;
                                 <td class="text-center"><?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?></td>
                                 <td><?php echo $_item->Id; ?></td>
                                 <td><?php echo $_item->BenhNhan()->Name; ?></td>
-                                <td><?php echo $_item->BenhNhan()->Gioitinh(); ?></td>
+                                <td class="text-center"><?php echo $_item->BenhNhan()->Gioitinh(); ?></td>
                                 <td><?php echo Common::ForMatDMY($_item->BenhNhan()->Ngaysinh); ?></td>
-                                <td><?php echo date("d-m-Y H:i:s", strtotime($_item->ThoiGianKham)); ?></td>
+                                <td><?php echo date("d-m-Y", strtotime($_item->ThoiGianKham)); ?></td>
                                 <td><?php echo $_item->ChanDoanBenh ?></td>
                                 <!-- <td><?php echo $_item->TongNgayDung; ?></td> -->
                                 <td><?php echo $_item->Status(); ?></td>

@@ -123,6 +123,22 @@ class danhmuc extends \Application implements \Controller\IControllerBE
         \Model\Common::ToUrl("/index.php?module=quanlythuoc&controller=danhmuc&action=index");
     }
 
+    public function isdelete()
+    {
+        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DanhMuc_Delete]);
+        try {
+            if (\Model\Request::Get("id", [])) {
+                $DSMaDanhMuc = \Model\Request::Get("id", []);
+                $modelDanhMuc = new ModelDanhMuc();
+                $modelDanhMuc->isDelete([$DSMaDanhMuc]);
+            }
+            new \Model\Error(\Model\Error::success, "Xóa danh mục thuốc thành công");
+        } catch (\Exception $exc) {
+            new \Model\Error(\Model\Error::danger, $exc->getMessage());
+        }
+        \Model\Common::ToUrl($_SERVER["HTTP_REFERER"]);
+    }
+
     function GetByName()
     {
     }

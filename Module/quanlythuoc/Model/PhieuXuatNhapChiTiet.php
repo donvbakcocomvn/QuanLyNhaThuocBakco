@@ -57,6 +57,18 @@ class PhieuXuatNhapChiTiet extends \Model\DB implements \Model\IModelService
             }
         }
     }
+
+    public function GetXuatNhap($xuatnhap)
+    {
+        return $xuatnhap == 1 ? "<span class='label-success' style='padding:5px; border-radius: 5px'>Phiếu Nhập</span>" : "<span class='label-danger' style='padding:5px; border-radius: 5px'>Phiếu Xuất</span>";
+    }
+
+    public function GetByIdThuoc($IdThuoc)
+    {
+        $sql = "SELECT * FROM `lap1_qlthuoc_phieuxuatnhap_chitiet` WHERE `IdThuoc` = '$IdThuoc'";
+        $result = $this->GetRows($sql);
+        return $result;
+    }
     public function ThanhTien()
     {
         return number_format($this->Price * $this->SoLuong, 0, ".", ",") . " đ";

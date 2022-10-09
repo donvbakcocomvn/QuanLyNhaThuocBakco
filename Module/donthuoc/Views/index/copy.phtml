@@ -91,16 +91,13 @@ $benhnhan = new BenhNhan($donthuoc->IdBenhNhan);
                                 <?php $bn->Gioitinh($benhnhan->Gioitinh)->renderHtml();  ?>
                             </div>
                             <div class="col-md-4">
-                                <?php $bn->Namsinh(substr($benhnhan->Ngaysinh, 0, 4))->renderHtml();  ?>
+                                <?php $bn->Ngaysinh(date("d", strtotime($benhnhan->Ngaysinh)))->renderHtml();  ?>
                             </div>
                             <div class="col-md-4">
-                                <?php $bn->Thangsinh(substr($benhnhan->Ngaysinh, 5, 2))->renderHtml();  ?>
+                                <?php $bn->Thangsinh(date("m", strtotime($benhnhan->Ngaysinh)))->renderHtml();  ?>
                             </div>
                             <div class="col-md-4">
-                                <?php $bn->Ngaysinh(substr($benhnhan->Ngaysinh, 8, 2))->renderHtml();  ?>
-                            </div>
-                            <div class="col-md-12">
-                                <?php $bn->Address($benhnhan->Address)->renderHtml();  ?>
+                                <?php $bn->Namsinh(date("Y", strtotime($benhnhan->Ngaysinh)))->renderHtml();  ?>
                             </div>
                             <div class="col-md-12">
                                 <?php $bn->Address($benhnhan->Address)->renderHtml();  ?>
@@ -117,81 +114,79 @@ $benhnhan = new BenhNhan($donthuoc->IdBenhNhan);
                         </fieldset>
                     </div>
                 </div>
-                <fieldset>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>STT</th>
-                                <th>Tên Thuốc</th>
-                                <th>Số Ngày Dùng</th>
-                                <th>Cách Dùng</th>
-                                <th>Đơn Vị Tính</th>
-                                <th>Sáng</th>
-                                <th>Trưa</th>
-                                <th>Chiều</th>
-                                <th>Số Lượng</th>
-                                <th>Ghi Chú</th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-thuoc">
-                            <?php
-                            // var_dump(DonThuocDetail::DsThuoc());
-                            $i = 0;
-                            foreach (DonThuocDetail::DsThuoc() as $mathuoc => $thuoc) {
-                                $sanPham = new SanPham($thuoc["Id"] ?? null);
-                            ?>
-                                <tr>
-                                    <th>
-                                        <button data-toggle="tooltip" data-placement="top" title="" type="button" class="btn  btn-danger deleterow" id="delete0" index="0" data-original-title="Xóa thuốc">
-                                            <i class="fa fa-minus" aria-hidden="true"></i>
-                                        </button>
-                                    </th>
-                                    <td style="display: table-cell; vertical-align: middle;">
-                                        <div class="text-center">
-                                            <?php echo $i + 1; ?>
-                                        </div>
-                                    </td>
-                                    <td style="width:250px;">
-                                        <?php
-                                        echo $form->Name($thuoc["Id"] ?? "", "donthuoc" . $i, $i)->renderHTML() ?>
-                                    </td>
-                                    <td style="width:120px;">
-                                        <?php echo $form->SoNgaySDThuoc($thuoc["SoNgaySDThuoc"] ?? "", "SoNgaySD" . $i, $i)->render(); ?>
-                                    </td>
-                                    <td style="width: 150px;">
-                                        <?php echo $form->CachDung($sanPham->CachDungThuoc(), "cachdungthuoc" . $i, $i)->render(); ?>
-                                    </td>
-                                    <td style="width: 100px;">
-                                        <?php echo $form->DVT($sanPham->DonViTinh(), "dvt" . $i, $i)->render(); ?>
-                                    </td>
-                                    <td style="width: 100px;">
-                                        <?php echo $form->Sang($thuoc["Sang"] ?? "", "sang" . $i, $i)->render(); ?>
-                                    </td>
-                                    <td style="width: 100px;">
-                                        <?php echo $form->Trua($thuoc["Trua"] ?? "", "trua" . $i, $i)->render(); ?>
-                                    </td>
-                                    <td style="width: 100px;">
-                                        <?php echo $form->Chieu($thuoc["Chieu"] ?? "", "chieu" . $i, $i)->render(); ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $form->SoLuong($thuoc["Soluong"] ?? "", "soluong" . $i, $i)->render(); ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $form->GhiChu($sanPham->Ghichu, "ghichu" . $i, $i)->render(); ?>
-                                    </td>
-                                </tr>
-                            <?php
-                                $i++;
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                    <div class="col-md-12 ">
-                        <button class="btn btn-warning" type="reset">Làm Lại</button>
-                        <button class="btn btn-primary" name="LuuThoat">Sao chép đơn thuốc</button>
+                <div class="col-md-12">
+                    <div class="row">
+                        <fieldset>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Tên Thuốc</th>
+                                        <th>Số Ngày Dùng</th>
+                                        <th>Cách Dùng</th>
+                                        <th>Đơn Vị Tính</th>
+                                        <th>Sáng</th>
+                                        <th>Trưa</th>
+                                        <th>Chiều</th>
+                                        <th>Số Lượng</th>
+                                        <th>Ghi Chú</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-thuoc">
+                                    <?php
+                                    // var_dump(DonThuocDetail::DsThuoc());
+                                    $i = 0;
+                                    foreach (DonThuocDetail::DsThuoc() as $mathuoc => $thuoc) {
+                                        $sanPham = new SanPham($thuoc["Id"] ?? null);
+                                    ?>
+                                        <tr>
+                                            <td style="display: table-cell; vertical-align: middle;">
+                                                <div class="text-center">
+                                                    <?php echo $i + 1; ?>
+                                                </div>
+                                            </td>
+                                            <td style="width:250px;">
+                                                <?php
+                                                echo $form->Name($thuoc["Id"] ?? "", "donthuoc" . $i, $i)->renderHTML() ?>
+                                            </td>
+                                            <td style="width:120px;">
+                                                <?php echo $form->SoNgaySDThuoc($thuoc["SoNgaySDThuoc"] ?? "", "SoNgaySD" . $i, $i)->render(); ?>
+                                            </td>
+                                            <td style="width: 150px;">
+                                                <?php echo $form->CachDung($sanPham->CachDungThuoc(), "cachdungthuoc" . $i, $i)->render(); ?>
+                                            </td>
+                                            <td style="width: 100px;">
+                                                <?php echo $form->DVT($sanPham->DonViTinh(), "dvt" . $i, $i)->render(); ?>
+                                            </td>
+                                            <td style="width: 100px;">
+                                                <?php echo $form->Sang($thuoc["Sang"] ?? "", "sang" . $i, $i)->render(); ?>
+                                            </td>
+                                            <td style="width: 100px;">
+                                                <?php echo $form->Trua($thuoc["Trua"] ?? "", "trua" . $i, $i)->render(); ?>
+                                            </td>
+                                            <td style="width: 100px;">
+                                                <?php echo $form->Chieu($thuoc["Chieu"] ?? "", "chieu" . $i, $i)->render(); ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $form->SoLuong($thuoc["Soluong"] ?? "", "soluong" . $i, $i)->render(); ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $form->GhiChu($sanPham->Ghichu, "ghichu" . $i, $i)->render(); ?>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                        $i++;
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </fieldset>
                     </div>
-                </fieldset>
+                </div>
+                <div class="col-md-12 ">
+                    <button class="btn btn-warning" type="reset">Làm Lại</button>
+                    <button class="btn btn-primary" name="LuuThoat">Sao chép đơn thuốc</button>
+                </div>
             </form>
         </div>
     </div>

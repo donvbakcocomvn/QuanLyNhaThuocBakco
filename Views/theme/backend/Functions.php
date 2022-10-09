@@ -208,7 +208,7 @@ class Functions
         $user = User::CurentUser();
     ?>
         <!-- Left side column. contains the logo and sidebar -->
-        <aside class=" main-sidebar ">
+        <aside class=" main-sidebar " style="border-left: 1px solid #d2d6de;">
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar">
                 <!-- Sidebar user panel -->
@@ -323,7 +323,7 @@ class Functions
                                 ], []) == true) {
                                 ?>
                                     <li class="text-capitalize">
-                                        <a href="/thongke/donthuoctrongngay"><i class="fa fa-circle-o"></i>
+                                        <a href="/donthuoc/index/donthuoctrongngay/"><i class="fa fa-circle-o"></i>
                                             Đơn trong ngày
                                         </a>
                                     </li>

@@ -11,26 +11,36 @@ use Model\Locations;
 use Model\ThongKe;
 ?>
 <div class="container-fluid">
-    <form method="get" action="/thongke/thuocsaphet/">
-        <div class="form-group d-flex">
-            <label class="btn btn-default"><input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox"><i class="fa fa-share" aria-hidden="true"></class=></i></label>
-            <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập vào tên thuốc để tìm kiếm">
-            <button class="btn btn-primary no-border-radius" name="btnTim" type="submit">
-                <i class="fa fa-search"></i> Tìm Kiếm
-            </button>
-        </div>
-    </form>
     <div class="clearfix">
         <div class="box box-primary">
             <div class="box-header">
-                <h3 class="text-center text-uppercase">Danh sách thuốc sắp hết</h3>
-                <div class="box-tools float-left">
+                <form method="get" action="/thongke/thuocsaphet/">
+                    <div class="form-group d-flex" style="margin-bottom: 0px;">
+                            <div class="col-sm-10 form-group" style="margin-bottom: 0px;">
+                                <?php
+                                \Model\FormSearch::KeyWordDashboard("Tên thuốc", $_REQUEST['keyword'] ?? null, "Nhập vào tên thuốc để tìm kiếm")->renderHtml2(null, null, 'glyphicon glyphicon-barcode form-control-feedback');
+                                ?>
+                            </div>
+                            <div class="col-sm-2 form-group" style="margin-bottom: 0px;">
+                                <div class="form-group has-success has-feedback">
+                                    <label for="inputSuccess2" class="text-capitalize"><em>Nhấn vào đây&nbsp; </em><i class="fa fa-check"></i></label>
+                                    <button type="submit" style="border-radius: 5px;" class="form-control btn btn-success" name="btnTim">
+                                        <i class="fa fa-search-plus"></i>&nbsp;&nbsp; Tìm kiếm
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                </form>
+            </div>
+            <div class="box-header">
+                <h3 class="text-center text-uppercase" style="margin: 0px;">Danh sách thuốc sắp hết</h3>
+                <div class="box-title">
                     <?php
                     if (\Model\Permission::CheckPremision([
                         \Model\User::QuanLy, \Model\User::Admin
                     ], []) == true) {
                     ?>
-                        <a class="btn btn-success" href="/thongke/exportthuocsaphet/">
+                        <a class="btn btn-warning" <?php echo \Model\FormRender::ToolTip("Xuất Excel danh sách thuốc có số lượng sắp hết trong kho"); ?> href="/thongke/exportthuocsaphet/">
                             <i class="fa fa-filter"></i>&nbsp;Export danh sách</a>
                     <?php
                     }
@@ -45,11 +55,11 @@ use Model\ThongKe;
                             <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                                 <thead>
                                     <tr role="row">
-                                        <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">STT</th>
+                                        <th class="sorting_asc text-center" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">STT</th>
                                         <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Tên thuốc</th>
 
                                         <th class="sorting text-center" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Còn lại</th>
-                                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Số lô</th>
+                                        <th class="sorting text-center" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Số lô</th>
                                         <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Nhà sản xuất</th>
                                         <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">Nước sản xuất</th>
                                     </tr>

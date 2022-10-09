@@ -27,11 +27,13 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
 
     function index()
     {
+        $data = null;
+        $params["idPhieu"] = isset($_REQUEST["idPhieu"]) ? \Model\Common::TextInput($_REQUEST["idPhieu"]) : "";
+        $params["loaiphieu"] = isset($_REQUEST["loaiphieu"]) ? \Model\Common::TextInput($_REQUEST["loaiphieu"]) : "";
+        $params["content"] = isset($_REQUEST["content"]) ? \Model\Common::TextInput($_REQUEST["content"]) : "";
         \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Phieu_DS]);
+        if (isset($_REQUEST['btnTim'])) {
         $modelItem = new \Module\quanlythuoc\Model\PhieuXuatNhap();
-        $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
-        $params["danhmuc"] = isset($_REQUEST["danhmuc"]) ? \Model\Common::TextInput($_REQUEST["danhmuc"]) : "";
-        $params["isShow"] = isset($_REQUEST["isShow"]) ? \Model\Common::TextInput($_REQUEST["isShow"]) : "";
         $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
         $indexPage = max(1, $indexPage);
         $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;
@@ -44,6 +46,23 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
         $data["pageNumber"] = $pageNumber;
         $data["params"] = $params;
         $data["total"] = $total;
+        }
+        else {
+            $total = 0;
+            $modelItem = new \Module\quanlythuoc\Model\PhieuXuatNhap();
+            $DanhSachTaiKhoan = $modelItem->GetItems([], 1, 10, $total);
+
+            $data["items"] = $DanhSachTaiKhoan;
+            $data["indexPage"] = 1;
+            $data["pageNumber"] = 10;
+            $data["params"] = $params;
+            $data["total"] = $total;
+        }
+        
+        if (isset($_REQUEST['btnsubmit'])) {
+            
+        }
+        
         $this->View($data);
     }
 

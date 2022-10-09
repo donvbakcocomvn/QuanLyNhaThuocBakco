@@ -129,6 +129,7 @@ class DB
      */
     public function Update($model, $where)
     {
+        // self::$Debug = true;
         $TableName = self::$TableName;
         $strsql = "";
         foreach ($model as $col => $val) {

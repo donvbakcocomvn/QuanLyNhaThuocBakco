@@ -51,9 +51,9 @@ class thongke extends \Application
     function benhnhantrongngay()
     {
         $modelItem = new \Model\ThongKe();
-        $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
-        $params["danhmuc"] = isset($_REQUEST["danhmuc"]) ? \Model\Common::TextInput($_REQUEST["danhmuc"]) : "";
-        $params["isShow"] = isset($_REQUEST["isShow"]) ? \Model\Common::TextInput($_REQUEST["isShow"]) : "";
+        $params["nameBN"] = isset($_REQUEST["nameBN"]) ? \Model\Common::TextInput($_REQUEST["nameBN"]) : "";
+        $params["address"] = isset($_REQUEST["address"]) ? \Model\Common::TextInput($_REQUEST["address"]) : "";
+        $params["phone"] = isset($_REQUEST["phone"]) ? \Model\Common::TextInput($_REQUEST["phone"]) : "";
         $params["indate"] = isset($_REQUEST["indate"]) ? date('Y-m-d', strtotime($_REQUEST["indate"])) : date('Y-m-d', time());
         $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
         $indexPage = max(1, $indexPage);
@@ -72,9 +72,9 @@ class thongke extends \Application
     function donthuoctrongngay()
     {
         $modelItem = new \Model\ThongKe();
-        $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
-        $params["danhmuc"] = isset($_REQUEST["danhmuc"]) ? \Model\Common::TextInput($_REQUEST["danhmuc"]) : "";
-        $params["isShow"] = isset($_REQUEST["isShow"]) ? \Model\Common::TextInput($_REQUEST["isShow"]) : "";
+        $params["id"] = isset($_REQUEST["id"]) ? \Model\Common::TextInput($_REQUEST["id"]) : "";
+        $params["status"] = isset($_REQUEST["status"]) ? \Model\Common::TextInput($_REQUEST["status"]) : "";
+        $params["nameBN"] = isset($_REQUEST["nameBN"]) ? \Model\Common::TextInput($_REQUEST["nameBN"]) : "";
         $params["indate"] = isset($_REQUEST["indate"]) ? date('Y-m-d', strtotime($_REQUEST["indate"])) : date('Y-m-d', time());
         $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
         $indexPage = max(1, $indexPage);
@@ -94,8 +94,6 @@ class thongke extends \Application
     {
         $modelItem = new \Model\ThongKe();
         $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
-        $params["danhmuc"] = isset($_REQUEST["danhmuc"]) ? \Model\Common::TextInput($_REQUEST["danhmuc"]) : "";
-        $params["isShow"] = isset($_REQUEST["isShow"]) ? \Model\Common::TextInput($_REQUEST["isShow"]) : "";
         $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
         $indexPage = max(1, $indexPage);
         $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;

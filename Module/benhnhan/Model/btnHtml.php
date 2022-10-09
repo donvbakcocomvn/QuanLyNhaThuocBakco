@@ -19,7 +19,7 @@ class btnHtml
         }
 ?>
         <a class="btn btn-warning" <?php echo \Model\FormRender::ToolTip("Danh sách bệnh nhân trong ngày hôm nay"); ?> href="/thongke/benhnhantrongngay">
-            <i class="fa fa-list-alt"></i> Danh sách bệnh nhân trong ngày </a>
+            <i class="fa fa-list-alt"></i> Bệnh nhân trong ngày </a>
     <?php
     }
 
@@ -41,7 +41,7 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-primary" href="/benhnhan">
+        <a class="btn btn-primary" href="/benhnhan" <?php echo \Model\FormRender::ToolTip("Danh sách thông tin tất cả bệnh nhân"); ?>>
             &nbsp;<i class="fa fa-th-list"></i> Danh sách bệnh nhân</a>
     <?php
     }
@@ -87,7 +87,7 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-default" <?php echo \Model\FormRender::ToolTip("Xóa bệnh nhân"); ?> title="Bạn có muốn xóa danh mục này?" href="/index.php?module=benhnhan&controller=index&action=isdelete&id=<?php echo $id; ?>">
+        <a class="btn btn-default" onclick="return confirm('Bạn có muốn xóa bệnh nhân này không ?')" <?php echo \Model\FormRender::ToolTip("Xóa bệnh nhân"); ?> title="Bạn có muốn xóa danh mục này?" href="/index.php?module=benhnhan&controller=index&action=isdelete&id=<?php echo $id; ?>">
             <i class="fa fa-trash-o text-red"></i>
         </a>
 <?php

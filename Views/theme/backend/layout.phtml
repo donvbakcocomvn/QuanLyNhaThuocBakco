@@ -17,7 +17,7 @@ use Views\theme\backend\Functions;
         Functions::header();
         Functions::leftaside();
         ?>
-        <div class="content-wrapper">
+        <div class="content-wrapper" style="border: unset;">
             <?php
             $error = \Model\Error::GetError();
             if ($error != null) {

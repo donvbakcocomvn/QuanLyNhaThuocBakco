@@ -126,12 +126,23 @@ $(document).ready(function () {
                         // alert("Thuốc đã có trong danh sách");
                         Swal.fire({
                             icon: 'error',
-                            title: 'Oops...',
-                            text: 'Something went wrong!',
-                            footer: '<a href="">Why do I have this issue?</a>'
-                        });
+                            title: 'Phòng Khám Phương Uyên',
+                            text: 'Thuốc này đã có trong danh sách, vui lòng chọn lại !',
+                            // showDenyButton: true,
+                            // showCancelButton: true,
+                            confirmButtonText: 'Chọn lại',
+                            // denyButtonText: `Don't save`,
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                            if (result.isConfirmed) {
+                                Swal.fire('OKayyy !', '', 'success')
+                                window.location.reload();
+                            } 
+                            // else if (result.isDenied) {
+                            //     Swal.fire('Changes are not saved', '', 'info')
+                            // }
+                        })
                         console.log(idName);
-                        window.location.reload();
                         $(idName).val("");
                         console.log($(idName + " option:selected").val());
                         return;

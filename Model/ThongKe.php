@@ -38,7 +38,7 @@ class ThongKe extends DB
             $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
         }
         // self::$Debug = true;
-        $where = " (`Name` like '%{$name}%' or `Id` like '%{$name}%' or `Idloaithuoc` like '%{$name}%' {$danhmucSql}) and `isDelete` = 0 ORDER BY `Name` DESC ";
+        $where = " (`Name` like '%{$name}%' or `Id` like '%{$name}%' or `Idloaithuoc` like '%{$name}%' {$danhmucSql}) and `isDelete` = 0 ";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 
@@ -66,19 +66,8 @@ class ThongKe extends DB
     {
         self::$TableName = prefixTable . "qlthuoc_phieuxuatnhap_chitiet";
         $name = isset($params["keyword"]) ? $params["keyword"] : '';
-        $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
-        $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
-        $isShowSql = "and `isShow` >= 0 ";
-        $indateSql = "";
-        $danhmucSql = "";
-        if ($isShow) {
-            $isShowSql = "and `isShow` = '{$isShow}' ";
-        }
-        if ($danhmuc) {
-            $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
-        }
         // self::$Debug = true;
-        $where = " (`IdThuoc` like '%{$name}%' {$danhmucSql}) and `isDelete` = 0 and `XuatNhap` = 1 ";
+        $where = " (`IdPhieu` like '%{$name}%' or `IdThuoc` like '%{$name}%') and `isDelete` = 0 and `XuatNhap` = 1 ";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 
@@ -86,19 +75,8 @@ class ThongKe extends DB
     {
         self::$TableName = prefixTable . "qlthuoc_phieuxuatnhap_chitiet";
         $name = isset($params["keyword"]) ? $params["keyword"] : '';
-        $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
-        $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
-        $isShowSql = "and `isShow` >= 0 ";
-        $indateSql = "";
-        $danhmucSql = "";
-        if ($isShow) {
-            $isShowSql = "and `isShow` = '{$isShow}' ";
-        }
-        if ($danhmuc) {
-            $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
-        }
         // self::$Debug = true;
-        $where = " (`IdThuoc` like '%{$name}%' {$danhmucSql}) and `isDelete` = 0 and `XuatNhap` = -1 ";
+        $where = " (`IdPhieu` like '%{$name}%' or `IdThuoc` like '%{$name}%') and `isDelete` = 0 and `XuatNhap` = -1 ";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 
@@ -144,52 +122,52 @@ class ThongKe extends DB
     public function GetBenhNhanTrongNgay($params, $indexPage, $pageNumber, &$total)
     {
         self::$TableName = prefixTable . "benhnhan";
-        $name = isset($params["keyword"]) ? $params["keyword"] : '';
-        $fromdate = isset($params["fromdate"]) ? $params["fromdate"] : null;
-        $todate = isset($params["todate"]) ? $params["todate"] : null;
+        $name = isset($params["nameBN"]) ? $params["nameBN"] : '';
         $indate = isset($params["indate"]) ? $params["indate"] : null;
-        $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
-        $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
-        $isShowSql = "and `isShow` >= 0 ";
+        $diachi = isset($params["address"]) ? $params["address"] : null;
+        $sdt = isset($params["phone"]) ? $params["phone"] : null;
         $indateSql = "";
-        $danhmucSql = "";
+        $diachiSql = "";
+        $sdtSql = "";
         if ($indate) {
             $indateSql = " and `CreateRecord` LIKE '%$indate%'";
         }
-        if ($isShow) {
-            $isShowSql = "and `isShow` = '{$isShow}' ";
+        if ($diachi) {
+            $diachiSql = "and `Address` = '{$diachi}' ";
         }
-        if ($danhmuc) {
-            $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
+        if ($sdt) {
+            $sdtSql = "and `Phone` = '{$sdt}' ";
         }
         // self::$Debug = true;
-        $where = " (`Name` like '%{$name}%' or `Phone` like '%{$name}%' or `Address` like '%{$name}%' {$danhmucSql}) {$indateSql} and `isDelete` = 0 ";
+        $where = " (`Name` like '%{$name}%'{$diachiSql}{$sdtSql}) {$indateSql} and `isDelete` = 0 ";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 
     public function GetDonThuocTrongNgay($params, $indexPage, $pageNumber, &$total)
     {
         self::$TableName = prefixTable . "toathuoc";
-        $name = isset($params["keyword"]) ? $params["keyword"] : '';
-        $fromdate = isset($params["fromdate"]) ? $params["fromdate"] : null;
-        $todate = isset($params["todate"]) ? $params["todate"] : null;
+        $id = isset($params["id"]) ? $params["id"] : '';
+        $status = isset($params["status"]) ? $params["status"] : '';
+        $nameBN = isset($params["nameBN"]) ? $params["nameBN"] : '';
         $indate = isset($params["indate"]) ? $params["indate"] : null;
-        $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
-        $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
-        $isShowSql = "and `isShow` >= 0 ";
+        $idSql = "";
+        $nameBNSql = "";
+        $statusSql = "";
         $indateSql = "";
-        $danhmucSql = "";
+        if ($id) {
+            $idSql = " and `Id` LIKE '%$id%'";
+        }
         if ($indate) {
             $indateSql = " and `CreateRecord` LIKE '%$indate%'";
         }
-        if ($isShow) {
-            $isShowSql = "and `isShow` = '{$isShow}' ";
+        if ($status) {
+            $statusSql = "and `ThuocLoaiDon` = '{$status}' ";
         }
-        if ($danhmuc) {
-            $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
+        if ($nameBN) {
+            $nameBNSql = "and `NameBN` = '{$nameBN}' ";
         }
         // self::$Debug = true;
-        $where = " (`NameBN` like '%{$name}%' {$danhmucSql}) {$indateSql} ORDER BY `CreateRecord` DESC";
+        $where = " (`Id` like '%{$id}%' {$statusSql} {$nameBNSql}) {$indateSql} ORDER BY `CreateRecord` DESC";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 
@@ -197,19 +175,8 @@ class ThongKe extends DB
     {
         self::$TableName = prefixTable . "qlthuoc_phieuxuatnhap_chitiet";
         $name = isset($params["keyword"]) ? $params["keyword"] : '';
-        $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
-        $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
-        $isShowSql = "and `isShow` >= 0 ";
-        $indateSql = "";
-        $danhmucSql = "";
-        if ($isShow) {
-            $isShowSql = "and `isShow` = '{$isShow}' ";
-        }
-        if ($danhmuc) {
-            $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
-        }
         // self::$Debug = true;
-        $where = " (`IdThuoc` like '%{$name}%' {$danhmucSql}) {$indateSql} and DATEDIFF(`HanSuDung`,CURDATE()) >= 0 AND DATEDIFF(`HanSuDung`,CURDATE()) <= 60 AND `XuatNhap` = 1";
+        $where = " (`IdPhieu` like '%{$name}%' or `IdThuoc` like '%{$name}%' ) and DATEDIFF(`HanSuDung`,CURDATE()) >= 0 AND DATEDIFF(`HanSuDung`,CURDATE()) <= 60 AND `XuatNhap` = 1";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 
@@ -365,11 +332,10 @@ class ThongKe extends DB
     public static function GetTongXuatNhap()
     {
         $thongke = new ThongKe();
-        $table = prefixTable;
         $sql = "Select `IdThuoc`, 
         SUM(CASE When `XuatNhap`= 1 Then`SoLuong` Else 0 End ) as 'TongSLNhap', 
         SUM(CASE When `XuatNhap`= -1 Then `SoLuong` Else 0 End ) as 'TongSLXuat'
-        from  `{$table}qlthuoc_phieuxuatnhap_chitiet`
+        from  `lap1_qlthuoc_phieuxuatnhap_chitiet`
         Where `IsDelete`=0
         GROUP BY `IdThuoc`";
         $result = $thongke->GetRows($sql);
@@ -378,12 +344,11 @@ class ThongKe extends DB
     public static function GetTongXuatNhapById($idThuoc)
     {
         $thongke = new ThongKe();
-        $table = prefixTable;
-        $sql = "Select `IdThuoc`, 
+        echo $sql = "Select `IdThuoc`, 
         SUM(CASE When `XuatNhap`= 1 Then`SoLuong` Else 0 End ) as 'TongSLNhap', 
         SUM(CASE When `XuatNhap`= -1 Then `SoLuong` Else 0 End ) as 'TongSLXuat'
-        from  `{$table}qlthuoc_phieuxuatnhap_chitiet`
-        Where `IsDelete`=0 and `IdThuoc` = '{$idThuoc}'
+        from  `lap1_qlthuoc_phieuxuatnhap_chitiet`
+        Where and `IdThuoc` = '{$idThuoc}'
         GROUP BY `IdThuoc`";
         $result = $thongke->GetRows($sql);
         return $result;

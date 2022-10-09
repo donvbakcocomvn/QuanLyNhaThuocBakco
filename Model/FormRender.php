@@ -73,7 +73,13 @@ class FormRender
                         ?>
                     </div>
                     <div class="modal-footer">
-                        <a href="/huongdan/put/<?php echo $id; ?>/" class="btn btn-success">Sửa File hướng dẫn</a>
+                        <?php
+                        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy]) == true) {
+                        ?>
+                            <a href="/huongdan/put/<?php echo $id; ?>/" class="btn btn-success">Sửa File hướng dẫn</a>
+                        <?php
+                        }
+                        ?>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Thoát/Đóng lại</button>
                     </div>
                 </div>
