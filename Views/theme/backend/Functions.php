@@ -41,6 +41,7 @@ class Functions
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.5 -->
         <link rel="stylesheet" href="/public/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/public/dist/js/app.min.js">
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
         <!-- Ionicons -->
@@ -385,7 +386,7 @@ class Functions
                         <li class="">
                             <a href="/donthuoc/index/post/?isnew=1">
                                 <i class="fa fa-plus-square"></i>
-                                <span>Thêm đơn thuốc</span>
+                                <span>Tạo đơn thuốc</span>
                             </a>
                         </li>
                     <?php

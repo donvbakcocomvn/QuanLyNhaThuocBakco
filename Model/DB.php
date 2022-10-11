@@ -10,7 +10,7 @@ class DB
     private static $Connect;
 
     private static $params;
-    
+
     // static protected $_Query = "";
 
     public function __construct()
@@ -170,7 +170,6 @@ class DB
 
     public function DeleteById($id)
     {
-
         $where = " `Id` = '{$id}' ";
         $this->DeleteDB($where);
     }
@@ -229,7 +228,8 @@ class DB
         return $d;
     }
 
-    static function getParam() {
+    static function getParam()
+    {
         if (self::$params) {
             foreach (self::$params as $v => $param) {
                 self::$params[$v] = self::BokyTuDacBietPaRam(self::$params[$v]);
@@ -240,7 +240,8 @@ class DB
         }
     }
 
-    static function BokyTuDacBietPaRam($str) {
+    static function BokyTuDacBietPaRam($str)
+    {
 
         if (!empty($str)) {
             $kytu = array(";", "select", "delete", "insert", "update");

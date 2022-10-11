@@ -218,10 +218,12 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
 
     public function Delete($Id)
     {
-        $sp = new SanPham($Id);
-        $model["Id"] = $sp->Id;
-        $model["IsDelete"] = 1;
-        return $sp->Put($model);
+    }
+
+    public function DeleteByIdPhieu($IdPhieu)
+    {
+        $where = " `IdPhieu` = '{$IdPhieu}' ";
+        $this->DeleteDB($where);
     }
 
     public function Post($model)
@@ -244,6 +246,12 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
     {
         // DB::$Debug = true;
         return $this->SelectRow("`IdPhieu` = '{$Id}'");
+    }
+
+    public function GetByIdDonThuoc($IdDonThuoc)
+    {
+        // DB::$Debug = true;
+        return $this->SelectRow("`IdDonThuoc` = '{$IdDonThuoc}'");
     }
 
     public function GetByIdThuoc($Id)

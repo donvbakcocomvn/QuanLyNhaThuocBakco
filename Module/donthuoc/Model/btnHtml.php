@@ -65,7 +65,7 @@ class btnHtml
         }
     ?>
         <a class="btn btn-info" <?php echo \Model\FormRender::ToolTip("Thêm đơn thuốc mới"); ?> href="/index.php?module=donthuoc&controller=index&action=post&isnew=1">
-            <i class="fa fa-plus"></i> Thêm đơn thuốc</a>
+            <i class="fa fa-plus"></i> Tạo đơn thuốc</a>
     <?php
     }
 

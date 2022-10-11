@@ -151,7 +151,7 @@ class login extends \Application
                     $user->UpdatePass($pass, $userName);  // Update Mật Khẩu Mới
                     echo "<script>alert('Đổi Mật Khẩu Thành Công!');</script>";
                 }
-                // Common::ToUrl("/index.php?controller=login&action=index");
+                Common::ToUrl("/index.php?controller=login&action=index");
 
             }
         } catch (Exception $ex) {

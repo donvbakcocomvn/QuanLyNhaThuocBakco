@@ -91,14 +91,13 @@ class SanPham extends \Model\DB implements \Model\IModelService
 
     function DongBoThuocNhap()
     {
-        $thuocNhap = ThongKe::GetTongXuatNhap();
-        // phía phiếu
-        foreach ($thuocNhap as $item) {
-            $thuoc = new SanPham($item['IdThuoc']);
-            $thuocModel = $thuoc->GetById($item['IdThuoc']);
-            $thuocModel["SLXuat"] = $item["TongSLXuat"];
-            $thuocModel["SLNhap"] = $item["TongSLNhap"];
-            $thuocModel["SLHienTai"] = $thuocModel["Soluong"] - $item["TongSLXuat"] + $item["TongSLNhap"];
+        $item = ThongKe::GetTongXuatNhap();
+        $thuoc = new SanPham();
+        $thuocModel = $thuoc->GetThuoc();
+        if ($thuocNhap['IdThuoc'] = $thuocModel['Id']) {
+            $thuocModel["SLXuat"] = $item["TongSLXuat"] ?? 0;
+            $thuocModel["SLNhap"] = $item["TongSLNhap"] ?? 0;
+            $thuocModel["SLHienTai"] = $thuocModel["Soluong"] - $thuocModel["SLXuat"] +  $thuocModel["SLNhap"];
             $thuoc->Put($thuocModel);
         }
     }
@@ -215,7 +214,7 @@ class SanPham extends \Model\DB implements \Model\IModelService
 
     public function GetThuoc()
     {
-        $sql = "SELECT `Id`, `Idloaithuoc`, `Name`, `Solo`, `Gianhap`, `Giaban`, `DVT`, `Ngaysx`, `HSD`, `Tacdung`, `Cochetacdung`, `Ghichu`, `Soluong`, `SLXuat`, `SLNhap`, `SLHienTai`,`Canhbao`, `NhaSX`, `NuocSX`, `CachDung`,`CreateRecord` FROM `lap1_qlthuoc_thuoc`";
+        $sql = "SELECT * FROM `lap1_qlthuoc_thuoc`";
         $result = $this->GetRows($sql);
         return $result;
     }

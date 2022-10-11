@@ -16,8 +16,8 @@ $roleDetail = new Model\Role();
         <div class="box-header">
             <h3 class="box-title">Sửa Thuốc</h3>
             <div class="box-tools">
-                <?php 
-                    \Model\FormRender::HuongDan("suathuoc", "Hướng dẫn sửa thuốc")
+                <?php
+                \Model\FormRender::HuongDan("suathuoc", "Hướng dẫn sửa thuốc")
                 ?>
             </div>
         </div>
@@ -75,11 +75,11 @@ $roleDetail = new Model\Role();
                         <?php $sp->Canhbao($item->Canhbao)->renderHtml();  ?>
                     </div>
                     <div class="col-md-4">
-                        <?php 
+                        <?php
                         $sp->Ngaysx($item->Ngaysx)->renderHtml();  ?>
                     </div>
                     <div class="col-md-4">
-                        <?php 
+                        <?php
                         $sp->HSD($item->HSD)->renderHtml();  ?>
                     </div>
                     <div class="col-md-4">
@@ -99,8 +99,5 @@ $roleDetail = new Model\Role();
                 </div>
         </form>
     </div>
-</div>
-</form>
-</div>
 </div>
 </div>

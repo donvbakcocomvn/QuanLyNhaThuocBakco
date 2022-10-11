@@ -149,7 +149,6 @@ class PhieuXuatNhapChiTiet extends \Model\DB implements \Model\IModelService
         $_SESSION["DSThuocPhieuNhap"][$index] = $phieu;
     }
 
-
     function CreatIdPhieu($IdPhieu = null)
     {
 
@@ -192,6 +191,12 @@ class PhieuXuatNhapChiTiet extends \Model\DB implements \Model\IModelService
         }
         $DM = new danhmuc();
         return $DM->DeleteById($Id);
+    }
+
+    public function DeleteByIdPhieu($IdPhieu)
+    {
+        $where = " `IdPhieu` = '{$IdPhieu}' ";
+        $this->DeleteDB($where);
     }
 
     public function Post($model)

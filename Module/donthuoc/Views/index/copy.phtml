@@ -120,6 +120,11 @@ $benhnhan = new BenhNhan($donthuoc->IdBenhNhan);
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
+                                        <th>
+                                            <button data-toggle="tooltip" data-placement="top" title="Thêm thuốc mới" type="button" class="btn btn-success" id="btn-add">
+                                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                            </button>
+                                        </th>
                                         <th>STT</th>
                                         <th>Tên Thuốc</th>
                                         <th>Số Ngày Dùng</th>
@@ -140,6 +145,11 @@ $benhnhan = new BenhNhan($donthuoc->IdBenhNhan);
                                         $sanPham = new SanPham($thuoc["Id"] ?? null);
                                     ?>
                                         <tr>
+                                            <th>
+                                                <button data-toggle="tooltip" data-placement="top" title="Xóa thuốc" type="button" title="Xóa thuốc này?" class="btn btn-danger deleterows" id="<?php echo 'delete' . $mathuoc ?>" index=<?php echo $mathuoc ?>>
+                                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                                </button>
+                                            </th>
                                             <td style="display: table-cell; vertical-align: middle;">
                                                 <div class="text-center">
                                                     <?php echo $i + 1; ?>

@@ -12,6 +12,7 @@
                 <h3 class="box-title">Import Thuốc </h3>
                 <div class="box-tools">
                     <?php
+
                     use Module\quanlythuoc\Model\SanPham;
                     // Module\quanlythuoc\Model\btnHtml::btnViewSanPham();
                     \Model\FormRender::HuongDan("importthuoc", "Hướng dẫn Import")
@@ -26,13 +27,15 @@
                             <i class="fa fa-file-text-o"></i>
                         </a>
                         <form action="" method="post" enctype="multipart/form-data" accept=".xlsx">
-                            <label style="background: #aaa;padding: 10px;cursor: pointer;">
+                            <label style="background: #aaaaaa94;padding: 10px;cursor: pointer;" for="exampleInputFile">
                                 <br>
-                                Chọn file
-                                <input type="file" style="visibility: hidden;" name="import_file" />
+                                CHỌN FILE
+                                <hr style="border-top: 1px solid #00a65a;text-align: center; margin: 5px 0px" width="100%" noshade="noshade">
+                                <input type="file" id="exampleInputFile" name="import_file" />
+                                <br>
                             </label>
                             <br>
-                            <input type="submit" name="submit" id="import" class="btn btn-success" value="Import File"/>
+                            <input type="submit" name="submit" id="import" class="btn btn-success" value="Import File" />
                         </form>
                     </div>
                 </table>

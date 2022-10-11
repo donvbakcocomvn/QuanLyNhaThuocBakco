@@ -35,7 +35,8 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		$properties["class"] = " form-control saveinfor";
 		$properties["readonly"] = $val;
-		$properties[FormRender::Required] = "true";
+		$properties["style"] = "border: 1px solid red; background-color: #de020252";
+		// $properties[FormRender::Required] = "true";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
 		return new FormRender(new Textbox("Mã đơn thuốc", $name, $properties));
 	}
@@ -131,6 +132,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 		$properties = self::$properties;
 		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		$properties[FormRender::Readonly] = "true";
+		$properties["style"] = "border: 1px solid red; background-color: #de020252";
 		$properties["class"] = " form-control saveinfor";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
 		return new FormRender(new Textbox("Ngày Tạo", $name, $properties));

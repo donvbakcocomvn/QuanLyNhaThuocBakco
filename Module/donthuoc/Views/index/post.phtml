@@ -10,7 +10,7 @@
 <ol class="breadcrumb">
     <li><a href="/index.php?controller=backend">Home</a></li>
     <li><a href="/index.php?module=donthuoc&controller=index&action=index"> Danh Sách Đơn Thuốc</a></li>
-    <li> Thêm Đơn Thuốc </li>
+    <li> Tạo Đơn Thuốc </li>
 </ol>
 <?php
 
@@ -29,7 +29,7 @@ $roleDetail = new Model\Role();
 <div class="container-fluid">
     <div class="box box-primary">
         <div class="box-header">
-            <h3 class="box-title">Thêm Đơn Thuốc</h3>
+            <h3 class="box-title">Tạo Đơn Thuốc</h3>
             <div class="box-tools">
                 <?php
                 \Model\FormRender::HuongDan("themdonthuoc", "Hướng dẫn thêm đơn thuốc");
@@ -52,10 +52,10 @@ $roleDetail = new Model\Role();
                                     $form = new FormDonThuoc(FormDonThuoc::GetFormData());
                                     $donthuoc = new DonThuoc();
                                     ?>
-                                    <div class="col-md-12">
+                                    <div class="">
                                         <div class="form-group">
                                             <label>Ngày dùng thuốc</label>
-                                            <div class="d-flex">
+                                            <div class="d-flex ">
                                                 <?php echo $form->TongNgayDung($_SESSION["SoNgaySDThuoc"] ?? 0)->render(); ?>
                                                 <?php btnHtml::btnCapNhatNgayDung(); ?>
                                             </div>

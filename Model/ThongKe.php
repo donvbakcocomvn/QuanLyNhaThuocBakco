@@ -176,7 +176,7 @@ class ThongKe extends DB
         self::$TableName = prefixTable . "qlthuoc_phieuxuatnhap_chitiet";
         $name = isset($params["keyword"]) ? $params["keyword"] : '';
         // self::$Debug = true;
-        $where = " (`IdPhieu` like '%{$name}%' or `IdThuoc` like '%{$name}%' ) and DATEDIFF(`HanSuDung`,CURDATE()) >= 0 AND DATEDIFF(`HanSuDung`,CURDATE()) <= 60 AND `XuatNhap` = 1";
+        $where = " (`IdPhieu` like '%{$name}%' or `IdThuoc` like '%{$name}%' ) and DATEDIFF(`HanSuDung`,CURDATE()) >= 0 AND DATEDIFF(`HanSuDung`,CURDATE()) <= 120 AND `XuatNhap` = 1";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 
@@ -338,19 +338,19 @@ class ThongKe extends DB
         from  `lap1_qlthuoc_phieuxuatnhap_chitiet`
         Where `IsDelete`=0
         GROUP BY `IdThuoc`";
-        $result = $thongke->GetRows($sql);
+        $result = $thongke->GetRow($sql);
         return $result;
     }
     public static function GetTongXuatNhapById($idThuoc)
     {
         $thongke = new ThongKe();
-        echo $sql = "Select `IdThuoc`, 
+        $sql = "Select `IdThuoc`, 
         SUM(CASE When `XuatNhap`= 1 Then`SoLuong` Else 0 End ) as 'TongSLNhap', 
         SUM(CASE When `XuatNhap`= -1 Then `SoLuong` Else 0 End ) as 'TongSLXuat'
         from  `lap1_qlthuoc_phieuxuatnhap_chitiet`
-        Where and `IdThuoc` = '{$idThuoc}'
+        Where `IdThuoc` = '{$idThuoc}'
         GROUP BY `IdThuoc`";
-        $result = $thongke->GetRows($sql);
+        $result = $thongke->GetRow($sql);
         return $result;
     }
 }

@@ -33,36 +33,54 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
         $params["content"] = isset($_REQUEST["content"]) ? \Model\Common::TextInput($_REQUEST["content"]) : "";
         \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Phieu_DS]);
         if (isset($_REQUEST['btnTim'])) {
-        $modelItem = new \Module\quanlythuoc\Model\PhieuXuatNhap();
-        $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
-        $indexPage = max(1, $indexPage);
-        $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;
-        $pageNumber = max(1, $pageNumber);
-        $total = 0;
-        $DanhSachTaiKhoan = $modelItem->GetItems($params, $indexPage, $pageNumber, $total);
-
-        $data["items"] = $DanhSachTaiKhoan;
-        $data["indexPage"] = $indexPage;
-        $data["pageNumber"] = $pageNumber;
-        $data["params"] = $params;
-        $data["total"] = $total;
-        }
-        else {
+            $modelItem = new \Module\quanlythuoc\Model\PhieuXuatNhap();
+            $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
+            $indexPage = max(1, $indexPage);
+            $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;
+            $pageNumber = max(1, $pageNumber);
+            $total = 0;
+            $DanhSachTaiKhoan = $modelItem->GetItems($params, $indexPage, $pageNumber, $total);
+            $data["items"] = $DanhSachTaiKhoan;
+            $data["indexPage"] = $indexPage;
+            $data["pageNumber"] = $pageNumber;
+            $data["params"] = $params;
+            $data["total"] = $total;
+        } else {
             $total = 0;
             $modelItem = new \Module\quanlythuoc\Model\PhieuXuatNhap();
             $DanhSachTaiKhoan = $modelItem->GetItems([], 1, 10, $total);
-
             $data["items"] = $DanhSachTaiKhoan;
             $data["indexPage"] = 1;
             $data["pageNumber"] = 10;
             $data["params"] = $params;
             $data["total"] = $total;
         }
-        
+
         if (isset($_REQUEST['btnsubmit'])) {
-            
+            $modelItem = new \Module\quanlythuoc\Model\PhieuXuatNhap();
+            $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
+            $indexPage = max(1, $indexPage);
+            $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;
+            $pageNumber = max(1, $pageNumber);
+            $total = 0;
+            $DanhSachTaiKhoan = $modelItem->GetItems($params, $indexPage, $pageNumber, $total);
+            $data["items"] = $DanhSachTaiKhoan;
+            $data["indexPage"] = $indexPage;
+            $data["pageNumber"] = $pageNumber;
+            $data["params"] = $params;
+            $data["total"] = $total;
+            // var_dump($DanhSachTaiKhoan);
+            $data[] = [
+                "Id", "Mã phiếu", "Mã đơn thuốc", "Tổng tiền", "Đơn vị cung cấp", "Xuất/Nhập", "Nội dung phiếu", "Ghi chú", "Ngày nhập", "Ngày tạo bản ghi", "Ngày sửa bản ghi", "isdelete"
+            ];
+            if ($DanhSachTaiKhoan) {
+                foreach ($DanhSachTaiKhoan as $row) {
+                    $data[] = $row;
+                }
+                \Module\quanlythuoc\Model\SanPham::ExportBangKe($data, "public/Excel/1.xlsx");
+            }
         }
-        
+
         $this->View($data);
     }
 
@@ -189,7 +207,6 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
                 $Phieu["CreateRecord"] = Date("Y-m-d H:i:s", time());
                 $Phieu["UpdateRecord"] = Date("Y-m-d H:i:s", time());
                 $Phieu["IsDelete"] = 0;
-                // var_dump($Phieu);
                 // die();
                 $phieuXuatNhap = new \Module\quanlythuoc\Model\PhieuXuatNhap();
                 $phieuXuatNhap->Post($Phieu);
@@ -198,7 +215,7 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
                     if ($_phieu) {
                         if (isset($_phieu["Id"]) == true) {
                             $itemFormDetail["IdPhieu"] = $itemForm["IdPhieu"];
-                            $itemFormDetail["IdThuoc"] = $_phieu["Id"];
+                            echo $itemFormDetail["IdThuoc"] = $_phieu["Id"];
                             $itemFormDetail["SoLuong"] = $_phieu["SoLuong"];
                             $itemFormDetail["SoLo"] = $_phieu["Solo"];
                             $itemFormDetail["HanSuDung"] = date("Y-m-d", strtotime($_phieu["HSD"]));
@@ -212,11 +229,13 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
                             $itemFormDetail["IsDelete"] = 0;
                             $SanPham = new \Module\quanlythuoc\Model\PhieuXuatNhapChiTiet();
                             $SanPham->Post($itemFormDetail);
+                            $sp = new SanPham();
+                            $sp->DongBoThuocNhapByID($itemFormDetail["IdThuoc"]);
                         }
                     }
                 }
-                $dm = new SanPham();
-                $dm->DongBoThuocNhap();
+                // $dm = new SanPham();
+                // $dm->DongBoThuocNhap();
                 ModelPhieuXuatNhap::DeleteAllThuocPhieuNhap();
                 ModelPhieuXuatNhap::SetPostForm([]);
                 $phieu = new ModelPhieuXuatNhap($itemFormDetail["IdPhieu"]);

@@ -134,6 +134,7 @@ $roleDetail = new Model\Role();
                                             <th>Mã Phiếu</th>
                                             <th>Loại Phiếu</th>
                                             <th>Số Lượng</th>
+                                            <th>Số Lô</th>
                                             <th>Giá Tiền</th>
                                             <th>Thành Tiền</th>
                                             <th>Ghi Chú</th>
@@ -143,6 +144,7 @@ $roleDetail = new Model\Role();
                                         <?php
                                         $phieuxuatnhap = new PhieuXuatNhapChiTiet();
                                         $DSPhieu = $phieuxuatnhap->GetByIdThuoc($data['Id']);
+                                        // var_dump($DSPhieu);
                                         foreach ($DSPhieu as $index => $item) {
                                         ?>
                                             <tr>
@@ -150,6 +152,7 @@ $roleDetail = new Model\Role();
                                                 <td><?php echo $item['IdPhieu']; ?></td>
                                                 <td><?php echo $phieuxuatnhap->GetXuatNhap($item['XuatNhap']);?></td>
                                                 <td><?php echo Common::ViewNumber($item['SoLuong']);?></td>
+                                                <td><?php echo $item['SoLo']; ?></td>
                                                 <td><?php echo Common::ViewPrice($item['Price']);?></td>
                                                 <td><?php echo Common::ViewPrice($item['SoLuong'] * $item['Price']);?></td>
                                                 <td><?php echo $item['GhiChu'];?></td>
