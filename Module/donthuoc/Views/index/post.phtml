@@ -62,7 +62,7 @@ $roleDetail = new Model\Role();
                                         </div>
 
                                         <div>
-                                            <?php echo $form->ThuocLoaiDon()->renderHTML(); ?>
+                                            <?php echo $form->ThuocLoaiDon(null, "thuocloaidon")->renderHTML(); ?>
                                         </div>
                                         <div>
                                             <?php echo $form->ChanDoanBenh()->renderHTML(); ?>
@@ -129,17 +129,17 @@ $roleDetail = new Model\Role();
                                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                             </button>
                                         </th>
-                                        <th>STT</th>
-                                        <th>Tên Thuốc</th>
-                                        <th>SL tồn</th>
-                                        <th>Ngày Dùng</th>
-                                        <th>Cách Dùng</th>
-                                        <th>ĐVT</th>
-                                        <th>Sáng</th>
-                                        <th>Trưa</th>
-                                        <th>Chiều</th>
-                                        <th>Số Lượng</th>
-                                        <th>Ghi Chú</th>
+                                        <th class="text-center">STT</th>
+                                        <th class="text-center">Tên Thuốc</th>
+                                        <th class="text-center">SL tồn</th>
+                                        <th class="text-center">Ngày Dùng</th>
+                                        <th class="text-center">Cách Dùng</th>
+                                        <th class="text-center">ĐVT</th>
+                                        <th class="text-center">Sáng</th>
+                                        <th class="text-center">Trưa</th>
+                                        <th class="text-center">Chiều</th>
+                                        <th class="text-center">Số Lượng</th>
+                                        <th class="text-center">Ghi Chú</th>
                                     </tr>
                                 </thead>
                                 <tbody class="table-thuoc">
@@ -201,9 +201,7 @@ $roleDetail = new Model\Role();
                                 </tbody>
                             </table>
                         </fieldset>
-
                     </div>
-
                 </div>
                 <div class="col-md-12 ">
                     <button class="btn btn-warning" type="reset">Làm lại</button>

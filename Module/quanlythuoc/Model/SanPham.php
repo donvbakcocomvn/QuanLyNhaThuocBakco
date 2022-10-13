@@ -214,7 +214,7 @@ class SanPham extends \Model\DB implements \Model\IModelService
 
     public function GetThuoc()
     {
-        $sql = "SELECT * FROM `lap1_qlthuoc_thuoc`";
+        $sql = "SELECT `Id`, `Idloaithuoc`, `Name`, `Giaban`, `DVT`, `Tacdung`, `Ghichu`, `Soluong`, `SLXuat`, `SLNhap`, `SLHienTai`, `Canhbao`, `CachDung`, `CreateRecord` FROM `lap1_qlthuoc_thuoc`";
         $result = $this->GetRows($sql);
         return $result;
     }

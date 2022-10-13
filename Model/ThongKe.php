@@ -199,7 +199,7 @@ class ThongKe extends DB
     public function GetDSBNTrongNgay()
     {
         $date = date('Y-m-d', time());
-        $sql = "SELECT `Id`, `Name`, `Gioitinh`, `Ngaysinh`, `CMND`, `Address`, `Phone`,`TinhThanh`, `QuanHuyen`, `PhuongXa` FROM `lap1_benhnhan` WHERE `CreateRecord` LIKE '%$date%' and `isDelete` = 0 limit 0,10";
+        $sql = "SELECT `Id`, `Name`, `Gioitinh`, `Ngaysinh`, `CMND`, `Address`, `Phone` FROM `lap1_benhnhan` WHERE `CreateRecord` LIKE '%$date%' and `isDelete` = 0 limit 0,10";
         $result = $this->GetRows($sql);
         return $result;
     }
@@ -211,6 +211,8 @@ class ThongKe extends DB
         $result = $this->GetRows($sql);
         return $result;
     }
+
+    
 
     public function GetDSXuatNhapExportChiTiet($xuatnhap)
     {
@@ -236,7 +238,14 @@ class ThongKe extends DB
 
     public function GetSpCanhBao()
     {
-        $sql = "SELECT `Id`,`Name`, `Namebietduoc`, `Solo`, `Gianhap`, `Giaban`, `DVT`, `Ngaysx`, `HSD`, `Tacdung`, `Cochetacdung`, `Ghichu`, `Soluong`, `NhaSX`, `NuocSX`,`CachDung`, `Canhbao` FROM `lap1_qlthuoc_thuoc`WHERE `Soluong` < `Canhbao` ORDER BY `Name` ASC";
+        $sql = "SELECT `Id`,`Name`,`DVT`, `SLHienTai`, `Canhbao` FROM `lap1_qlthuoc_thuoc`WHERE `SLHienTai` < `Canhbao` ORDER BY `Name` ASC";
+        $result = $this->GetRows($sql);
+        return $result;
+    }
+
+    public function GetThuocSapHetHan()
+    {
+        $sql = "SELECT `IdThuoc`, `SoLo`, `SoLuong`, `HanSuDung` FROM `lap1_qlthuoc_phieuxuatnhap_chitiet` WHERE DATEDIFF(`HanSuDung`,CURDATE()) >= 0 AND DATEDIFF(`HanSuDung`,CURDATE()) <= 120 AND `XuatNhap` = 1";
         $result = $this->GetRows($sql);
         return $result;
     }

@@ -93,7 +93,7 @@ class FormSearch
 
     static function Keyword($value = null)
     {
-        return new FormRender(new Textbox('Từ Khóa', 'keyword', ['value' => $value, 'placeholder' => 'Nhập vào mã hoặc bệnh nhân', 'style' => 'border-radius: 5px', 'class' => 'form-control']));
+        return new FormRender(new Textbox('Mã hoặc tên bệnh nhân', 'keyword', ['value' => $value, 'placeholder' => 'Từ khóa...', 'style' => 'border-radius: 5px', 'class' => 'form-control']));
     }
 
     static function SelectStatus($value = null)

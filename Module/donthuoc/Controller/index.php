@@ -84,23 +84,67 @@ class index extends \Application implements \Controller\IControllerBE
 
     function index()
     {
-        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DonThuoc_DS]);
-        $modelItem = new DonThuoc();
+        $data = null;
         $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
         $params["fromdate"] = isset($_REQUEST["fromdate"]) && $_REQUEST["fromdate"] != null ? date('Y-m-d H:i:s', strtotime($_REQUEST["fromdate"])) : "";
         $params["todate"] = isset($_REQUEST["todate"]) && $_REQUEST["todate"] != null ? date('Y-m-d H:i:s', strtotime($_REQUEST["todate"])) : "";
         $params["status"] = isset($_REQUEST["status"]) ? \Model\Common::TextInput($_REQUEST["status"]) : "";
-        $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
-        $indexPage = max(1, $indexPage);
-        $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;
-        $pageNumber = max(1, $pageNumber);
-        $total = 0;
-        $DanhSachTaiKhoan = $modelItem->GetItems($params, $indexPage, $pageNumber, $total);
-        $data["items"] = $DanhSachTaiKhoan;
-        $data["indexPage"] = $indexPage;
-        $data["pageNumber"] = $pageNumber;
-        $data["params"] = $params;
-        $data["total"] = $total;
+        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DonThuoc_DS]);
+        if (isset($_REQUEST['btnTim'])) {
+            $modelItem = new DonThuoc();
+            $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
+            $indexPage = max(1, $indexPage);
+            $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;
+            $pageNumber = max(1, $pageNumber);
+            $total = 0;
+            $DanhSachTaiKhoan = $modelItem->GetItems($params, $indexPage, $pageNumber, $total);
+            $data["items"] = $DanhSachTaiKhoan;
+            $data["indexPage"] = $indexPage;
+            $data["pageNumber"] = $pageNumber;
+            $data["params"] = $params;
+            $data["total"] = $total;
+        } else {
+            $total = 0;
+            $modelItem = new DonThuoc();
+            $DanhSachTaiKhoan = $modelItem->GetItems([], 1, 10, $total);
+            $data["items"] = $DanhSachTaiKhoan;
+            $data["indexPage"] = 1;
+            $data["pageNumber"] = 10;
+            $data["params"] = $params;
+            $data["total"] = $total;
+        }
+
+        if (isset($_REQUEST['btnExport'])) {
+            $modelItem = new DonThuoc();
+            $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
+            $indexPage = max(1, $indexPage);
+            $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;
+            $pageNumber = max(1, $pageNumber);
+            $total = 0;
+            $DanhSachTaiKhoan = $modelItem->GetItems($params, $indexPage, $pageNumber, $total);
+            $data["items"] = $DanhSachTaiKhoan;
+            $data["indexPage"] = $indexPage;
+            $data["pageNumber"] = $pageNumber;
+            $data["params"] = $params;
+            $data["total"] = $total;
+            $data[] = [
+                "Mã đơn thuốc", "Mã bệnh nhân", "Tên bệnh nhân", "Giới tính", "Ngày sinh", "Thời gian khám bệnh", "Chẩn đoán bệnh", "Thuộc loại đơn", "Tổng ngày dùng thuốc", "Tình trạng", "Ngày tạo đơn"
+            ];
+            if ($DanhSachTaiKhoan) {
+                foreach ($DanhSachTaiKhoan as $row) {
+                    var_dump($row);
+                    $donthuoc = new DonThuoc($row["Id"]);
+                    $row["GioiTinh"] = $donthuoc->BenhNhan()->Gioitinh();
+                    $row["ThuocLoaiDon"] = $donthuoc->ThuocLoaiDon();
+                    $row["NgaySinh"] = Common::ForMatDMY($row["NgaySinh"]);
+                    $row["ThoiGianKham"] = Common::ForMatDMYHIS($row["ThoiGianKham"]);
+                    $row["Status"] = $donthuoc->ViewStatusExport();
+                    $row["CreateRecord"] = Common::ForMatDMYHIS($row["CreateRecord"]);
+                    $data[] = $row;
+                }
+                \Module\quanlythuoc\Model\SanPham::ExportBangKe($data, "public/Excel/ExportDonThuocTheoBoLoc.xlsx");
+            }
+        }
         $this->View($data);
     }
 
@@ -222,11 +266,11 @@ class index extends \Application implements \Controller\IControllerBE
         // var_dump($data);
         $donthuocdetail = new DonThuocDetail();
         $thuoc = DonThuocDetail::DsThuoc()[$data["index"]];
-
         $thuoc["Sang"] = floatval($data["sang"]);
         $thuoc["Trua"] = floatval($data["trua"]);
         $thuoc["Chieu"] = floatval($data["chieu"]);
         $thuoc["SoNgaySDThuoc"] = $data["ngaydungthuoc"];
+        $thuoc["thuocloaidon"] = $data["thuocloaidon"];
         // $thuoc["GhiChu"] = $data["Ghichu"];
         // var_dump($thuoc["Sang"]);
         // var_dump($thuoc["Trua"]);
@@ -412,6 +456,7 @@ class index extends \Application implements \Controller\IControllerBE
         if ($isnew != null) {
             DonThuocDetail::ClearSession();
             FormBenhNhan::SetFormData([]);
+            FormDonThuoc::SetFormData([]);
             Common::ToUrl('/index.php?module=donthuoc&controller=index&action=post');
         }
         $this->View();

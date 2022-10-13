@@ -24,13 +24,12 @@ use PFBC\Element\Textbox;
                     <!-- <h3 class="box-title text-uppercase">Tìm kiếm theo bộ lọc</h3> -->
                     <form method="get" action="/donthuoc/index/index/">
                         <div class="row">
-                            <div class="col-sm-3 form-group">
+                            <div class="col-sm-2 form-group">
                                 <?php
-
                                 FormSearch::Keyword($_GET['keyword'] ?? null)->renderHtml2(null, null, 'glyphicon glyphicon-user form-control-feedback');
                                 ?>
                             </div>
-                            <div class="col-sm-3 form-group">
+                            <div class="col-sm-2 form-group">
                                 <?php
                                 FormSearch::SelectStatus($_GET['status'] ?? null)->renderHtml2(null, null, '');
                                 ?>
@@ -50,6 +49,14 @@ use PFBC\Element\Textbox;
                                     <label for="inputSuccess2" class="text-capitalize"><em>Nhấn vào đây&nbsp; </em><i class="fa fa-check"></i></label>
                                     <button type="submit" style="border-radius: 5px;" class="form-control btn btn-success" name="btnTim" id="keyword">
                                         <i class="fa fa-filter"></i>&nbsp; Tìm kiếm theo bộ lọc
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 form-group">
+                                <div class="form-group has-warning has-feedback">
+                                    <label for="inputWarning2" class="text-capitalize"><em>Export theo bộ lọc&nbsp; </em><i class="fa fa-check"></i></label>
+                                    <button type="submit" style="border-radius: 5px;" class="form-control btn btn-warning" name="btnExport" id="keyword">
+                                        <i class="fa fa-paper-plane-o"></i>&nbsp; Export danh sách
                                     </button>
                                 </div>
                             </div>

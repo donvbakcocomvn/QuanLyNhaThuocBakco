@@ -169,15 +169,16 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 	 *
 	 * @return mixed
 	 */
-	function ThuocLoaiDon($val = null)
+	function ThuocLoaiDon($val = null, $id = null)
 	{
 		$properties = self::$properties;
 		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		$properties["data-value"] = $val;
+		$properties["id"] = $id;
 		$properties["class"] = " form-control saveinfor select2";
 		$properties[FormRender::Required] = "true";
 		$option = OptionsService::GetGroupsToSelect("optiondonthuoc");
-		$option1 =  ["" => "--- Chọn loại đơn ---"];
+		$option1 =  ["" => "Chọn loại đơn"];
 		$options = $option1 + $option;
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
 		return new FormRender(new Select("Thuộc Đơn Thuốc", $name, $options, $properties));

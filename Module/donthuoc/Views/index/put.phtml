@@ -23,7 +23,6 @@ use Module\donthuoc\Model\DonThuocDetail;
 use Module\quanlythuoc\Model\SanPham;
 
 $roleDetail = new Model\Role();
-$form = new FormDonThuoc();
 
 $donthuoc  = new DonThuoc($donthuoc);
 // var_dump($donthuoc);
@@ -32,7 +31,7 @@ $benhnhan = new BenhNhan($donthuoc->IdBenhNhan);
 // echo $benhnhan->Ngaysinh;
 // echo $a = substr($benhnhan->Ngaysinh,5,2)
 FormBenhNhan::SetFormData(json_encode($benhnhan, JSON_OBJECT_AS_ARRAY));
-$bn = new FormBenhNhan();
+$bn = new FormBenhNhan(FormBenhNhan::GetFormData());
 
 ?>
 <div class="container-fluid">
@@ -48,13 +47,13 @@ $bn = new FormBenhNhan();
             </div>
         </div>
         <div class="box-body">
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="" method="post" id="formKhachHang" enctype="multipart/form-data">
                 <div class="col-md-4">
                     <div class="row">
                         <fieldset>
                             <legend>Thông tin đơn thuốc</legend>
                             <?php
-                            $form = new FormDonThuoc();
+                            $form = new FormDonThuoc(FormDonThuoc::GetFormData());
                             ?>
                             <div class="col-md-9">
                                 <?php echo $form->TongNgayDung($_SESSION["SoNgaySDThuoc"] ?? 0)->renderHTML(); ?>
@@ -64,7 +63,7 @@ $bn = new FormBenhNhan();
                                 <?php btnHtml::btnCapNhatNgayDung(); ?>
                             </div>
                             <div class="col-md-12">
-                                <?php echo $form->ThuocLoaiDon($donthuoc->ThuocLoaiDon)->renderHTML(); ?>
+                                <?php echo $form->ThuocLoaiDon($donthuoc->ThuocLoaiDon,"thuocloaidon")->renderHTML(); ?>
                             </div>
                             <div class="col-md-12">
                                 <?php echo $form->ChanDoanBenh($donthuoc->ChanDoanBenh)->renderHTML(); ?>
@@ -129,17 +128,17 @@ $bn = new FormBenhNhan();
                                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                             </button>
                                         </th>
-                                        <th>STT</th>
-                                        <th>Tên Thuốc</th>
-                                        <th>SL tồn</th>
-                                        <th>Ngày Dùng</th>
-                                        <th>Cách Dùng</th>
-                                        <th>Đơn Vị Tính</th>
-                                        <th>Sáng</th>
-                                        <th>Trưa</th>
-                                        <th>Chiều</th>
-                                        <th>Số Lượng</th>
-                                        <th>Ghi Chú</th>
+                                        <th class="text-center">STT</th>
+                                        <th class="text-center">Tên Thuốc</th>
+                                        <th class="text-center">SL tồn</th>
+                                        <th class="text-center">Ngày Dùng</th>
+                                        <th class="text-center">Cách Dùng</th>
+                                        <th class="text-center">Đơn Vị Tính</th>
+                                        <th class="text-center">Sáng</th>
+                                        <th class="text-center">Trưa</th>
+                                        <th class="text-center">Chiều</th>
+                                        <th class="text-center">Số Lượng</th>
+                                        <th class="text-center">Ghi Chú</th>
                                     </tr>
                                 </thead>
                                 <tbody class="table-thuoc">

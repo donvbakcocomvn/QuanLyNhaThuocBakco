@@ -87,15 +87,15 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
     {
         // ??
         $isReset = \Model\Request::Get("isreset", null);
-        $_SESSION["DetailThuoc"] = $_SESSION["DetailThuoc"]??[];
+        $_SESSION["DetailThuoc"] = $_SESSION["DetailThuoc"] ?? [];
         if ($isReset != null) {
             $_SESSION["DetailThuoc"] = [];
-            Common::ToUrl('/index.php?module=donthuoc&controller=index&action=put&id='.$IdDonThuoc);
+            Common::ToUrl('/index.php?module=donthuoc&controller=index&action=put&id=' . $IdDonThuoc);
         }
-        self::DsThuoc(); 
+        self::DsThuoc();
         $detail = new DonThuocDetail();
-        $danhSachThuoc = $detail->getByIdDonThuoc($IdDonThuoc); 
-        foreach ($danhSachThuoc as $key => $thuoc) { 
+        $danhSachThuoc = $detail->getByIdDonThuoc($IdDonThuoc);
+        foreach ($danhSachThuoc as $key => $thuoc) {
             $thuocDetail = new ModelSanPham($thuoc["IdThuoc"]);
             $item = $thuocDetail->GetById($thuoc["IdThuoc"]);
             // var_dump($thuoc);
@@ -137,13 +137,7 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
 
     public function CapNhatThuoc($detailThuoc, $index)
     {
-        // $item = $_SESSION["DetailThuoc"][$index];
-        // $sang = $item["Sang"] ?? 0;
-        // $chieu = $item["Chieu"] ?? 0;
-        // $trua = $item["Trua"] ?? 0;
-
         $sp = new ModelSanPham($detailThuoc);
-
         $sanpham = new \Module\quanlythuoc\Model\SanPham();
         $spThuoc = $sanpham->GetById($detailThuoc["Id"]);
         $detailThuoc["Id"] = $detailThuoc["Id"];
@@ -157,7 +151,6 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
         $detailThuoc["Giaban"] = $detailThuoc["Giaban"];
         $detailThuoc["Ghichu"] = $detailThuoc["Ghichu"] ?? "";
         $detailThuoc["CachDung"] = $sp->CachDungThuoc();
-        // echo $sp->DVQuyDoi;
         $Sang = $detailThuoc["Sang"];
         $Trua = $detailThuoc["Trua"];
         $Chieu = $detailThuoc["Chieu"];
@@ -170,20 +163,20 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
         if ($detailThuoc["Chieu"] != 0) {
             $Chieu = max($detailThuoc["Chieu"], floatval($sp->DVQuyDoi));
         }
-        // var_dump($Sang);
-        // var_dump($Chieu);
-        // var_dump($Trua);
         $detailThuoc["Soluong"] = ceil(($Sang + $Chieu + $Trua) * $detailThuoc["SoNgaySDThuoc"]);
-        if ($detailThuoc["Soluong"] > $spThuoc['SLHienTai']) {
-            // return $_SESSION["DetailThuoc"][$index] = null;
-            $detailThuoc["Sang"] = 0;
-            $detailThuoc["Trua"] =  0;
-            $detailThuoc["Chieu"] =  0;
-            $detailThuoc["Soluong"] = 0;
-            $_SESSION["DetailThuoc"][$index] = $detailThuoc;
-            return false;
-        }
 
+        $detailThuoc['thuocloaidon'] = $detailThuoc['thuocloaidon'] ?? 0;
+        if ($detailThuoc['thuocloaidon'] == 3) {
+            if ($detailThuoc["Soluong"] > $spThuoc['SLHienTai']) {
+                // return $_SESSION["DetailThuoc"][$index] = null;
+                $detailThuoc["Sang"] = 0;
+                $detailThuoc["Trua"] =  0;
+                $detailThuoc["Chieu"] =  0;
+                $detailThuoc["Soluong"] = 0;
+                $_SESSION["DetailThuoc"][$index] = $detailThuoc;
+                return false;
+            }
+        }
         $_SESSION["DetailThuoc"][$index] = $detailThuoc;
         return true;
     }

@@ -58,6 +58,16 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
         return $status[$this->Status] ?? "";
     }
 
+    public function ViewStatusExport()
+    {
+        $status = [
+            1 => "Chưa lấy",
+            2 => "Đang soạn",
+            3 => "Đã xong",
+        ];
+        return $status[$this->Status] ?? "";
+    }
+
     public function LoaiDonThuoc()
     {
         $status = [

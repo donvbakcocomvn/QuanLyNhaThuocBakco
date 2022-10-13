@@ -1,4 +1,22 @@
 $(document).ready(function () {
+    $("#thuocloaidon").change(function (param) {
+        $(".changenumber").each(function (index, e) {
+            $($(this).attr("id")).val();
+            var index = $("#" + $(this).attr("id")).attr("index");
+            var idSang = "#sang" + $("#" + $(this).attr("id")).attr("index");
+            var idDonThuoc = "#donthuoc" + $("#" + $(this).attr("id")).attr("index");
+            var idTrua = "#trua" + $("#" + $(this).attr("id")).attr("index");
+            var idChieu = "#chieu" + $("#" + $(this).attr("id")).attr("index");
+            var idSoLuong = "#soluong" + $("#" + $(this).attr("id")).attr("index");
+            if ($(idDonThuoc).val()) {
+                $(idSang).val(0).change();
+                $(idTrua).val(0).change();
+                $(idChieu).val(0).change();
+                $(idSoLuong).val(0).change();
+                // window.location.reload();
+            }
+        });
+    });
 
     // Xử lý dữ liệu sáng, trưa, chiều, số lượng thuốc
     $(".changenumber").each(function (index, e) {
@@ -7,7 +25,7 @@ $(document).ready(function () {
             // console.log($(this).attr("id"));
             $($(this).attr("id")).val();
             // console.log($("#"+$(this).attr("id")).val());
-            console.log($("#" + $(this).attr("id")).attr("index"));
+            // console.log($("#" + $(this).attr("id")).attr("index"));
             var idName = "#" + $(this).attr("id");
             var idDVT = "#dvt" + $("#" + $(this).attr("id")).attr("index");
             var index = $("#" + $(this).attr("id")).attr("index");
@@ -18,6 +36,7 @@ $(document).ready(function () {
             var idChieu = "#chieu" + $("#" + $(this).attr("id")).attr("index");
             var idSoLuong = "#soluong" + $("#" + $(this).attr("id")).attr("index");
             var idGiaBan = "#giaban" + $("#" + $(this).attr("id")).attr("index");
+            var idLoaiDonThuoc = "#thuocloaidon";
 
             $.ajax({
                 url: `/donthuoc/index/capnhatsoluong/`,
@@ -31,6 +50,7 @@ $(document).ready(function () {
                     "chieu": $(idChieu).val(),
                     "trua": $(idTrua).val(),
                     "ngaydungthuoc": $(idSoNgaySD).val(),
+                    "thuocloaidon": $(idLoaiDonThuoc).val(),
                 }),
                 contentType: false,
                 processData: false,
@@ -58,9 +78,6 @@ $(document).ready(function () {
                         $(idSoLuong).val(0);
                     }
                 },
-                complete: function () {
-                    //spinner.close();
-                }
             });
         });
     });
@@ -106,7 +123,6 @@ $(document).ready(function () {
             var idGiaBan = "#giaban" + index;
             var idCachDungThuoc = "#cachdungthuoc" + index;
             var idGhiChu = "#ghichu" + index;
-
             console.log(idDVT);
             console.log(index);
             console.log(idThuoc);
@@ -137,7 +153,7 @@ $(document).ready(function () {
                             if (result.isConfirmed) {
                                 Swal.fire('OKayyy !', '', 'success')
                                 window.location.reload();
-                            } 
+                            }
                             // else if (result.isDenied) {
                             //     Swal.fire('Changes are not saved', '', 'info')
                             // }
@@ -213,7 +229,6 @@ $(document).ready(function () {
                 dataType: 'json',
                 success: function (response) {
                     if (response.Name != null) {
-
                         $("#tenbenhnhan").val(response.Name);
                         $("#Namsinh").val((response.Ngaysinh).substring(0, 4));
                         $("#Thangsinh").val((response.Ngaysinh).substring(5, 7));
@@ -227,7 +242,6 @@ $(document).ready(function () {
                         $(`select#quanHuyen option[value="` + $(response.QuanHuyen) + `"]`).attr("selected", true);
                         $('#quanHuyen').data('value', response.QuanHuyen);
                         $('#quanHuyen').change();
-
                         $(`select#phuongXa option[value="` + $(response.PhuongXa) + `"]`).attr("selected", true);
                         $('#phuongXa').data('value', response.PhuongXa);
                         $('#phuongXa').change();

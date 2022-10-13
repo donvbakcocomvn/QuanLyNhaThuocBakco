@@ -44,7 +44,7 @@ $benhnhan = new BenhNhan($donthuoc->IdBenhNhan);
             </div>
         </div>
         <div class="box-body">
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="" method="post" id="formKhachHang" enctype="multipart/form-data">
                 <div class="col-md-4">
                     <div class="row">
                         <fieldset>
@@ -60,7 +60,7 @@ $benhnhan = new BenhNhan($donthuoc->IdBenhNhan);
                                 <?php btnHtml::btnCapNhatNgayDung(); ?>
                             </div>
                             <div class="col-md-12">
-                                <?php echo $form->ThuocLoaiDon($donthuoc->ThuocLoaiDon)->renderHTML(); ?>
+                                <?php echo $form->ThuocLoaiDon($donthuoc->ThuocLoaiDon,"thuocloaidon")->renderHTML(); ?>
                             </div>
                             <div class="col-md-12">
                                 <?php echo $form->ChanDoanBenh($donthuoc->ChanDoanBenh)->renderHTML(); ?>
@@ -125,16 +125,17 @@ $benhnhan = new BenhNhan($donthuoc->IdBenhNhan);
                                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                             </button>
                                         </th>
-                                        <th>STT</th>
-                                        <th>Tên Thuốc</th>
-                                        <th>Số Ngày Dùng</th>
-                                        <th>Cách Dùng</th>
-                                        <th>Đơn Vị Tính</th>
-                                        <th>Sáng</th>
-                                        <th>Trưa</th>
-                                        <th>Chiều</th>
-                                        <th>Số Lượng</th>
-                                        <th>Ghi Chú</th>
+                                        <th class="text-center">STT</th>
+                                        <th class="text-center">Tên Thuốc</th>
+                                        <th class="text-center">SL tồn</th>
+                                        <th class="text-center">Ngày Dùng</th>
+                                        <th class="text-center">Cách Dùng</th>
+                                        <th class="text-center">ĐVT</th>
+                                        <th class="text-center">Sáng</th>
+                                        <th class="text-center">Trưa</th>
+                                        <th class="text-center">Chiều</th>
+                                        <th class="text-center">Số Lượng</th>
+                                        <th class="text-center">Ghi Chú</th>
                                     </tr>
                                 </thead>
                                 <tbody class="table-thuoc">
@@ -155,14 +156,17 @@ $benhnhan = new BenhNhan($donthuoc->IdBenhNhan);
                                                     <?php echo $i + 1; ?>
                                                 </div>
                                             </td>
-                                            <td style="width:250px;">
+                                            <td style="width:200px;">
                                                 <?php
                                                 echo $form->Name($thuoc["Id"] ?? "", "donthuoc" . $i, $i)->renderHTML() ?>
                                             </td>
-                                            <td style="width:120px;">
+                                            <td style="width: 80px;">
+                                                <?php echo $form->SLHienTai($sanPham->SLHienTai ?? "", "SLHienTai" . $i, $i)->render(); ?>
+                                            </td>
+                                            <td style="width:100px;">
                                                 <?php echo $form->SoNgaySDThuoc($thuoc["SoNgaySDThuoc"] ?? "", "SoNgaySD" . $i, $i)->render(); ?>
                                             </td>
-                                            <td style="width: 150px;">
+                                            <td style="width: 100px;">
                                                 <?php echo $form->CachDung($sanPham->CachDungThuoc(), "cachdungthuoc" . $i, $i)->render(); ?>
                                             </td>
                                             <td style="width: 100px;">
@@ -177,7 +181,7 @@ $benhnhan = new BenhNhan($donthuoc->IdBenhNhan);
                                             <td style="width: 100px;">
                                                 <?php echo $form->Chieu($thuoc["Chieu"] ?? "", "chieu" . $i, $i)->render(); ?>
                                             </td>
-                                            <td>
+                                            <td style="width: 80px;">
                                                 <?php echo $form->SoLuong($thuoc["Soluong"] ?? "", "soluong" . $i, $i)->render(); ?>
                                             </td>
                                             <td>

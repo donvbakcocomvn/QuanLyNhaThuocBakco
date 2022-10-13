@@ -30,30 +30,22 @@ class sanpham extends \Application implements \Controller\IControllerBE
         \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Thuoc_Export]);
         $sp = new \Module\quanlythuoc\Model\SanPham();
         $item = $sp->GetThuoc();
-        // var_dump($item);
-        // $data[] = ["BẢNG KÊ THUỐC PHÒNG KHÁM PHƯƠNG UYÊN"];
         $data[] = [
-            "Mã thuốc", "Danh mục thuốc", "Tên Thuốc", "Số lô", "Giá nhập", "Giá Bán", "Đơn vị tính", "Ngày sản xuất", "Hạn sử dụng", "Tác dụng", "Cơ chế tác dụng", "Ghi chú", "Số lượng Tổng", "Số lượng xuất", "Số lượng nhập", "Số lượng tồn kho", "Số lượng cảnh báo", "Nhà sản xuất", "Nước sản xuất", "Cách dùng thuốc", "Ngày tạo thuốc"
+            "Mã thuốc", "Danh mục thuốc", "Tên Thuốc", "Giá Bán", "Đơn vị tính", "Tác dụng", "Ghi chú", "Số lượng Ban Đầu", "Số lượng xuất", "Số lượng nhập", "Số lượng tồn kho", "Số lượng cảnh báo", "Cách dùng thuốc", "Ngày tạo thuốc"
         ];
-        // $data[] = [];
-        // $total = 0;
-        // $convert = new Common();
         if ($item) {
             foreach ($item as $row) {
                 $row["Giaban"] = Common::ViewPrice($row["Giaban"]);
-                $row["Gianhap"] = Common::ViewPrice($row["Gianhap"]);
-                $row["Ngaysx"] = Common::ForMatDMY($row["Ngaysx"]);
-                $row["HSD"] = Common::ForMatDMY($row["HSD"]);
+                // $row["Gianhap"] = Common::ViewPrice($row["Gianhap"]);
+                // $row["NuocSX"] = Notions::GetById($row["NuocSX"]) ?? "";
                 $row["CachDung"] = $sp->GetDesByVal($row["CachDung"], 'cachdungthuoc');
                 $row["Soluong"] = Common::ViewNumber($row["Soluong"]);
+                $row["DVT"] = $sp->GetDesByVal($row["DVT"], 'donvitinh');
                 $row["SLXuat"] = Common::ViewNumber($row["SLXuat"]);
                 $row["SLNhap"] = Common::ViewNumber($row["SLNhap"]);
                 $row["SLHienTai"] = Common::ViewNumber($row["SLHienTai"]);
                 $row["CreateRecord"] = Common::ForMatDMYHIS($row["CreateRecord"]);
                 $row["Idloaithuoc"] = DanhMuc::GetNameById($row["Idloaithuoc"]) ?? "";
-                $row["NuocSX"] = Notions::GetById($row["NuocSX"]) ?? "";
-                // $row["DVT"] = $sp->DonViTinh($row["DVT"]);
-                // var_dump($row["DVT"]);
                 $data[] = $row;
             }
             \Module\quanlythuoc\Model\SanPham::ExportBangKe($data, "public/Excel/ExportThuoc.xlsx");
