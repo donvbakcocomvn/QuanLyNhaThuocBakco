@@ -139,7 +139,7 @@ $roleDetail = new Model\Role();
                                         <th class="text-center">Trưa</th>
                                         <th class="text-center">Chiều</th>
                                         <th class="text-center">Số Lượng</th>
-                                        <th class="text-center">Ghi Chú</th>
+                                        <!-- <th class="text-center">Ghi Chú</th> -->
                                     </tr>
                                 </thead>
                                 <tbody class="table-thuoc">
@@ -161,7 +161,7 @@ $roleDetail = new Model\Role();
                                                     <?php echo $i + 1; ?>
                                                 </div>
                                             </td>
-                                            <th style="width: 200px;">
+                                            <th style="width: 250px;">
                                                 <?php
                                                 echo $form->Name($thuoc["Id"] ?? "", "donthuoc" . $i, $i)->renderHTML();
                                                 ?>
@@ -175,7 +175,7 @@ $roleDetail = new Model\Role();
                                             <td style="width: 100px;">
                                                 <?php echo $form->CachDung($sanPham->CachDungThuoc(), "cachdungthuoc" . $i, $i)->render(); ?>
                                             </td>
-                                            <td style="width: 100px;">
+                                            <td style="width: 80px;">
                                                 <?php echo $form->DVT($sanPham->DonViTinh(), "dvt" . $i, $i)->render(); ?>
                                             </td>
                                             <td style="width: 100px;">
@@ -187,12 +187,12 @@ $roleDetail = new Model\Role();
                                             <td style="width: 100px;">
                                                 <?php echo $form->Chieu($thuoc["Chieu"] ?? "", "chieu" . $i, $i)->render(); ?>
                                             </td>
-                                            <td style="width: 100px;">
+                                            <td style="width: 80px;">
                                                 <?php echo $form->SoLuong($thuoc["Soluong"] ?? "", "soluong" . $i, $i)->render(); ?>
                                             </td>
-                                            <td>
+                                            <!-- <td>
                                                 <?php echo $form->GhiChu($sanPham->Ghichu, "ghichu" . $i, $i)->render(); ?>
-                                            </td>
+                                            </td> -->
                                         </tr>
                                     <?php
                                         $i++;

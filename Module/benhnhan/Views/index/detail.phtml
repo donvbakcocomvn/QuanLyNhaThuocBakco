@@ -74,23 +74,31 @@ $itemBN = new BenhNhan($data);
                                         // var_dump($itemBN);
                                         ?>
                                         <div class="">
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <?php $bn->Id($itemBN->Id)->renderHTML(); ?>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <?php $bn->Name($itemBN->Name)->renderHTML();  ?>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <?php
                                                 $bn->Gioitinh($itemBN->Gioitinh)->renderHtml();  ?>
                                             </div>
-                                            <div class="col-md-4">
-                                                <?php $bn->Ngaysinh($itemBN->Ngaysinh)->renderHtml();  ?>
-                                            </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <?php $bn->CMND($itemBN->CMND)->renderHtml();  ?>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
+                                                <?php $bn->NgaySinh(date("d", strtotime($itemBN->Ngaysinh)))->renderHTML(); ?>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <?php $bn->ThangSinh(date("m", strtotime($itemBN->Ngaysinh)))->renderHTML();  ?>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <?php
+                                                $bn->NamSinh(date('Y', strtotime($itemBN->Ngaysinh)))->renderHtml();  ?>
+                                            </div>
+                                            
+                                            <div class="col-md-3">
                                                 <?php $bn->Phone($itemBN->Phone)->renderHtml();  ?>
                                             </div>
                                             <div class="col-md-12">

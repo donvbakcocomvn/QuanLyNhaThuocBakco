@@ -79,7 +79,10 @@ class index extends \Application implements \Controller\IControllerBE
                 $model["Id"] = $_GET['id'];
                 $model["Name"] = $itemHtml["Name"];
                 $model["Gioitinh"] = $itemHtml["Gioitinh"];
-                $model["Ngaysinh"] = $itemHtml["Ngaysinh"];
+                $ngay = intval($itemHtml["NgaySinh"]) ? intval($itemHtml["NgaySinh"]) : 1;
+                $thang = intval($itemHtml["ThangSinh"]) ? intval($itemHtml["ThangSinh"]) : 1;
+                $nam = intval($itemHtml["NamSinh"]) ?? date('Y');
+                $model["Ngaysinh"] = date('Y-m-d', strtotime($nam . '-' . $thang . '-' . $ngay));
                 $model["CMND"] = $itemHtml["CMND"];
                 $model["Address"] = $itemHtml["Address"];
                 $model["TinhThanh"] = $itemHtml["TinhThanh"];
@@ -151,7 +154,10 @@ class index extends \Application implements \Controller\IControllerBE
                 $model["Id"] = $itemHtml["Id"];
                 $model["Name"] = $itemHtml["Name"];
                 $model["Gioitinh"] = $itemHtml["Gioitinh"];
-                $model["Ngaysinh"] = $itemHtml["Ngaysinh"] ?? "";
+                $ngay = intval($itemHtml["NgaySinh"]) ? intval($itemHtml["NgaySinh"]) : 1;
+                $thang = intval($itemHtml["ThangSinh"]) ? intval($itemHtml["ThangSinh"]) : 1;
+                $nam = intval($itemHtml["NamSinh"]) ?? date('Y');
+                $model["Ngaysinh"] = date('Y-m-d', strtotime($nam . '-' . $thang . '-' . $ngay));
                 $model["CMND"] = $itemHtml["CMND"];
                 $model["Address"] = $itemHtml["Address"];
                 $model["TinhThanh"] = $itemHtml["TinhThanh"] ?? "";
