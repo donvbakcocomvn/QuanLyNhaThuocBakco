@@ -148,10 +148,18 @@ class index extends \Application implements \Controller\IControllerBE
         try {
             if (\Model\Request::Post(FormBenhNhan::$ElementsName, null)) {
                 $itemHtml = \Model\Request::Post(FormBenhNhan::$ElementsName, null);
+
+
+                // $op = new OptionsService();
+                // $nameGioiTinh = $op->GetGroupsToSelect("gioitinh");
+
+                // $model["GhiChu"] = strip_tags($itemHtml["GhiChu"]);
+                // var_dump($itemHtml);
+                // var_dump($itemHtml["NgaySinh"]);
                 $model["Id"] = $itemHtml["Id"];
                 $model["Name"] = $itemHtml["Name"];
                 $model["Gioitinh"] = $itemHtml["Gioitinh"];
-                $model["Ngaysinh"] = $itemHtml["Ngaysinh"] ?? "";
+                $model["Ngaysinh"] = date("Y-m-d", strtotime($itemHtml["NgaySinh"] ?? ""));
                 $model["CMND"] = $itemHtml["CMND"];
                 $model["Address"] = $itemHtml["Address"];
                 $model["TinhThanh"] = $itemHtml["TinhThanh"] ?? "";

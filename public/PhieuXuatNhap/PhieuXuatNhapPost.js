@@ -27,7 +27,7 @@ $(document).ready(function () {
             processData: false,
             success: function (response) {
                 window.location.reload();
-                console.log(response);
+                // console.log(response);
             },
             complete: function () {
                 //spinner.close();
@@ -43,8 +43,6 @@ $(document).ready(function () {
         $.ajax({
             url: `/quanlythuoc/phieuxuatnhap/ThemSanPham/`,
             type: 'post',
-            // data:{$id : $id},
-            //dataType: 'json',
             contentType: false,
             processData: false,
             success: function (response) {

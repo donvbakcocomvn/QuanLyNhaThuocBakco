@@ -384,6 +384,11 @@ class SanPham extends \Model\DB implements \Model\IModelService
     <?php
     }
 
+    public function LichSuXuatNhan()
+    { 
+        $ChiTietPhieuHen = new PhieuXuatNhapChiTiet();
+        return $ChiTietPhieuHen->LichSuNhapXuatyTheoMaThuoc($this->Id);
+    }
 
     // Tìm kiếm
     public function GetItems($params, $indexPage, $pageNumber, &$total)

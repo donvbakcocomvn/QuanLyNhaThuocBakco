@@ -74,7 +74,7 @@ class FormRender
                     </div>
                     <div class="modal-footer">
                         <a href="/huongdan/put/<?php echo $id; ?>/" class="btn btn-success">Sửa File hướng dẫn</a>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Thoát/Đóng lại</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng lại</button>
                     </div>
                 </div>
             </div>
