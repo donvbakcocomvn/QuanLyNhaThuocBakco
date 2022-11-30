@@ -89,9 +89,10 @@ class FormBenhNhan implements iFormBenhNhan
         {
                 $properties = self::$properties;
                 $properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
+                $properties[FormRender::Required] = "";
                 $properties["id"] = __FUNCTION__;
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-                return new FormRender(new Element\Textbox("Ngày sinh", $name, $properties));
+                return new FormRender(new Element\Date("Ngày sinh", $name, $properties));
         }
 
         function ThangSinh($val = null)

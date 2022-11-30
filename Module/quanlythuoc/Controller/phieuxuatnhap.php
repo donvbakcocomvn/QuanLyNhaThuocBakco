@@ -55,8 +55,9 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
         $donthuocdetail = new \Module\quanlythuoc\Model\PhieuXuatNhap();
         $sanpham = new SanPham($id);
         $_sanpham = $sanpham->GetById($id);
-        $_sanpham["Soluong"] = 1;
-        $_sanpham["HSD"] = null;
+        $_sanpham["Soluong"] = $donthuocdetail->GetThuocPhieuXuatNhap($index)["Soluong"] ?? 1;
+        $_sanpham["Soluong"] = max($_sanpham["Soluong"], 1);
+        // $_sanpham["HSD"] = null;
         $_sanpham["DVTTitle"] = $sanpham->DonViTinh();
         $donthuocdetail->CapNhatSanPham($_sanpham, $index);
         echo json_encode(\Module\quanlythuoc\Model\PhieuXuatNhap::DSThuocPhieuNhap()[$index], JSON_UNESCAPED_UNICODE);
@@ -87,10 +88,11 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
         }
         $_sanpham["Gianhap"] = floatval($dataRequest["gia"]);
         $_sanpham["Giaban"] =  floatval($dataRequest["gia"]);
-
         $donthuocdetail->CapNhatSanPham($_sanpham, $index);
         $_sanpham["ThanhTien"] = $_sanpham["Gianhap"] * $_sanpham["Soluong"];
         $_sanpham["TongTien"] =  \Module\quanlythuoc\Model\PhieuXuatNhap::TongTien();
+
+        // lưu danh sách sản phẩm
         echo json_encode($_sanpham, JSON_UNESCAPED_UNICODE);
     }
 
@@ -98,8 +100,7 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
     {
         // $MaSP = \Model\Request::Get("id", []);
         // $index = \Model\Request::Get("index", []);
-        $_SESSION["DSThuocPhieuNhap"][] = [];
-        return $_SESSION["DSThuocPhieuNhap"];
+        \Module\quanlythuoc\Model\PhieuXuatNhap::ThemThuocPhieuXuatNhap([]);
     }
 
 

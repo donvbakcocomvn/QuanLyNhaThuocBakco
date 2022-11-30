@@ -63,7 +63,7 @@ class PhieuXuatNhapChiTiet extends \Model\DB implements \Model\IModelService
     }
     public function HanSuDung()
     {
-        return date("d-m-Y", strtotime($this->HanSuDung) );
+        return date("d-m-Y", strtotime($this->HanSuDung));
     }
     public function Price()
     {
@@ -97,6 +97,11 @@ class PhieuXuatNhapChiTiet extends \Model\DB implements \Model\IModelService
             // var_dump($detailThuoc);
         }
         return true;
+    }
+
+    public function LichSuNhapXuatyTheoMaThuoc($maThuoc)
+    {
+        return $this->Select("`IdThuoc`='{$maThuoc}'");
     }
 
     public function CapNhatSanPham($detail, $index)
@@ -181,7 +186,10 @@ class PhieuXuatNhapChiTiet extends \Model\DB implements \Model\IModelService
         $DM = new danhmuc();
         return $DM->DeleteById($Id);
     }
-
+    public function PhieuXuatNhap()
+    {
+        return new PhieuXuatNhap($this->IdPhieu);
+    }
     public function Post($model)
     {
         return $this->Insert($model);

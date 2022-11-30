@@ -1,6 +1,6 @@
 <ol class="breadcrumb">
-    <li><a href="/index.php?controller=backend">Home</a></li>
-    <li><a href="/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=index"> Danh Sách Phiếu</a></li>
+    <li><a href="/backend">Home</a></li>
+    <li><a href="/quanlythuoc/phieuxuatnhap/index"> Danh Sách Phiếu</a></li>
     <li> Thêm Phiếu </li>
 </ol>
 <?php
@@ -20,10 +20,9 @@ $roleDetail = new Model\Role();
 <div class="container-fluid">
     <div class="box box-primary">
         <div class="box-header">
-
             <h3 class="box-title">Thêm Phiếu</h3>
             <div class="box-tools">
-                <?php FormRender::HuongDan("themphieu","Hướng dẫn thêm phiếu"); ?>
+                <?php FormRender::HuongDan("themphieu", "Hướng dẫn thêm phiếu"); ?>
             </div>
         </div>
         <form action="" method="post" onsubmit="return confirm('Bạn có chắc thông tin đã nhập chính xác?')" enctype="multipart/form-data">
@@ -96,6 +95,7 @@ $roleDetail = new Model\Role();
                                     $index = 1;
                                     foreach (PhieuXuatNhap::DSThuocPhieuNhap() as $mathuoc => $thuoc) {
                                         $sanPham = new SanPham($thuoc);
+
                                         $formChiTiet = new FormPhieuXuatNhapChiTiet();
                                         $i = $mathuoc;
                                     ?>
@@ -116,7 +116,8 @@ $roleDetail = new Model\Role();
                                                 echo $formChiTiet->DVT($sanPham->DonViTinh(), "DVT" . $i, $i, [FormRender::Readonly => "true"])->render(); ?>
                                             </th>
                                             <th>
-                                                <?php echo $formChiTiet->SoLuong($sanPham->Soluong ?? 1, "SoLuong" . $i, $i)->render(); ?>
+                                                <?php 
+                                                echo $formChiTiet->SoLuong($sanPham->Soluong, "SoLuong" . $i, $i)->render(); ?>
                                             </th>
                                             <th>
                                                 <?php

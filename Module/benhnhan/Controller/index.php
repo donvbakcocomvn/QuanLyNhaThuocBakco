@@ -130,7 +130,6 @@ class index extends \Application implements \Controller\IControllerBE
                 $benhnhan->Post($itemForm);
                 new \Model\Error(\Model\Error::success, "Thêm Thông Tin Khách Hàng Thành Công");
                 \Model\Common::ToUrl("/index.php?module=benhnhan&controller=index&action=index");
-                
             }
         } catch (\Exception $exc) {
             echo $exc->getMessage();
@@ -151,14 +150,17 @@ class index extends \Application implements \Controller\IControllerBE
 
                 $itemHtml = \Model\Request::Post(FormBenhNhan::$ElementsName, null);
 
+
                 // $op = new OptionsService();
                 // $nameGioiTinh = $op->GetGroupsToSelect("gioitinh");
-                
+
                 // $model["GhiChu"] = strip_tags($itemHtml["GhiChu"]);
+                // var_dump($itemHtml);
+                // var_dump($itemHtml["NgaySinh"]);
                 $model["Id"] = $itemHtml["Id"];
                 $model["Name"] = $itemHtml["Name"];
                 $model["Gioitinh"] = $itemHtml["Gioitinh"];
-                $model["Ngaysinh"] = $itemHtml["Ngaysinh"] ?? "";
+                $model["Ngaysinh"] = date("Y-m-d", strtotime($itemHtml["NgaySinh"] ?? ""));
                 $model["CMND"] = $itemHtml["CMND"];
                 $model["Address"] = $itemHtml["Address"];
                 $model["TinhThanh"] = $itemHtml["TinhThanh"] ?? "";

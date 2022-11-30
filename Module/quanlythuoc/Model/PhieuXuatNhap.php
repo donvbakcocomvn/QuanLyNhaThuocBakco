@@ -69,7 +69,11 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
 
     public function XuatNhap()
     {
-        return $this->XuatNhap == 1 ? "<span class='label-success' style='padding:5px; border-radius: 5px'>Phiếu Nhập</span>" : "<span class='label-danger' style='padding:5px; border-radius: 5px'>Phiếu Xuất</span>";
+        $a = [
+            1 => "<span class='label-success' style='padding:5px; border-radius: 5px'>Phiếu Nhập</span>",
+            -1 => "<span class='label-danger' style='padding:5px; border-radius: 5px'>Phiếu Xuất</span>"
+        ];
+        return $a[$this->XuatNhap] ?? "";
     }
     public function getTongTien()
     {
@@ -116,6 +120,7 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
         // $trua = $item["Trua"] ?? 0;
 
         $detail["SoLuong"] = $detail["Soluong"] ?? "";
+        $detail["Soluong"] = $detail["Soluong"] ?? "";
         $detail["Giaban"] = $detail["Giaban"] ?? 0;
         $detail["Gianhap"] = $detail["Gianhap"] ?? 0;
         $detail["SoLo"] = $detail["SoLo"] ?? "";
@@ -178,6 +183,14 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
     public static function ThemDSThuocPhieuNhap($phieu, $index)
     {
         $_SESSION["DSThuocPhieuNhap"][$index] = $phieu;
+    }
+    public static function ThemThuocPhieuXuatNhap($phieu)
+    {
+        $_SESSION["DSThuocPhieuNhap"][] = $phieu;
+    }
+    public static function GetThuocPhieuXuatNhap($index)
+    {
+        return $_SESSION["DSThuocPhieuNhap"][$index];
     }
 
 

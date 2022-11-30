@@ -10,7 +10,6 @@ class Date extends Textbox {
 	public function __construct($label, $name, array $properties = null) {
 		$this->_attributes["placeholder"] = "YYYY-MM-DD (e.g. " . date("Y-m-d") . ")";
 		$this->_attributes["title"] = $this->_attributes["placeholder"];
-
 		parent::__construct($label, $name, $properties);
     }
 

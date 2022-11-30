@@ -1,13 +1,24 @@
+<?php
+$keyword = $_GET["keyword"] ?? "";
+$pageNumber = $_GET["pageNumber"] ?? 10;
+$indexPage = $_GET["indexPage"] ?? 1;
+?>
+
 <ol class="breadcrumb">
-    <li><a href="/index.php?controller=backend">Home</a></li>
+    <li><a href="/backend/">Dashboard</a></li>
     <li> Danh Sách Bệnh Nhân </li>
 </ol>
 
 <div class="container-fluid">
     <form method="get" action="/benhnhan/index/index/">
         <div class="form-group d-flex">
-            <label class="btn btn-default"><input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox"><i class="fa fa-share" aria-hidden="true"></class=></i></label>
-            <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập tên, số điện thoại hoặc địa chỉ để tìm kiếm">
+            <label class="btn btn-default">
+                <input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox">
+                <i class="fa fa-share" aria-hidden="true"></i>
+            </label>
+            <input id="keyword" class="form-control" name="keyword" value="<?php echo $keyword ?>" type="" placeholder="Nhập tên, số điện thoại hoặc địa chỉ để tìm kiếm">
+            <input name="indexPage" value="<?php echo $indexPage ?>" type="hidden">
+            <input name="pageNumber" value="<?php echo $pageNumber ?>" type="hidden">
             <button class="btn btn-primary no-border-radius" name="btnTim" type="submit">
                 <i class="fa fa-search"></i> Tìm Kiếm
             </button>
@@ -24,6 +35,7 @@
                     use Model\OptionsService;
                     use Model\TinhThanh;
                     use Module\benhnhan\Model\BenhNhan;
+
                     Module\benhnhan\Model\btnHtml::btnViewKhachHangTrongNgay();
                     Module\benhnhan\Model\btnHtml::btnExport();
                     Module\benhnhan\Model\btnHtml::btnThemKhachHang();
@@ -86,7 +98,7 @@
                         )->render();
                         ?>
                         <?php
-                        $linkPhanTrang = "/index.php?module=quanlythuoc&controller=danhmuc&action=index&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
+                        $linkPhanTrang = "/benhnhan/index/index/?keyword={$keyword}&indexPage=[i]&pageNumber={$pageNumber}";
                         echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
                         ?>
                     </div>
@@ -97,7 +109,7 @@
 </div>
 <script type="text/javascript">
     var SoDongHienThi = function(evalue) {
-        var linkPhanTrang = '/index.php?module=quanlythuoc&controller=danhmuc&action=index&indexPage=1&pageNumber=[j]';
+        var linkPhanTrang = '/benhnhan/index/index/?indexPage=1&pageNumber=[j]';
         linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
         window.location.href = linkPhanTrang;
     }
