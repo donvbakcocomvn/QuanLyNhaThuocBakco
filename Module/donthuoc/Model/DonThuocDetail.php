@@ -110,7 +110,7 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
 
     public function getByIdDonThuoc($idDonThuoc)
     {
-        return $this->Select("`IdDonThuoc` = '{$idDonThuoc}'");
+        return $this->Select("`IdDonThuoc` = '{$idDonThuoc}' order by `Id`");
     }
 
     public function checkDsThuoc($detailThuoc)
@@ -124,8 +124,7 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
             $value["Id"] = $value["Id"] ?? null;
             if ($value["Id"] == $sp->Id) {
                 return null;
-            }
-
+            } 
             // var_dump($value);
             // var_dump($detailThuoc);
         }

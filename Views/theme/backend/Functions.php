@@ -486,7 +486,7 @@ class Functions
     ?>
         <footer class="main-footer no-print">
             <div class="pull-right hidden-xs">
-                <b>Version</b> 0.0.1
+                <b>Version</b> 0.0.2
             </div>
             <strong>Copyright<a href="http://bakco.com.vn"></a>.</strong> nhathuoc.bakco.com.vn
         </footer>

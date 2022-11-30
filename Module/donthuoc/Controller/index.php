@@ -372,6 +372,7 @@ class index extends \Application implements \Controller\IControllerBE
                             $SanPham = new \Module\quanlythuoc\Model\PhieuXuatNhapChiTiet();
                             $SanPham->Post($itemFormDetail);
                         }
+                        DonThuocDetail::ClearSession();
                     }
                 }
                 DonThuocDetail::ClearSession();
@@ -541,7 +542,6 @@ class index extends \Application implements \Controller\IControllerBE
                 $itemBN["PhuongXa"] = $itemBenhNhan["PhuongXa"] ?? '';
                 $itemBN["Phone"] = $itemBenhNhan["Phone"];
                 $benhnhan->Post($itemBN);
-
                 $donthuoc = new DonThuoc();
                 $itemForm = \Model\Request::Post(FormDonThuoc::$ElementsName, null);
                 $itemDonThuoc["Id"] = $donthuoc->CreatId();
@@ -553,7 +553,10 @@ class index extends \Application implements \Controller\IControllerBE
                 $itemDonThuoc["ThuocLoaiDon"] = $itemForm["ThuocLoaiDon"];
                 $itemDonThuoc["TongNgayDung"] = $itemForm["TongNgayDung"];
                 $itemDonThuoc["Status"] = 1;
-                $donthuoc->Post($itemDonThuoc);
+                // tạo benh nhân
+                if ($itemDonThuoc) {
+                   $donthuoc->Post($itemDonThuoc);
+                }  
                 $detail = new DonThuocDetail();
                 $iddonthuoc = \Model\Request::Get("id", null);
                 $DonThuocModel = new DonThuoc($iddonthuoc);

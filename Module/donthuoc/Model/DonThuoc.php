@@ -81,7 +81,7 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
     public static function GetDetailById($IdDonThuoc)
     {
         $donthuoc = new DonThuoc();
-        $sql = "SELECT * FROM `lap1_toathuoc_detail` WHERE `IdDonThuoc` = '$IdDonThuoc'";
+        $sql = "SELECT * FROM `lap1_toathuoc_detail` WHERE `IdDonThuoc` = '$IdDonThuoc' Order By `Id`";
         $result = $donthuoc->GetRows($sql);
         return $result;
     }
