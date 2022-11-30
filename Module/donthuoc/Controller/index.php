@@ -308,8 +308,8 @@ class index extends \Application implements \Controller\IControllerBE
                     $Phieu["DoViCungCap"] = "";
                     $Phieu["IdPhieu"] = $phieu->getIdPhieu();
                     $Phieu["XuatNhap"] = -1;
-                    $Phieu["NoiDungPhieu"] = "Đơn thuốc ".$itemDonThuoc['ChanDoanBenh']." của ".$itemDonThuoc["NameBN"];
-                    $Phieu["GhiChu"] = "Đơn thuốc ".$itemDonThuoc['ChanDoanBenh']." của ".$itemDonThuoc["NameBN"] ;
+                    $Phieu["NoiDungPhieu"] = "Đơn thuốc " . $itemDonThuoc['ChanDoanBenh'] . " của " . $itemDonThuoc["NameBN"];
+                    $Phieu["GhiChu"] = "Đơn thuốc " . $itemDonThuoc['ChanDoanBenh'] . " của " . $itemDonThuoc["NameBN"];
                     $Phieu["NgayNhap"] = Date("Y-m-d H:i:s", time());
                     $Phieu["CreateRecord"] = Date("Y-m-d H:i:s", time());
                     $Phieu["UpdateRecord"] = Date("Y-m-d H:i:s", time());
@@ -335,7 +335,7 @@ class index extends \Application implements \Controller\IControllerBE
                             $SanPham->Post($itemFormDetail);
                         }
                         DonThuocDetail::ClearSession();
-                    }  
+                    }
                 }
                 new \Model\Error(\Model\Error::success, "Đã Thêm Toa Thuốc");
                 $donthuoc = new DonThuoc($itemDonThuoc["Id"]);
@@ -490,7 +490,6 @@ class index extends \Application implements \Controller\IControllerBE
                 $itemBN["PhuongXa"] = $itemBenhNhan["PhuongXa"] ?? '';
                 $itemBN["Phone"] = $itemBenhNhan["Phone"];
                 $benhnhan->Post($itemBN);
-
                 $donthuoc = new DonThuoc();
                 $itemForm = \Model\Request::Post(FormDonThuoc::$ElementsName, null);
                 $itemDonThuoc["Id"] = $donthuoc->CreatId();
@@ -502,8 +501,10 @@ class index extends \Application implements \Controller\IControllerBE
                 $itemDonThuoc["ThuocLoaiDon"] = $itemForm["ThuocLoaiDon"];
                 $itemDonThuoc["TongNgayDung"] = $itemForm["TongNgayDung"];
                 $itemDonThuoc["Status"] = 1;
-                $donthuoc->Post($itemDonThuoc);
-
+                // tạo benh nhân
+                if ($itemDonThuoc) {
+                   $donthuoc->Post($itemDonThuoc);
+                }  
                 $detail = new DonThuocDetail();
                 $iddonthuoc = \Model\Request::Get("id", null);
                 $DonThuocModel = new DonThuoc($iddonthuoc);
