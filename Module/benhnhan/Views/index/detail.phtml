@@ -63,7 +63,7 @@ $itemBN = new BenhNhan($data);
                         </ul>
                         <div class="tab-content">
 
-                            <div class="tab-pane" id="infomation">
+                            <div class="tab-pane" id="infomation" style="min-height: 500px;">
                                 <form action="" method="post" enctype="multipart/form-data">
                                     <div class="box-body">
                                         <?php
@@ -85,7 +85,7 @@ $itemBN = new BenhNhan($data);
                                                 $bn->Gioitinh($itemBN->Gioitinh)->renderHtml();  ?>
                                             </div>
                                             <div class="col-md-4">
-                                                <?php $bn->Ngaysinh($itemBN->Ngaysinh)->renderHtml();  ?>
+                                                <?php $bn->NgaySinhFull($itemBN->Ngaysinh)->renderHtml();  ?>
                                             </div>
                                             <div class="col-md-4">
                                                 <?php $bn->CMND($itemBN->CMND)->renderHtml();  ?>
@@ -115,7 +115,7 @@ $itemBN = new BenhNhan($data);
 
 
                             </div>
-                            <div class="tab-pane active" id="donthuoc">
+                            <div class="tab-pane active" id="donthuoc" style="min-height: 500px;" >
                                 <table class="table table-hover table-bordered">
                                     <thead>
                                         <tr>
@@ -144,9 +144,10 @@ $itemBN = new BenhNhan($data);
                                             // var_dump($item);
                                         ?>
                                             <tr>
-                                                <td style="width: 1px;">
+                                                <td style="width: 160px;">
                                                     <?php
                                                     echo Module\donthuoc\Model\btnHtml::btnCopyDonThuoc($item['Id']);
+                                                    echo Module\donthuoc\Model\btnHtml::btnXoaDonThuoc($item['Id']);
                                                     ?>
                                                 </td>
                                                 <td><?php echo $index + 1; ?></td>

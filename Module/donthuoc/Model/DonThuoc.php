@@ -213,6 +213,8 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
 
     public function Delete($Id)
     {
+        $where = " `Id` = '{$Id}' ";
+        $this->DeleteDB($where);
     }
 
     public function GetById($Id)

@@ -83,8 +83,8 @@ class index extends \Application implements \Controller\IControllerBE
                 $model["CMND"] = $itemHtml["CMND"];
                 $model["Address"] = $itemHtml["Address"];
                 $model["TinhThanh"] = $itemHtml["TinhThanh"];
-                $model["QuanHuyen"] = $itemHtml["QuanHuyen"];
-                $model["PhuongXa"] = $itemHtml["PhuongXa"];
+                $model["QuanHuyen"] = $itemHtml["QuanHuyen"] ?? "";
+                $model["PhuongXa"] = $itemHtml["PhuongXa"] ?? "";
                 $model["Phone"] = $itemHtml["Phone"];
                 $model["UpdateRecord"] = date("Y-m-d H:i:s", time());
                 // phpinfo();

@@ -114,8 +114,12 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-default" <?php echo \Model\FormRender::ToolTip("Sao chép đơn thuốc"); ?> href="/index.php?module=donthuoc&controller=index&action=copy&id=<?php echo $id; ?>">
-            <i class="fa fa-files-o text-purple"></i>
+        <a class="btn btn-primary" <?php echo \Model\FormRender::ToolTip("Sao chép đơn thuốc"); ?> href="/index.php?module=donthuoc&controller=index&action=copy&id=<?php echo $id; ?>">
+            <i class="fa fa-files-o"></i>
+        </a>
+        <a class="btn btn-default" <?php echo \Model\FormRender::ToolTip("Sao chép đơn thuốc cho bệnh nhân khác"); ?> 
+        href="/donthuoc/index/copy/?id=<?php echo $id; ?>&isnew=1">
+            <i class="fa fa-users"></i>
         </a>
     <?php
     }

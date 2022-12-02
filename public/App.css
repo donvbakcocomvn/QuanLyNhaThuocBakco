@@ -50,3 +50,6 @@ legend {
     padding: 4px 10px;
     vertical-align: middle;
 }
+select.form-control{
+    padding: 6px 0px;
+}

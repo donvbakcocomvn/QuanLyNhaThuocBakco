@@ -84,22 +84,22 @@ class index extends \Application implements \Controller\IControllerBE
     function index()
     {
         \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DonThuoc_DS]);
-            $modelItem = new DonThuoc();
-            $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
-            $params["fromdate"] = isset($_REQUEST["fromdate"]) && $_REQUEST["fromdate"] != null ? date('Y-m-d H:i:s', strtotime($_REQUEST["fromdate"])) : "";
-            $params["todate"] = isset($_REQUEST["todate"]) && $_REQUEST["todate"] != null ? date('Y-m-d H:i:s', strtotime($_REQUEST["todate"])) : "";
-            $params["status"] = isset($_REQUEST["status"]) ? \Model\Common::TextInput($_REQUEST["status"]) : "";
-            $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
-            $indexPage = max(1, $indexPage);
-            $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;
-            $pageNumber = max(1, $pageNumber);
-            $total = 0;
-            $DanhSachTaiKhoan = $modelItem->GetItems($params, $indexPage, $pageNumber, $total);
-            $data["items"] = $DanhSachTaiKhoan;
-            $data["indexPage"] = $indexPage;
-            $data["pageNumber"] = $pageNumber;
-            $data["params"] = $params;
-            $data["total"] = $total;
+        $modelItem = new DonThuoc();
+        $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
+        $params["fromdate"] = isset($_REQUEST["fromdate"]) && $_REQUEST["fromdate"] != null ? date('Y-m-d H:i:s', strtotime($_REQUEST["fromdate"])) : "";
+        $params["todate"] = isset($_REQUEST["todate"]) && $_REQUEST["todate"] != null ? date('Y-m-d H:i:s', strtotime($_REQUEST["todate"])) : "";
+        $params["status"] = isset($_REQUEST["status"]) ? \Model\Common::TextInput($_REQUEST["status"]) : "";
+        $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
+        $indexPage = max(1, $indexPage);
+        $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;
+        $pageNumber = max(1, $pageNumber);
+        $total = 0;
+        $DanhSachTaiKhoan = $modelItem->GetItems($params, $indexPage, $pageNumber, $total);
+        $data["items"] = $DanhSachTaiKhoan;
+        $data["indexPage"] = $indexPage;
+        $data["pageNumber"] = $pageNumber;
+        $data["params"] = $params;
+        $data["total"] = $total;
         $this->View($data);
     }
 
@@ -528,7 +528,8 @@ class index extends \Application implements \Controller\IControllerBE
             if (\Model\Request::Post(FormDonThuoc::$ElementsName, null) && \Model\Request::Post(FormBenhNhan::$ElementsName, null)) {
                 $benhnhan = new BenhNhan();
                 $itemBenhNhan = \Model\Request::Post(FormBenhNhan::$ElementsName, null);
-                $itemBN["Id"] = $benhnhan->CreatId();
+
+                $itemBN["Id"] = $itemBenhNhan["Id"] ?? $benhnhan->CreatId();
                 $itemBN["Name"] = $itemBenhNhan["Name"];
                 $itemBN["Gioitinh"] = $itemBenhNhan["Gioitinh"];
                 $ngay = $itemBenhNhan["NgaySinh"] ? $itemBenhNhan["NgaySinh"] : '01';
@@ -541,7 +542,10 @@ class index extends \Application implements \Controller\IControllerBE
                 $itemBN["QuanHuyen"] = $itemBenhNhan["QuanHuyen"] ?? '';
                 $itemBN["PhuongXa"] = $itemBenhNhan["PhuongXa"] ?? '';
                 $itemBN["Phone"] = $itemBenhNhan["Phone"];
-                $benhnhan->Post($itemBN);
+                if ($itemBenhNhan["Id"] == "") {
+                    $itemBN["Id"] = $benhnhan->CreatId();
+                    $benhnhan->Post($itemBN);
+                }
                 $donthuoc = new DonThuoc();
                 $itemForm = \Model\Request::Post(FormDonThuoc::$ElementsName, null);
                 $itemDonThuoc["Id"] = $donthuoc->CreatId();
@@ -555,8 +559,8 @@ class index extends \Application implements \Controller\IControllerBE
                 $itemDonThuoc["Status"] = 1;
                 // tạo benh nhân
                 if ($itemDonThuoc) {
-                   $donthuoc->Post($itemDonThuoc);
-                }  
+                    $donthuoc->Post($itemDonThuoc);
+                }
                 $detail = new DonThuocDetail();
                 $iddonthuoc = \Model\Request::Get("id", null);
                 $DonThuocModel = new DonThuoc($iddonthuoc);
@@ -615,6 +619,6 @@ class index extends \Application implements \Controller\IControllerBE
         } catch (\Exception $ex) {
             new \Model\Error(\Model\Error::danger, $ex->getMessage());
         }
-        \Model\Common::ToUrl("/index.php?module=donthuoc&controller=index&action=index");
+        \Model\Common::ToUrl($_SERVER["HTTP_REFERER"]);
     }
 }

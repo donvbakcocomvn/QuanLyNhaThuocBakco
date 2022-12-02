@@ -28,6 +28,9 @@ $bn = new FormBenhNhan();
 $donthuoc  = new DonThuoc($donthuoc);
 // var_dump($donthuoc);
 $benhnhan = new BenhNhan($donthuoc->IdBenhNhan);
+if (isset($_GET["isnew"])) {
+    $benhnhan = new BenhNhan();
+}
 // echo $benhnhan->Ngaysinh;
 // echo $a = substr($benhnhan->Ngaysinh,5,2)
 ?>
@@ -47,17 +50,18 @@ $benhnhan = new BenhNhan($donthuoc->IdBenhNhan);
             <form action="" method="post" enctype="multipart/form-data">
                 <div class="col-md-4">
                     <div class="row">
-                        <fieldset>
+                        <fieldset style="min-height: 400px;">
                             <legend>Thông tin đơn thuốc</legend>
                             <?php
                             $form = new FormDonThuoc();
                             ?>
-                            <div class="col-md-9">
-                                <?php echo $form->TongNgayDung($_SESSION["SoNgaySDThuoc"] ?? 0)->renderHTML(); ?>
-                            </div>
-                            </br>
-                            <div class="form-group" style="margin-top: 5px;">
-                                <?php btnHtml::btnCapNhatNgayDung(); ?>
+                            <div class="col-md-12">
+                                <label>Ngày Dùng Thuốc</label>
+                                <div class="d-flex">
+                                    <?php echo $form->TongNgayDung($_SESSION["SoNgaySDThuoc"] ?? 0)->render(); ?>
+                                    <?php btnHtml::btnCapNhatNgayDung(); ?>
+                                </div>
+
                             </div>
                             <div class="col-md-12">
                                 <?php echo $form->ThuocLoaiDon($donthuoc->ThuocLoaiDon)->renderHTML(); ?>
@@ -76,13 +80,14 @@ $benhnhan = new BenhNhan($donthuoc->IdBenhNhan);
                 </div>
                 <div class="col-md-8">
                     <div class="row">
-                        <fieldset>
+                        <fieldset style="min-height: 400px;">
                             <legend>Thông tin bệnh nhân</legend>
                             <div class="col-md-6">
-                                <?php $bn->Name($donthuoc->NameBN, null, 'tenbenhnhan')->renderHtml();  ?>
+                                <?php $bn->IdValue($benhnhan->Id)->render();  ?>
+                                <?php $bn->Name($benhnhan->Name, null)->renderHtml();  ?>
                             </div>
                             <div class="col-md-6">
-                                <?php $bn->Phone($benhnhan->Phone, null, 'sodienthoai')->renderHtml();  ?>
+                                <?php $bn->Phone($benhnhan->Phone, null)->renderHtml();  ?>
                             </div>
                             <div class="col-md-6">
                                 <?php $bn->CMND($benhnhan->CMND)->renderHtml();  ?>
@@ -98,10 +103,7 @@ $benhnhan = new BenhNhan($donthuoc->IdBenhNhan);
                             </div>
                             <div class="col-md-4">
                                 <?php $bn->Ngaysinh(substr($benhnhan->Ngaysinh, 8, 2))->renderHtml();  ?>
-                            </div>
-                            <div class="col-md-12">
-                                <?php $bn->Address($benhnhan->Address)->renderHtml();  ?>
-                            </div>
+                            </div> 
                             <div class="col-md-12">
                                 <?php $bn->Address($benhnhan->Address)->renderHtml();  ?>
                             </div>
@@ -129,7 +131,7 @@ $benhnhan = new BenhNhan($donthuoc->IdBenhNhan);
                                 <th>Đơn Vị Tính</th>
                                 <th>Sáng</th>
                                 <th>Trưa</th>
-                                <th>Chiều</th>
+                                <th>Tối</th>
                                 <th>Số Lượng</th>
                                 <th>Ghi Chú</th>
                             </tr>

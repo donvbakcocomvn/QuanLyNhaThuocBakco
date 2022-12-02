@@ -28,6 +28,11 @@ class FormBenhNhan implements iFormBenhNhan
         {
                 return $_SESSION[$name] ?? [];
         }
+        function IdValue($val = null)
+        {
+                $name = self::$ElementsName . "[Id]";
+                return new FormRender(new Element\Hidden($name, $val));
+        }
         function Id($val = null)
         {
                 // $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
@@ -95,9 +100,18 @@ class FormBenhNhan implements iFormBenhNhan
                 $properties["type"] = 'number';
                 $properties["class"] = " form-control saveinfor";
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-                return new FormRender(new Element\Date("Ngày sinh", $name, $properties));
+                return new FormRender(new Element\Textbox("Ngày sinh", $name, $properties));
         }
-
+        function NgaySinhFull($val = null)
+        {
+                $properties = self::$properties;
+                $properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
+                $properties[FormRender::Required] = "";
+                $properties["type"] = 'date';
+                $properties["class"] = " form-control";
+                $name = self::$ElementsName . "[Ngaysinh]";
+                return new FormRender(new Element\Textbox("Ngày,Tháng,Năm sinh", $name, $properties));
+        }
         function ThangSinh($val = null)
         {
                 $properties = self::$properties;
