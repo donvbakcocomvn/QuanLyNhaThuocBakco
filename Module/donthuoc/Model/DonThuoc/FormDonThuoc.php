@@ -197,7 +197,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 		$properties["class"] = " form-control saveinfor";
 		$properties[FormRender::Required] = "true";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-		return new FormRender(new Textbox("Số Ngày Sử Dụng Thuốc", $name, $properties));
+		return new FormRender(new Textbox("Ngày Dụng Thuốc", $name, $properties));
 	}
 	/**
 	 *

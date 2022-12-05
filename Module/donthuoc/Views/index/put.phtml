@@ -59,6 +59,7 @@ $bn = new FormBenhNhan();
                             ?>
                             <div class="col-md-9">
                                 <?php
+                                $_SESSION["SoNgaySDThuoc"] = $_SESSION["SoNgaySDThuoc"] ?? null;
                                 $_SESSION["SoNgaySDThuoc"] = $_SESSION["SoNgaySDThuoc"] == "" ? null : $_SESSION["SoNgaySDThuoc"];
                                 echo $form->TongNgayDung($_SESSION["SoNgaySDThuoc"] ?? $donthuoc->TongNgayDung)->renderHTML(); ?>
                             </div>
@@ -128,12 +129,12 @@ $bn = new FormBenhNhan();
                                 <th></th>
                                 <th>STT</th>
                                 <th>Tên Thuốc</th>
-                                <th>Số Ngày Dùng</th>
+                                <th>Ngày Dùng</th>
                                 <th>Cách Dùng</th>
                                 <th>Đơn Vị Tính</th>
                                 <th>Sáng</th>
                                 <th>Trưa</th>
-                                <th>Chiều</th>
+                                <th>Tối</th>
                                 <th>Số Lượng</th>
                                 <th>Ghi Chú</th>
                             </tr>
@@ -160,7 +161,7 @@ $bn = new FormBenhNhan();
                                         <?php
                                         echo $form->Name($thuoc["Id"] ?? "", "donthuoc" . $i, $i)->renderHTML() ?>
                                     </td>
-                                    <td style="width:120px;">
+                                    <td style="width:100px;">
                                         <?php echo $form->SoNgaySDThuoc($thuoc["SoNgaySDThuoc"] ?? "", "SoNgaySD" . $i, $i)->render(); ?>
                                     </td>
                                     <td style="width: 150px;">
