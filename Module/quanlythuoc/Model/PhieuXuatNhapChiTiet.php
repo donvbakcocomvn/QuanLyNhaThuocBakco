@@ -136,16 +136,19 @@ class PhieuXuatNhapChiTiet extends \Model\DB implements \Model\IModelService
     {
         $_SESSION["DSThuocPhieuNhap"][$index] = [];
     }
+    public function XoaChiTietPhieuNhap($idPhieuNhap)
+    {
+        $where = "`IdPhieu` = '{$idPhieuNhap}'";
+        $this->DeleteDB($where);
+    }
 
     public static function ThemDSThuocPhieuNhap($phieu, $index)
     {
         $_SESSION["DSThuocPhieuNhap"][$index] = $phieu;
     }
-
-
+ 
     function CreatIdPhieu($IdPhieu = null)
-    {
-
+    { 
         return Common::uuid();
     }
 

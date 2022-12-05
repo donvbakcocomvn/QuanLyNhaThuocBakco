@@ -124,7 +124,7 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
             $value["Id"] = $value["Id"] ?? null;
             if ($value["Id"] == $sp->Id) {
                 return null;
-            } 
+            }
             // var_dump($value);
             // var_dump($detailThuoc);
         }
@@ -279,6 +279,12 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
 
         $where = " `Name` like '%{$name}%' {$danhmucSql} ";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
+    }
+
+    public function DanhSachThuocTheoDonThuoc($idDonThuoc)
+    {
+        $where = "`IdDonThuoc` = '$idDonThuoc'";
+        return $this->Select($where);
     }
 
     public function Post($model)

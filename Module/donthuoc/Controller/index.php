@@ -59,10 +59,49 @@ class index extends \Application implements \Controller\IControllerBE
             $ModelDonThuoc["Status"] = 3;
             $dt = new DonThuoc();
             $dt->Put($ModelDonThuoc);
-            new \Model\Error(\Model\Error::success, "Hoàn thành việc soạn thuốc");
+            $Phieu["TongTien"] = $donthuoc->TongTien();
+            $Phieu["DoViCungCap"] = "";
+            $Phieu["IdPhieu"] = $idDonThuoc;
+            $Phieu["XuatNhap"] = -1;
+            $Phieu["NoiDungPhieu"] = "Đơn thuốc " . $donthuoc->ChanDoanBenh . " của " . $donthuoc->NameBN;
+            $Phieu["GhiChu"] = "Đơn thuốc " . $donthuoc->ChanDoanBenh . " của " . $donthuoc->NameBN;
+            $Phieu["NgayNhap"] = Date("Y-m-d H:i:s", time());
+            $Phieu["CreateRecord"] = Date("Y-m-d H:i:s", time());
+            $Phieu["UpdateRecord"] = Date("Y-m-d H:i:s", time());
+            $Phieu["IsDelete"] = 0;
+            $phieuXuatNhap = new \Module\quanlythuoc\Model\PhieuXuatNhap();
+            $_phieuXN = $phieuXuatNhap->GetByIdPhieu($idDonThuoc);
+            if ($_phieuXN == null) {
+                $phieuXuatNhap->Post($Phieu);
+            } else {
+                $Phieu["Id"] = $_phieuXN["Id"];
+                $phieuXuatNhap->Put($Phieu);
+            } 
+            // xóa chi tiết đơn theo mã phiếu
+            $phieuXuatNhapChiTiet = new \Module\quanlythuoc\Model\PhieuXuatNhapChiTiet();
+            $phieuXuatNhapChiTiet->XoaChiTietPhieuNhap($Phieu["IdPhieu"]);
+            foreach ($donthuoc->DanhSachThuoc() as $key => $thuoc) {
+                $idThuoc = $thuoc["Id"];
+                $itemFormDetail["IdPhieu"] = $Phieu["IdPhieu"];
+                $itemFormDetail["IdThuoc"] = $idThuoc;
+                $itemFormDetail["SoLuong"] = $thuoc["SoLuong"];
+                $itemFormDetail["NhaSanXuat"] = $thuoc["NhaSanXuat"] ?? "";
+                $itemFormDetail["SoLo"] = $thuoc["SoLo"] ?? "";
+                $itemFormDetail["NuocSanXuat"] = $thuoc["NuocSanXuat"] ?? "";
+                $itemFormDetail["HanSuDung"] = Date("Y-m-d H:i:s", time() + 3600 * 24 * 100);
+                $itemFormDetail["Price"] = $thuoc["GiaBan"];
+                $itemFormDetail["XuatNhap"] = -1;
+                $itemFormDetail["CreateRecord"] = Date("Y-m-d H:i:s", time());
+                $itemFormDetail["UpdateRecord"] = Date("Y-m-d H:i:s", time());
+                $itemFormDetail["GhiChu"] = $thuoc["GhiChu"];
+                $itemFormDetail["IsDelete"] = 0;
+                $SanPham = new \Module\quanlythuoc\Model\PhieuXuatNhapChiTiet();
+                $SanPham->Post($itemFormDetail);
+            }
+            new \Model\Error(\Model\Error::success, "Đã Giao Thuốc");
             $itemDonThuoc = new DonThuoc($ModelDonThuoc["Id"]);
             // \Model\Common::ToUrl("/donthuoc/index/viewdonthuoc/?id=" . $itemDonThuoc->Id . "");
-            \Model\Common::ToUrl("/donthuoc/index/donchuaxuly/");
+            // \Model\Common::ToUrl("/donthuoc/index/donchuaxuly/");
         } catch (\Exception $exc) {
             echo $exc->getMessage();
         }
@@ -339,42 +378,7 @@ class index extends \Application implements \Controller\IControllerBE
                     }
                     // DonThuocDetail::ClearSession();
                 }
-                $phieu = new PhieuXuatNhap();
-                if ($itemDonThuoc["ThuocLoaiDon"] == 3) {
-                    $Phieu["TongTien"] = $sum;
-                    $Phieu["DoViCungCap"] = "";
-                    $Phieu["IdPhieu"] = $phieu->getIdPhieu();
-                    $Phieu["XuatNhap"] = -1;
-                    $Phieu["NoiDungPhieu"] = "Đơn thuốc " . $itemDonThuoc['ChanDoanBenh'] . " của " . $itemDonThuoc["NameBN"];
-                    $Phieu["GhiChu"] = "Đơn thuốc " . $itemDonThuoc['ChanDoanBenh'] . " của " . $itemDonThuoc["NameBN"];
-                    $Phieu["NgayNhap"] = Date("Y-m-d H:i:s", time());
-                    $Phieu["CreateRecord"] = Date("Y-m-d H:i:s", time());
-                    $Phieu["UpdateRecord"] = Date("Y-m-d H:i:s", time());
-                    $Phieu["IsDelete"] = 0;
-                    $phieuXuatNhap = new \Module\quanlythuoc\Model\PhieuXuatNhap();
-                    $phieuXuatNhap->Post($Phieu);
-                    foreach (DonThuocDetail::DsThuoc() as $mathuoc => $thuoc) {
-                        $sp = new SanPham();
-                        if (isset($thuoc["Id"]) == true) {
-                            $idThuoc = $thuoc["Id"];
-                            $itemFormDetail["IdPhieu"] = $Phieu["IdPhieu"];
-                            $itemFormDetail["IdThuoc"] = $idThuoc;
-                            $itemFormDetail["SoLuong"] = $thuoc["Soluong"];
-                            $itemFormDetail["NhaSanXuat"] = "";
-                            $itemFormDetail["SoLo"] = $thuoc["SoLo"] ?? "";
-                            $itemFormDetail["NuocSanXuat"] = "";
-                            $itemFormDetail["Price"] = $itemDetail["GiaBan"];
-                            $itemFormDetail["XuatNhap"] = -1;
-                            $itemFormDetail["CreateRecord"] = Date("Y-m-d H:i:s", time());
-                            $itemFormDetail["UpdateRecord"] = Date("Y-m-d H:i:s", time());
-                            $itemFormDetail["GhiChu"] = $itemDetail["GhiChu"];
-                            $itemFormDetail["IsDelete"] = 0;
-                            $SanPham = new \Module\quanlythuoc\Model\PhieuXuatNhapChiTiet();
-                            $SanPham->Post($itemFormDetail);
-                        }
-                        DonThuocDetail::ClearSession();
-                    }
-                }
+
                 DonThuocDetail::ClearSession();
                 new \Model\Error(\Model\Error::success, "Đã Thêm Toa Thuốc");
                 $donthuoc = new DonThuoc($itemDonThuoc["Id"]);

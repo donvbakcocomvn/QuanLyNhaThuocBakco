@@ -54,10 +54,13 @@ $bn = new FormBenhNhan();
                         <fieldset>
                             <legend>Thông tin đơn thuốc</legend>
                             <?php
+
                             $form = new FormDonThuoc();
                             ?>
                             <div class="col-md-9">
-                                <?php echo $form->TongNgayDung($_SESSION["SoNgaySDThuoc"] ?? 0)->renderHTML(); ?>
+                                <?php
+                                $_SESSION["SoNgaySDThuoc"] = $_SESSION["SoNgaySDThuoc"] == "" ? null : $_SESSION["SoNgaySDThuoc"];
+                                echo $form->TongNgayDung($_SESSION["SoNgaySDThuoc"] ?? $donthuoc->TongNgayDung)->renderHTML(); ?>
                             </div>
                             </br>
                             <div class="form-group" style="margin-top: 5px;">

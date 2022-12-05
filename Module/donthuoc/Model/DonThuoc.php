@@ -47,6 +47,25 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
             }
         }
     }
+    public function TongTien()
+    {
+        $DSThuoc = $this->DanhSachThuoc();
+        $tong = 0;
+        if ($DSThuoc == null) {
+            return 0;
+        }
+        foreach ($DSThuoc as $key => $value) {
+            $thanhTien = $value["GiaBan"] * $value["SoLuong"];
+            $tong += $thanhTien;
+        }
+        return $tong;
+    }
+
+    public function DanhSachThuoc()
+    {
+        $donThuocChiTiet = new DonThuocDetail();
+        return $donThuocChiTiet->DanhSachThuocTheoDonThuoc($this->Id);
+    }
 
     public function Status()
     {

@@ -28,8 +28,12 @@ class btnHtml
         if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy]) == false) {
             return;
         }
+        $donThuoc = new DonThuoc($id);
+        if ($donThuoc->Status == 3) {
+            return;
+        }
     ?>
-        <a class="btn btn-info no-print" href="/index.php?module=donthuoc&controller=index&action=giaothuoc&id=<?php echo $id; ?>">
+        <a onclick="return confirm('Bạn đã giao thuốc cho bệnh nhân?')" class="btn btn-info no-print" href="/index.php?module=donthuoc&controller=index&action=giaothuoc&id=<?php echo $id; ?>">
             Giao thuốc
         </a>
     <?php
@@ -117,8 +121,7 @@ class btnHtml
         <a class="btn btn-primary" <?php echo \Model\FormRender::ToolTip("Sao chép đơn thuốc"); ?> href="/index.php?module=donthuoc&controller=index&action=copy&id=<?php echo $id; ?>">
             <i class="fa fa-files-o"></i>
         </a>
-        <a class="btn btn-default" <?php echo \Model\FormRender::ToolTip("Sao chép đơn thuốc cho bệnh nhân khác"); ?> 
-        href="/donthuoc/index/copy/?id=<?php echo $id; ?>&isnew=1">
+        <a class="btn btn-default" <?php echo \Model\FormRender::ToolTip("Sao chép đơn thuốc cho bệnh nhân khác"); ?> href="/donthuoc/index/copy/?id=<?php echo $id; ?>&isnew=1">
             <i class="fa fa-users"></i>
         </a>
     <?php
