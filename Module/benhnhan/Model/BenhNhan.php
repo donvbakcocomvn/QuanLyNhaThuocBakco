@@ -5,6 +5,7 @@ namespace Module\benhnhan\Model;
 use Model\Common;
 use Model\Locations;
 use Model\OptionsService;
+use Module\donthuoc\Model\DonThuoc;
 use TinhThanh;
 
 class BenhNhan extends \Model\DB implements \Model\IModelService
@@ -60,7 +61,7 @@ class BenhNhan extends \Model\DB implements \Model\IModelService
 
     function GetByNameAndPhone($name, $phone)
     {
-       echo $sql = "SELECT * FROM `lap1_benhnhan` WHERE `Name` LIKE '$name' or `Phone` LIKE '$phone'";
+        echo $sql = "SELECT * FROM `lap1_benhnhan` WHERE `Name` LIKE '$name' or `Phone` LIKE '$phone'";
         $result = $this->GetRow($sql);
         return $result;
     }
@@ -89,9 +90,12 @@ class BenhNhan extends \Model\DB implements \Model\IModelService
     function isdelete($DSMaSanPham)
     {
         $model["isDelete"] = 1;
-        $DSMaSanPham = implode("','", $DSMaSanPham);
-        $where = "`Id` in ('{$DSMaSanPham}') ";
+        $DSMaSanPhamsql = implode("','", $DSMaSanPham);
+        $where = "`Id` in ('{$DSMaSanPhamsql}') ";
         $this->Update($model, $where);
+        // xóa các đơn thuốc của bệnh nhân
+        $DonThuoc = new DonThuoc();
+        $DonThuoc->XoaDonThuocTheoBenhNhan($DSMaSanPham);
     }
 
     // Lấy Name Opitons Giới Tính

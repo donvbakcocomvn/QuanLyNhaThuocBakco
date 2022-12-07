@@ -37,7 +37,7 @@ class btnHtml
 
     public static function btnViewKhachHang()
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, DonthuocPermission::QLT_DonThuoc_Copy, DonthuocPermission::QLT_DonThuoc_Delete,DonthuocPermission::QLT_DonThuoc_Detail,DonthuocPermission::QLT_DonThuoc_DS,DonthuocPermission::QLT_DonThuoc_Export,DonthuocPermission::QLT_DonThuoc_Post,DonthuocPermission::QLT_DonThuoc_Put]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, DonthuocPermission::QLT_DonThuoc_Copy, DonthuocPermission::QLT_DonThuoc_Delete, DonthuocPermission::QLT_DonThuoc_Detail, DonthuocPermission::QLT_DonThuoc_DS, DonthuocPermission::QLT_DonThuoc_Export, DonthuocPermission::QLT_DonThuoc_Post, DonthuocPermission::QLT_DonThuoc_Put]) == false) {
             return;
         }
     ?>
@@ -71,7 +71,7 @@ class btnHtml
 
     public static function btnExport()
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_BenhNhan_Delete,Permission::QLT_BenhNhan_Detail,Permission::QLT_BenhNhan_Post,Permission::QLT_BenhNhan_Put,Permission::QLT_BenhNhan_DS]) == false) {
+        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_BenhNhan_Delete, Permission::QLT_BenhNhan_Detail, Permission::QLT_BenhNhan_Post, Permission::QLT_BenhNhan_Put, Permission::QLT_BenhNhan_DS]) == false) {
             return;
         }
     ?>
@@ -87,7 +87,7 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-default" <?php echo \Model\FormRender::ToolTip("Xóa bệnh nhân"); ?> title="Bạn có muốn xóa danh mục này?" href="/index.php?module=benhnhan&controller=index&action=isdelete&id=<?php echo $id; ?>">
+        <a onclick="return confirm('Xóa bệnh nhân này?')" class="btn btn-default" <?php echo \Model\FormRender::ToolTip("Xóa bệnh nhân"); ?> title="Bạn có muốn xóa danh mục này?" href="/benhnhan/index/isdelete/?id=<?php echo $id; ?>">
             <i class="fa fa-trash-o text-red"></i>
         </a>
 <?php

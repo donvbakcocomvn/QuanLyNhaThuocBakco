@@ -80,7 +80,7 @@ $roleDetail = new Model\Role();
                                         </th>
                                         <th style="width: 140px">
                                             <i class="pull-right fa fa-info" data-toggle="tooltip" data-placement="top" title="Giá Nhập/Xuất"></i>
-                                            Giá
+                                            Giá bán
                                         </th>
                                         <th style="width: 100px">
                                             <i class="pull-right fa fa-info" data-toggle="tooltip" data-placement="top" title="Giá Nhập/Xuất"></i>
@@ -116,7 +116,7 @@ $roleDetail = new Model\Role();
                                                 echo $formChiTiet->DVT($sanPham->DonViTinh(), "DVT" . $i, $i, [FormRender::Readonly => "true"])->render(); ?>
                                             </th>
                                             <th>
-                                                <?php 
+                                                <?php
                                                 echo $formChiTiet->SoLuong($sanPham->Soluong, "SoLuong" . $i, $i)->render(); ?>
                                             </th>
                                             <th>
@@ -128,7 +128,7 @@ $roleDetail = new Model\Role();
                                                 echo $formChiTiet->HanSuDung($sanPham->HSD, "HanSuDung" . $i, $i)->render(); ?>
                                             </th>
                                             <th>
-                                                <?php echo $formChiTiet->Price($sanPham->Gianhap, "Price" . $i, $i)->render(); ?>
+                                                <?php echo $formChiTiet->Price($sanPham->Giaban, "Price" . $i, $i)->render(); ?>
                                             </th>
                                             <th id="<?php echo "ThanhTien" . $i ?>">
                                                 <?php echo number_format($sanPham->ThanhTien(), 0, ".", ","); ?>

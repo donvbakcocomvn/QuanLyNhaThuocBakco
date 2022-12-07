@@ -385,7 +385,7 @@ class SanPham extends \Model\DB implements \Model\IModelService
     }
 
     public function LichSuXuatNhan()
-    { 
+    {
         $ChiTietPhieuHen = new PhieuXuatNhapChiTiet();
         return $ChiTietPhieuHen->LichSuNhapXuatyTheoMaThuoc($this->Id);
     }

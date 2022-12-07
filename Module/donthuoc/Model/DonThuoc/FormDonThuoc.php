@@ -397,8 +397,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 		$properties = self::$properties;
 		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		$properties["id"] = $id;
-		$properties["index"] = $index;
-		$properties[FormRender::Disabled] = "true";
+		$properties["index"] = $index; 
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]" . "[]";
 		return new FormRender(new Textbox("", $name, $properties));
 	}

@@ -61,7 +61,7 @@ $bn = new FormBenhNhan();
                                 <?php
                                 $_SESSION["SoNgaySDThuoc"] = $_SESSION["SoNgaySDThuoc"] ?? null;
                                 $_SESSION["SoNgaySDThuoc"] = $_SESSION["SoNgaySDThuoc"] == "" ? null : $_SESSION["SoNgaySDThuoc"];
-                                echo $form->TongNgayDung($_SESSION["SoNgaySDThuoc"] ?? $donthuoc->TongNgayDung)->renderHTML(); ?>
+                                echo $form->TongNgayDung($donthuoc->TongNgayDung ?? $_SESSION["SoNgaySDThuoc"])->renderHTML(); ?>
                             </div>
                             </br>
                             <div class="form-group" style="margin-top: 5px;">
@@ -126,7 +126,11 @@ $bn = new FormBenhNhan();
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th></th>
+                                <th>
+                                    <button data-toggle="tooltip" data-placement="top" title="Thêm thuốc mới" type="button" class="btn btn-success" id="btn-add">
+                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                    </button>
+                                </th>
                                 <th>STT</th>
                                 <th>Tên Thuốc</th>
                                 <th>Ngày Dùng</th>
@@ -145,6 +149,7 @@ $bn = new FormBenhNhan();
                             $i = 0;
                             foreach (DonThuocDetail::DsThuoc() as $mathuoc => $thuoc) {
                                 $sanPham = new SanPham($thuoc["Id"] ?? null);
+
                             ?>
                                 <tr>
                                     <th>
@@ -177,7 +182,8 @@ $bn = new FormBenhNhan();
                                         <?php echo $form->Trua($thuoc["Trua"] ?? "", "trua" . $i, $i)->render(); ?>
                                     </td>
                                     <td style="width: 100px;">
-                                        <?php echo $form->Chieu($thuoc["Chieu"] ?? "", "chieu" . $i, $i)->render(); ?>
+                                        <?php
+                                        echo $form->Chieu($thuoc["Chieu"] ?? "", "chieu" . $i, $i)->render(); ?>
                                     </td>
                                     <td>
                                         <?php echo $form->SoLuong($thuoc["Soluong"] ?? "", "soluong" . $i, $i)->render(); ?>

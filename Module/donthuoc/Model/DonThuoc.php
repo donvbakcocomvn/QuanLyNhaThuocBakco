@@ -47,6 +47,13 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
             }
         }
     }
+
+    public function XoaDonThuocTheoBenhNhan($DanhSachMaBenhNhan)
+    {
+        $DanhSachMaBenhNhan = implode("','", $DanhSachMaBenhNhan);
+        $where = "`IdBenhNhan` in ('{$DanhSachMaBenhNhan}') ";
+        return $this->Update(["IsDelete" => 1], $where);
+    }
     public function TongTien()
     {
         $DSThuoc = $this->DanhSachThuoc();
@@ -249,7 +256,7 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
     public function GetItems($params, $indexPage, $pageNumber, &$total)
     {
         $name = isset($params["keyword"]) ? $params["keyword"] : '';
-        $isShow = isset($params["isShow"]) ? $params["isShow"] : '';
+        $isShow = isset($params["isDelete"]) ? $params["isDelete"] : 0;
         $fromdate = isset($params["fromdate"]) ? $params["fromdate"] : '';
         $todate = isset($params["todate"]) ? $params["todate"] : '';
         $status = isset($params["status"]) ? $params["status"] : '';
@@ -265,8 +272,9 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
         if ($todate != "") {
             $todateSql = "and `CreateRecord` <= '{$todate}' ";
         }
-        // self::$Debug = true;
-        $where = " (`Id` like '%{$name}%' or `NameBN` like '%{$name}%') {$fromdateSql}{$statusSql}{$todateSql} ORDER BY `CreateRecord` DESC";
+        $fromdateIsDeleteSQL = "and `IsDelete` = '0'";
+        
+        $where = " (`Id` like '%{$name}%' or `NameBN` like '%{$name}%') {$fromdateSql} {$statusSql} {$todateSql} $fromdateIsDeleteSQL  ORDER BY `CreateRecord` DESC";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 

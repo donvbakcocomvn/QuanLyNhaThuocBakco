@@ -71,6 +71,7 @@ $(document).ready(function () {
             var idSoLo = "#SoLo" + $("#" + $(this).attr("id")).attr("index");
             var idNhaSanXuat = "#NhaSanXuat" + $("#" + $(this).attr("id")).attr("index");
             var idNuocSanXuat = "#NuocSanXuat" + $("#" + $(this).attr("id")).attr("index");
+            var idThanhTien = "#ThanhTien" + $("#" + $(this).attr("id")).attr("index");
             var idHanSuDung = "#HanSuDung" + index;
             var idPrice = "#Price" + $("#" + $(this).attr("id")).attr("index");
             var index = $("#" + $(this).attr("id")).attr("index");
@@ -87,7 +88,7 @@ $(document).ready(function () {
                         $(idNhaSanXuat).val(response.NhaSX);
 
                         $(idNuocSanXuat).val(response.NuocSX);
-                        $(idPrice).val(response.Gianhap);
+                        $(idPrice).val(response.Giaban);
                         $(idDVT).val(response.DVTTitle);
                         if ($("#XuatNhapId").val() == "1") {
                             $(idHanSuDung).attr("Required", "");
@@ -99,6 +100,8 @@ $(document).ready(function () {
                         // $(idNhaSanXuat).attr("Required", "");
                         // $(idNuocSanXuat).attr("Required", "");
                         $(idPrice).attr("Required", "");
+                        $(idThanhTien).html((response.ThanhTien).toLocaleString('en-US'));
+
                     }
 
 

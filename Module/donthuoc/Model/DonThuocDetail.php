@@ -75,11 +75,11 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
                 $_SESSION["DetailThuoc"][] = [];
             }
         }
-        if (count($_SESSION["DetailThuoc"]) == 0) {
-            for ($i = 0; $i < 5; $i++) {
-                $_SESSION["DetailThuoc"][] = [];
-            }
-        }
+        // if (count($_SESSION["DetailThuoc"]) == 0) {
+        //     for ($i = 0; $i < 5; $i++) {
+        //         $_SESSION["DetailThuoc"][] = [];
+        //     }
+        // }
         return $_SESSION["DetailThuoc"];
     }
 

@@ -76,7 +76,7 @@ class index extends \Application implements \Controller\IControllerBE
             } else {
                 $Phieu["Id"] = $_phieuXN["Id"];
                 $phieuXuatNhap->Put($Phieu);
-            } 
+            }
             // xóa chi tiết đơn theo mã phiếu
             $phieuXuatNhapChiTiet = new \Module\quanlythuoc\Model\PhieuXuatNhapChiTiet();
             $phieuXuatNhapChiTiet->XoaChiTietPhieuNhap($Phieu["IdPhieu"]);
@@ -110,6 +110,7 @@ class index extends \Application implements \Controller\IControllerBE
     public function themdong()
     {
         $_SESSION["DetailThuoc"][] = [];
+        var_dump($_SESSION["DetailThuoc"]);
         return $_SESSION["DetailThuoc"];
     }
 
@@ -238,9 +239,9 @@ class index extends \Application implements \Controller\IControllerBE
         $donthuocdetail = new DonThuocDetail();
         $thuoc = DonThuocDetail::DsThuoc()[$data["index"]];
 
-        $thuoc["Sang"] = floatval($data["sang"]);
-        $thuoc["Trua"] = floatval($data["trua"]);
-        $thuoc["Chieu"] = floatval($data["chieu"]);
+        $thuoc["Sang"] = floatval($data["sang"] ?? 0);
+        $thuoc["Trua"] = floatval($data["trua"] ?? 0);
+        $thuoc["Chieu"] = floatval($data["chieu"] ?? 0);
         $thuoc["SoNgaySDThuoc"] = $data["ngaydungthuoc"];
         // $thuoc["GhiChu"] = $data["Ghichu"];
         // var_dump($thuoc["Sang"]);
@@ -502,7 +503,10 @@ class index extends \Application implements \Controller\IControllerBE
         }
         $DM = new DonThuoc();
         $data["donthuoc"] = $DM->GetById($id);
-        DonThuocDetail::setDsThuoc($id);
+        if (isset($_GET["isnew"])) {
+            DonThuocDetail::setDsThuoc($id);
+            Common::ToUrl("/donthuoc/index/put/?id={$id}");
+        }
         $this->View($data);
     }
 
@@ -603,7 +607,11 @@ class index extends \Application implements \Controller\IControllerBE
         }
         $DM = new DonThuoc();
         $data["donthuoc"] = $DM->GetById($id);
-        DonThuocDetail::setDsThuoc($id);
+        if (isset($_GET["isnew"])) {
+            DonThuocDetail::setDsThuoc($id);
+            Common::ToUrl("/donthuoc/index/copy/?id={$id}&isnewbn=1");
+        }
+
         $this->View($data);
     }
 

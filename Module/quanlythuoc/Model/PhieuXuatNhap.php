@@ -86,9 +86,9 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
         $DSThuoc = $_SESSION["DSThuocPhieuNhap"];
         $tong = 0;
         foreach ($DSThuoc as $key => $value) {
-            $_sp = new SanPham($value);
-            $thanhTien = $_sp->ThanhTien();
-            $tong += floatval($thanhTien);
+            $value["Giaban"] = $value["Giaban"] ?? 0;
+            $value["Soluong"] = $value["Soluong"] ?? 0;
+            $tong += $value["Giaban"]  * $value["Soluong"];
         }
         return $tong;
     }

@@ -106,7 +106,7 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-default no-print" <?php echo \Model\FormRender::ToolTip("Sửa đơn thuốc"); ?> href="/index.php?module=donthuoc&controller=index&action=put&id=<?php echo $id; ?>">
+        <a class="btn btn-default no-print" <?php echo \Model\FormRender::ToolTip("Sửa đơn thuốc"); ?> href="/index.php?module=donthuoc&isnew=1&controller=index&action=put&id=<?php echo $id; ?>">
             <i class="fa fa-pencil text-blue"></i>
         </a>
     <?php
@@ -118,7 +118,7 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-primary" <?php echo \Model\FormRender::ToolTip("Sao chép đơn thuốc"); ?> href="/index.php?module=donthuoc&controller=index&action=copy&id=<?php echo $id; ?>">
+        <a class="btn btn-primary" <?php echo \Model\FormRender::ToolTip("Sao chép đơn thuốc"); ?> href="/index.php?module=donthuoc&isnew=1&controller=index&action=copy&id=<?php echo $id; ?>">
             <i class="fa fa-files-o"></i>
         </a>
         <a class="btn btn-default" <?php echo \Model\FormRender::ToolTip("Sao chép đơn thuốc cho bệnh nhân khác"); ?> href="/donthuoc/index/copy/?id=<?php echo $id; ?>&isnew=1">

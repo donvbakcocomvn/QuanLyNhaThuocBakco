@@ -150,7 +150,7 @@ class FormPhieuXuatNhapChiTiet implements iFormPhieuXuatNhapChiTiet
 		$properties["oninput"] = "this.setCustomValidity('')";
 		// $properties[FormRender::Required] = "true";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-		return new FormRender(new Element\Textbox("Giá", $name, $properties));
+		return new FormRender(new Element\Textbox("Giá Bán", $name, $properties));
 	}
 
 

@@ -28,7 +28,7 @@ $bn = new FormBenhNhan();
 $donthuoc  = new DonThuoc($donthuoc);
 // var_dump($donthuoc);
 $benhnhan = new BenhNhan($donthuoc->IdBenhNhan);
-if (isset($_GET["isnew"])) {
+if (isset($_GET["isnewbn"])) {
     $benhnhan = new BenhNhan();
 }
 // echo $benhnhan->Ngaysinh;
@@ -103,7 +103,7 @@ if (isset($_GET["isnew"])) {
                             </div>
                             <div class="col-md-4">
                                 <?php $bn->Ngaysinh(substr($benhnhan->Ngaysinh, 8, 2))->renderHtml();  ?>
-                            </div> 
+                            </div>
                             <div class="col-md-12">
                                 <?php $bn->Address($benhnhan->Address)->renderHtml();  ?>
                             </div>
@@ -123,7 +123,11 @@ if (isset($_GET["isnew"])) {
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th></th>
+                                <th>
+                                    <button data-toggle="tooltip" data-placement="top" title="Thêm thuốc mới" type="button" class="btn btn-success" id="btn-add">
+                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                    </button>
+                                </th>
                                 <th>STT</th>
                                 <th>Tên Thuốc</th>
                                 <th>Số Ngày Dùng</th>
@@ -138,7 +142,6 @@ if (isset($_GET["isnew"])) {
                         </thead>
                         <tbody class="table-thuoc">
                             <?php
-                            // var_dump(DonThuocDetail::DsThuoc());
                             $i = 0;
                             foreach (DonThuocDetail::DsThuoc() as $mathuoc => $thuoc) {
                                 $sanPham = new SanPham($thuoc["Id"] ?? null);

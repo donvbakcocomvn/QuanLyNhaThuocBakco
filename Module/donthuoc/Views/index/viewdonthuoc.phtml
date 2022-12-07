@@ -142,10 +142,10 @@ $IdDonThuoc = $donthuoc->Id;
                     <thead>
                         <tr style="border-bottom: 1px solid #00000042;">
                             <th class="text-center">STT</th>
-                            <th>Tên thuốc</th>
-                            <th>Số lượng</th>
+                            <th class="text-center">Tên thuốc</th>
+                            <th class="text-center">Số lượng</th>
                             <?php
-                            if (\Model\Permission::CheckPremision([Permission::QLT_DonThuoc_DS,Permission::QLT_DonThuoc_Post,Permission::QLT_DonThuoc_Put,Permission::QLT_DonThuoc_Copy,Permission::QLT_DonThuoc_Detail]) == true) {
+                            if (\Model\Permission::CheckPremision([Permission::QLT_DonThuoc_DS, Permission::QLT_DonThuoc_Post, Permission::QLT_DonThuoc_Put, Permission::QLT_DonThuoc_Copy, Permission::QLT_DonThuoc_Detail]) == true) {
                             ?>
                                 <th>Đơn vị tính</th>
                             <?php
@@ -154,14 +154,14 @@ $IdDonThuoc = $donthuoc->Id;
                             <?php
                             if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy]) == true) {
                             ?>
-                                <th>Đơn giá</th>
+                                <th class="text-center">Đơn giá</th>
                                 <th>Thành Tiền</th>
                             <?php
                             }
                             ?>
                         </tr>
                     </thead>
-                    <tbody >
+                    <tbody>
                         <?php
                         $detail = DonThuoc::GetDetailById($IdDonThuoc);
                         $common = new Common();
@@ -169,40 +169,76 @@ $IdDonThuoc = $donthuoc->Id;
                         $sum = 0;
                         foreach ($detail as $index => $DTdetail) { ?>
                             <tr>
-                                <td></td>
-                                <th><?php echo SanPham::GetNameById($DTdetail['IdThuoc']); ?></th>
-                                <td><span style="font-weight: 400 !important;"><?php echo $DTdetail['SoLuong'] . ' ' . $DTdetail['DVT']; ?></span></td>
+                                <td class="text-center">
+                                    <b>
+                                        <?php echo $index + 1 ?>
+                                    </b>
+                                </td>
+                                <th>
+                                    <?php echo SanPham::GetNameById($DTdetail['IdThuoc']); ?>
+                                </th>
+                                <td class="text-center"><span style="font-weight: 400 !important;">
+                                        <?php echo $DTdetail['SoLuong'] . ' ' . $DTdetail['DVT']; ?>
+                                    </span></td>
                                 <?php
-                            if (\Model\Permission::CheckPremision([Permission::QLT_DonThuoc_DS,Permission::QLT_DonThuoc_Post,Permission::QLT_DonThuoc_Put,Permission::QLT_DonThuoc_Copy,Permission::QLT_DonThuoc_Detail]) == true) {
-                            ?>
-                                <td><?php echo $DTdetail['DVT']; ?></td>
-                            <?php
-                            }
-                            ?>
+                                if (\Model\Permission::CheckPremision([Permission::QLT_DonThuoc_DS, Permission::QLT_DonThuoc_Post, Permission::QLT_DonThuoc_Put, Permission::QLT_DonThuoc_Copy, Permission::QLT_DonThuoc_Detail]) == true) {
+                                ?>
+                                    <td>
+                                        <?php echo $DTdetail['DVT']; ?>
+                                    </td>
+                                <?php
+                                }
+                                ?>
                                 <?php
                                 if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy]) == true) {
                                 ?>
-                                    <td><?php echo Common::ViewNumber($DTdetail['GiaBan']); ?></td>
-                                    <td><?php echo Common::ViewPrice($DTdetail['SoLuong'] * $DTdetail['GiaBan']); ?></td>
-                                    <?php
+                                    <td class="text-center">
+                                        <?php echo Common::ViewNumber($DTdetail['GiaBan']); ?>
+                                    </td>
+                                    <td>
+                                        <?php echo Common::ViewPrice($DTdetail['SoLuong'] * $DTdetail['GiaBan']); ?>
+                                    </td>
+                                <?php
                                 }
                                 ?>
-                                <td><?php $sum += $DTdetail['SoLuong'] * $DTdetail['GiaBan'] ?></td>
+                                <td>
+                                    <?php $sum += $DTdetail['SoLuong'] * $DTdetail['GiaBan'] ?>
+                                </td>
                             </tr>
                             <tr>
-                                <td class="text-center"><b><?php echo $index + 1 ?></b></td>
-                                <td><i><?php echo '(' . $DTdetail['GhiChu'] . ')'; ?></i></td>
+                                <td></td>
+                                <?php
+                                if ($DTdetail['GhiChu']) { ?>
+                                    <td class="text-center">
+                                        <i>
+                                            <?php
+                                            $thuoc = new SanPham($DTdetail['IdThuoc']);
+                                            echo '(' . $thuoc->Ghichu . ')'; ?>
+                                        </i>
+                                    </td>
+                                <?php
+                                }
+                                ?>
+
                             </tr>
                             <tr style="border-bottom: 1px solid #00000042;">
                                 <td></td>
-                                <td><i>Sáng: <b><?php echo SanPham::GetDesByVal($DTdetail['Sang'], 'donviquydoi') . ' ' . $DTdetail['DVT']; ?></b></i></td>
-                                <td><i>Trưa: <b><?php echo SanPham::GetDesByVal($DTdetail['Trua'], 'donviquydoi') . ' ' . $DTdetail['DVT'] ?? 0; ?></b></i></td>
-                                <td><i>Tối: <b><?php echo SanPham::GetDesByVal($DTdetail['Chieu'], 'donviquydoi') . ' ' . $DTdetail['DVT'] ?? 0 ?></b></i></td>
+                                <td style="padding-left: 22px;"><i>Sáng: <b>
+                                            <?php echo SanPham::GetDesByVal($DTdetail['Sang'], 'donviquydoi') . ' ' . $DTdetail['DVT']; ?>
+                                        </b></i></td>
+                                <td><i>Trưa: <b>
+                                            <?php echo SanPham::GetDesByVal($DTdetail['Trua'], 'donviquydoi') . ' ' . $DTdetail['DVT'] ?? 0; ?>
+                                        </b></i></td>
+                                <td><i>Tối: <b>
+                                            <?php echo SanPham::GetDesByVal($DTdetail['Chieu'], 'donviquydoi') . ' ' . $DTdetail['DVT'] ?? 0 ?>
+                                        </b></i></td>
+                                <td></td>
                             </tr>
                         <?php
                         }
                         ?>
                     </tbody>
+
                 </table>
             </div>
             <tr>

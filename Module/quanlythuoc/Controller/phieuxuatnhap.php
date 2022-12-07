@@ -5,6 +5,7 @@ namespace Module\quanlythuoc\Controller;
 use Model\Common;
 use Model\Error;
 use Model\Request;
+use Module\cart\Model\DonHang;
 use Module\quanlythuoc\Model\PhieuXuatNhap as ModelPhieuXuatNhap;
 use Module\quanlythuoc\Model\PhieuXuatNhap\FormPhieuXuatNhap;
 use Module\quanlythuoc\Model\SanPham;
@@ -57,6 +58,11 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
         $_sanpham = $sanpham->GetById($id);
         $_sanpham["Soluong"] = $donthuocdetail->GetThuocPhieuXuatNhap($index)["Soluong"] ?? 1;
         $_sanpham["Soluong"] = max($_sanpham["Soluong"], 1);
+        $_sanpham["Giaban"] = floatval($_sanpham["Giaban"]);
+        $_sanpham["Gianhap"] = floatval($_sanpham["Gianhap"]);
+        $_sanpham["ThanhTien"] = floatval($_sanpham["Giaban"] * $_sanpham["Soluong"]);
+        $_sanpham["TongTien"] = \Module\quanlythuoc\Model\PhieuXuatNhap::TongTien();
+
         // $_sanpham["HSD"] = null;
         $_sanpham["DVTTitle"] = $sanpham->DonViTinh();
         $donthuocdetail->CapNhatSanPham($_sanpham, $index);
@@ -86,10 +92,10 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
         } else {
             $_sanpham["HSD"] = null;
         }
-        $_sanpham["Gianhap"] = floatval($dataRequest["gia"]);
+        $_sanpham["Gianhap"] = floatval($_sanpham["Gianhap"]);
         $_sanpham["Giaban"] =  floatval($dataRequest["gia"]);
         $donthuocdetail->CapNhatSanPham($_sanpham, $index);
-        $_sanpham["ThanhTien"] = $_sanpham["Gianhap"] * $_sanpham["Soluong"];
+        $_sanpham["ThanhTien"] = $_sanpham["Giaban"] * $_sanpham["Soluong"];
         $_sanpham["TongTien"] =  \Module\quanlythuoc\Model\PhieuXuatNhap::TongTien();
 
         // lưu danh sách sản phẩm
