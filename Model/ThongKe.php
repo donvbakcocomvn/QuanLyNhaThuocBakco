@@ -365,11 +365,11 @@ class ThongKe extends DB
     public static function GetTongXuatNhap()
     {
         $thongke = new ThongKe();
-        $table = prefixTable;
+        $prefixTable = prefixTable;
         $sql = "Select `IdThuoc`, 
         SUM(CASE When `XuatNhap`= 1 Then`SoLuong` Else 0 End ) as 'TongSLNhap', 
         SUM(CASE When `XuatNhap`= -1 Then `SoLuong` Else 0 End ) as 'TongSLXuat'
-        from  `{$table}qlthuoc_phieuxuatnhap_chitiet`
+        from  `{$prefixTable}qlthuoc_phieuxuatnhap_chitiet`
         Where `IsDelete`=0
         GROUP BY `IdThuoc`";
         $result = $thongke->GetRows($sql);
@@ -385,7 +385,7 @@ class ThongKe extends DB
         from  `{$table}qlthuoc_phieuxuatnhap_chitiet`
         Where `IsDelete`=0 and `IdThuoc` = '{$idThuoc}'
         GROUP BY `IdThuoc`";
-        $result = $thongke->GetRows($sql);
+        $result = $thongke->GetRow($sql);
         return $result;
     }
 }

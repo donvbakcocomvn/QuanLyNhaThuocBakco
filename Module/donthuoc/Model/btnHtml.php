@@ -102,7 +102,11 @@ class btnHtml
 
     public static function btnSuaDonThuoc($id)
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DonThuoc_Put]) == false) {
+        if (\Model\Permission::CheckPremision([
+            \Model\User::Admin,
+            \Model\User::QuanLy,
+            Permission::QLT_DonThuoc_Put
+        ]) == false) {
             return;
         }
     ?>

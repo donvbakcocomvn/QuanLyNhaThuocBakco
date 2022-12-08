@@ -146,9 +146,9 @@ class PhieuXuatNhapChiTiet extends \Model\DB implements \Model\IModelService
     {
         $_SESSION["DSThuocPhieuNhap"][$index] = $phieu;
     }
- 
+
     function CreatIdPhieu($IdPhieu = null)
-    { 
+    {
         return Common::uuid();
     }
 
@@ -195,18 +195,17 @@ class PhieuXuatNhapChiTiet extends \Model\DB implements \Model\IModelService
     }
     public function Post($model)
     {
-        return $this->Insert($model);
-        // $sp = new SanPham($model["IdThuoc"]);
-        // $spItem["Id"] = $sp->Id;
-        // $spItem["SoLuong"] =
-        //     $sp->Soluong +
-        //     ($model["SoLuong"] * $model["XuatNhap"]);
-        // return $sp->Put($spItem);
+        $this->Insert($model);
+        // 
+        $sp = new SanPham();
+        $sp->DongBoThuocNhapByID($model["IdThuoc"]);
     }
 
     public function Put($model)
     {
-        return $this->UpdateRow($model);
+        $this->UpdateRow($model);
+        $sp = new SanPham();
+        return $sp->DongBoThuocNhapByID($model["IdThuoc"]);
     }
 
     public function GetById($Id)

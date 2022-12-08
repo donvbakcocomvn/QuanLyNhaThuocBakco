@@ -1,6 +1,6 @@
-<ol class="breadcrumb" >
-    <li><a href="/index.php?controller=backend" >Home</a></li>
-    <li><a href="/index.php?controller=quanlyusers" >Quản Lý Tài Khoản</a></li>
+<ol class="breadcrumb">
+    <li><a href="/index.php?controller=backend">Home</a></li>
+    <li><a href="/index.php?controller=quanlyusers">Quản Lý Tài Khoản</a></li>
     <li> Sửa </li>
 </ol>
 <?php
@@ -8,20 +8,20 @@
 $modelUser = new Model\User($user);
 //var_dump($modelUser);
 ?>
-<div class="container-fluid" >
-    <div class="box box-primary" >
-        <div class="box-header" >
-            <h3 class="box-title" >Thông Tin Chung</h3>
-            <div class="box-tools" >
-                <?php 
+<div class="container-fluid">
+    <div class="box box-primary">
+        <div class="box-header">
+            <h3 class="box-title">Thông Tin Chung</h3>
+            <div class="box-tools">
+                <?php
                 \Model\FormRender::HuongDan("suauser", "Hướng dẫn sửa tài khoản");
                 ?>
                 <!--<a href="#" class="btn btn-success" ><i class="fa fa-plus" ></i></a>-->
             </div>
         </div>
-        <div class="box-body" >
-            <div class="row" >
-                <div class="col-md-6" >
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-6">
                     <form action="" method="POST">
                         <?php
                         \Model\Users\FormUser::Id($modelUser->Id)->render();
@@ -30,43 +30,43 @@ $modelUser = new Model\User($user);
                         \Model\Users\FormUser::Email($modelUser->Email)->renderHTML();
                         \Model\Users\FormUser::BOD($modelUser->BODFomatDB())->renderHTML();
                         \Model\Users\FormUser::Active($modelUser->Active)->renderHTML();
-                        ?>  
-                        <div class="form-group " >  
-                            <button class="btn btn-default"  type="reset" >Làm Lại</button>
-                            <button class="btn btn-success" >Lưu</button>
-                            <button class="btn btn-success" name="LuuThoat" >Lưu & Thoát</button>
+                        ?>
+                        <div class="form-group ">
+                            <button class="btn btn-default" type="reset">Làm Lại</button>
+                            <button class="btn btn-success">Lưu</button>
+                            <button class="btn btn-success" name="LuuThoat">Lưu & Thoát</button>
                         </div>
                     </form>
                 </div>
-                <div class="col-md-6" >
+                <div class="col-md-6">
                     <form method="POST" action="/index.php?controller=quanlyusers&action=resetpassword">
-                        <div class="box box-primary" >
-                            <div class="box-header" >
-                                <h3 class="box-title" >Reset Mật Khẩu</h3> 
+                        <div class="box box-primary">
+                            <div class="box-header">
+                                <h3 class="box-title">Reset Mật Khẩu</h3>
                             </div>
-                            <div class="box-body" >
-                                <div class="form-group" >
+                            <div class="box-body">
+                                <div class="form-group">
                                     <label>Mật Khẩu Mới</label>
-                                    <div class="d-flex" >
+                                    <div class="d-flex">
                                         <?php
                                         \Model\Users\FormUser::Id($modelUser->Id)->render();
                                         \Model\Users\FormUser::CreatePassword()->render();
                                         ?>
-                                        <button type="button" data-target="#CreatePassword"  class="btngeneratePassword btn btn-primary" >Ngâu Nhiên</button>
+                                        <button type="button" data-target="#CreatePassword" class="btngeneratePassword btn btn-primary">Ngâu Nhiên</button>
                                     </div>
-                                </div> 
+                                </div>
                             </div>
-                            <div class="box-footer" >
-                                <button class="btn btn-success" >Lưu</button>
+                            <div class="box-footer">
+                                <button class="btn btn-success">Lưu</button>
                             </div>
                         </div>
                     </form>
-                    <div class="box box-primary" >
-                        <form action="/index.php?controller=quanlyusers&action=phanquyen" method="post" >
-                            <div class="box-header" >
-                                <h3 class="box-title" >Danh Sách Quyền</h3> 
+                    <div class="box box-primary">
+                        <form action="/index.php?controller=quanlyusers&action=phanquyen" method="post">
+                            <div class="box-header">
+                                <h3 class="box-title">Danh Sách Quyền</h3>
                             </div>
-                            <div class="box-body" >
+                            <div class="box-body">
                                 <?php
                                 \Model\Users\FormUser::Id($modelUser->Id)->render();
                                 $modelRole = new Model\Role();
@@ -80,25 +80,25 @@ $modelUser = new Model\User($user);
                                     if ($modelUser->CheckPremision([$_role->Id])) {
                                         $isChecked = true;
                                     }
-                                    ?> 
-                                    <div class="list-group" >
+                                ?>
+                                    <div class="list-group">
                                         <div>
                                             <label>
-                                                <input <?php echo $isChecked == true ? 'checked=""' : '' ?> value="<?php echo $_role->Id ?>"  type="checkbox" name="Rolesuser[<?php echo $_role->Id ?>]" > 
-                                                <?php echo $_role->Name ?>|<?php echo $_role->Des ?>
-                                                
+                                                <input <?php echo $isChecked == true ? 'checked=""' : '' ?> value="<?php echo $_role->Id ?>" type="checkbox" name="Rolesuser[<?php echo $_role->Id ?>]">
+                                                <?php echo $_role->Id ?>|<?php echo $_role->Des ?>
+
                                             </label>
                                         </div>
                                     </div>
-                                    <?php
+                                <?php
                                 }
                                 ?>
 
 
 
                             </div>
-                            <div class="box-footer" >
-                                <button class="btn btn-success" >Lưu</button>
+                            <div class="box-footer">
+                                <button class="btn btn-success">Lưu</button>
                             </div>
                         </form>
 

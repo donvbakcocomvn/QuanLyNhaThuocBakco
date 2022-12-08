@@ -81,7 +81,7 @@ class index extends \Application implements \Controller\IControllerBE
             $phieuXuatNhapChiTiet = new \Module\quanlythuoc\Model\PhieuXuatNhapChiTiet();
             $phieuXuatNhapChiTiet->XoaChiTietPhieuNhap($Phieu["IdPhieu"]);
             foreach ($donthuoc->DanhSachThuoc() as $key => $thuoc) {
-                $idThuoc = $thuoc["Id"];
+                $idThuoc = $thuoc["IdThuoc"];
                 $itemFormDetail["IdPhieu"] = $Phieu["IdPhieu"];
                 $itemFormDetail["IdThuoc"] = $idThuoc;
                 $itemFormDetail["SoLuong"] = $thuoc["SoLuong"];
@@ -95,13 +95,13 @@ class index extends \Application implements \Controller\IControllerBE
                 $itemFormDetail["UpdateRecord"] = Date("Y-m-d H:i:s", time());
                 $itemFormDetail["GhiChu"] = $thuoc["GhiChu"];
                 $itemFormDetail["IsDelete"] = 0;
-                $SanPham = new \Module\quanlythuoc\Model\PhieuXuatNhapChiTiet();
-                $SanPham->Post($itemFormDetail);
+                $PhieuXuatNhapChiTiet = new \Module\quanlythuoc\Model\PhieuXuatNhapChiTiet();
+                $PhieuXuatNhapChiTiet->Post($itemFormDetail);
             }
             new \Model\Error(\Model\Error::success, "Đã Giao Thuốc");
             $itemDonThuoc = new DonThuoc($ModelDonThuoc["Id"]);
             // \Model\Common::ToUrl("/donthuoc/index/viewdonthuoc/?id=" . $itemDonThuoc->Id . "");
-            // \Model\Common::ToUrl("/donthuoc/index/donchuaxuly/");
+            \Model\Common::ToUrl("/donthuoc/index/donchuaxuly/");
         } catch (\Exception $exc) {
             echo $exc->getMessage();
         }

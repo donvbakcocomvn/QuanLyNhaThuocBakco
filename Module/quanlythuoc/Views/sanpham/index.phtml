@@ -26,7 +26,7 @@
                     use Model\Common;
                     use Model\FormRender;
                     use Module\quanlythuoc\Model\SanPham;
-                    // Module\quanlythuoc\Model\btnHtml::btnDongBoSL();
+                    Module\quanlythuoc\Model\btnHtml::btnDongBoSL();
                     Module\quanlythuoc\Model\btnHtml::btnImportSanPham();
                     Module\quanlythuoc\Model\btnHtml::btnExportSanPham();
                     Module\quanlythuoc\Model\btnHtml::btnThemSanPham();
@@ -38,16 +38,35 @@
                 <table class="table table-hover table-bordered">
                     <thead>
                         <tr>
-                            <td></td>
-                            <th>STT</th>
-                            <th>Mã thuốc</th>
-                            <th>Tên thuốc</th>
-                            <th>Tổng Nhập</th>
-                            <th>Tổng Xuất</th>
-                            <th>Tồn Kho</th>
-                            <th>Tổng</th>
-                            <th>Giá nhập</th>
-                            <th>Giá bán</th>
+                            <th>Thao Tác</th>
+                            <th class="text-center">STT
+                                <p style="margin-bottom: 0px;" class="text-center">(1)</p>
+                            </th>
+                            <th class="text-center">Mã thuốc
+                                <p style="margin-bottom: 0px;" class="text-center">(2)</p>
+                            </th>
+                            <th class="text-center">Tên thuốc
+                                <p style="margin-bottom: 0px;" class="text-center">(2)</p>
+                            </th>
+                            <th class="text-center">Tổng Nhập
+                                <p style="margin-bottom: 0px;" class="text-center">(3)</p>
+                            </th>
+                            <th class="text-center">Tổng Xuất
+                                <p style="margin-bottom: 0px;" class="text-center">(4)</p>
+                            </th>
+                            <th class="text-center">SL
+                                <?php echo FormRender::ToolTipElement("Số Lượng Ban Đầu Không Có Phiếu Nhập") ?>
+                                <p style="margin-bottom: 0px;"v class="text-center">(5)</p>
+                            </th>
+                            <th class="text-center">Tồn Kho
+                                <p style="margin-bottom: 0px;" class="text-center">(6)=(5)-(4)+(3)</p>
+                            </th>
+                            <th class="text-center">Giá nhập
+                                <p style="margin-bottom: 0px;" class="text-center">(7)</p>
+                            </th>
+                            <th class="text-center">Giá bán
+                                <p style="margin-bottom: 0px;" class="text-center">(8)</p>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -72,8 +91,8 @@
                                 <td><?php echo $_item->Name; ?></td>
                                 <td><?php echo $_item->SLNhap; ?></td>
                                 <td><?php echo $_item->SLXuat; ?></td>
-                                <td><?php echo $_item->SLHienTai; ?></td>
                                 <td><?php echo $_item->Soluong; ?></td>
+                                <td><?php echo $_item->SLHienTai; ?></td>
                                 <!-- <td><?php echo $_item->CachDungThuoc(); ?></td> -->
                                 <!-- <td><?php echo $_item->IdLoaiThuoc()->Name; ?></td> -->
                                 <!-- <th><?php echo $_item->DonViQuyDoi(); ?></th> -->

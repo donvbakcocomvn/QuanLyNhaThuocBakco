@@ -96,15 +96,12 @@ class SanPham extends \Model\DB implements \Model\IModelService
 
     function DongBoThuocNhap()
     {
-        $thuocNhap = ThongKe::GetTongXuatNhap();
+        $thuocNhap = new SanPham();
+        $items = $thuocNhap->GetItems([], 1, 100000, $total);
+        // var_dump($items);
         // phía phiếu
-        foreach ($thuocNhap as $item) {
-            $thuoc = new SanPham($item['IdThuoc']);
-            $thuocModel = $thuoc->GetById($item['IdThuoc']);
-            $thuocModel["SLXuat"] = $item["TongSLXuat"];
-            $thuocModel["SLNhap"] = $item["TongSLNhap"];
-            $thuocModel["SLHienTai"] = $thuocModel["Soluong"] - $item["TongSLXuat"] + $item["TongSLNhap"];
-            $thuoc->Put($thuocModel);
+        foreach ($items as $item) {
+            $this->DongBoThuocNhapByID($item['Id']);
         }
     }
     function DongBoThuocNhapByID($id = null)
@@ -116,8 +113,8 @@ class SanPham extends \Model\DB implements \Model\IModelService
         // phía phiếu
         $thuoc = new SanPham($id);
         $thuocModel = $thuoc->GetById($id);
-        $thuocModel["SLXuat"] = $item["TongSLXuat"] ?? 0;
-        $thuocModel["SLNhap"] = $item["TongSLNhap"] ?? 0;
+        $thuocModel["SLXuat"] = $item["TongSLXuat"]??0;
+        $thuocModel["SLNhap"] = $item["TongSLNhap"]??0;
         $thuocModel["SLHienTai"] = $thuocModel["Soluong"] - $thuocModel["SLXuat"] +  $thuocModel["SLNhap"];
         $thuoc->Put($thuocModel);
     }
