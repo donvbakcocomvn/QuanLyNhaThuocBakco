@@ -1295,7 +1295,7 @@ INSERT INTO `lap1_options` (`Id`, `Name`, `Val`, `Des`, `GroupsId`) VALUES
 ('73916D76-C7D3-D2B3-44A9-9FD169C32A5D', 'Chưa lấy thuốc', '1', 'Chưa lấy thuốc', 'trangthai'),
 ('AD608BF0-E24A-C285-9AD1-02B8D196CBAF', '0', '0', '0', 'donviquydoi'),
 ('DA7891B1-D55F-3AEC-BE7E-1CE0FB9F1887', 'Đang soạn thuốc', '2', 'Đang soạn thuốc', 'trangthai'),
-('2CA8C55C-9C63-5529-F809-DB92DF369D15', 'Đã soạn thuốc xong', '3', 'Đã soạn thuốc xong', 'trangthai');
+('2CA8C55C-9C63-5529-F809-DB92DF369D15', 'Đã giao thuốc', '3', 'Đã giao thuốc', 'trangthai');
 
 -- --------------------------------------------------------
 

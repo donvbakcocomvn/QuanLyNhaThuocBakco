@@ -79,7 +79,7 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
         $status = [
             1 => "<span class='label-danger' style='padding: 5px;border-radius: 5px';>Chưa lấy thuốc</span>",
             2 => "<span class='label-warning' style='padding: 5px;border-radius: 5px';>Đang soạn thuốc</span>",
-            3 => "<span class='label-success' style='padding: 5px;border-radius: 5px';>Đã soạn thuốc xong</span>",
+            3 => "<span class='label-success' style='padding: 5px;border-radius: 5px';>Đã giao thuốc</span>",
         ];
         return $status[$this->Status] ?? "";
     }
@@ -273,7 +273,7 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
             $todateSql = "and `CreateRecord` <= '{$todate}' ";
         }
         $fromdateIsDeleteSQL = "and `IsDelete` = '0'";
-        
+
         $where = " (`Id` like '%{$name}%' or `NameBN` like '%{$name}%') {$fromdateSql} {$statusSql} {$todateSql} $fromdateIsDeleteSQL  ORDER BY `CreateRecord` DESC";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
@@ -293,7 +293,7 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
             $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
         }
         // self::$Debug = true;
-        $where = " (`Id` like '%{$name}%' or `IdBenhNhan` like '%{$name}%' or `NameBN` like '%{$name}%' {$danhmucSql}) and `Status`  = 1 ORDER BY `CreateRecord` DESC";
+        $where = " (`Id` like '%{$name}%' or `IdBenhNhan` like '%{$name}%' or `NameBN` like '%{$name}%' ) {$danhmucSql} and `ThuocLoaiDon`  = 3 ORDER BY `status` asc";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 
