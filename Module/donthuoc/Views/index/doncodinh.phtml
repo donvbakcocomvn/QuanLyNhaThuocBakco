@@ -11,6 +11,7 @@ use Module\donthuoc\Model\DonThuoc;
 use Module\donthuoc\Model\DonThuoc\FormDonThuoc;
 use PFBC\Element\Select;
 use PFBC\Element\Textbox;
+
 ?>
 <ol class="breadcrumb">
     <li><a href="/index.php?controller=backend">Home</a></li>
@@ -19,45 +20,7 @@ use PFBC\Element\Textbox;
 <div class="container-fluid">
     <div class="clearfix">
         <div class="box box-success">
-            <div class="">
-                <div class="box-header">
-                    <!-- <h3 class="box-title text-uppercase">Tìm kiếm theo bộ lọc</h3> -->
-                    <form method="get" action="/donthuoc/index/index/">
-                        <div class="row">
-                            <div class="col-sm-3 form-group">
-                                <?php
 
-                                FormSearch::Keyword($_GET['keyword'] ?? null)->renderHtml2(null, null, 'glyphicon glyphicon-user form-control-feedback');
-                                ?>
-                            </div>
-                            <div class="col-sm-3 form-group">
-                                <?php
-                                FormSearch::SelectStatus($_GET['status'] ?? null)->renderHtml2(null, null, '');
-                                ?>
-                            </div>
-                            <div class="col-sm-2 form-group">
-                                <?php
-                                FormSearch::Fromdate($_REQUEST['fromdate'] ?? null)->renderHtml2(null, null, 'glyphicon glyphicon-calendar form-control-feedback');
-                                ?>
-                            </div>
-                            <div class="col-sm-2 form-group">
-                                <?php
-                                FormSearch::Todate($_GET['todate'] ?? "")->renderHtml2(null, null, 'glyphicon glyphicon-calendar form-control-feedback');
-                                ?>
-                            </div>
-                            <div class="col-sm-2 form-group">
-                                <div class="form-group has-success has-feedback">
-                                    <label for="inputSuccess2" class="text-capitalize"><em>Nhấn vào đây&nbsp; </em><i class="fa fa-check"></i></label>
-                                    <button type="submit" style="border-radius: 5px;" class="form-control btn btn-success" name="btnTim" id="keyword">
-                                        <i class="fa fa-filter"></i>&nbsp; Tìm kiếm theo bộ lọc
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <hr style="border-top: 2px solid #00a65a; margin-top:0px" width="90%" noshade="noshade">
-            </div>
             <div class="box-header">
                 <h3 class="box-title">Danh Sách Đơn Thuốc Cố Định</h3>
                 <div class="box-tools">
@@ -65,11 +28,50 @@ use PFBC\Element\Textbox;
                     <?php
                     // Module\donthuoc\Model\btnHtml::btnExportBySearch();
                     Module\donthuoc\Model\btnHtml::btnThemDonThuoc();
-                    \Model\FormRender::HuongDan("danhsachdonthuoc", "Hướng dẫn đơn thuốc");
+                    \Model\FormRender::HuongDan("danhsachdonthuoc", "Hướng dẫn");
                     ?>
                 </div>
             </div>
             <div class="box-body">
+                <div class="">
+                    <div class="box-header">
+                        <!-- <h3 class="box-title text-uppercase">Tìm kiếm theo bộ lọc</h3> -->
+                        <form method="get" action="/donthuoc/index/index/">
+                            <div class="row">
+                                <div class="col-sm-2 form-group">
+                                    <?php
+                                    FormSearch::Keyword($_GET['keyword'] ?? null)->renderHtml2(null, null, 'glyphicon glyphicon-user form-control-feedback');
+                                    ?>
+                                </div>
+                                <div class="col-sm-2 form-group">
+                                    <?php
+                                    FormSearch::SelectStatus($_GET['status'] ?? null)->renderHtml2(null, null, '');
+                                    ?>
+                                </div>
+                                <div class="col-sm-2 form-group">
+                                    <?php
+                                    FormSearch::Fromdate($_REQUEST['fromdate'] ?? null)->renderHtml2(null, null, 'glyphicon glyphicon-calendar form-control-feedback');
+                                    ?>
+                                </div>
+                                <div class="col-sm-2 form-group">
+                                    <?php
+                                    FormSearch::Todate($_GET['todate'] ?? "")->renderHtml2(null, null, 'glyphicon glyphicon-calendar form-control-feedback');
+                                    ?>
+                                </div>
+                                <div class="col-sm-2 form-group">
+                                    <div class="form-group has-success has-feedback">
+                                        <label for="inputSuccess2" class="text-capitalize"><em>Nhấn vào đây&nbsp;
+                                            </em><i class="fa fa-check"></i></label>
+                                        <button type="submit" style="border-radius: 5px;" class="btn btn-success"
+                                            name="btnTim" id="keyword">
+                                            <i class="fa fa-filter"></i>&nbsp; Tìm kiếm
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 <table class="table table-hover table-bordered">
                     <thead>
                         <tr>
@@ -91,7 +93,7 @@ use PFBC\Element\Textbox;
                         foreach ($items as $index => $item) {
                             $_item = new DonThuoc($item);
                             // var_dump($_item);
-                        ?>
+                            ?>
                             <tr>
                                 <td class="text-center">
                                     <?php
@@ -101,18 +103,28 @@ use PFBC\Element\Textbox;
                                     echo Module\donthuoc\Model\btnHtml::btnchitiet($_item->Id);
                                     ?>
                                 </td>
-                                <td class="text-center"><?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?></td>
+                                <td class="text-center">
+                                    <?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?>
+                                </td>
                                 <td><?php echo $_item->Id; ?></td>
-                                <td><?php echo $_item->BenhNhan()->Name; ?></td>
+                                <td>
+                                    <?php echo $_item->BenhNhan()->Name; ?>
+                                </td>
                                 <td><?php echo $_item->BenhNhan()->Gioitinh(); ?></td>
-                                <td><?php echo Common::ForMatDMY($_item->BenhNhan()->Ngaysinh); ?></td>
+                                <td>
+                                    <?php echo Common::ForMatDMY($_item->BenhNhan()->Ngaysinh); ?>
+                                </td>
                                 <td><?php echo date("d-m-Y H:i:s", strtotime($_item->ThoiGianKham)); ?></td>
-                                <td><?php echo $_item->ChanDoanBenh ?></td>
+                                <td>
+                                    <?php echo $_item->ChanDoanBenh ?>
+                                </td>
                                 <!-- <td><?php echo $_item->TongNgayDung; ?></td> -->
                                 <td><?php echo $_item->Status(); ?></td>
-                                <td><?php echo $_item->LoaiDonThuoc() ?></td>
+                                <td>
+                                    <?php echo $_item->LoaiDonThuoc() ?>
+                                </td>
                             </tr>
-                        <?php
+                            <?php
                         }
                         ?>
                     </tbody>
@@ -143,7 +155,7 @@ use PFBC\Element\Textbox;
     </div>
 </div>
 <script type="text/javascript">
-    var SoDongHienThi = function(evalue) {
+    var SoDongHienThi = function (evalue) {
         var linkPhanTrang = '/index.php?module=donthuoc&controller=index&action=index&indexPage=1&pageNumber=[j]';
         linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
         window.location.href = linkPhanTrang;

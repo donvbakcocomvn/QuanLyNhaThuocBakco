@@ -129,12 +129,17 @@ class index extends \Application implements \Controller\IControllerBE
         $params["fromdate"] = isset($_REQUEST["fromdate"]) && $_REQUEST["fromdate"] != null ? date('Y-m-d H:i:s', strtotime($_REQUEST["fromdate"])) : "";
         $params["todate"] = isset($_REQUEST["todate"]) && $_REQUEST["todate"] != null ? date('Y-m-d H:i:s', strtotime($_REQUEST["todate"])) : "";
         $params["status"] = isset($_REQUEST["status"]) ? \Model\Common::TextInput($_REQUEST["status"]) : "";
+        $params["loaidonthuoc"] = isset($_REQUEST["loaidonthuoc"]) ? \Model\Common::TextInput($_REQUEST["loaidonthuoc"]) : "";
+
         $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
         $indexPage = max(1, $indexPage);
         $pageNumber = isset($_GET["pageNumber"]) ? intval($_GET["pageNumber"]) : 10;
         $pageNumber = max(1, $pageNumber);
         $total = 0;
         $DanhSachTaiKhoan = $modelItem->GetItems($params, $indexPage, $pageNumber, $total);
+        if (isset($_REQUEST["export"])) {
+            $this->ExportByFilter($params);
+        }
         $data["items"] = $DanhSachTaiKhoan;
         $data["indexPage"] = $indexPage;
         $data["pageNumber"] = $pageNumber;
@@ -145,6 +150,72 @@ class index extends \Application implements \Controller\IControllerBE
 
     function export()
     {
+    }
+
+    private  function ExportByFilter($params)
+    {
+        $modelItem = new DonThuoc();
+        $item = $modelItem->GetAll($params);
+        // var_dump($item);
+        $data[] = [
+            "Mã đơn thuốc",
+            "Mã bệnh nhân",
+            "Tên bệnh nhân",
+            "Giới tính",
+            "Ngày sinh",
+            "Thời gian khám",
+            "Chẩn đoán bệnh",
+            "Thuộc loại đơn",
+            "Số ngày dùng thuốc"
+        ];
+        if ($item) {
+            foreach ($item as $row) {
+                $benhnhan = new BenhNhan($row["IdBenhNhan"]);
+                $donthuoc = new DonThuoc($row["Id"]);
+                $row["GioiTinh"] = $benhnhan->Gioitinh();
+                $row["NgaySinh"] = Common::ForMatDMY($row["NgaySinh"]);
+                $row["ThuocLoaiDon"] = $donthuoc->ThuocLoaiDon();
+                $row["TongNgayDung"] = $row["TongNgayDung"] . ' ' . 'ngày';
+                // unset($row["ThoiGianKham"]);
+                unset($row["Status"]);
+                unset($row["IsDelete"]);
+                unset($row["CreateRecord"]);
+                unset($row["UpdateRecord"]);
+                $data[] = $row;
+
+                $data[] = [
+                    "Mã Thuốc",
+                    "Số Ngày Dùng Thuốc",
+                    "Đơn Vị Tính",
+                    "Số Lượng",
+                    "Cách Dùng",
+                    "Giá Bán",
+                    "Ghi Chú",
+                ];
+                $dsThuoc = $donthuoc->DanhSachThuoc();
+                foreach ($dsThuoc as $key => $value) {
+                    $_item1 = [];
+                    $_item1[] = $value["IdThuoc"];
+                    $_item1[] = $value["SoNgaySDThuoc"];
+                    $_item1[] = $value["DVT"];
+                    $_item1[] = $value["SoLuong"];
+                    $_item1[] = $value["CachDung"];
+                    $_item1[] = $value["GiaBan"];
+                    $_item1[] = $value["GhiChu"];
+                    $data[] = $_item1;
+                    $_item2 = [];
+                    $_item2[] = "Sáng:";
+                    $_item2[] = $value["Sang"];
+                    $_item2[] = "Chiều";
+                    $_item2[] = $value["Trua"];
+                    $_item2[] = "Tối";
+                    $_item2[] = $value["Chieu"];
+                    $data[] = $_item2;
+                }
+                $data[] = [];
+            }
+            \Module\quanlythuoc\Model\SanPham::ExportBangKe($data, "public/thongke/ExportToaThuoc.xlsx");
+        }
     }
 
     function donchuaxuly()

@@ -237,14 +237,7 @@ class Functions
                         <a href="/profile/">
                             <i class="fa fa-info-circle"></i> <span>Thông Tin</span>
                         </a>
-                    </li>
-                    <!-- <li class="<?php echo \Application::$_Controller == "dashboard" ? 'active' : '' ?> treeview">
-                        <a href="/thongke/">
-                            <i class="fa fa-bar-chart"></i> <span>Thống Kê</span>
-                        </a>
-                    </li> -->
-
-                    <!-- Quản lý thuốc -->
+                    </li> 
                     <?php
                     if (\Model\Permission::CheckPremision([Permission::QLT_Thuoc_DS, Permission::QLT_DanhMuc_DS, Permission::QLT_Phieu_DS, User::Admin], []) == true) {
                     ?>
@@ -288,7 +281,7 @@ class Functions
                     }
                     if (\Model\Permission::CheckPremision([User::Admin, User::QuanLy,  DonthuocPermission::QLT_DonThuoc_Post, DonthuocPermission::QLT_DonThuoc_Put, DonthuocPermission::QLT_DonThuoc_Copy, DonthuocPermission::QLT_DonThuoc_Detail, DonthuocPermission::QLT_DonThuoc_Export], []) == true) {
                     ?>
-                        <li class="treeview <?php echo \Application::$_Module == "donthuoc" ? 'active' : '' ?>">
+                        <li class="treeview <?php echo \Application::$_Module == "donthuoc" || \Application::$_Action == "donthuoctrongngay" ? 'active' : '' ?>">
                             <a href="#">
                                 <i class="fa fa-pencil-square-o"></i>
                                 <span class="text-capitalize">Quản lý đơn thuốc &nbsp;<i class="fa fa-angle-down"></i></span>
@@ -310,11 +303,11 @@ class Functions
                                     DonthuocPermission::QLT_DonThuoc_Put, DonthuocPermission::QLT_DonThuoc_Detail, DonthuocPermission::QLT_DonThuoc_Delete, DonthuocPermission::QLT_DonThuoc_Export, DonthuocPermission::QLT_DonThuoc_Copy
                                 ], []) == true) {
                                 ?>
-                                    <li class="text-capitalize">
+                                    <!-- <li class="text-capitalize">
                                         <a href="/donthuoc/index/doncodinh"><i class="fa fa-circle-o"></i>
                                             Đơn lưu cố định
                                         </a>
-                                    </li>
+                                    </li> -->
                                 <?php  } ?>
                                 <?php
                                 if (\Model\Permission::CheckPremision([

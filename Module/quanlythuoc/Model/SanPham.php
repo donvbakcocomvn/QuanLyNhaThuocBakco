@@ -55,32 +55,30 @@ class SanPham extends \Model\DB implements \Model\IModelService
                 $id = $sp;
                 $sp = $this->GetById($id);
             }
-            if ($sp) {
-                $this->Id = isset($sp["Id"]) ? $sp["Id"] : null;
-                $this->Idloaithuoc = isset($sp["Idloaithuoc"]) ? $sp["Idloaithuoc"] : null;
-                $this->Name = isset($sp["Name"]) ? $sp["Name"] : null;
-                $this->Namebietduoc = isset($sp["Namebietduoc"]) ? $sp["Namebietduoc"] : null;
-                $this->Solo = isset($sp["Solo"]) ? $sp["Solo"] : null;
-                $this->Gianhap = isset($sp["Gianhap"]) ? $sp["Gianhap"] : null;
-                $this->Giaban = isset($sp["Giaban"]) ? $sp["Giaban"] : null;
-                $this->DVT = isset($sp["DVT"]) ? $sp["DVT"] : null;
-                $this->Ngaysx = isset($sp["Ngaysx"]) ? $sp["Ngaysx"] : null;
-                $this->HSD = isset($sp["HSD"]) ? $sp["HSD"] : null;
-                $this->DVQuyDoi = isset($sp["DVQuyDoi"]) ? $sp["DVQuyDoi"] : null;
-                $this->Tacdung = isset($sp["Tacdung"]) ? $sp["Tacdung"] : null;
-                $this->Cochetacdung = isset($sp["Cochetacdung"]) ? $sp["Cochetacdung"] : null;
-                $this->Ghichu = isset($sp["Ghichu"]) ? $sp["Ghichu"] : null;
-                $this->Soluong = isset($sp["Soluong"]) ? $sp["Soluong"] : null;
-                $this->NhaSX = isset($sp["NhaSX"]) ? $sp["NhaSX"] : null;
-                $this->NuocSX = isset($sp["NuocSX"]) ? $sp["NuocSX"] : null;
-                $this->IsDelete = isset($sp["IsDelete"]) ? $sp["IsDelete"] : null;
-                $this->CachDung = isset($sp["CachDung"]) ? $sp["CachDung"] : null;
-                $this->Canhbao = isset($sp["Canhbao"]) ? $sp["Canhbao"] : null;
-                $this->SLXuat = isset($sp["SLXuat"]) ? $sp["SLXuat"] : null;
-                $this->SLNhap = isset($sp["SLNhap"]) ? $sp["SLNhap"] : null;
-                $this->SLHienTai = isset($sp["SLHienTai"]) ? $sp["SLHienTai"] : null;
-            }
         }
+        $this->Id = $sp["Id"] ?? null;
+        $this->Idloaithuoc = $sp["Idloaithuoc"] ?? null;
+        $this->Name = $sp["Name"] ?? null;
+        $this->Namebietduoc = $sp["Namebietduoc"] ?? null;
+        $this->Solo = $sp["Solo"] ?? null;
+        $this->Gianhap = $sp["Gianhap"] ?? null;
+        $this->Giaban = $sp["Giaban"] ?? null;
+        $this->DVT = $sp["DVT"] ?? null;
+        $this->Ngaysx = $sp["Ngaysx"] ?? null;
+        $this->HSD = $sp["HSD"] ?? null;
+        $this->DVQuyDoi = $sp["DVQuyDoi"] ?? null;
+        $this->Tacdung = $sp["Tacdung"] ?? null;
+        $this->Cochetacdung = $sp["Cochetacdung"] ?? null;
+        $this->Ghichu = $sp["Ghichu"] ?? null;
+        $this->Soluong = $sp["Soluong"] ?? null;
+        $this->NhaSX = $sp["NhaSX"] ?? null;
+        $this->NuocSX = $sp["NuocSX"] ?? null;
+        $this->IsDelete = $sp["IsDelete"] ?? null;
+        $this->CachDung = $sp["CachDung"] ?? null;
+        $this->Canhbao = $sp["Canhbao"] ?? null;
+        $this->SLXuat = $sp["SLXuat"] ?? null;
+        $this->SLNhap = $sp["SLNhap"] ?? null;
+        $this->SLHienTai = $sp["SLHienTai"] ?? null;
     }
 
     public function TongSoLuong()
@@ -113,18 +111,18 @@ class SanPham extends \Model\DB implements \Model\IModelService
         // phía phiếu
         $thuoc = new SanPham($id);
         $thuocModel = $thuoc->GetById($id);
-        $thuocModel["SLXuat"] = $item["TongSLXuat"]??0;
-        $thuocModel["SLNhap"] = $item["TongSLNhap"]??0;
-        $thuocModel["SLHienTai"] = $thuocModel["Soluong"] - $thuocModel["SLXuat"] +  $thuocModel["SLNhap"];
+        $thuocModel["SLXuat"] = $item["TongSLXuat"] ?? 0;
+        $thuocModel["SLNhap"] = $item["TongSLNhap"] ?? 0;
+        $thuocModel["SLHienTai"] = $thuocModel["Soluong"] - $thuocModel["SLXuat"] + $thuocModel["SLNhap"];
         $thuoc->Put($thuocModel);
     }
 
     public function ThanhTien()
     {
-        return intval($this->Soluong)  * floatval($this->Gianhap);
+        return intval($this->Soluong) * floatval($this->Gianhap);
     }
 
-    static  public function ExportBangKe($data, $fileName)
+    static public function ExportBangKe($data, $fileName)
     {
         $spreadsheet = new Spreadsheet();
         $spreadsheet->setActiveSheetIndex(0);
@@ -156,7 +154,7 @@ class SanPham extends \Model\DB implements \Model\IModelService
         $spreadsheet->getDefaultStyle()->getFont()->setSize('14');
         foreach ($data as $row => $colums) {
             $colIndex = 0;
-            foreach ($colums as  $value) {
+            foreach ($colums as $value) {
                 // echo $colIndex;
                 $sheet0->setCellValue(
                     SanPham::GetCellName(
@@ -173,7 +171,7 @@ class SanPham extends \Model\DB implements \Model\IModelService
         Common::ToUrl("/{$fileName}");
     }
 
-    static  public function GetCollums($num)
+    static public function GetCollums($num)
     {
         $numeric = $num % 26;
         $letter = chr(65 + $numeric);
@@ -184,21 +182,21 @@ class SanPham extends \Model\DB implements \Model\IModelService
             return $letter;
         }
     }
-    static  public function GetCellName($col, $row)
+    static public function GetCellName($col, $row)
     {
         $row = max($row, 1);
         $colName = self::GetCollums($col);
         return "{$colName}{$row}";
     }
 
-    static  public function Export($data, $fileName)
+    static public function Export($data, $fileName)
     {
         $spreadsheet = new Spreadsheet();
         $spreadsheet->setActiveSheetIndex(0);
         $sheet0 = $spreadsheet->getActiveSheet();
         foreach ($data as $row => $colums) {
             $colIndex = 0;
-            foreach ($colums as  $value) {
+            foreach ($colums as $value) {
                 // echo $colIndex;
                 $sheet0->setCellValue(
                     SanPham::GetCellName(

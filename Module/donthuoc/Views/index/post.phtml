@@ -81,38 +81,37 @@ $roleDetail = new Model\Role();
                                 <fieldset>
                                     <legend>Thông tin bệnh nhân</legend>
                                     <div class="col-md-6">
-                                        <?php $bn->Name(null, 'tenbenhnhan')->renderHtml();  ?>
+                                        <?php $bn->Name(null, 'tenbenhnhan')->renderHtml(); ?>
                                     </div>
                                     <div class="col-md-6">
-                                        <?php $bn->Phone(null, 'sodienthoai')->renderHtml();  ?>
+                                        <?php $bn->Phone(null, 'sodienthoai')->renderHtml(); ?>
                                     </div>
                                     <div class="col-md-6">
-                                        <?php $bn->CMND()->renderHtml();  ?>
+                                        <?php $bn->CMND()->renderHtml(); ?>
                                     </div>
                                     <div class="col-md-6">
-                                        <?php $bn->Gioitinh()->renderHtml();  ?>
+                                        <?php $bn->Gioitinh(3)->renderHtml(); ?>
                                     </div>
                                     <div class="col-md-4">
-                                        <?php $bn->Namsinh()->renderHtml();  ?>
+                                        <?php $bn->Namsinh()->renderHtml(); ?>
                                     </div>
                                     <div class="col-md-4">
-                                        <?php $bn->Thangsinh()->renderHtml();  ?>
+                                        <?php $bn->Thangsinh()->renderHtml(); ?>
                                     </div>
-
                                     <div class="col-md-4">
-                                        <?php $bn->Ngaysinh()->renderHtml();  ?>
+                                        <?php $bn->Ngaysinh()->renderHtml(); ?>
                                     </div>
                                     <div class="col-md-12">
-                                        <?php $bn->Address()->renderHtml();  ?>
+                                        <?php $bn->Address()->renderHtml(); ?>
                                     </div>
                                     <div class="col-md-4 form-group">
-                                        <?php $bn->TinhThanh(null, "TinhThanhBenhNhan", "#QuanHuyenBenhNhan")->renderHtml();  ?>
+                                        <?php $bn->TinhThanh(null, "TinhThanhBenhNhan", "#QuanHuyenBenhNhan")->renderHtml(); ?>
                                     </div>
                                     <div class="col-md-4 form-group">
-                                        <?php $bn->QuanHuyen(null, "QuanHuyenBenhNhan", "#PhuongXaBenhNhan")->renderHtml();  ?>
+                                        <?php $bn->QuanHuyen(null, "QuanHuyenBenhNhan", "#PhuongXaBenhNhan")->renderHtml(); ?>
                                     </div>
                                     <div class="col-md-4 form-group">
-                                        <?php $bn->PhuongXa(null, "PhuongXaBenhNhan")->renderHtml();  ?>
+                                        <?php $bn->PhuongXa(null, "PhuongXaBenhNhan")->renderHtml(); ?>
                                     </div>
                                 </fieldset>
                             </div>
@@ -126,7 +125,8 @@ $roleDetail = new Model\Role();
                         <thead>
                             <tr>
                                 <th>
-                                    <button data-toggle="tooltip" data-placement="top" title="Thêm thuốc mới" type="button" class="btn btn-success" id="btn-add">
+                                    <button data-toggle="tooltip" data-placement="top" title="Thêm thuốc mới"
+                                        type="button" class="btn btn-success" id="btn-add">
                                         <i class="fa fa-plus" aria-hidden="true"></i>
                                     </button>
                                 </th>
@@ -150,10 +150,12 @@ $roleDetail = new Model\Role();
                             foreach (DonThuocDetail::DsThuoc() as $mathuoc => $thuoc) {
                                 $sanPham = new SanPham($thuoc["Id"] ?? null);
                                 // $i = $mathuoc;
-                            ?>
+                                ?>
                                 <tr>
                                     <th>
-                                        <button data-toggle="tooltip" data-placement="top" title="Xóa thuốc" type="button" title="Xóa thuốc này?" class="btn  btn-danger deleterows" id="<?php echo 'delete' . $mathuoc ?>" index=<?php echo $mathuoc ?>>
+                                        <button data-toggle="tooltip" data-placement="top" title="Xóa thuốc" type="button"
+                                            title="Xóa thuốc này?" class="btn  btn-danger deleterows"
+                                            id="<?php echo 'delete' . $mathuoc ?>" index=<?php echo $mathuoc ?>>
                                             <i class="fa fa-minus" aria-hidden="true"></i>
                                         </button>
                                     </th>
@@ -195,7 +197,7 @@ $roleDetail = new Model\Role();
                                         <?php echo $form->GhiChu($sanPham->Ghichu, "ghichu" . $i, $i)->render(); ?>
                                     </td>
                                 </tr>
-                            <?php
+                                <?php
                                 $i++;
                             }
                             ?>

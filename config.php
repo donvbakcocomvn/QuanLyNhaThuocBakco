@@ -21,14 +21,14 @@ define("LoginPage", "/login");
 global $INI;
 if (FALSE) {
     $INI['host'] = "localhost";
-    $INI['username'] = "nhat_phucle";
-    $INI['password'] = "phucle2301";
-    $INI['DBname'] = "nhat_quanlynhathuoc";
+    $INI['username'] = "root";
+    $INI['password'] = "root";
+    $INI['DBname'] = "nhathuoc";
 } else {
     $INI['host'] = "localhost";
     $INI['username'] = "root";
     $INI['password'] = "";
-    $INI['DBname'] = "bakcoerp3";
+    $INI['DBname'] = "nhathuoc";
 }
 
 //#mbne6Y3&foG

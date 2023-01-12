@@ -57,12 +57,12 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
         $sanpham = new SanPham($id);
         $_sanpham = $sanpham->GetById($id);
         $_sanpham["Soluong"] = $donthuocdetail->GetThuocPhieuXuatNhap($index)["Soluong"] ?? 1;
+        $_sanpham["Solo"] = $donthuocdetail->GetThuocPhieuXuatNhap($index)["Solo"] ?? "";
         $_sanpham["Soluong"] = max($_sanpham["Soluong"], 1);
         $_sanpham["Giaban"] = floatval($_sanpham["Giaban"]);
         $_sanpham["Gianhap"] = floatval($_sanpham["Gianhap"]);
         $_sanpham["ThanhTien"] = floatval($_sanpham["Giaban"] * $_sanpham["Soluong"]);
         $_sanpham["TongTien"] = \Module\quanlythuoc\Model\PhieuXuatNhap::TongTien();
-
         // $_sanpham["HSD"] = null;
         $_sanpham["DVTTitle"] = $sanpham->DonViTinh();
         $donthuocdetail->CapNhatSanPham($_sanpham, $index);
@@ -84,20 +84,19 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
         $sanpham = new SanPham(\Module\quanlythuoc\Model\PhieuXuatNhap::DSThuocPhieuNhap()[$index]);
         $_sanpham = $sanpham->GetById($sanpham->Id);
         $_sanpham["Soluong"] = intval($dataRequest["soLuong"]);
-        $_sanpham["NhaSX"] =  $dataRequest["nhaSanXuat"] ?? "";
-        $_sanpham["NuocSX"] =  $dataRequest["nuocSanXuat"] ?? "";
-        $_sanpham["Solo"] =  $dataRequest["soLo"];
+        $_sanpham["NhaSX"] = $dataRequest["nhaSanXuat"] ?? "";
+        $_sanpham["NuocSX"] = $dataRequest["nuocSanXuat"] ?? "";
+        $_sanpham["Solo"] = $dataRequest["soLo"] ?? "";
         if ($dataRequest["hsd"] != "") {
-            $_sanpham["HSD"] =   date("Y-m-d", strtotime($dataRequest["hsd"]));
+            $_sanpham["HSD"] = date("Y-m-d", strtotime($dataRequest["hsd"]));
         } else {
             $_sanpham["HSD"] = null;
         }
-        $_sanpham["Gianhap"] = floatval($_sanpham["Gianhap"]);
-        $_sanpham["Giaban"] =  floatval($dataRequest["gia"]);
+        $_sanpham["Gianhap"] = floatval($_sanpham["Gianhap"] ?? 0);
+        $_sanpham["Giaban"] = floatval($dataRequest["gia"]);
         $donthuocdetail->CapNhatSanPham($_sanpham, $index);
         $_sanpham["ThanhTien"] = $_sanpham["Giaban"] * $_sanpham["Soluong"];
-        $_sanpham["TongTien"] =  \Module\quanlythuoc\Model\PhieuXuatNhap::TongTien();
-
+        $_sanpham["TongTien"] = \Module\quanlythuoc\Model\PhieuXuatNhap::TongTien();
         // lưu danh sách sản phẩm
         echo json_encode($_sanpham, JSON_UNESCAPED_UNICODE);
     }
@@ -162,7 +161,7 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
             if (\Model\Request::Post(FormPhieuXuatNhap::$ElementsName, null)) {
                 $itemForm = \Model\Request::Post(FormPhieuXuatNhap::$ElementsName, null);
                 $phieuXuatNhap = new \Module\quanlythuoc\Model\PhieuXuatNhap();
-                $phieuDB =  $phieuXuatNhap->GetById($itemForm["IdPhieu"]);
+                $phieuDB = $phieuXuatNhap->GetById($itemForm["IdPhieu"]);
                 if ($phieuDB != null) {
                     throw new Exception("Đã có mã phiếu này.");
                 }
@@ -212,7 +211,7 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
                 \Model\Common::ToUrl("/quanlythuoc/phieuxuatnhap/detail/" . $phieu->Id . "");
             }
         } catch (\Exception $exc) {
-            new  Error(Error::danger, $exc->getMessage());
+            new Error(Error::danger, $exc->getMessage());
         }
         ModelPhieuXuatNhap::AddThuocPhieuNhapDefault();
         $this->View();

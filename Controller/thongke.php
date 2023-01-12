@@ -118,7 +118,23 @@ class thongke extends \Application
         // var_dump($item);
         // $data[] = ["BẢNG KÊ THUỐC PHÒNG KHÁM PHƯƠNG UYÊN"];
         $data[] = [
-            "Mã thuốc", "Tên Thuốc", "Tên biệt dược", "Số lô", "Giá nhập", "Giá Bán", "Đơn vị tính", "Ngày sản xuất", "Hạn sử dụng", "Tác dụng", "Cơ chế tác dụng", "Ghi chú", "Số lượng", "Nhà sản xuất", "Nước sản xuất", "Cách dùng thuốc", "Số lượng cảnh báo"
+            "Mã thuốc",
+            "Tên Thuốc",
+            "Tên biệt dược",
+            "Số lô",
+            "Giá nhập",
+            "Giá Bán",
+            "Đơn vị tính",
+            "Ngày sản xuất",
+            "Hạn sử dụng",
+            "Tác dụng",
+            "Cơ chế tác dụng",
+            "Ghi chú",
+            "Số lượng",
+            "Nhà sản xuất",
+            "Nước sản xuất",
+            "Cách dùng thuốc",
+            "Số lượng cảnh báo"
         ];
         if ($item) {
             foreach ($item as $row) {
@@ -144,7 +160,16 @@ class thongke extends \Application
         // var_dump($item);
         // $data[] = ["BẢNG KÊ THUỐC PHÒNG KHÁM PHƯƠNG UYÊN"];
         $data[] = [
-            "Mã bệnh nhân", "Tên bệnh nhân", "Giới tính", "Ngày sinh", "CMND/CCCD", "Địa chỉ", "Số điện thoại", "Tỉnh/Thành phố", "Quận/huyện", "Phường/Xã"
+            "Mã bệnh nhân",
+            "Tên bệnh nhân",
+            "Giới tính",
+            "Ngày sinh",
+            "CMND/CCCD",
+            "Địa chỉ",
+            "Số điện thoại",
+            "Tỉnh/Thành phố",
+            "Quận/huyện",
+            "Phường/Xã"
         ];
         if ($item) {
             foreach ($item as $row) {
@@ -163,7 +188,10 @@ class thongke extends \Application
         $item = $thongke->GetDSThuocTonExport();
         // var_dump($item);
         $data[] = [
-            "Mã thuốc", "Thuộc loại đơn", "Tên thuốc", "Số lượng tồn kho"
+            "Mã thuốc",
+            "Thuộc loại đơn",
+            "Tên thuốc",
+            "Số lượng tồn kho"
         ];
         if ($item) {
             foreach ($item as $row) {
@@ -181,14 +209,17 @@ class thongke extends \Application
         $item = $thongke->GetDSTongThuocTrongKhoExport();
         // var_dump($item);
         $data[] = [
-            "Mã thuốc", "Danh mục thuốc", "Tên thuốc", "Số lượng tổng"
+            "Mã thuốc",
+            "Danh mục thuốc",
+            "Tên thuốc",
+            "Số lượng tổng"
         ];
         if ($item) {
             foreach ($item as $row) {
                 $thuoc = new SanPham($row['Id']);
                 $dm = new DanhMuc($row["Idloaithuoc"]);
                 $row["Idloaithuoc"] = $dm->Name;
-                $row["TongThuoc"] = $row["TongThuoc"].' '.$thuoc->DonViTinh();
+                $row["TongThuoc"] = $row["TongThuoc"] . ' ' . $thuoc->DonViTinh();
                 $data[] = $row;
             }
             \Module\quanlythuoc\Model\SanPham::ExportBangKe($data, "public/thongke/ExportDSTongThuoc.xlsx");
@@ -201,7 +232,15 @@ class thongke extends \Application
         $item = $thongke->GetDSDonThuocTrongNgay();
         // var_dump($item);
         $data[] = [
-            "Mã đơn thuốc", "Mã bệnh nhân", "Tên bệnh nhân", "Giới tính", "Ngày sinh", "Thời gian khám", "Chẩn đoán bệnh", "Thuộc loại đơn", "Số ngày dùng thuốc"
+            "Mã đơn thuốc",
+            "Mã bệnh nhân",
+            "Tên bệnh nhân",
+            "Giới tính",
+            "Ngày sinh",
+            "Thời gian khám",
+            "Chẩn đoán bệnh",
+            "Thuộc loại đơn",
+            "Số ngày dùng thuốc"
         ];
         if ($item) {
             foreach ($item as $row) {
@@ -211,7 +250,7 @@ class thongke extends \Application
                 $row["NgaySinh"] = Common::ForMatDMY($row["NgaySinh"]);
                 $row["ThoiGianKham"] = Common::ForMatDMYHIS($row["ThoiGianKham"]);
                 $row["ThuocLoaiDon"] = $donthuoc->ThuocLoaiDon();
-                $row["TongNgayDung"] = $row["TongNgayDung"].' '.'ngày';
+                $row["TongNgayDung"] = $row["TongNgayDung"] . ' ' . 'ngày';
                 $data[] = $row;
             }
             \Module\quanlythuoc\Model\SanPham::ExportBangKe($data, "public/thongke/ExportBenhNhanTrongNgay.xlsx");
@@ -226,7 +265,12 @@ class thongke extends \Application
         // var_dump($item);
         // $data[] = ["BẢNG KÊ THUỐC PHÒNG KHÁM PHƯƠNG UYÊN"];
         $data[] = [
-            "Mã phiếu", "Đơn vị cung cấp", "Nội dung phiếu", "Ngày xuất", "Tổng tiền xuất", "Ghi chú"
+            "Mã phiếu",
+            "Đơn vị cung cấp",
+            "Nội dung phiếu",
+            "Ngày xuất",
+            "Tổng tiền xuất",
+            "Ghi chú"
         ];
         if ($item) {
             foreach ($item as $row) {
@@ -239,7 +283,7 @@ class thongke extends \Application
         }
     }
 
-    
+
 
     function ExportDSPhieuNhap()
     {
@@ -249,7 +293,12 @@ class thongke extends \Application
         // var_dump($item);
         // $data[] = ["BẢNG KÊ THUỐC PHÒNG KHÁM PHƯƠNG UYÊN"];
         $data[] = [
-            "Mã phiếu", "Đơn vị cung cấp", "Nội dung phiếu", "Ngày nhập", "Tổng tiền nhập", "Ghi chú"
+            "Mã phiếu",
+            "Đơn vị cung cấp",
+            "Nội dung phiếu",
+            "Ngày nhập",
+            "Tổng tiền nhập",
+            "Ghi chú"
         ];
         if ($item) {
             foreach ($item as $row) {

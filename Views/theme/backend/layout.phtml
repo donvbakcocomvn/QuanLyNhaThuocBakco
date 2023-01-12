@@ -1,6 +1,7 @@
 <?php
 
 use Views\theme\backend\Functions;
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -11,7 +12,8 @@ use Views\theme\backend\Functions;
     ?>
 </head>
 
-<body ng-app="angApp" class=" <?php echo $_COOKIE["sidebar-toggle"] ?? "" ?> hold-transition skin-black-light  sidebar-mini ">
+<body ng-app="angApp"
+    class=" <?php echo $_COOKIE["sidebar-toggle"] ?? "" ?> hold-transition skin-black-light  sidebar-mini ">
     <div class="wrapper">
         <?php
         Functions::header();
@@ -21,12 +23,12 @@ use Views\theme\backend\Functions;
             <?php
             $error = \Model\Error::GetError();
             if ($error != null) {
-            ?>
+                ?>
                 <div class="system-alert alert alert-<?php echo $error["Type"]; ?> alert-dismissible">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     <?php echo $error["Content"]; ?>
                 </div>
-            <?php
+                <?php
             }
             ?>
             <?php

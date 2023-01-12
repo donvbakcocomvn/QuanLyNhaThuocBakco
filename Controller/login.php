@@ -41,8 +41,10 @@ class login extends \Application
                  * @param {type} parameter
                  */
                 $userService = new \Model\UserService();
+
                 $user = $userService->GetUserByUsernamPassword($taiKhoan, $matKhau);
-                //            var_dump($user);
+                // var_dump($user);
+                // exit();
                 /**
                  * dang nhap khong thanh cong
                  * @param {type} parameter
@@ -52,12 +54,11 @@ class login extends \Application
                 }
                 unset($user["Password"]);
                 $u = $user;
+                $_SESSION[QuanLy] = $user;
                 $u["key"] = sha1($_SERVER["HTTP_USER_AGENT"]);
                 $userInfo = json_encode($u);
                 $token = base64_encode($userInfo);
                 setcookie("Token", $token, time() + 3600 * 20 * 30, "/");
-                //                die();
-                $_SESSION[QuanLy] = $user;
                 if ($ghiNho) {
                     setcookie("GhiNhoMatKhau", "1", time() + 3600 * 20 * 30, "/");
                     setcookie("TaiKhoan", $_SESSION[QuanLy]["Username"], time() + 3600 * 20 * 30, "/");
@@ -67,7 +68,6 @@ class login extends \Application
                     unset($_COOKIE['TaiKhoan']);
                     setcookie("TaiKhoan", null, -1, "/");
                 }
-
                 \Model\Common::ToUrl("/index.php?controller=backend");
             }
         } catch (\Exception $exc) {
@@ -91,7 +91,8 @@ class login extends \Application
             $key = sha1($_SERVER["HTTP_USER_AGENT"]);
             //            var_dump($key);
             //            var_dump($tokenDecode); 
-            $user = json_decode($tokenDecode, JSON_OBJECT_AS_ARRAY);
+
+            $user = \json_decode($tokenDecode, JSON_OBJECT_AS_ARRAY);
             //            var_dump($user);
             if ($key == $user["key"]) {
                 $_SESSION[QuanLy] = $user;
@@ -118,8 +119,8 @@ class login extends \Application
                 echo "<script>alert('Email Không Tồn Tại. Vui Lòng Nhập Lại !');</script>";
                 // exit();
             } else {
-                $code = $user->CreateToken();  // Token ngẫu nhiên
-                $user->AddToken($code, $mail);  // Thêm Token vào DB
+                $code = $user->CreateToken(); // Token ngẫu nhiên
+                $user->AddToken($code, $mail); // Thêm Token vào DB
                 $title = "Reset PassWord";
                 $content = "Họ và Tên :" . $itemUser["Name"] . "</br>" . "Tài Khoản :" . $itemUser["Username"] . "</br>" . "Mã xác nhận của bạn là: <span style='color:green'>" . $code . "</span>" . "</br>" .
                     "Nhấn <a style='color: violet;' href='http://nhathuoc.bakco.com.vn/index.php?controller=login&action=verification'>vào đây</a> để đặt lại mật khẩu mới !!!" . "</br>" . "Email này được gửi từ một biểu mẫu liên hệ trên <a style='color: violet;' href='http://nhathuoc.bakco.com.vn/index.php?controller=login&action=index'>nhathuoc.bakco.com.vn</a>";
@@ -133,22 +134,22 @@ class login extends \Application
     {
         try {
             if (isset($_POST["change"]) == true) {
-                $user = new UserService();       //Khởi tạo Duser
+                $user = new UserService(); //Khởi tạo Duser
                 $email = $_POST["email"];
                 $token = $_POST["code"];
                 $newpass = $_POST["newpass"];
                 $repass = $_POST["repass"];
-                $item = $user->GetByEmailAndToken($email, $token);    //Lấy User từ Mail Và Code người dùng nhập
+                $item = $user->GetByEmailAndToken($email, $token); //Lấy User từ Mail Và Code người dùng nhập
 
                 if ($newpass !== $repass) {
                     echo "<script>alert('Mật Khẩu Không Khớp');</script>";
                 } elseif ($item == NULL) {
                     echo "<script>alert('Vui Lòng Kiểm Tra Lại Email Hoặc Token');</script>";
                 } else {
-                    $keyPass = $item["KeyPassword"];        // Lấy ra KeyPass trong Admin
-                    $userName = $item["Username"];        // Lấy ra UserName trong Admin
-                    $pass = $user->CreatePassword($newpass, $keyPass);   //Mã Hóa Mật Khẩu
-                    $user->UpdatePass($pass, $userName);  // Update Mật Khẩu Mới
+                    $keyPass = $item["KeyPassword"]; // Lấy ra KeyPass trong Admin
+                    $userName = $item["Username"]; // Lấy ra UserName trong Admin
+                    $pass = $user->CreatePassword($newpass, $keyPass); //Mã Hóa Mật Khẩu
+                    $user->UpdatePass($pass, $userName); // Update Mật Khẩu Mới
                     echo "<script>alert('Đổi Mật Khẩu Thành Công!');</script>";
                 }
                 // Common::ToUrl("/index.php?controller=login&action=index");

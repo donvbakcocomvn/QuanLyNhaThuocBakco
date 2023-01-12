@@ -57,18 +57,25 @@ class FormSearch
 
     static function SelectStatus($value = null)
     {
-        $option1 = ["" => ""];
+        $option1 = ["" => "Tất Cả"];
         $option2 = OptionsService::GetGroupsToSelect('optiondonthuoc');
         $options = $option1 + $option2;
         return new FormRender(new Select('Thuộc Loại Đơn', 'status', $options, ['value' => $value, 'style' => 'border-radius: 5px', 'class' => 'form-control ']));
     }
+    static function ThuocLoaiDon($value = null)
+    {
+        $option1 = ["" => "Tất Cả"];
+        $option2 = OptionsService::GetGroupsToSelect('trangthai');
+        $options = $option1 + $option2;
+        return new FormRender(new Select('Tình Trạng', 'loaidonthuoc', $options, ['value' => $value, 'style' => 'border-radius: 5px', 'class' => 'form-control ']));
+    }
 
     static function Fromdate($value = "")
     {
-        return new FormRender(new Textbox('Từ ngày', 'fromdate',['value' => $value,'style' => 'border-radius: 5px','type' => 'date','class' => 'form-control'] ));
+        return new FormRender(new Textbox('Từ ngày', 'fromdate', ['value' => $value, 'style' => 'border-radius: 5px', 'type' => 'date', 'class' => 'form-control']));
     }
     static function Todate($value = null)
     {
-        return new FormRender(new Textbox('Đến ngày', 'todate',['value' => $value,'style' => 'border-radius: 5px','type' => 'date','class' => 'form-control'] ));
+        return new FormRender(new Textbox('Đến ngày', 'todate', ['value' => $value, 'style' => 'border-radius: 5px', 'type' => 'date', 'class' => 'form-control']));
     }
 }

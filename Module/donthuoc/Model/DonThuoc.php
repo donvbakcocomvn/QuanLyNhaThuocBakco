@@ -232,7 +232,7 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
 
     public static function ConvertDateToString($arr)
     {
-        $krr    = explode('-', $arr);
+        $krr = explode('-', $arr);
         $result = implode("", $krr);
         return $result;
     }
@@ -253,16 +253,22 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
     //     return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     // }
 
-    public function GetItems($params, $indexPage, $pageNumber, &$total)
+
+    public function GetAll($params)
     {
         $name = isset($params["keyword"]) ? $params["keyword"] : '';
         $isShow = isset($params["isDelete"]) ? $params["isDelete"] : 0;
         $fromdate = isset($params["fromdate"]) ? $params["fromdate"] : '';
         $todate = isset($params["todate"]) ? $params["todate"] : '';
         $status = isset($params["status"]) ? $params["status"] : '';
+        $loaidonthuoc = isset($params["loaidonthuoc"]) ? $params["loaidonthuoc"] : '';
         $fromdateSql = "";
         $todateSql = "";
         $statusSql = "";
+        $loaidonthuocSql = "";
+        if ($loaidonthuoc) {
+            $loaidonthuocSql = "and `Status` = '{$loaidonthuoc}' ";
+        }
         if ($status) {
             $statusSql = "and `ThuocLoaiDon` = '{$status}' ";
         }
@@ -274,7 +280,38 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
         }
         $fromdateIsDeleteSQL = "and `IsDelete` = '0'";
 
-        $where = " (`Id` like '%{$name}%' or `NameBN` like '%{$name}%') {$fromdateSql} {$statusSql} {$todateSql} $fromdateIsDeleteSQL  ORDER BY `CreateRecord` DESC";
+        $where = " (`Id` like '%{$name}%' or `NameBN` like '%{$name}%') {$fromdateSql} {$statusSql} {$todateSql} {$fromdateIsDeleteSQL} {$loaidonthuocSql}  ORDER BY `CreateRecord` DESC";
+        return $this->Select($where);
+    }
+
+
+    public function GetItems($params, $indexPage, $pageNumber, &$total)
+    {
+        $name = isset($params["keyword"]) ? $params["keyword"] : '';
+        $isShow = isset($params["isDelete"]) ? $params["isDelete"] : 0;
+        $fromdate = isset($params["fromdate"]) ? $params["fromdate"] : '';
+        $todate = isset($params["todate"]) ? $params["todate"] : '';
+        $status = isset($params["status"]) ? $params["status"] : '';
+        $loaidonthuoc = isset($params["loaidonthuoc"]) ? $params["loaidonthuoc"] : '';
+        $fromdateSql = "";
+        $todateSql = "";
+        $statusSql = "";
+        $loaidonthuocSql = "";
+        if ($loaidonthuoc) {
+            $loaidonthuocSql = "and `Status` = '{$loaidonthuoc}' ";
+        }
+        if ($status) {
+            $statusSql = "and `ThuocLoaiDon` = '{$status}' ";
+        }
+        if ($fromdate != "") {
+            $fromdateSql = "and `CreateRecord` >= '{$fromdate}' ";
+        }
+        if ($todate != "") {
+            $todateSql = "and `CreateRecord` <= '{$todate}' ";
+        }
+        $fromdateIsDeleteSQL = "and `IsDelete` = '0'";
+
+        $where = " (`Id` like '%{$name}%' or `NameBN` like '%{$name}%') {$fromdateSql} {$statusSql} {$todateSql} {$fromdateIsDeleteSQL} {$loaidonthuocSql}  ORDER BY `CreateRecord` DESC";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 
@@ -283,7 +320,7 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
         $name = isset($params["keyword"]) ? $params["keyword"] : '';
         $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
         $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
-        $isShowSql = "and `isShow` >= 0 ";
+        $isShowSql = "and `isDelete` = 0 ";
         $danhmucSql = "";
 
         if ($isShow) {
@@ -293,7 +330,7 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
             $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
         }
         // self::$Debug = true;
-        $where = " (`Id` like '%{$name}%' or `IdBenhNhan` like '%{$name}%' or `NameBN` like '%{$name}%' ) {$danhmucSql} and `ThuocLoaiDon`  = 3 ORDER BY `status` asc";
+        $where = " (`Id` like '%{$name}%' or `IdBenhNhan` like '%{$name}%' or `NameBN` like '%{$name}%' ) {$danhmucSql} {$isShowSql} and `ThuocLoaiDon`  = 3 ORDER BY `status` asc";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 
@@ -312,7 +349,7 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
             $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
         }
         // self::$Debug = true;
-        $where = " (`Id` like '%{$name}%' or `IdBenhNhan` like '%{$name}%' or `NameBN` like '%{$name}%' {$danhmucSql}) and `Status` = 2 ORDER BY `Id` DESC";
+        $where = " (`Id` like '%{$name}%' or `IdBenhNhan` like '%{$name}%' or `NameBN` like '%{$name}%' {$danhmucSql}) and `isDelete` = 0 and `Status` = 2  ORDER BY `Id` DESC";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 
@@ -331,7 +368,7 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
             $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
         }
         // self::$Debug = true;
-        $where = " (`Id` like '%{$name}%' or `IdBenhNhan` like '%{$name}%' or `NameBN` like '%{$name}%' {$danhmucSql}) and `Status` = 3 ORDER BY `Id` DESC";
+        $where = " (`Id` like '%{$name}%' or `IdBenhNhan` like '%{$name}%' or `NameBN` like '%{$name}%' {$danhmucSql}) and `isdelete` = 0 and `Status` = 3 ORDER BY `Id` DESC";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 

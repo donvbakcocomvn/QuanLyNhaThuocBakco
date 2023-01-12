@@ -25,4 +25,3 @@ if (class_exists($strController)) {
     $_Controller->loi404();
 }
 ?>
-

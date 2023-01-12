@@ -176,20 +176,20 @@ class ThongKe extends DB
         $indate = isset($params["indate"]) ? $params["indate"] : null;
         $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
         $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
-        $isShowSql = "and `isShow` >= 0 ";
+        $isShowSql = "and `isDelete` = 0 ";
         $indateSql = "";
         $danhmucSql = "";
         if ($indate) {
             $indateSql = " and `CreateRecord` LIKE '%$indate%'";
         }
         if ($isShow) {
-            $isShowSql = "and `isShow` = '{$isShow}' ";
+            $isShowSql = "and `isDelete` = '{$isShow}' ";
         }
         if ($danhmuc) {
             $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
         }
         // self::$Debug = true;
-        $where = " (`NameBN` like '%{$name}%' {$danhmucSql}) {$indateSql} ORDER BY `CreateRecord` DESC";
+        $where = " (`NameBN` like '%{$name}%' {$danhmucSql}) {$indateSql} {$isShowSql} ORDER BY `CreateRecord` DESC";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 

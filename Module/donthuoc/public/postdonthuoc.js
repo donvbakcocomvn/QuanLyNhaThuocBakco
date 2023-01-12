@@ -47,8 +47,8 @@ $(document).ready(function () {
                     else {
                         Swal.fire({
                             icon: 'error',
-                            title: 'Phòng Khám Phương Uyên',
-                            text: 'Không đủ thuốc trong kho rồi',
+                            title: 'Không đủ thuốc trong kho.',
+                            text: 'Phòng Khám Phương Uyên',
                             showConfirmButton: false,
                             timer: 1500
                         })

@@ -89,13 +89,11 @@ $roleDetail = new Model\Role();
                                     </tr>
                                 </thead>
                                 <tbody class="table-thuoc">
-
                                     <?php
-                                    // var_dump(PhieuXuatNhap::DSThuocPhieuNhap());
                                     $index = 1;
+
                                     foreach (PhieuXuatNhap::DSThuocPhieuNhap() as $mathuoc => $thuoc) {
                                         $sanPham = new SanPham($thuoc);
-
                                         $formChiTiet = new FormPhieuXuatNhapChiTiet();
                                         $i = $mathuoc;
                                     ?>
@@ -121,7 +119,7 @@ $roleDetail = new Model\Role();
                                             </th>
                                             <th>
                                                 <?php
-                                                echo $formChiTiet->SoLo($sanPham->Solo, "SoLo" . $i, $i)->render(); ?>
+                                                echo $formChiTiet->SoLo($thuoc["Solo"], "SoLo" . $i, $i)->render(); ?>
                                             </th>
                                             <th class="hansudung">
                                                 <?php
@@ -142,7 +140,8 @@ $roleDetail = new Model\Role();
                                         <td><b id="TongTien">
                                                 <?php echo
                                                 Common::ViewNumber(PhieuXuatNhap::TongTien());
-                                                ?></b></td>
+                                                ?></b>
+                                                </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -150,7 +149,6 @@ $roleDetail = new Model\Role();
                     </div>
                     <div class="col-md-12 ">
                         <button id="LamLai" class="btn btn-warning" type="reset">Làm Lại</button>
-                        <!-- <button class="btn btn-success">Lưu</button> -->
                         <button id="btnTaoPhieu" class="btn btn-success" name="LuuThoat">Tạo phiếu</button>
                     </div>
                 </div>

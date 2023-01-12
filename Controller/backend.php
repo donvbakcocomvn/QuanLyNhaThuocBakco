@@ -7,20 +7,22 @@ use PFBC\View;
 use Module\quanlythuoc\Model\SanPham;
 use Model\Common;
 
-class backend extends \Application {
+class backend extends \Application
+{
 
     /**
      * kiểm tra dăng nhap
      * @param {type} parameter
      */
-    public function __construct() {
+    public function __construct()
+    {
 
         $_SESSION[QuanLy] = isset($_SESSION[QuanLy]) ? $_SESSION[QuanLy] : null;
         /**
          * chưa đăng nhap
          * @param {type} parameter
          */
-//        var_dump($_SESSION[QuanLy]);
+        //        var_dump($_SESSION[QuanLy]);
         if ($_SESSION[QuanLy] == null) {
             /**
              * chuyển qua trang dăng nhap
@@ -36,7 +38,8 @@ class backend extends \Application {
          */
     }
 
-    function index() {
+    function index()
+    {
         // \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy]);
         $this->View();
     }
@@ -48,7 +51,7 @@ class backend extends \Application {
         $item = $thongke->GetDSXuatNhapExportChiTiet(1);
         // var_dump($item);
         $data[] = [
-            "Mã phiếu", "Mã thuốc", "Số lô", "Nhà sản xuất", "Số lượng","Nước sản xuất","Giá nhập", "Tổng giá nhập"
+            "Mã phiếu", "Mã thuốc", "Số lô", "Nhà sản xuất", "Số lượng", "Nước sản xuất", "Giá nhập", "Tổng giá nhập"
         ];
         if ($item) {
             foreach ($item as $row) {
@@ -69,7 +72,7 @@ class backend extends \Application {
         $item = $thongke->GetDSXuatNhapExportChiTiet(-1);
         // var_dump($item);
         $data[] = [
-            "Mã phiếu", "Mã thuốc", "Số lô", "Nhà sản xuất", "Số lượng","Nước sản xuất","Giá nhập", "Tổng giá nhập"
+            "Mã phiếu", "Mã thuốc", "Số lô", "Nhà sản xuất", "Số lượng", "Nước sản xuất", "Giá nhập", "Tổng giá nhập"
         ];
         if ($item) {
             foreach ($item as $row) {
@@ -83,7 +86,8 @@ class backend extends \Application {
         }
     }
 
-    function xuatkho() {
+    function xuatkho()
+    {
         $modelItem = new ThongKe();
         $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
         $params["danhmuc"] = isset($_REQUEST["danhmuc"]) ? \Model\Common::TextInput($_REQUEST["danhmuc"]) : "";
@@ -102,7 +106,8 @@ class backend extends \Application {
         $this->View($data);
     }
 
-    function tonkho() {
+    function tonkho()
+    {
         $modelItem = new ThongKe();
         $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
         $params["danhmuc"] = isset($_REQUEST["danhmuc"]) ? \Model\Common::TextInput($_REQUEST["danhmuc"]) : "";
@@ -121,7 +126,8 @@ class backend extends \Application {
         $this->View($data);
     }
 
-    function dstong() {
+    function dstong()
+    {
         $modelItem = new ThongKe();
         $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
         $params["danhmuc"] = isset($_REQUEST["danhmuc"]) ? \Model\Common::TextInput($_REQUEST["danhmuc"]) : "";
@@ -140,7 +146,8 @@ class backend extends \Application {
         $this->View($data);
     }
 
-    function nhapkho() {
+    function nhapkho()
+    {
         $modelItem = new ThongKe();
         $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
         $params["danhmuc"] = isset($_REQUEST["danhmuc"]) ? \Model\Common::TextInput($_REQUEST["danhmuc"]) : "";
@@ -198,7 +205,7 @@ class backend extends \Application {
         $data["total"] = $total;
         $this->View($data);
     }
-    
+
     function lichsunhap()
     {
         $idThuoc = $this->getParams(0);
@@ -213,17 +220,18 @@ class backend extends \Application {
         $this->View($id = ['id']);
     }
 
-    function qrcode() {
+    function qrcode()
+    {
 
         $this->View();
     }
 
-    function logout() {
+    function logout()
+    {
 
         $_SESSION[QuanLy] = null;
         unset($_COOKIE['Token']);
         setcookie("Token", null, -1, "/");
         \Model\Common::ToUrl(LoginPage);
     }
-
 }

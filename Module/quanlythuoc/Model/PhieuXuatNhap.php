@@ -77,7 +77,7 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
     }
     public function getTongTien()
     {
-        return  number_format($this->TongTien, 0, ".", ",") . " đ";
+        return number_format($this->TongTien, 0, ".", ",") . " đ";
     }
 
 
@@ -88,7 +88,7 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
         foreach ($DSThuoc as $key => $value) {
             $value["Giaban"] = $value["Giaban"] ?? 0;
             $value["Soluong"] = $value["Soluong"] ?? 0;
-            $tong += $value["Giaban"]  * $value["Soluong"];
+            $tong += $value["Giaban"] * $value["Soluong"];
         }
         return $tong;
     }
@@ -123,7 +123,7 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
         $detail["Soluong"] = $detail["Soluong"] ?? "";
         $detail["Giaban"] = $detail["Giaban"] ?? 0;
         $detail["Gianhap"] = $detail["Gianhap"] ?? 0;
-        $detail["SoLo"] = $detail["SoLo"] ?? "";
+        $detail["Solo"] = $detail["Solo"] ?? "";
         $detail["NhaSanXuat"] = $detail["NhaSanXuat"] ?? "";
         $detail["NuocSanXuat"] = $detail["NuocSanXuat"] ?? "";
         $detail["Price"] = $detail["Price"] ?? "";
@@ -171,7 +171,7 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
     {
         $form["IdPhieu"] = $form["IdPhieu"] ?? self::getIdPhieu();
         $form["NgayNhap"] = $form["NgayNhap"] ?? date("Y-m-d", time());
-        $form["NgayNhap"] = $form["NgayNhap"] == "" ? date("Y-m-d", time()) :  $form["NgayNhap"];
+        $form["NgayNhap"] = $form["NgayNhap"] == "" ? date("Y-m-d", time()) : $form["NgayNhap"];
         $_SESSION["FormPostDefaut"] = $form;
     }
 
