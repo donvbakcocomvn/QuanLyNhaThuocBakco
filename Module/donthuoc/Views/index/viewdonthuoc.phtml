@@ -121,19 +121,19 @@ $IdDonThuoc = $donthuoc->Id;
                         <th>
                         <td>Tuổi : <?php echo date('Y') - date('Y', strtotime($donthuoc->NgaySinh)); ?></td>
                         </th>
-                    </thead>
-                    <thead>
-                        <th>
-                        <td>Quê quán : <?php echo DonThuoc::GetItemById('Address', $donthuoc->IdBenhNhan); ?></td>
-                        </th>
-                        <th>
-                        <td>Giới tính : <?php echo $donthuoc->GioiTinh(); ?></td>
+                        <td>Giới: <?php echo $donthuoc->GioiTinh(); ?></td>
                         </th>
                     </thead>
                     <thead>
                         <th>
-                        <td>Số điện thoại : <?php echo DonThuoc::GetItemById('Phone', $donthuoc->IdBenhNhan); ?></td>
+                        <td>Đ/C : <?php echo DonThuoc::GetItemById('Address', $donthuoc->IdBenhNhan); ?>
+                        </td>
+                        <td>
+                            SĐT : <?php echo DonThuoc::GetItemById('Phone', $donthuoc->IdBenhNhan); ?>
+                        </td>
                         </th>
+                    </thead>
+                    <thead>
                         <th>
                         <td>Chẩn đoán : <?php echo $donthuoc->ChanDoanBenh; ?></td>
                         </th>
@@ -151,8 +151,13 @@ $IdDonThuoc = $donthuoc->Id;
                             <?php
                             if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy]) == true) {
                             ?>
-                                <th class="text-center">Đơn giá</th>
-                                <th>Thành Tiền</th>
+                                <th class="text-center">
+                                    <?php
+                                    echo $donthuoc->ThuocLoaiDon != 2 ? "Đơn giá" : ""
+                                    ?></th>
+                                <th><?php
+                                    echo $donthuoc->ThuocLoaiDon != 2 ? "Thành Tiền" : ""
+                                    ?></th>
                             <?php
                             }
                             ?>
@@ -283,7 +288,9 @@ $IdDonThuoc = $donthuoc->Id;
                 </div>
                 <div class="col-xs-4">
                     <?php
-                    echo Module\donthuoc\Model\btnHtml::btnhoanthanhsoandon($IdDonThuoc);
+                    if ($donthuoc->ThuocLoaiDon != 2) {
+                        echo Module\donthuoc\Model\btnHtml::btnhoanthanhsoandon($IdDonThuoc);
+                    }
                     ?>
                 </div>
                 <div class="col-xs-4">

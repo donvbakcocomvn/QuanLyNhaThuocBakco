@@ -59,6 +59,7 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
         $_sanpham["Soluong"] = $donthuocdetail->GetThuocPhieuXuatNhap($index)["Soluong"] ?? 1;
         $_sanpham["Solo"] = $donthuocdetail->GetThuocPhieuXuatNhap($index)["Solo"] ?? "";
         $_sanpham["Soluong"] = max($_sanpham["Soluong"], 1);
+        $_sanpham["HSD"] = date("Y-m-d",time());
         $_sanpham["Giaban"] = floatval($_sanpham["Giaban"]);
         $_sanpham["Gianhap"] = floatval($_sanpham["Gianhap"]);
         $_sanpham["ThanhTien"] = floatval($_sanpham["Giaban"] * $_sanpham["Soluong"]);
@@ -88,9 +89,10 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
         $_sanpham["NuocSX"] = $dataRequest["nuocSanXuat"] ?? "";
         $_sanpham["Solo"] = $dataRequest["soLo"] ?? "";
         if ($dataRequest["hsd"] != "") {
+            var_dump($dataRequest["hsd"]);
             $_sanpham["HSD"] = date("Y-m-d", strtotime($dataRequest["hsd"]));
         } else {
-            $_sanpham["HSD"] = null;
+            $_sanpham["HSD"] = time();
         }
         $_sanpham["Gianhap"] = floatval($_sanpham["Gianhap"] ?? 0);
         $_sanpham["Giaban"] = floatval($dataRequest["gia"]);
@@ -182,7 +184,7 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
                 $phieuXuatNhap->Post($Phieu);
 
                 foreach (ModelPhieuXuatNhap::DSThuocPhieuNhap() as $maphieu => $_phieu) {
-                   
+
                     if ($_phieu) {
                         if (isset($_phieu["Id"]) == true) {
                             $itemFormDetail["IdPhieu"] = $itemForm["IdPhieu"];
