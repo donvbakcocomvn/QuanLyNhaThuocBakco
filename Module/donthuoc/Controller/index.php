@@ -354,6 +354,11 @@ class index extends \Application implements \Controller\IControllerBE
         $_sanpham = $sanpham->GetById($id);
         // var_dump($_sanpham);
         $_sanpham["SoNgaySDThuoc"] = $_SESSION["SoNgaySDThuoc"] ?? 0;
+
+        if ($_sanpham["SLHienTai"] <= 0) {
+            echo json_encode(new DonThuocDetail());
+            return;
+        }
         $result = $donthuocdetail->checkDsThuoc($_sanpham);
         if ($result == null) {
             echo json_encode(new DonThuocDetail());

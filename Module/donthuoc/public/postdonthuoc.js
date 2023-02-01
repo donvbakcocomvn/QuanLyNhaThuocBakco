@@ -120,23 +120,21 @@ $(document).ready(function () {
                 contentType: false,
                 processData: false,
                 success: function (response) {
-                    console.log(response);
-                    // console.log("ádasdsadsdadasdsd");
+
                     if (response.SoNgaySDThuoc == null) {
                         // alert("Thuốc đã có trong danh sách");
                         Swal.fire({
                             icon: 'error',
-                            title: 'Oops...',
-                            text: 'Something went wrong!',
-                            footer: '<a href="">Why do I have this issue?</a>'
-                        });
-                        console.log(idName);
-                        window.location.reload();
-                        $(idName).val("");
-                        console.log($(idName + " option:selected").val());
-                        return;
+                            title: 'Đã hết thuốc',
+                            text: 'Thuốc không thể kê trong lúc này',
+                            timer: 1500
+                        }).then(() => {
+                            window.location.reload();
+                            $(idName).val("");
+                            return;
+                        })
                     }
-                    console.log(response);
+
                     $(idGiaBan).val(response.Giaban);
                     $(idDVT).val(response.DVTTitle);
                     $(idSang).val(response.Sang);
