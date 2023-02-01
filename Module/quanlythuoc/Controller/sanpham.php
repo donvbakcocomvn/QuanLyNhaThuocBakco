@@ -83,10 +83,11 @@ class sanpham extends \Application implements \Controller\IControllerBE
                         $item[7] = str_replace("/", "-", $item[7]);
                         $item[8] = str_replace("/", "-", $item[8]);
                         // them vào database  
-                        $itemInsert["Id"] = $sanpham->CreatId();
+                        $itemInsert["Id"] = $item[0];
                         if ($item[2] != "") {
-                            $itemInsert["Idloaithuoc"] = $item[1] ? DanhMuc::GetIdByName($item[1]) : '';
+                            $itemInsert["Idloaithuoc"] = $item[1] ?? "";
                             $itemInsert["Name"] = Common::CheckName($item[2]);
+                            $itemInsert["Namebietduoc"] = Common::CheckName($item[2]);
                             $itemInsert["Solo"] = $item[3] ? intval($item[3]) : '';
                             $itemInsert["Gianhap"] = $item[4] ? $item[4] : '';
                             $itemInsert["Giaban"] = $item[5] ? $item[5] : '';
@@ -103,13 +104,18 @@ class sanpham extends \Application implements \Controller\IControllerBE
                             $itemInsert["Soluong"] = $item[14] ?? "";
                             $itemInsert["DVQuyDoi"] = $item[15];
                             $itemInsert["CachDung"] = $b["Val"] ?? "";
-                            $itemInsert["Canhbao"] = $item[17];
+                            $itemInsert["Canhbao"] = $item[17]; 
+                        }
+                        $sp = $sanpham->GetById($item[0]);
+                        if ($sp == null) {
                             $sanpham->Post($itemInsert);
+                        } else {
+                            $sanpham->Put($itemInsert);
                         }
                     }
                 }
                 new \Model\Error(\Model\Error::success, "Import Thành Công");
-                Common::ToUrl("/index.php?module=quanlythuoc&controller=sanpham&action=index");
+                // Common::ToUrl("/index.php?module=quanlythuoc&controller=sanpham&action=index");
                 // die();
             }
         } catch (Exception $ex) {
