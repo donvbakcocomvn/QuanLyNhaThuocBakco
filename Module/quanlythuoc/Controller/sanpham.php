@@ -104,7 +104,7 @@ class sanpham extends \Application implements \Controller\IControllerBE
                             $itemInsert["Soluong"] = $item[14] ?? "";
                             $itemInsert["DVQuyDoi"] = $item[15];
                             $itemInsert["CachDung"] = $b["Val"] ?? "";
-                            $itemInsert["Canhbao"] = $item[17]; 
+                            $itemInsert["Canhbao"] = $item[17];
                         }
                         $sp = $sanpham->GetById($item[0]);
                         if ($sp == null) {
@@ -115,6 +115,7 @@ class sanpham extends \Application implements \Controller\IControllerBE
                     }
                 }
                 new \Model\Error(\Model\Error::success, "Import Thành Công");
+                $this->dongboSL();
                 // Common::ToUrl("/index.php?module=quanlythuoc&controller=sanpham&action=index");
                 // die();
             }
