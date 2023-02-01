@@ -182,6 +182,7 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
                 $phieuXuatNhap->Post($Phieu);
 
                 foreach (ModelPhieuXuatNhap::DSThuocPhieuNhap() as $maphieu => $_phieu) {
+                   
                     if ($_phieu) {
                         if (isset($_phieu["Id"]) == true) {
                             $itemFormDetail["IdPhieu"] = $itemForm["IdPhieu"];
@@ -191,7 +192,7 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
                             $itemFormDetail["HanSuDung"] = date("Y-m-d", strtotime($_phieu["HSD"]));
                             $itemFormDetail["NhaSanXuat"] = $_phieu["NhaSanXuat"];
                             $itemFormDetail["NuocSanXuat"] = $_phieu["NuocSanXuat"];
-                            $itemFormDetail["Price"] = $_phieu["Gianhap"];
+                            $itemFormDetail["Price"] = $_phieu["Giaban"];
                             $itemFormDetail["XuatNhap"] = $itemForm["XuatNhap"];
                             $itemFormDetail["CreateRecord"] = Date("Y-m-d", time());
                             $itemFormDetail["UpdateRecord"] = Date("Y-m-d", time());

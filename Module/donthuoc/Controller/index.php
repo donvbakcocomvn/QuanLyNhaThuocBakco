@@ -51,7 +51,7 @@ class index extends \Application implements \Controller\IControllerBE
 
     function giaothuoc()
     {
-        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy]);
+        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, "Giao_Thuoc"]);
         try {
             $idDonThuoc = \Model\Request::Get("id", null);
             $donthuoc = new DonThuoc($idDonThuoc);
