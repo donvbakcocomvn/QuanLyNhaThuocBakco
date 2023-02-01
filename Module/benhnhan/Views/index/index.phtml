@@ -1,0 +1,158 @@
+<?php
+$keyword = $_GET["keyword"] ?? "";
+$pageNumber = $_GET["pageNumber"] ?? 10;
+$indexPage = $_GET["indexPage"] ?? 1;
+?>
+
+<ol class="breadcrumb">
+    <li><a href="/backend/">Dashboard</a></li>
+    <li> Danh Sách Bệnh Nhân </li>
+</ol>
+
+<div class="container-fluid">
+    <form method="get" action="/benhnhan/index/index/">
+        <div class="form-group d-flex">
+            <label class="btn btn-default">
+                <input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox">
+                <i class="fa fa-share" aria-hidden="true"></i>
+            </label>
+            <input id="keyword" class="form-control" name="keyword" value="<?php echo $keyword ?>" type="" placeholder="Nhập tên, số điện thoại hoặc địa chỉ để tìm kiếm">
+            <input name="indexPage" value="<?php echo $indexPage ?>" type="hidden">
+            <input name="pageNumber" value="<?php echo $pageNumber ?>" type="hidden">
+            <button class="btn btn-primary no-border-radius" name="btnTim" type="submit">
+                <i class="fa fa-search"></i> Tìm Kiếm
+            </button>
+        </div>
+    </form>
+    <div class="clearfix">
+        <div class="box box-primary">
+            <div class="">
+                <div class="box-header">
+                    <form method="get" action="/benhnhan/index/index/">
+                        <div class="row">
+                            <div class="col-sm-2 form-group">
+                                <?php
+                                \Model\FormSearch::MaBenhNhan($_GET['id'] ?? null)->renderHtml2(null, null, 'glyphicon glyphicon-barcode form-control-feedback');
+                                ?>
+                            </div>
+                            <div class="col-sm-2 form-group">
+                                <?php
+                                \Model\FormSearch::NameBenhNhan($_GET['nameBN'] ?? null)->renderHtml2(null, null, 'glyphicon glyphicon-user form-control-feedback');
+                                ?>
+                            </div>
+                            <div class="col-sm-2 form-group">
+                                <?php
+                                \Model\FormSearch::GioiTinhBenhNhan($_GET['gioitinh'] ?? null)->renderHtml2(null, null, '');
+                                ?>
+                            </div>
+                            <div class="col-sm-2 form-group">
+                                <?php
+                                \Model\FormSearch::AddressBenhNhan($_REQUEST['address'] ?? null)->renderHtml2(null, null, 'glyphicon glyphicon-home form-control-feedback');
+                                ?>
+                            </div>
+                            <div class="col-sm-2 form-group">
+                                <?php
+                                \Model\FormSearch::PhoneBenhNhan($_GET['phone'] ?? "")->renderHtml2(null, null, 'glyphicon glyphicon-phone form-control-feedback');
+                                ?>
+                            </div>
+                            <div class="col-sm-2 form-group">
+                                <div class="form-group has-success has-feedback">
+                                    <label for="inputSuccess2" class="text-capitalize"><em>Nhấn vào đây&nbsp; </em><i class="fa fa-check"></i></label>
+                                    <button type="submit" style="border-radius: 5px;" class="form-control btn btn-success" name="btnTim" id="keyword">
+                                        <i class="fa fa-filter"></i>&nbsp; Tìm kiếm theo bộ lọc
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <hr style="border-top: 2px solid #00a65a; margin-top:0px" width="90%" noshade="noshade">
+            </div>
+            <div class="box-header">
+                <h3 class="box-title">Danh sách bệnh nhân</h3>
+                <div class="box-tools">
+                    <?php
+
+                    use Model\Locations;
+                    use Model\OptionsService;
+                    use Model\TinhThanh;
+                    use Module\benhnhan\Model\BenhNhan;
+
+                    Module\benhnhan\Model\btnHtml::btnViewKhachHangTrongNgay();
+                    Module\benhnhan\Model\btnHtml::btnExport();
+                    // Module\benhnhan\Model\btnHtml::btnThemKhachHang();
+                    \Model\FormRender::HuongDan("danhsachbenhnhan", "Hướng dẫn bệnh nhân")
+                    ?>
+                </div>
+            </div>
+            <div class="box-body">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>STT</th>
+                            <th>Mã Khách Hàng</th>
+                            <th>Tên Khách Hàng</th>
+                            <th>Giới Tính</th>
+                            <th>Địa Chỉ</th>
+                            <th>Điện Thoại</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $locaiton = new Locations();
+                        foreach ($items as $index => $item) {
+                            $_item = new BenhNhan($item);
+                        ?>
+                            <tr>
+                                <td style="width: 150px;" class="text-center">
+                                    <?php
+                                    echo Module\benhnhan\Model\btnHtml::btnSuaKhachHang($_item->Id);
+                                    echo Module\benhnhan\Model\btnHtml::btnXoaKhachHang($_item->Id);
+                                    echo Module\benhnhan\Model\btnHtml::btnchitiet($_item->Id);
+                                    ?>
+                                </td>
+                                <td><?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?></td>
+                                <td><?php echo $_item->Id; ?></td>
+                                <td><?php echo $_item->Name; ?></td>
+                                <td><?php echo $_item->Gioitinh(); ?></td>
+                                <td><?php echo $_item->Address; ?></td>
+                                <td><?php echo $_item->Phone; ?></td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
+                <div class="box-footer">
+                    <div class="d-flex">
+                        <?php
+                        \Model\FormCommon::Select(
+                            "",
+                            "",
+                            [10, 20, 50, 100],
+                            [
+                                "style" => "max-width:150px;",
+                                "class" => "form-control",
+                                "value" => $pageNumber,
+                                "onchange" => "SoDongHienThi(this.value)",
+                            ]
+                        )->render();
+                        ?>
+                        <?php
+                        $linkPhanTrang = "/benhnhan/index/index/?keyword={$keyword}&indexPage=[i]&pageNumber={$pageNumber}";
+                        echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var SoDongHienThi = function(evalue) {
+        var linkPhanTrang = '/benhnhan/index/index/?indexPage=1&pageNumber=[j]';
+        linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
+        window.location.href = linkPhanTrang;
+    }
+</script>

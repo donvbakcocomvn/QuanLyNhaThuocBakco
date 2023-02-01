@@ -30,7 +30,7 @@ class Request {
     }
 
     public static function Get($name, $value) {
-          if (isset($_GET[$name])) {
+        if (isset($_GET[$name])) {
             return $_GET[$name];
         }
         return $value;

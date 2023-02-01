@@ -8,22 +8,36 @@
 
 namespace Controller;
 
+use Model\Notions;
+
 /**
  * Description of api
  *
  * @author MSI
  */
-class api extends \Application {
+class api extends \Application
+{
 
-    public function __construct() {
+    public function __construct()
+    {
+    }
 
+    public function nations()
+    {
+        $notions = new Notions();
+        echo json_encode($notions->GetNotions());
+    }
+    public function nationsOptions()
+    { 
+        echo json_encode(Notions::GetToOptions());
     }
 
     /**
      * trả vể dang sách thẻ <option></option>
      * @param {type} parameter
      */
-    function GetQuanHuyenTag() {
+    function GetQuanHuyenTag()
+    {
         $idTinh = $this->getParams(0);
         $location = new \Model\Locations();
         $items = $location->GetByIdParents($idTinh);
@@ -37,8 +51,7 @@ THELI;
         echo $html;
     }
 
-    function diemdanh() {
-
+    function diemdanh()
+    {
     }
-
 }

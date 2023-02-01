@@ -1,44 +1,48 @@
 <?php
 
 use Views\theme\backend\Functions;
-?>
 
+?>
 <!DOCTYPE html>
 <html>
-    <head>
+
+<head>
+    <?php
+    Functions::head();
+    ?>
+</head>
+
+<body ng-app="angApp"
+    class=" <?php echo $_COOKIE["sidebar-toggle"] ?? "" ?> hold-transition skin-black-light  sidebar-mini ">
+    <div class="wrapper">
         <?php
-        Functions::head();
+        Functions::header();
+        Functions::leftaside();
         ?>
-    </head>
-    <body ng-app="angApp" class="hold-transition skin-black-light  sidebar-mini">
-        <div class="wrapper">
+        <div class="content-wrapper">
             <?php
-            Functions::header();
-            Functions::leftaside();
+            $error = \Model\Error::GetError();
+            if ($error != null) {
+                ?>
+                <div class="system-alert alert alert-<?php echo $error["Type"]; ?> alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <?php echo $error["Content"]; ?>
+                </div>
+                <?php
+            }
             ?>
-            <div class="content-wrapper">
-                <?php
-                $error = \Model\Error::GetError();
-                if ($error != null) {
-                    ?>
-                    <div class="system-alert alert alert-<?php echo $error["Type"]; ?> alert-dismissible">
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <?php echo $error["Content"]; ?>
-                    </div>
-                    <?php
-                }
-                ?>
-                <?php
-                include $_Content;
-                ?>
-            </div>
             <?php
-            Functions::footer();
-            Functions::aside();
+            include $_Content;
             ?>
-        </div><!-- ./wrapper -->
+        </div>
         <?php
-        Functions::js();
+        Functions::footer();
+        Functions::aside();
         ?>
-    </body>
+    </div>
+    <?php
+    Functions::js();
+    ?>
+</body>
+
 </html>

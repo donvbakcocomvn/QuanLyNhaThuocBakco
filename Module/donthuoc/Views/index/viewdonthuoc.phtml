@@ -1,0 +1,277 @@
+<?php
+
+use Module\cart\Model\Order;
+use PhpOffice\PhpSpreadsheet\Calculation\DateTimeExcel\Days;
+use Model\Products;
+use Module\donthuoc\Model\DonThuoc;
+use Module\quanlythuoc\Model\SanPham;
+use Module\benhnhan\Model\BenhNhan;
+use Model\Common;
+use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Sum;
+use Module\donthuoc\Model\DonThuocDetail;
+use Module\donthuoc\Permission;
+
+?>
+<style>
+    @media print {
+
+        .no-print,
+        .no-print * {
+            display: none !important;
+        }
+    }
+
+    .main {
+        margin: 0;
+        padding: 0;
+    }
+
+    .salesslip {
+        width: 500px;
+        margin: auto;
+    }
+
+    .shop {
+        text-align: center;
+    }
+
+    /* ------------------------------ */
+    .temporary {
+        margin: 0 25px;
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 15px;
+    }
+
+    td.temporary-title {
+        padding-right: 7px;
+    }
+
+    /* ------------------------------ */
+    .content {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: unset;
+    }
+
+    /* ------------------------------ */
+    .total-order {
+        display: flex;
+        flex-basis: 50%;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+
+    .total-order p {
+        font-size: 17px;
+        margin: 5px 0;
+    }
+
+    /* ------------------------------ */
+    .footer {
+        text-align: center;
+    }
+
+    .btn {
+        margin-left: 50%;
+        padding: 5px 30px;
+        transform: translateX(-50%);
+        border-radius: 10px;
+        border: 1px solid #9e9e9e;
+        margin-bottom: 10px;
+    }
+
+    .btn:hover {
+        color: #000;
+        cursor: pointer;
+        background-color: #6b6565ba;
+    }
+</style>
+<?php
+$donthuoc = new DonThuoc($donthuoc);
+$IdDonThuoc = $donthuoc->Id;
+
+?>
+
+<div class="box box-default" style="border: none;">
+    <ol class="breadcrumb no-print">
+        <li><a href="/index.php?controller=backend">Home</a></li>
+        <li><a href="/index.php?module=donthuoc&controller=index&action=index">Danh Sách Đơn Thuốc</a></li>
+        <li class="text-capitalize"> Đơn thuốc chi tiết <?php echo $IdDonThuoc; ?> </li>
+    </ol>
+    <div class="main main-body">
+        <div class="salesslip">
+            <div class="shop">
+                <h4 style="margin: 0px; margin-t    op:5px;font-size:16px"><b>PHÒNG KHÁM PHƯƠNG UYÊN</b></h4>
+                <span style="font-size: 11px;">ĐC: 176 đường số 18,Bình Hưng Hòa,Bình Tân. Giờ làm việc: Sáng 7h30 -
+                    11h, Chiều 17h - 20h30 (Nghỉ thứ 7)
+                </span>
+                <p style="margin-bottom: 0px;">
+                    <span><b style="font-size: 22px !important;">ĐƠN THUỐC</b></span>
+                </p>
+            </div>
+            <!---------------------------------->
+            <div style="margin: 0; border-bottom: 0px solid #00000042">
+                <table class="table-hover" style="width: 100%;">
+                    <thead>
+                        <th>
+                        <td>Họ và tên :   <?php echo $donthuoc->NameBN; ?></td>
+                        </th>
+                        <th>
+                        <td>Tuổi : <?php echo date('Y') - date('Y', strtotime($donthuoc->NgaySinh)); ?></td>
+                        </th>
+                    </thead>
+                    <thead>
+                        <th>
+                        <td>Quê quán : <?php echo DonThuoc::GetItemById('Address', $donthuoc->IdBenhNhan); ?></td>
+                        </th>
+                        <th>
+                        <td>Giới tính : <?php echo $donthuoc->GioiTinh(); ?></td>
+                        </th>
+                    </thead>
+                    <thead>
+                        <th>
+                        <td>Số điện thoại : <?php echo DonThuoc::GetItemById('Phone', $donthuoc->IdBenhNhan); ?></td>
+                        </th>
+                        <th>
+                        <td>Chẩn đoán : <?php echo $donthuoc->ChanDoanBenh; ?></td>
+                        </th>
+                    </thead>
+                </table>
+            </div>
+            <div style="margin: 0; border-bottom: 1px solid #00000042">
+                <table style="width: 100%;">
+                    <thead>
+                        <tr style="border-bottom: 1px solid #00000042;">
+                            <th class="text-center">STT</th>
+                            <th class="text-left">Tên thuốc</th>
+                            <th class="text-center">Số lượng</th>
+                            <?php
+                            if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy]) == true) {
+                            ?>
+                                <th class="text-center">Đơn giá</th>
+                                <th>Thành Tiền</th>
+                            <?php
+                            }
+                            ?>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $detail = DonThuoc::GetDetailById($IdDonThuoc);
+                        $common = new Common();
+                        // var_dump($detail);
+                        $sum = 0;
+                        foreach ($detail as $index => $DTdetail) { ?>
+                            <tr>
+                                <td class="text-center">
+                                    <b>
+                                        <?php echo $index + 1 ?>
+                                    </b>
+                                </td>
+                                <th style="white-space: nowrap;" >
+                                    <?php echo SanPham::GetNameById($DTdetail['IdThuoc']); ?>
+                                </th>
+                                <td class="text-center"><span style="font-weight: 400 !important;">
+                                        <?php echo $DTdetail['SoLuong'] . ' ' . $DTdetail['DVT']; ?>
+                                    </span>
+                                </td>
+                                <?php
+                                if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy]) == true) {
+                                ?>
+                                    <td class="text-center">
+                                        <?php echo Common::ViewNumber($DTdetail['GiaBan']); ?>
+                                    </td>
+                                    <td>
+                                        <?php echo Common::ViewPrice($DTdetail['SoLuong'] * $DTdetail['GiaBan']); ?>
+                                    </td>
+                                <?php
+                                }
+                                ?>
+                                <td>
+                                    <?php $sum += $DTdetail['SoLuong'] * $DTdetail['GiaBan'] ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <?php
+                                if ($DTdetail['GhiChu']) { ?>
+                                    <td class="text-center">
+                                        <i>
+                                            <?php
+                                            $thuoc = new SanPham($DTdetail['IdThuoc']);
+                                            echo '(' . $thuoc->Ghichu . ')'; ?>
+                                        </i>
+                                    </td>
+                                <?php
+                                }
+                                ?>
+
+                            </tr>
+                            <tr style="border-bottom: 0px solid #00000042;">
+                                <td></td>
+                                <td style="padding-left: 22px;"><i>Sáng: <b>
+                                            <?php if ($DTdetail['Sang'] > 0) echo SanPham::GetDesByVal($DTdetail['Sang'], 'donviquydoi') . ' ' . $DTdetail['DVT']; ?>
+                                        </b></i></td>
+                                <td><i>Trưa: <b>
+                                            <?php if ($DTdetail['Trua'] > 0) echo SanPham::GetDesByVal($DTdetail['Trua'], 'donviquydoi') . ' ' . $DTdetail['DVT'] ?? ""; ?>
+                                        </b></i></td>
+                                <td><i>Tối: <b>
+                                            <?php if ($DTdetail['Chieu'] > 0) echo SanPham::GetDesByVal($DTdetail['Chieu'], 'donviquydoi') . ' ' . $DTdetail['DVT'] ?? "" ?>
+                                        </b></i></td>
+                                <td></td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
+                    </tbody>
+
+                </table>
+            </div>
+            <tr>
+                <td><b>Tổng cộng :</b><span style="float : right; font-weight: bold;">
+                        <?php echo Common::ViewPrice($sum) . " " . "( " . $common->convert_number_to_words($sum) . " )" ?>
+                    </span></td>
+            </tr> 
+            <div class="row">
+                <div class="col-xs-6"></div>
+                <div class="col-xs-6 text-center">
+                    <h6 style=" font-weight: 500; margin: 10px 0;">
+                        <i>
+                            <?php $date = getdate();
+                            // echo $date['weekday'] . ", ";
+                            echo "Ngày " . $date['mday'] . " ";
+                            echo "Tháng " . $date['mon'] . " ";
+                            echo "Năm " . $date['year'] . "";
+                            ?>
+                        </i>
+                    </h6>
+                    <h6>Bác Sỹ</h6><br><br>
+                </div>
+            </div>
+            <div class="footer">
+                <h5 style="margin: 10px 0; letter-spacing: 0.7 px; font-style: italic;text-align: left;">
+                    <b>* Khi tái khám nhớ mang theo đơn thuốc</b>
+                </h5>
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    <button type="submit" onclick="window.print()" class="no-print btn">
+                        Print
+                    </button>
+                </div>
+                <div class="col-xs-4">
+                    <?php
+                    echo Module\donthuoc\Model\btnHtml::btnhoanthanhsoandon($IdDonThuoc);
+                    ?>
+                </div>
+                <div class="col-xs-4">
+                    <?php
+                    echo Module\donthuoc\Model\btnHtml::btnSuaDonThuoc($IdDonThuoc);
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

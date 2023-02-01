@@ -1,0 +1,42 @@
+<?php
+
+use Model\FormRender;
+?>
+<ol class="breadcrumb">
+    <li><a href="/backend/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+    <li class="active">Thống kê</li>
+</ol>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box box-solid">
+                    <div class="box-header with-border">
+                        <h3 style="letter-spacing: 0.8px;">Thống kê danh sách</h3>
+
+                        <div class="box-tools float-left">
+                            <?php
+                            FormRender::HuongDan("huongdanthongke", "Hướng dẫn quản lý thống kê");
+                            ?>
+                        </div>
+                    </div>
+                    <div class="box-body no-padding">
+                        <ul style="font-size: 16px;" class="nav nav-pills nav-stacked">
+                            <li class="active"><a href="/thongke/thuocsaphet"><i class="fa fa-list"></i> Danh sách thuốc sắp hết</a></li>
+                            <li class="active"><a href="/thongke/benhnhantrongngay"><i class="fa fa-list"></i> Danh sách bệnh nhân trong ngày</a></li>
+                            <li class="active"><a href="/thongke/donthuoctrongngay"><i class="fa fa-list"></i> Danh sách đơn thuốc kê toa trong ngày</a></li>
+                            <li class="active"><a href="/thongke/benhnhantrongngay"><i class="fa fa-list"></i> Danh sách thuốc trong kho sắp hết hạn</a></li>
+                        </ul>
+                    </div>
+                    <div class="box-body no-padding">
+                        <ul style="font-size: 16px;" class="nav nav-pills nav-stacked">
+                            <li class="active"><a href="/thongke/thuocsaphet/"><i class="fa fa-list"></i> Danh sách thuốc sắp hết</a></li>
+                            <li class="active"><a href="/thongke/benhnhantrongngay/"><i class="fa fa-list"></i> Danh sách bệnh nhân trong ngày</a></li>
+                            <li class="active"><a href="/thongke/donthuoctrongngay/"><i class="fa fa-list"></i> Danh sách đơn thuốc kê toa trong ngày</a></li>
+                            <li class="active"><a href="/thongke/thuocsaphethan/"><i class="fa fa-list"></i> Danh sách thuốc trong kho sắp hết hạn</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>

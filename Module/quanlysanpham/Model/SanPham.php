@@ -12,7 +12,8 @@ namespace Module\quanlysanpham\Model;
  *
  * @author MSI
  */
-class SanPham extends \Model\DB implements \Model\IModelService {
+class SanPham extends \Model\DB implements \Model\IModelService
+{
 
     public $Id;
     public $Name;
@@ -37,7 +38,8 @@ class SanPham extends \Model\DB implements \Model\IModelService {
     public $STT;
     public $Lang;
 
-    public function __construct($sp = null) {
+    public function __construct($sp = null)
+    {
         self::$TableName = prefixTable . "sanpham";
         parent::__construct();
         if ($sp) {
@@ -61,7 +63,7 @@ class SanPham extends \Model\DB implements \Model\IModelService {
                 $this->Content = isset($sp["Content"]) ? $sp["Content"] : null;
                 $this->UrlImages = isset($sp["UrlImages"]) ? $sp["UrlImages"] : null;
                 $this->DateCreate = isset($sp["DateCreate"]) ? $sp["DateCreate"] : null;
-                 
+
                 $this->Number = isset($sp["Number"]) ? $sp["Number"] : null;
                 $this->Note = isset($sp["Note"]) ? $sp["Note"] : null;
                 $this->BuyTimes = isset($sp["BuyTimes"]) ? $sp["BuyTimes"] : null;
@@ -79,7 +81,8 @@ class SanPham extends \Model\DB implements \Model\IModelService {
      * xóa sản phẩm
      * @param {type} parameter
      */
-    public function Delete($Id) {
+    public function Delete($Id)
+    {
         // xóa só lượng
         $spsl = new SanPhamSoLuong();
         $spsl->DeleteByIdSanPham($Id);
@@ -91,22 +94,26 @@ class SanPham extends \Model\DB implements \Model\IModelService {
         $sp->DeleteById($Id);
     }
 
-    static function SanPhamByDanhMuc($id) {
+    static function SanPhamByDanhMuc($id)
+    {
         $Sp = new SanPham();
     }
 
-    static function CountSanPhamByDanhMuc($id) {
+    static function CountSanPhamByDanhMuc($id)
+    {
 
         $Sp = new SanPham();
         $where = "`DanhMucId` = '{$id}'";
         return $Sp->SelectCount($where);
     }
 
-    public function GetById($Id) {
+    public function GetById($Id)
+    {
         return $this->SelectById($Id);
     }
 
-    public function GetItems($params, $indexPage, $pageNumber, &$total) {
+    public function GetItems($params, $indexPage, $pageNumber, &$total)
+    {
         $name = isset($params["keyword"]) ? $params["keyword"] : '';
         $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
         $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
@@ -124,19 +131,23 @@ class SanPham extends \Model\DB implements \Model\IModelService {
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 
-    public function Post($model) {
+    public function Post($model)
+    {
         return $this->Insert($model);
     }
 
-    public function Put($model) {
+    public function Put($model)
+    {
         return $this->UpdateRow($model);
     }
 
-    public function Content() {
+    public function Content()
+    {
         return htmlspecialchars_decode($this->Content);
     }
 
-    public function ToArray() {
+    public function ToArray()
+    {
         $a["Id"] = $this->Id;
         $a["Name"] = $this->Name;
         $a["DanhMucId"] = $this->DanhMucId;
@@ -158,17 +169,20 @@ class SanPham extends \Model\DB implements \Model\IModelService {
         return $a;
     }
 
-    public function DanhMuc() {
+    public function DanhMuc()
+    {
         return new DanhMuc($this->DanhMucId);
     }
 
-    public function OptionsByIndex($index) {
+    public function OptionsByIndex($index)
+    {
         $SanPhamThuocTinh = new SanPhamThuocTinh();
-//        \Model\DB::$Debug = true;
+        //        \Model\DB::$Debug = true;
         return new SanPhamThuocTinh($SanPhamThuocTinh->GetItemsByIdSanPhamOptionsIndex($this->Id, $index));
     }
 
-    public function Options() {
+    public function Options()
+    {
         $SanPhamThuocTinh = new SanPhamThuocTinh();
         $items = $SanPhamThuocTinh->GetItemsByIdSanPham($this->Id);
         foreach ($items as $k => $item) {
@@ -178,56 +192,62 @@ class SanPham extends \Model\DB implements \Model\IModelService {
         return $items;
     }
 
-    public static function btnPost() {
+    public static function btnPost()
+    {
         if (\Model\Permission::CheckPremision([\Model\User::Admin, "quanlysanpham_sanpham_them"]) == false) {
             return;
         }
-        ?> 
+?>
         <a class="btn btn-success" href="/index.php?module=quanlysanpham&controller=sanpham&action=post">
             <i class="fa fa-plus"></i>Thêm Mới
         </a>
-        <?php
+    <?php
     }
 
-    public function Price() {
+    public function Price()
+    {
         return \Model\Common::ViewPrice($this->Price);
     }
 
-    public function btnPut() {
+    public function btnPut()
+    {
         if (\Model\Permission::CheckPremision([\Model\User::Admin, "quanlysanpham_sanpham_put"]) == false) {
             return;
         }
-        ?> 
+    ?>
         <a class="btn btn-primary" href="/quanlysanpham/sanpham/put/?id=<?php echo $this->Id; ?>">
             <i class="fa fa-edit"></i>Sửa
         </a>
-        <?php
+    <?php
     }
 
-    public function btnDelete() {
+    public function btnDelete()
+    {
         if (\Model\Permission::CheckPremision([\Model\User::Admin, "quanlysanpham_sanpham_delete"]) == false) {
             return;
         }
-        ?> 
+    ?>
         <a class="btn btn-danger" title="Xóa Vĩnh Viễn Sản Phẩm Này?" href="/quanlysanpham/sanpham/deleteall/<?php echo $this->Id; ?>">
             <i class="fa fa-times"></i>Xóa
         </a>
-        <?php
+    <?php
     }
 
-    public static function btnDeleteSelect() {
+    public static function btnDeleteSelect()
+    {
         if (\Model\Permission::CheckPremision([\Model\User::Admin, "quanlysanpham_sanpham_delete"]) == false) {
             return;
         }
-        ?> 
-        <button class="btn btn-danger" title="Xóa Các Sản Phẩm Đã Chọn?" >
+    ?>
+        <button class="btn btn-danger" title="Xóa Các Sản Phẩm Đã Chọn?">
             <i class="fa fa-times"></i>Xóa Chọn
         </button>
-        <?php
+    <?php
     }
 
     // ẩn trong hiển thị sảm -> xóa đưa vào thùng rác
-    public function DeleteIsShow($DSMaSanPham) {
+    public function DeleteIsShow($DSMaSanPham)
+    {
 
         $model["isShow"] = -1;
         $DSMaSanPham = implode("','", $DSMaSanPham);
@@ -235,21 +255,23 @@ class SanPham extends \Model\DB implements \Model\IModelService {
         $this->Update($model, $where);
     }
 
-    public function btnMoveToTrash() {
+    public function btnMoveToTrash()
+    {
         if (\Model\Permission::CheckPremision([\Model\User::Admin, "quanlysanpham_sanpham_delete"]) == false) {
             return;
         }
-        ?> 
+    ?>
         <a class="btn btn-danger" title="Xóa Sản Phẩm Này?" href="/quanlysanpham/sanpham/delete/?id=<?php echo $this->Id; ?>">
             <i class="fa fa-times"></i>Xóa
         </a>
-        <?php
+<?php
     }
 
-    public function XoaHinh() {
+    public function XoaHinh()
+    {
         $urlHinh = $this->UrlImages;
         $urlHinh = substr($urlHinh, 1);
-//        echo $urlHinh;
+        //        echo $urlHinh;
         if (file_exists($urlHinh)) {
             unlink($urlHinh);
         }
@@ -259,16 +281,19 @@ class SanPham extends \Model\DB implements \Model\IModelService {
      * Lấy sản phẩm mới nhất
      * @param {type} parameter
      */
-    public function SanPhamMoi($soLuongSanPham) {
+    public function SanPhamMoi($soLuongSanPham)
+    {
         $where = " 1 = 1 ORDER BY `DateCreate` DESC limit 0,{$soLuongSanPham}";
         return $this->Select($where);
     }
 
-    public function ThanhTien() {
-        return $this->Number * $this->Price;
+ 
+    public function ThanhTien()
+    {
+        return intval($this->Number)  * floatval($this->Price);
     }
-    public function ThanhTienToVND() {
-        return number_format($this->ThanhTien(),0, ".",",") ." vnđ";
+    public function ThanhTienToVND()
+    {
+        return number_format($this->ThanhTien(), 0, ".", ",") . " vnđ";
     }
-
 }

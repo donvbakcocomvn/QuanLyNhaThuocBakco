@@ -1,0 +1,85 @@
+<?php 
+use Model\Common;
+use Model\OptionsService;
+use Module\quanlythuoc\Model\PhieuXuatNhap;
+use Module\quanlythuoc\Model\PhieuXuatNhapChiTiet;
+$param = $_GET['id'];
+$phieu = new PhieuXuatNhap();
+$phieuNhap = $phieu->GetByIdPhieu($param);
+// var_dump($item);
+?>
+<ol class="breadcrumb">
+    <li><a href="/index.php?controller=backend">Dashboard</a></li>
+    <li><a href="/backend/xuatkho/"> Danh sách phiếu xuất kho</a></li>
+    <li> Thông Tin Chi Tiết Của Phiếu <?php echo $param?></li>
+</ol>
+<div class="container">
+    <div class="box box-primary">
+        <div class="box-header">
+            <h3 class="box-title">Thông Tin Chi Tiết Của Phiếu</h3>
+        </div>
+        <div class="box-body">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <table class="table ">
+                    <tr>
+                        <td class="text-right">Mã Phiếu</td>
+                        <td><?php echo $phieuNhap['IdPhieu']; ?></td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-right">Loại phiếu</td>
+                        <td><?php echo $phieu->XuatNhapViewThongKe($phieuNhap['XuatNhap']); ?></td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">Tổng tiền</td>
+                        <td><?php echo Common::ViewPrice($phieuNhap['TongTien']); ?></td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">Nội Dung</td>
+                        <td><?php echo $phieuNhap['NoiDungPhieu']; ?></td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">Ghi chú</td>
+                        <td><?php echo $phieuNhap['GhiChu']; ?></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="col-md-12">
+            
+                <table class="table ">
+                    <tr>
+                        <th>Thuốc</th>
+                        <th>Số lượng</th>
+                        <th>Số Lô</th>
+                        <th>Hạn sử dụng</th> 
+                        <th>Giá</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                    <?php
+                    $phieuDetail = new PhieuXuatNhapChiTiet();
+                    $DSThuocPhieuNhap = $phieuDetail->GetByIdPhieu($param);
+                    // var_dump($DSThuocPhieuNhap);
+                    foreach ($DSThuocPhieuNhap as $key => $value) {
+                    ?>
+                        <tr>
+                            <td><?php echo $value['IdThuoc'] ?></td>
+                            <td><b><?php echo $value['SoLuong'] ?></b></td>
+                            <td><?php echo $value['SoLo'] ?></td>
+                            <td><?php echo Common::ForMatDMY($value['HanSuDung']) ?></td> 
+                            <td><b><?php echo Common::ViewPrice($value['Price']); ?></b></td>
+                            <td><b><?php echo Common::ViewPrice($value['SoLuong'] * $value['Price'])?></b></td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
+                    <tr> 
+                        <td colspan="5" class="text-right" > Tổng Tiền</td>
+                        <td><b><?php echo Common::ViewPrice($phieuNhap['TongTien']); ?></b></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

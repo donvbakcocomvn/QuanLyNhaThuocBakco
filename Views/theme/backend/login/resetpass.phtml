@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Forgot PassWord | Phòng Khám Bác Sỹ Uyên</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="/public/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="/public/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="/public/plugins/iCheck/square/blue.css">
+</head>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-box-body" style="border-radius: 15px ;">
+            <p class="login-box-msg h3">Quên Mật Khẩu</p>
+            <form action="" method="post" id="FormCheck">
+                <label for="" class="text-center">Nhập Email và chúng tôi sẽ gửi cho bạn một liên kết để đặt lại mật khẩu của bạn.</label>
+                <div class="form-group has-feedback text-center" style="margin: 20px 0;">
+                    <input type="email" name="mail" class="form-control" placeholder="Nhập Email Của Bạn...">
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    <small class="form-text text-muted ">Chúng tôi sẽ không bao giờ chia sẻ email của bạn với bất kỳ ai</small>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 center">
+                        <button type="submit" id="sendmail" onclick="disableBtn()"; name="sendmail" style="margin:auto;" class="btn btn-success btn-block">Gửi Email</button>
+                    </div>
+                </div>
+                <br>
+                    <summary class="form-text text-muted ">Bạn Đã Có Tài Khoản Rồi Đúng Không ?
+                        <a href="/index.php?controller=login&action=index">Đăng Nhập</a>
+                    </summary>
+            </form>
+        </div>
+    </div>
+    <script src="/public/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <script src="/public/bootstrap/js/bootstrap.min.js"></script>
+</body>
+<script>
+    // Ngăn chặn người dùng nhấp nút button nhiều lần
+    function disableBtn() {
+        setTimeout(function() {
+            $("#sendmail").prop("disabled", true);
+        }, 100);
+
+        setTimeout(function() {
+            $("#sendmail").prop("disabled", false);
+        }, 15000);
+    }
+</script>
+</html>

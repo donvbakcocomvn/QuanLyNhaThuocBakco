@@ -1,0 +1,35 @@
+<ol class="breadcrumb">
+    <li><a href="/index.php?controller=backend">Home</a></li>
+    <li> Sửa file hướng dẫn</li>
+</ol>
+<div class="container-fluid">
+    <div class="box box-primary">
+        <div class="box-header">
+            <h3 class="box-title">SỬA FILE HƯỚNG DẪN &nbsp;<i class="fa fa-file"></i></h3>
+            <div class="box-tools">
+                <!--<a href="#" class="btn btn-success" ><i class="fa fa-plus" ></i></a>-->
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <form action="" method="post">
+                        <?php 
+                        use Model\HuongDan\FormHuongDan;
+
+                        $form = new FormHuongDan();
+                        $id = $_Params[0];
+                        $path = "public/huongdan/{$id}.html";
+                        $content = file_get_contents($path); 
+                        echo $form->Content($content)->render();
+                        ?>
+                        <br>
+                        <div class="box-primary">
+                            <input type="submit" class="btn btn-info" name="Luu" value="Cập nhật File hướng dẫn" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

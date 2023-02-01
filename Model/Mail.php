@@ -11,45 +11,49 @@ class Mail {
     static function GetConfig() {
         return [
             "Host" => "smtp.gmail.com",
-            "Username" => "namdong92@gmail.com",
-            "Password" => "polgzebtetoogcip",
+            // "Username" => "namdong92@gmail.com",
+            // "Password" => "polgzebtetoogcip",
+            "Username" => "lthanhphuc99@gmail.com",
+            "Password" => "rnefujzphorfomre",
             "Port" => "465"
         ];
     }
 
-    static function SendMail($mailTo, $Subject, $Body, $AltBody = "") {
+    static function SendMail($title, $content, $addressMail) {
         $mail = new PHPMailer(true);
         try {
             //Server settings
             $mail->SMTPDebug = SMTP::DEBUG_OFF;                      //Enable verbose debug output
-            $mail->isSMTP();                                            //Send using SMTP
-            $mail->CharSet = 'UTF-8';
-            $mail->Host = self::GetConfig()["Host"];                     //Set the SMTP server to send through
-            $mail->SMTPAuth = true;
-            //Enable SMTP authentication
-            $mail->Username = self::GetConfig()["Username"];                     //SMTP username
-            $mail->Password = self::GetConfig()["Password"];                               //SMTP password
+            $mail->isSMTP();   
+            $mail->CharSet = 'utf-8';                                   //Send using SMTP
+            $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+            $mail->Username   = 'lthanhphuc99@gmail.com';                     //SMTP username
+            $mail->Password   = 'rnefujzphorfomre';                               //SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-            $mail->Port = self::GetConfig()["Port"];                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+            $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
             //Recipients
-            $mail->setFrom(self::GetConfig()["Username"], 'Admin lap1');
-            $mail->addAddress($mailTo["Email"], $mailTo["Name"]);     //Add a recipient  
-              
-//            $mail->addCC('cc@example.com');
-//            $mail->addCC('cc@example.com'); 
-//            $mail->addBCC('bcc@example.com'); 
-            //Attachments
-//            $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
-//            $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name 
+            $mail->setFrom('lthanhphuc99@gmail.com', 'Phòng Khám Bác Sỹ Uyên');
+            $mail->addAddress($addressMail);     //Add a recipient
+            // $mail->addAddress('ellen@example.com');               //Name is optional
+            // $mail->addReplyTo('info@example.com', 'Information');
+            // $mail->addCC('cc@example.com');
+            // $mail->addBCC('bcc@example.com');
+
+            // Attachments
+            // $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
+            // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
+
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
-            $mail->Subject = $Subject;
-            $mail->Body = $Body;
-            $mail->AltBody = $AltBody;
+            $mail->Subject = $title;
+            $mail->Body    = $content;
+            // $mail->AltBody = 'Click On This Link to Reset Password '.$link.'';
             $mail->send();
-            echo 'Message has been sent';
-        } catch (Exception $e) {
-            echo "Loi: {$e->getMessage()}";
+            echo "<script>alert('Mail của bạn đã được gửi đi.\nHãy kiểm tra hộp thư đến để xem kết quả');</script>";
+        } catch (\Exception $e) {
+            echo "Lỗi rồi kìa : {$e->getMessage()}";
         }
     }
 

@@ -1,0 +1,178 @@
+<ol class="breadcrumb">
+    <li><a href="/index.php?controller=backend">Home</a></li>
+    <li><a href="/index.php?module=benhnhan&controller=index&action=index"> Danh Sách Khách Hàng</a></li>
+    <li> Thông Tin Chi Tiết Khách Hàng </li>
+</ol>
+<?php
+
+use Model\Common;
+use Module\benhnhan\Model\BenhNhan\FormBenhNhan;
+use Module\benhnhan\Model\BenhNhan;
+use Module\donthuoc\Model\DonThuoc;
+
+$roleDetail = new Model\Role();
+$itemBN = new BenhNhan($data);
+
+?>
+<div class="container-fluid">
+    <!-- <div class="box box-basic"> -->
+    <section class="content">
+
+        <div class="row">
+            <fieldset>
+                <legend>Thông tin chi tiết khách hàng</legend>
+                <div class="col-md-3">
+
+                    <!-- Profile Image -->
+                    <div class="box box-info">
+                        <div class="box-body box-profile">
+                            <h3 class="profile-username text-center"><?php echo $itemBN->Name; ?></h3>
+                            <p class="text-muted text-center"><?php echo $itemBN->Id ?></p>
+
+                            <ul class="list-group list-group-unbordered">
+                                <li class="list-group-item">
+                                    <b>Giới Tính</b> <a class="pull-right"><?php echo $itemBN->Gioitinh() ?></a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>CMND/CCCD</b> <a class="pull-right"><?php echo $itemBN->CMND ?></a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Số Điện Thoại</b> <a class="pull-right"><?php echo $itemBN->Phone ?></a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Sinh Ngày</b> <a class="pull-right"><?php echo Common::ForMatDMY($itemBN->Ngaysinh) ?></a>
+                                </li>
+                                <!-- <li class="list-group-item">
+                                    <b>Ngày Tạo</b> <a class="pull-right"><?php echo Common::ForMatDMYHIS($itemBN->CreateRecord) ?></a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Ngày Cập Nhật</b> <a class="pull-right"><?php echo Common::ForMatDMYHIS($itemBN->UpdateRecord) ?></a>
+                                </li> -->
+                            </ul>
+
+                            <!-- <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> -->
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+
+                </div><!-- /.col -->
+                <div class="col-md-9">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#infomation" data-toggle="tab" aria-expanded="true">Thông Tin Khách Hàng</a></li>
+                            <li class=""><a href="#donthuoc" data-toggle="tab" aria-expanded="false">Đơn Thuốc</a></li>
+                        </ul>
+                        <div class="tab-content">
+
+                            <div class="tab-pane" id="infomation" style="min-height: 500px;">
+                                <form action="" method="post" enctype="multipart/form-data">
+                                    <div class="box-body">
+                                        <?php
+                                        $bn = new FormBenhNhan();
+
+                                        $itemBN = new BenhNhan($data);
+
+                                        // var_dump($itemBN);
+                                        ?>
+                                        <div class="">
+                                            <div class="col-md-4">
+                                                <?php $bn->Id($itemBN->Id)->renderHTML(); ?>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <?php $bn->Name($itemBN->Name)->renderHTML();  ?>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <?php
+                                                $bn->Gioitinh($itemBN->Gioitinh)->renderHtml();  ?>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <?php $bn->NgaySinhFull($itemBN->Ngaysinh)->renderHtml();  ?>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <?php $bn->CMND($itemBN->CMND)->renderHtml();  ?>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <?php $bn->Phone($itemBN->Phone)->renderHtml();  ?>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <?php $bn->Address($itemBN->Address)->renderHtml();  ?>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <?php $bn->TinhThanh($itemBN->TinhThanh, "TinhThanhBenhNhan", "#QuanHuyenBenhNhan")->renderHtml();  ?>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <?php $bn->QuanHuyen($itemBN->QuanHuyen, "QuanHuyenBenhNhan", "#PhuongXaBenhNhan")->renderHtml();  ?>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <?php $bn->PhuongXa($itemBN->PhuongXa, "PhuongXaBenhNhan")->renderHtml();  ?>
+                                            </div>
+                                            <div class="col-md-12 ">
+                                                <!-- <button class="btn btn-success">Lưu</button> -->
+                                                <button class="btn btn-success" name="LuuThoat">Cập Nhật Khách Hàng</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+
+                            </div>
+                            <div class="tab-pane active" id="donthuoc" style="min-height: 500px;" >
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>STT</th>
+                                            <th>Mã Đơn Thuốc</th>
+                                            <th>Tên Khách Hàng</th>
+                                            <th>Giới Tính</th>
+                                            <th>Ngày Sinh</th>
+                                            <th>Chẩn Đoán</th>
+                                            <th>Số Ngày Dùng</th>
+                                            <th>Thuộc Loại Đơn</th>
+                                            <!-- <th>Quận/Huyện</th> -->
+                                            <!-- <th>Phường/Xã</th> -->
+                                            <!-- <th>Điện Thoại</th> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $id = $_GET['id'];
+                                        $_item = new DonThuoc();
+                                        $result = $_item->GetDonThuocByIdBN($id);
+                                        // var_dump($result);
+                                        foreach ($result as $index => $item) {
+                                            $nameBN = $_item->GetNameById($item['IdBenhNhan']);
+                                            // var_dump($item);
+                                        ?>
+                                            <tr>
+                                                <td style="width: 160px;">
+                                                    <?php
+                                                    echo Module\donthuoc\Model\btnHtml::btnCopyDonThuoc($item['Id']);
+                                                    echo Module\donthuoc\Model\btnHtml::btnXoaDonThuoc($item['Id']);
+                                                    ?>
+                                                </td>
+                                                <td><?php echo $index + 1; ?></td>
+                                                <td><?php echo $item['Id']; ?></td>
+                                                <!-- <td><?php echo $_item->IdBenhNhan; ?></td> -->
+                                                <td><?php echo $nameBN; ?></td>
+                                                <td><?php echo $_item->GetNameOptionByValAndGroupId($item['GioiTinh'], 'gioitinh'); ?></td>
+                                                <td><?php echo Common::ForMatDMY($item['NgaySinh']); ?></td>
+                                                <td><?php echo $item['ChanDoanBenh'] ?></td>
+                                                <td><?php echo $item['TongNgayDung'] ?></td>
+                                                <td><?php echo $_item->GetNameOptionByValAndGroupId($item['ThuocLoaiDon'], 'optiondonthuoc') ?></td>
+                                            </tr>
+                                        <?php
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </section>
+    <!-- </div> -->
+</div>
+
+<script src="/public/TinhThanh/tinhthanh.js"></script>

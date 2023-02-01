@@ -85,10 +85,10 @@ class danhmuc extends \Application implements \Controller\IControllerBE {
 
                 $itemHtml = \Model\Request::Post(FormDanhMuc::$ElementsName, null);
 
-                $model["Id"] = $itemHtml["Id"];
-                $model["Name"] = $itemHtml["Name"];
+                // $model["Id"] = $itemHtml["Id"];
+                // $model["Name"] = $itemHtml["Name"];
                 $model["keyword"] = strip_tags($itemHtml["keyword"]);
-                $model["Lang"] = $itemHtml["Lang"];
+                // $model["Lang"] = $itemHtml["Lang"];
                 $model["des"] = strip_tags($itemHtml["des"]);
                 $model["title"] = strip_tags($itemHtml["title"]);
                 $dm = new \Module\quanlysanpham\Model\DanhMuc();
@@ -105,7 +105,7 @@ class danhmuc extends \Application implements \Controller\IControllerBE {
         }
         $DM = new \Module\quanlysanpham\Model\DanhMuc();
         $data["item"] = $DM->GetById($id);
-        $this->View($data);
+    $this->View($data);
     }
 
 }

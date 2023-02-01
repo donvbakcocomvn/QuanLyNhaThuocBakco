@@ -1,0 +1,163 @@
+<?php
+
+use Model\Common;
+use Model\FormRender;
+use Model\FormSearch;
+use Model\Locations;
+use Model\OptionsService;
+use Model\TinhThanh;
+use Module\baiviet\Model\Options\Options;
+use Module\donthuoc\Model\DonThuoc;
+use Module\donthuoc\Model\DonThuoc\FormDonThuoc;
+use PFBC\Element\Select;
+use PFBC\Element\Textbox;
+
+?>
+<ol class="breadcrumb">
+    <li><a href="/index.php?controller=backend">Home</a></li>
+    <li class="active"> Danh Sách Đơn Thuốc Cố Định</li>
+</ol>
+<div class="container-fluid">
+    <div class="clearfix">
+        <div class="box box-success">
+
+            <div class="box-header">
+                <h3 class="box-title">Danh Sách Đơn Thuốc Cố Định</h3>
+                <div class="box-tools">
+                    <!-- <a type="button" href="/thongke/donthuoctrongngay" class="btn btn-success"><i class="fa fa-list"></i>&nbsp;Danh sách đơn thuốc trong ngày</a> -->
+                    <?php
+                    // Module\donthuoc\Model\btnHtml::btnExportBySearch();
+                    Module\donthuoc\Model\btnHtml::btnThemDonThuoc();
+                    \Model\FormRender::HuongDan("danhsachdonthuoc", "Hướng dẫn");
+                    ?>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="">
+                    <div class="box-header">
+                        <!-- <h3 class="box-title text-uppercase">Tìm kiếm theo bộ lọc</h3> -->
+                        <form method="get" action="/donthuoc/index/index/">
+                            <div class="row">
+                                <div class="col-sm-2 form-group">
+                                    <?php
+                                    FormSearch::Keyword($_GET['keyword'] ?? null)->renderHtml2(null, null, 'glyphicon glyphicon-user form-control-feedback');
+                                    ?>
+                                </div>
+                                <div class="col-sm-2 form-group">
+                                    <?php
+                                    FormSearch::SelectStatus($_GET['status'] ?? null)->renderHtml2(null, null, '');
+                                    ?>
+                                </div>
+                                <div class="col-sm-2 form-group">
+                                    <?php
+                                    FormSearch::Fromdate($_REQUEST['fromdate'] ?? null)->renderHtml2(null, null, 'glyphicon glyphicon-calendar form-control-feedback');
+                                    ?>
+                                </div>
+                                <div class="col-sm-2 form-group">
+                                    <?php
+                                    FormSearch::Todate($_GET['todate'] ?? "")->renderHtml2(null, null, 'glyphicon glyphicon-calendar form-control-feedback');
+                                    ?>
+                                </div>
+                                <div class="col-sm-2 form-group">
+                                    <div class="form-group has-success has-feedback">
+                                        <label for="inputSuccess2" class="text-capitalize"><em>Nhấn vào đây&nbsp;
+                                            </em><i class="fa fa-check"></i></label>
+                                        <button type="submit" style="border-radius: 5px;" class="btn btn-success"
+                                            name="btnTim" id="keyword">
+                                            <i class="fa fa-filter"></i>&nbsp; Tìm kiếm
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th class="text-center">STT</th>
+                            <th>Mã Đơn Thuốc</th>
+                            <th>Tên Bệnh Nhân</th>
+                            <th>Giới Tính</th>
+                            <th>Ngày Sinh</th>
+                            <th>Thời Gian Khám Bệnh</th>
+                            <th>Chẩn Đoán</th>
+                            <!-- <th>Ngày Dùng</th> -->
+                            <th>Tình trạng</th>
+                            <th>Thuộc Loại Đơn</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        foreach ($items as $index => $item) {
+                            $_item = new DonThuoc($item);
+                            // var_dump($_item);
+                            ?>
+                            <tr>
+                                <td class="text-center">
+                                    <?php
+                                    echo Module\donthuoc\Model\btnHtml::btnCopyDonThuoc($_item->Id);
+                                    // echo Module\donthuoc\Model\btnHtml::btnXoaDonThuoc($_item->Id);
+                                    echo Module\donthuoc\Model\btnHtml::btnSuaDonThuoc($_item->Id);
+                                    echo Module\donthuoc\Model\btnHtml::btnchitiet($_item->Id);
+                                    ?>
+                                </td>
+                                <td class="text-center">
+                                    <?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?>
+                                </td>
+                                <td><?php echo $_item->Id; ?></td>
+                                <td>
+                                    <?php echo $_item->BenhNhan()->Name; ?>
+                                </td>
+                                <td><?php echo $_item->BenhNhan()->Gioitinh(); ?></td>
+                                <td>
+                                    <?php echo Common::ForMatDMY($_item->BenhNhan()->Ngaysinh); ?>
+                                </td>
+                                <td><?php echo date("d-m-Y H:i:s", strtotime($_item->ThoiGianKham)); ?></td>
+                                <td>
+                                    <?php echo $_item->ChanDoanBenh ?>
+                                </td>
+                                <!-- <td><?php echo $_item->TongNgayDung; ?></td> -->
+                                <td><?php echo $_item->Status(); ?></td>
+                                <td>
+                                    <?php echo $_item->LoaiDonThuoc() ?>
+                                </td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
+                <div class="box-footer">
+                    <div class="d-flex">
+                        <?php
+                        \Model\FormCommon::Select(
+                            "",
+                            "",
+                            [10, 20, 50, 100],
+                            [
+                                "style" => "max-width:150px;",
+                                "class" => "form-control",
+                                "value" => $pageNumber,
+                                "onchange" => "SoDongHienThi(this.value)",
+                            ]
+                        )->render();
+                        ?>
+                        <?php
+                        $linkPhanTrang = "/index.php?module=donthuoc&controller=index&action=index&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
+                        echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var SoDongHienThi = function (evalue) {
+        var linkPhanTrang = '/index.php?module=donthuoc&controller=index&action=index&indexPage=1&pageNumber=[j]';
+        linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
+        window.location.href = linkPhanTrang;
+    }
+</script>

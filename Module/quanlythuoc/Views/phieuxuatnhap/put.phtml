@@ -1,0 +1,322 @@
+<ol class="breadcrumb">
+    <li><a href="/index.php?controller=backend">Home</a></li>
+    <li><a href="index.php?module=quanlythuoc&controller=phieuxuatnhap&action=index"> Danh Sách Phiếu</a></li>
+    <li> Thêm Phiếu </li>
+</ol>
+<?php
+
+use Model\FormRender;
+use Model\Notions;
+use Module\quanlythuoc\Model\DanhMuc;
+use Module\quanlythuoc\Model\DanhMuc\FormDanhMuc;
+use Module\quanlythuoc\Model\PhieuXuatNhap;
+use Module\quanlythuoc\Model\PhieuXuatNhap\FormPhieuXuatNhap;
+use Module\quanlythuoc\Model\PhieuXuatNhap\FormPhieuXuatNhapChiTiet;
+use Module\quanlythuoc\Model\PhieuXuatNhapChiTiet;
+use Module\quanlythuoc\Model\SanPham;
+
+$roleDetail = new Model\Role();
+
+// $options = Notions::GetToOptions();
+// var_dump($options);
+
+?>
+<div class="container-fluid">
+    <div class="box box-primary">
+        <div class="box-header">
+            <h3 class="box-title">Thêm Phiếu</h3>
+            <!-- <div class="box-tools">
+                <?php
+                Module\quanlythuoc\Model\btnHtml::btnViewDanhMuc();
+                ?>
+            </div> -->
+        </div>
+        <form action="" method="post" onsubmit="return confirm('Bạn có chắc thông tin đã nhập chính xác?')" enctype="multipart/form-data">
+            <div class="box-body">
+                <?php
+                $ModelPhieuData = new PhieuXuatNhap($data["phieuData"]);
+                $phieu = new FormPhieuXuatNhap($data["phieuData"]);
+                 
+                ?>
+                <div class="row">
+                    <div class="col-md-4">
+                        <?php $phieu->IdPhieu(null,null,null,[FormRender::Readonly=>""])->renderHtml(); ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php $phieu->XuatNhap()->renderHtml(); ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php $phieu->NgayNhap()->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?php $phieu->NoiDungPhieu()->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?php $phieu->GhiChu()->renderHtml();  ?>
+                    </div>
+                    <div class="col-md-12">
+                        <fieldset>
+                            <legend>Danh Sách Thuốc</legend>
+                            <div>
+                                <!-- <button data-toggle="tooltip" data-placement="top" title="Thêm thuốc" type="button" class="btn btn-success" id="btn-addrow">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </button> -->
+                            </div>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <!-- <th style="width: 50px;"></th> -->
+                                        <th  style="width: 50px;">STT</th>
+                                        <th>Thuốc</th>
+                                        <th style="width: 150px;">ĐVT</th>
+                                        <th style="width: 150px;">
+                                            <i class="pull-right fa fa-info" data-toggle="tooltip" data-placement="top" title="Số lượng sản phẩm nhập vào"></i>
+                                            Số Lượng
+                                        </th>
+                                        <th  style="width: 150px;">
+                                            <i class="pull-right fa fa-info" data-toggle="tooltip" data-placement="top" title="Số lô sản phẩm"></i>
+                                            Số Lô
+                                        </th>
+                                        <th  style="width: 150px;">
+                                            <i class="pull-right fa fa-info" data-toggle="tooltip" data-placement="top" title="Giá nhập của 1 sản phẩm"></i>
+                                            Giá
+                                        </th>
+                                        <th  style="width: 150px;">
+                                            <i class="pull-right fa fa-info" data-toggle="tooltip" data-placement="top" title="Giá nhập của 1 sản phẩm"></i>
+                                            Thành tiền
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-thuoc">
+
+                                    <?php
+                                    // var_dump(PhieuXuatNhap::DSThuocPhieuNhap());
+                                    $index = 1;
+                                    foreach (PhieuXuatNhap::DSThuocPhieuNhap() as $mathuoc => $thuoc) {
+                                        $sanPham = new PhieuXuatNhapChiTiet($thuoc);
+                                        $formChiTiet = new FormPhieuXuatNhapChiTiet($thuoc);
+                                        $i = $mathuoc;
+                                    ?>
+                                        <tr>
+                                            <!-- <th>
+                                                <button data-toggle="tooltip" data-placement="top" title="Xóa thuốc" type="button" title="Xóa thuốc này?" class="btn  btn-danger deleterow" id="<?php echo 'delete' . $i ?>" index=<?php echo $i ?>>
+                                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                                </button>
+                                            </th> -->
+                                            <th>
+                                                <?php echo $index++; ?>
+                                            </th>
+                                            <th> 
+                                                <?php
+                                                echo $formChiTiet->IdThuoc(null, "IdThuoc" . $i, $i)->render() ?>
+                                            </th>
+                                            <th>
+                                                <?php
+                                                echo $formChiTiet->DVT($sanPham->SanPham()->DonViTinh(), "DVT" . $i, $i, [FormRender::Readonly => ""])->render(); ?>
+                                            </th>
+                                            <th>
+                                                <?php echo $formChiTiet->SoLuong(null, "SoLuong" . $i, $i)->render(); ?>
+                                            </th>
+                                            <th>
+                                                <?php echo $formChiTiet->SoLo(null, "SoLo" . $i, $i)->render(); ?>
+                                            </th>
+                                            <th>
+                                                <?php echo $formChiTiet->Price(null, "Price" . $i, $i)->render(); ?>
+                                            </th>
+                                            <th id="<?php echo "ThanhTien" . $i ?>">
+                                                <?php echo number_format($sanPham->SoLuong * $sanPham->Price, 0, ".", ","); ?>
+                                            </th>
+                                        </tr>
+                                    <?php
+                                    }
+                                    ?>
+                                </tbody>
+                                <tr>
+                                    <td colspan="6" class="text-right"><b>Tổng Tiền</b></td>
+                                    <td><?php echo $ModelPhieuData->getTongTien(); ?></td>
+                                </tr>
+                            </table>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-12 ">
+                        <button class="btn btn-warning" type="reset">Làm Lại</button>
+                        <!-- <button class="btn btn-success">Lưu</button> -->
+                        <button class="btn btn-success" name="LuuThoat">Lưu</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+
+        $("#LamLai").click(function() {
+            $.ajax({
+                url: `/quanlythuoc/phieuxuatnhap/lamlai/`,
+                type: 'Get',
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    window.location.reload();
+                },
+                complete: function() {
+                    //spinner.close();
+                }
+            });
+        });
+        // Xóa SESSION
+        $(".deleterow").click(function() {
+            var index = $("#" + $(this).attr("id")).attr("index");
+            // var TongNgayDungThuoc = $("#TongNgayDungThuoc").val();
+            $.ajax({
+                url: `/quanlythuoc/phieuxuatnhap/DeleteSP/${index}/`,
+                type: 'Get',
+                // data:{$id : $id},
+                //dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    window.location.reload();
+                    console.log(response);
+                },
+                complete: function() {
+                    //spinner.close();
+                }
+            });
+        });
+
+        // Thêm SESSION
+        $("#btn-addrow").click(function() {
+            // var index = $("#" + $(this).attr("id")).attr("index");
+            // alert("index");
+            // var TongNgayDungThuoc = $("#TongNgayDungThuoc").val();
+            $.ajax({
+                url: `/quanlythuoc/phieuxuatnhap/ThemSanPham/`,
+                type: 'post',
+                // data:{$id : $id},
+                //dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    window.location.reload();
+                    console.log(response);
+                },
+                complete: function() {
+                    //spinner.close();
+                }
+            });
+        })
+
+        // Change Thuốc
+        $(".changename").each(function(index, e) {
+
+            // console.log(e.attr("id"));
+            $(this).change(function(param) {
+                // console.log($(this).attr("id")); // Lấy Id thuốc
+                $($(this).attr("id")).val();
+                // console.log($("#"+$(this).attr("id")).val()); // Lấy Mã Thuốc
+                // console.log($("#" + $(this).attr("id")).attr("index")); // Lấy index thuốc
+                var idName = "#" + $(this).attr("id");
+                var idDVT = "#DVT" + $("#" + $(this).attr("id")).attr("index");
+                var idSoLuong = "#SoLuong" + $("#" + $(this).attr("id")).attr("index");
+                var idSoLo = "#SoLo" + $("#" + $(this).attr("id")).attr("index");
+                var idNhaSanXuat = "#NhaSanXuat" + $("#" + $(this).attr("id")).attr("index");
+                var idNuocSanXuat = "#NuocSanXuat" + $("#" + $(this).attr("id")).attr("index");
+                var idPrice = "#Price" + $("#" + $(this).attr("id")).attr("index");
+                var index = $("#" + $(this).attr("id")).attr("index");
+                var idThuoc = $(idName).val();
+                $.ajax({
+                    url: `/quanlythuoc/phieuxuatnhap/capnhatdanhsachsanpham/${idThuoc}/${index}/`,
+                    type: 'get',
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        $(idSoLuong).val(response.Soluong);
+                        $(idSoLo).val(response.Solo);
+                        $(idNhaSanXuat).val(response.NhaSX);
+                        $(idNuocSanXuat).val(response.NuocSX);
+                        $(idPrice).val(response.Gianhap);
+                        $(idDVT).val(response.DVTTitle);
+                    },
+                    complete: function() {
+                        //spinner.close();
+                    }
+                });
+            });
+        });
+
+        $(".formpostdata").each(function(index, e) {
+            $(".formpostdata").change();
+            $(this).change(function(param) {
+                var IdPhieu = $("#IdPhieu_Id");
+                var DonViCungCap = $("#DonViCungCap_Id");
+                var XuatNhap = $("#XuatNhap_Id");
+                var NoiDungPhieu = $("#NoiDungPhieu_Id");
+                var GhiChu = $("#GhiChu_Id");
+                var NgayNhap = $("#NgayNhap_Id");
+                $.ajax({
+                    url: `/quanlythuoc/phieuxuatnhap/setformdefault/`,
+                    type: 'post',
+                    data: JSON.stringify({
+                        "IdPhieu": IdPhieu.val(),
+                        "DonViCungCap": DonViCungCap.val(),
+                        "XuatNhap": XuatNhap.val(),
+                        "NoiDungPhieu": NoiDungPhieu.val(),
+                        "GhiChu": GhiChu.val(),
+                        "NgayNhap": NgayNhap.val(),
+                    }),
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                         console.log(response); 
+                    }
+                });
+            });
+        });
+        $(".changenum").each(function(index, e) {
+            $(this).change(function(param) {
+                $($(this).attr("id")).val();
+                // console.log($("#"+$(this).attr("id")).val()); // Lấy Mã Thuốc
+                // console.log($("#" + $(this).attr("id")).attr("index")); // Lấy index thuốc
+                var idName = "#" + $(this).attr("id");
+                var idDVT = "#DVT" + $("#" + $(this).attr("id")).attr("index");
+                var idSoLuong = "#SoLuong" + $("#" + $(this).attr("id")).attr("index");
+                var idSoLo = "#SoLo" + $("#" + $(this).attr("id")).attr("index");
+                var idNhaSanXuat = "#NhaSanXuat" + $("#" + $(this).attr("id")).attr("index");
+                var idNuocSanXuat = "#NuocSanXuat" + $("#" + $(this).attr("id")).attr("index");
+                var idThanhTien = "#ThanhTien" + $("#" + $(this).attr("id")).attr("index");
+                var idPrice = "#Price" + $("#" + $(this).attr("id")).attr("index");
+                var index = $("#" + $(this).attr("id")).attr("index");
+                var idThuoc = $(idName).val();
+                $.ajax({
+                    url: `/quanlythuoc/phieuxuatnhap/capnhatsanpham/`,
+                    type: 'post',
+                    data: JSON.stringify({
+                        "index": index,
+                        "soLuong": $(idSoLuong).val(),
+                        "nhaSanXuat": $(idNhaSanXuat).val(),
+                        "nuocSanXuat": $(idNuocSanXuat).val(),
+                        "soLo": $(idSoLo).val(),
+                        "gia": $(idPrice).val(),
+                    }),
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        $(idSoLuong).val(response.Soluong);
+                        $(idSoLo).val(response.Solo);
+                        $(idNhaSanXuat).val(response.NhaSX);
+                        $(idNuocSanXuat).val(response.NuocSX);
+                        $(idThanhTien).html((response.Soluong * response.Giaban).toLocaleString('en-US'));
+                        $(idPrice).val(response.Giaban);
+                        $("#TongTien").html(response.TongTien.toLocaleString('en-US'));
+                    },
+                    complete: function() {
+                        //spinner.close();
+                    }
+                });
+            });
+        });
+    });
+</script>

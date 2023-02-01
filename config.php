@@ -2,6 +2,7 @@
 
 session_start();
 ob_start();
+date_default_timezone_set('Asia/Ho_Chi_Minh');
 define("DEFAULT_ACTION", "index");
 define("DEFAULT_CONTROLLER", "index");
 
@@ -20,15 +21,14 @@ define("LoginPage", "/login");
 global $INI;
 if (FALSE) {
     $INI['host'] = "localhost";
-    $INI['username'] = "nhan_donv";
-    $INI['password'] = "zaq@123Abc456";
-    $INI['DBname'] = "nhan_nhanvien";
+    $INI['username'] = "root";
+    $INI['password'] = "root";
+    $INI['DBname'] = "nhathuoc";
 } else {
     $INI['host'] = "localhost";
     $INI['username'] = "root";
     $INI['password'] = "";
-    $INI['DBname'] = "bakcoerp";
+    $INI['DBname'] = "nhathuoc";
 }
 
 //#mbne6Y3&foG
-?>

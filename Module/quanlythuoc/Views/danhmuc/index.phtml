@@ -1,0 +1,126 @@
+<ol class="breadcrumb">
+    <li><a href="/index.php?controller=backend">Home</a></li>
+    <li> Danh Sách Danh Mục Thuốc </li>
+</ol>
+
+<div class="container-fluid">
+    <div class="clearfix">
+        <div class="box box-primary">
+            <div>
+                <div class="box-header">
+                    <div class="">
+                        <div class="box-header">
+                            <form method="get" action="/quanlythuoc/danhmuc/index/">
+                                <div class="row">
+                                    <div class="col-sm-3 form-group">
+                                        <?php
+                                        \Model\FormSearch::MaDanhMuc($_GET['idDM'] ?? null)->renderHtml2(null, null, 'glyphicon glyphicon-barcode form-control-feedback');
+                                        ?>
+                                    </div>
+                                    <div class="col-sm-3 form-group">
+                                        <?php
+                                        \Model\FormSearch::NameDanhMuc($_GET['name'] ?? null)->renderHtml2(null, null, 'glyphicon glyphicon-list-alt form-control-feedback');
+                                        ?>
+                                    </div>
+                                    <div class="col-sm-3 form-group">
+                                        <?php
+                                        \Model\FormSearch::LinkDanhMuc($_GET['link'] ?? null)->renderHtml2(null, null, 'glyphicon glyphicon-link form-control-feedback');
+                                        ?>
+                                    </div>
+                                    <div class="col-sm-3 form-group">
+                                        <div class="form-group has-success has-feedback">
+                                            <label for="inputSuccess2" class="text-capitalize"><em>Nhấn vào đây&nbsp; </em><i class="fa fa-check"></i></label>
+                                            <button type="submit" style="border-radius: 5px;" class="form-control btn btn-success" name="btnTim" id="keyword">
+                                                <i class="fa fa-filter"></i>&nbsp; Tìm kiếm theo bộ lọc
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <hr style="border-top: 2px solid #00a65a; margin-top:0px" width="90%" noshade="noshade">
+                    </div>
+                </div>
+            </div>
+            <div class="box-header">
+                <h3 class="box-title">Danh Mục Thuốc</h3>
+                <div class="box-tools">
+                    <?php
+
+                    use Module\quanlythuoc\Model\DanhMuc;
+
+                    Module\quanlythuoc\Model\btnHtml::btnThemDanhMuc();
+                    \Model\FormRender::HuongDan("danhmucthuoc", "Hướng dẫn danh mục thuốc")
+                    ?>
+                </div>
+            </div>
+
+            <div class="box-body">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>STT</th>
+                            <th>Mã Danh Mục</th>
+                            <th>Tên Danh Mục</th>
+                            <th>Đường Dẫn</th>
+                            <th>Ghi Chú</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        foreach ($items as $index => $item) {
+                            $_item = new DanhMuc($item);
+                            // var_dump($items);
+                            // echo $_item->Id;
+                        ?>
+                            <tr>
+                                <td class="text-center">
+                                    <?php
+                                    echo Module\quanlythuoc\Model\btnHtml::btnSuaDanhMuc($_item->Id);
+                                    echo Module\quanlythuoc\Model\btnHtml::btnXoaDanhMuc($_item->Id);
+                                    ?>
+                                </td>
+                                <td scope="row"><?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?></td>
+                                <td><?php echo $_item->Id; ?></td>
+                                <td><?php echo $_item->Name; ?></td>
+                                <td><?php echo $_item->Link; ?></td>
+                                <td><?php echo $_item->GhiChu; ?></td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
+                <div class="box-footer">
+                    <div class="d-flex">
+                        <?php
+                        \Model\FormCommon::Select(
+                            "",
+                            "",
+                            [10, 20, 50, 100],
+                            [
+                                "style" => "max-width:150px;",
+                                "class" => "form-control",
+                                "value" => $pageNumber,
+                                "onchange" => "SoDongHienThi(this.value)",
+                            ]
+                        )->render();
+                        ?>
+                        <?php
+                        $linkPhanTrang = "/index.php?module=quanlythuoc&controller=danhmuc&action=index&idDM={$params["idDM"]}&name={$params["name"]}&link={$params["link"]}&indexPage=[i]&pageNumber={$pageNumber}";
+                        echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var SoDongHienThi = function(evalue) {
+        var linkPhanTrang = '/index.php?module=quanlythuoc&controller=danhmuc&action=index&indexPage=1&pageNumber=[j]';
+        linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
+        window.location.href = linkPhanTrang;
+    }
+</script>

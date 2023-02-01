@@ -25,9 +25,12 @@ class OptionsService extends DB implements IModelService, IModelToOptions {
         parent::$TableName = prefixTable . "options";
         parent::__construct();
         if ($op) {
+            // var_dump($op);
             if (!is_array($op)) {
                 $Id = $op;
                 $op = $this->GetById($Id);
+                // var_dump($op);
+                // var_dump("__op");
             }
             if ($op) {
                 $this->Id = isset($op["Id"]) ? $op["Id"] : "";
@@ -67,7 +70,7 @@ class OptionsService extends DB implements IModelService, IModelToOptions {
 
     public static function GetGroupsToSelect($idGroups) {
         $op = new OptionsService();
-        return $op->SelectToOptions("`GroupsId`= '{$idGroups}' ", ["Val", "Name"]);
+        return $op->SelectToOptions("`GroupsId`= '{$idGroups}' order by `Val` DESC ", ["Val", "Name"]);
     }
 
     public static function ToSelect() {
@@ -83,6 +86,14 @@ class OptionsService extends DB implements IModelService, IModelToOptions {
         <?php
     }
 
+    public function btnXoa() {
+        if (Permission::CheckPremision([User::Admin]))
+
+            ?>
+        <a href="/options/delete/?id=<?php echo $this->Id; ?>" class="btn btn-danger btn-sm" >Xóa</a>
+        <?php
+    }
+
     public function GroupsIdName() {
         return [
             "congty" => "Công Ty",
@@ -91,6 +102,7 @@ class OptionsService extends DB implements IModelService, IModelToOptions {
             "hinhthuchd" => "Hình Thức Hợp Đồng",
             "gioitinh" => "Giới Thiệu",
             "chucvu" => "Chức Vụ",
+            "donvitinh" => "Đơn Vị Tính",
         ];
     }
 

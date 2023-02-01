@@ -1,0 +1,159 @@
+<ol class="breadcrumb">
+    <li><a href="/backend">Home</a></li>
+    <li><a href="/quanlythuoc/phieuxuatnhap/index"> Danh Sách Phiếu</a></li>
+    <li> Thêm Phiếu </li>
+</ol>
+<?php
+
+use Model\Common;
+use Model\FormRender;
+use Module\quanlythuoc\Model\DanhMuc;
+use Module\quanlythuoc\Model\DanhMuc\FormDanhMuc;
+use Module\quanlythuoc\Model\PhieuXuatNhap;
+use Module\quanlythuoc\Model\PhieuXuatNhap\FormPhieuXuatNhap;
+use Module\quanlythuoc\Model\PhieuXuatNhap\FormPhieuXuatNhapChiTiet;
+use Module\quanlythuoc\Model\PhieuXuatNhapChiTiet;
+use Module\quanlythuoc\Model\SanPham;
+
+$roleDetail = new Model\Role();
+?>
+<div class="container-fluid">
+    <div class="box box-primary">
+        <div class="box-header">
+            <h3 class="box-title">Thêm Phiếu</h3>
+            <div class="box-tools">
+                <?php FormRender::HuongDan("themphieu", "Hướng dẫn thêm phiếu"); ?>
+            </div>
+        </div>
+        <form action="" method="post" onsubmit="return confirm('Bạn có chắc thông tin đã nhập chính xác?')" enctype="multipart/form-data">
+            <div class="box-body">
+                <?php
+                $phieu = new FormPhieuXuatNhap(PhieuXuatNhap::GetPostForm());
+                ?>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <?php $phieu->IdPhieu()->renderHtml(); ?>
+                            </div>
+                            <div class="col-md-4">
+                                <?php $phieu->XuatNhap(null, "XuatNhapId")->renderHtml(); ?>
+                            </div>
+                            <div class="col-md-4">
+                                <?php $phieu->NgayNhap()->renderHtml(); ?>
+                            </div>
+                            <div class="col-md-6">
+                                <?php $phieu->NoiDungPhieu()->renderHtml();  ?>
+                            </div>
+                            <div class="col-md-6">
+                                <?php $phieu->GhiChu()->renderHtml();  ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <fieldset>
+                            <legend>Danh Sách Thuốc</legend>
+                            <div>
+                                <button data-toggle="tooltip" data-placement="top" title="Thêm thuốc" type="button" class="btn btn-success" id="btn-addrow">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </button>
+
+                            </div>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 50px"></th>
+                                        <th>STT</th>
+                                        <th>Thuốc</th>
+                                        <th style="width: 100px">ĐVT</th>
+                                        <th style="width: 100px">
+                                            <i class="pull-right fa fa-info" data-toggle="tooltip" data-placement="top" title="Số lượng sản phẩm nhập vào"></i>
+                                            Số Lượng
+                                        </th>
+                                        <th style="width: 100px">
+                                            <i class="pull-right fa fa-info" data-toggle="tooltip" data-placement="top" title="Lô sản phẩm nhập vào"></i>
+                                            Số Lô
+                                        </th>
+                                        <th class="hansudung" style="width: 80px">
+                                            <i class="pull-right fa fa-info" data-toggle="tooltip" data-placement="top" title="Lô sản phẩm nhập vào"></i>
+                                            Hạn sử dụng
+                                        </th>
+                                        <th style="width: 140px">
+                                            <i class="pull-right fa fa-info" data-toggle="tooltip" data-placement="top" title="Giá Nhập/Xuất"></i>
+                                            Giá bán
+                                        </th>
+                                        <th style="width: 100px">
+                                            <i class="pull-right fa fa-info" data-toggle="tooltip" data-placement="top" title="Giá Nhập/Xuất"></i>
+                                            Thành Tiền
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-thuoc">
+                                    <?php
+                                    $index = 1;
+
+                                    foreach (PhieuXuatNhap::DSThuocPhieuNhap() as $mathuoc => $thuoc) {
+                                        $sanPham = new SanPham($thuoc);
+                                        $formChiTiet = new FormPhieuXuatNhapChiTiet();
+                                        $i = $mathuoc;
+                                    ?>
+                                        <tr>
+                                            <th>
+                                                <button data-toggle="tooltip" data-placement="top" title="Xóa thuốc" type="button" title="Xóa thuốc này?" class="btn  btn-danger deleterow" id="<?php echo 'delete' . $i ?>" index=<?php echo $i ?>>
+                                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                                </button>
+                                            </th>
+                                            <th style="width: 50px;">
+                                                <?php echo $index++; ?>
+                                            </th>
+                                            <th style="width: 200px;">
+                                                <?php echo $formChiTiet->IdThuoc($thuoc["Id"] ?? "", "IdThuoc" . $i, $i)->render() ?>
+                                            </th>
+                                            <th>
+                                                <?php
+                                                echo $formChiTiet->DVT($sanPham->DonViTinh(), "DVT" . $i, $i, [FormRender::Readonly => "true"])->render(); ?>
+                                            </th>
+                                            <th>
+                                                <?php
+                                                echo $formChiTiet->SoLuong($sanPham->Soluong, "SoLuong" . $i, $i)->render(); ?>
+                                            </th>
+                                            <th>
+                                                <?php
+                                                echo $formChiTiet->SoLo($sanPham->Solo, "SoLo" . $i, $i)->render(); ?>
+                                            </th>
+                                            <th class="hansudung">
+                                                <?php
+                                                echo $formChiTiet->HanSuDung($sanPham->HSD, "HanSuDung" . $i, $i)->render(); ?>
+                                            </th>
+                                            <th>
+                                                <?php echo $formChiTiet->Price($sanPham->Giaban, "Price" . $i, $i)->render(); ?>
+                                            </th>
+                                            <th id="<?php echo "ThanhTien" . $i ?>">
+                                                <?php echo number_format($sanPham->ThanhTien(), 0, ".", ","); ?>
+                                            </th>
+                                        </tr>
+                                    <?php
+                                    }
+                                    ?>
+                                    <tr>
+                                        <td class="txtTongTien" colspan="8" class="text-right"><b>Tổng tiền</b></td>
+                                        <td><b id="TongTien">
+                                                <?php echo
+                                                Common::ViewNumber(PhieuXuatNhap::TongTien());
+                                                ?></b>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-12 ">
+                        <button id="LamLai" class="btn btn-warning" type="reset">Làm Lại</button>
+                        <button id="btnTaoPhieu" class="btn btn-success" name="LuuThoat">Tạo phiếu</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="/public/PhieuXuatNhap/PhieuXuatNhapPost.js?v=<?php echo filectime('public/PhieuXuatNhap/PhieuXuatNhapPost.js') ?>"></script>

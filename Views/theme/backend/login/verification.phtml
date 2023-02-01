@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Reset PassWord | Phòng Khám Bác Sỹ Uyên</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="/public/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="/public/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="/public/plugins/iCheck/square/blue.css">
+</head>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-box-body" style="border-radius: 10px;">
+            <form action="" method="POST" class="form-horizontal box-1" role="form">
+                <legend class="text-center">Nhập Mã Xác Nhận</legend>
+                <div class="form-group" style="background-color: #b6c6d4;border-radius: 10px; margin: 0">
+                    <div class="alert alert-primary">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <span>
+                            Hãy nhập mã xác nhận mà chúng tôi đã gửi về email của bạn
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group has-feedback" style="margin: 20px 0;">
+                    <input type="email" required name="email" class="form-control" placeholder="Nhập email của bạn...">
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback" style="margin: 20px 0;">
+                    <input type="phone" required name="code" class="form-control" placeholder="Nhập mã xác nhận của bạn...">
+                    <span class="glyphicon glyphicon-qrcode form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback" style="margin: 20px 0;">
+                    <input type="password" required name="newpass" class="form-control" placeholder="Nhập Mật Khẩu Mới...">
+                    <span class="glyphicon glyphicon-eye-close form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback" style="margin: 20px 0;">
+                    <input type="password" required name="repass" class="form-control" placeholder="Nhập Lại Mật Khẩu...">
+                    <span class="glyphicon glyphicon-eye-close form-control-feedback"></span>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <button type="submit" name="change" style="width: 100%" class="btn btn-success">Xác Nhận</button>
+                    </div>
+                </div>
+                    <summary class="form-text text-muted text-center ">Nhấn vào đây để 
+                        <a href="/index.php?controller=login&action=index"><u>Đăng Nhập</u></a>
+                    </summary>
+            </form>
+        </div>
+    </div>
+    <script src="/public/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <script src="/public/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>
