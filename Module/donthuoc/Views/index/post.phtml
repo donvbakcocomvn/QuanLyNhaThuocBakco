@@ -121,26 +121,25 @@ $roleDetail = new Model\Role();
 
 
                 <fieldset>
-                    <table class="table table-bordered">
+                    <table class="table_Thuoc table table-bordered">
                         <thead>
                             <tr>
                                 <th>
-                                    <button data-toggle="tooltip" data-placement="top" title="Thêm thuốc mới"
-                                        type="button" class="btn btn-success" id="btn-add">
+                                    <button data-toggle="tooltip" data-placement="top" title="Thêm thuốc mới" type="button" class="btn btn-success" id="btn-add">
                                         <i class="fa fa-plus" aria-hidden="true"></i>
                                     </button>
                                 </th>
                                 <th>STT</th>
                                 <th>Tên Thuốc</th>
                                 <th>SL tồn</th>
-                                <th>Ngày Dùng</th>
-                                <th>Cách Dùng</th>
-                                <th>Đơn Vị Tính</th>
+                                <th>N.Dùng</th>
+                                <th>ĐVT</th>
                                 <th>Sáng</th>
                                 <th>Trưa</th>
                                 <th>Tối</th>
-                                <th>Số Lượng</th>
+                                <th>SL</th>
                                 <th>Ghi Chú</th>
+
                             </tr>
                         </thead>
                         <tbody class="table-thuoc">
@@ -148,18 +147,16 @@ $roleDetail = new Model\Role();
                             // var_dump(DonThuocDetail::DsThuoc());
                             $i = 0;
                             foreach (DonThuocDetail::DsThuoc() as $mathuoc => $thuoc) {
-                                $sanPham = new SanPham($thuoc["Id"] ?? null);
+                                $sanPham = new SanPham($thuoc);
                                 // $i = $mathuoc;
-                                ?>
+                            ?>
                                 <tr>
-                                    <th>
-                                        <button data-toggle="tooltip" data-placement="top" title="Xóa thuốc" type="button"
-                                            title="Xóa thuốc này?" class="btn  btn-danger deleterows"
-                                            id="<?php echo 'delete' . $mathuoc ?>" index=<?php echo $mathuoc ?>>
+                                    <th style="width: 50px;">
+                                        <button data-toggle="tooltip" data-placement="top" title="Xóa thuốc" type="button" title="Xóa thuốc này?" class="btn  btn-danger deleterows" id="<?php echo 'delete' . $mathuoc ?>" index=<?php echo $mathuoc ?>>
                                             <i class="fa fa-minus" aria-hidden="true"></i>
                                         </button>
                                     </th>
-                                    <td style="display: table-cell; vertical-align: middle;">
+                                    <td style="width: 40px;display: table-cell; vertical-align: middle;">
                                         <div class="text-center">
                                             <?php echo $i + 1; ?>
                                         </div>
@@ -172,32 +169,30 @@ $roleDetail = new Model\Role();
                                     <td style="width: 80px;">
                                         <?php echo $form->SLHienTai($sanPham->SLHienTai ?? "", "SLHienTai" . $i, $i)->render(); ?>
                                     </td>
-                                    <td style="width: 100px;">
+                                    <td style="width: 80px;">
                                         <?php echo $form->SoNgaySDThuoc($thuoc["SoNgaySDThuoc"] ?? "", "SoNgaySD" . $i, $i)->render(); ?>
                                     </td>
-                                    <td style="width: 100px;">
-                                        <?php echo $form->CachDung($sanPham->CachDungThuoc(), "cachdungthuoc" . $i, $i)->render(); ?>
-                                    </td>
-                                    <td style="width: 100px;">
+                                    <td style="width: 70px;">
                                         <?php echo $form->DVT($sanPham->DonViTinh(), "dvt" . $i, $i)->render(); ?>
                                     </td>
-                                    <td style="width: 100px;">
+                                    <td style="width: 80px;">
                                         <?php echo $form->Sang($thuoc["Sang"] ?? "", "sang" . $i, $i)->render(); ?>
                                     </td>
-                                    <td style="width: 100px;">
+                                    <td style="width: 80px;">
                                         <?php echo $form->Trua($thuoc["Trua"] ?? "", "trua" . $i, $i)->render(); ?>
                                     </td>
-                                    <td style="width: 100px;">
+                                    <td style="width: 80px;">
                                         <?php echo $form->Chieu($thuoc["Chieu"] ?? "", "chieu" . $i, $i)->render(); ?>
                                     </td>
-                                    <td style="width: 100px;">
+                                    <td style="width: 60px;">
                                         <?php echo $form->SoLuong($thuoc["Soluong"] ?? "", "soluong" . $i, $i)->render(); ?>
                                     </td>
                                     <td>
                                         <?php echo $form->GhiChu($sanPham->Ghichu, "ghichu" . $i, $i)->render(); ?>
                                     </td>
                                 </tr>
-                                <?php
+
+                            <?php
                                 $i++;
                             }
                             ?>
@@ -205,7 +200,7 @@ $roleDetail = new Model\Role();
                     </table>
                 </fieldset>
                 <div class="col-md-12 ">
-                    <button class="btn btn-warning" type="reset">Làm lại</button>
+                    <!-- <button class="btn btn-warning" type="reset">Làm lại</button> -->
                     <button class="btn btn-success" name="LuuThoat">Thêm đơn thuốc mới</button>
                 </div>
             </form>

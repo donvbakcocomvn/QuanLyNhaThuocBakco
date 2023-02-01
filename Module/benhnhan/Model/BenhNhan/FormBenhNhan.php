@@ -76,8 +76,8 @@ class FormBenhNhan implements iFormBenhNhan
                 $properties["id"] = __FUNCTION__;
                 $properties["class"] = " form-control saveinfor";
                 $options = OptionsService::GetGroupsToSelect("gioitinh");
-                $option1 = ["" => "--- Chọn giới tính ---"];
-                $options = $option1 + $options;
+                // $option1 = ["" => "--- Chọn giới tính ---"];
+                // $options = $option1 + $options;
                 $properties[FormRender::Required] = "true";
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
                 return new FormRender(new Element\Select("Giới Tính", $name, $options, $properties));

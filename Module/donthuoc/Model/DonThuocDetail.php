@@ -123,7 +123,8 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
             // var_dump($detailThuoc);
             $value["Id"] = $value["Id"] ?? null;
             if ($value["Id"] == $sp->Id) {
-                return null;
+                // kiểm tra đã có thuốc chưa
+                return true;
             }
             // var_dump($value);
             // var_dump($detailThuoc);

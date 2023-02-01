@@ -107,10 +107,10 @@ $(document).ready(function () {
             var idCachDungThuoc = "#cachdungthuoc" + index;
             var idGhiChu = "#ghichu" + index;
 
-            console.log(idDVT);
-            console.log(index);
-            console.log(idThuoc);
-            console.log(idCachDungThuoc);
+            // console.log(idDVT);
+            // console.log(index);
+            // console.log(idThuoc);
+            // console.log(idCachDungThuoc);
 
             $.ajax({
                 url: `/donthuoc/index/capnhatthuoc/${idThuoc}/${index}/`,
@@ -125,8 +125,8 @@ $(document).ready(function () {
                         // alert("Thuốc đã có trong danh sách");
                         Swal.fire({
                             icon: 'error',
-                            title: 'Đã hết thuốc',
-                            text: 'Thuốc không thể kê trong lúc này',
+                            title: 'Không thể kê thuốc này',
+                            text: 'Thuốc đã hết',
                             timer: 1500
                         }).then(() => {
                             window.location.reload();
@@ -140,7 +140,7 @@ $(document).ready(function () {
                     $(idSang).val(response.Sang);
                     $(idTrua).val(response.Trua);
                     $(idChieu).val(response.Chieu);
-                    $(idSoNgaySD).val(response.SoNgaySDThuoc);
+                    // $(idSoNgaySD).val(response.SoNgaySDThuoc);
                     $(idSoLuong).val(response.Soluong);
                     $(idCachDungThuoc).val(response.CachDung);
                     $(idGhiChu).val(response.Ghichu);

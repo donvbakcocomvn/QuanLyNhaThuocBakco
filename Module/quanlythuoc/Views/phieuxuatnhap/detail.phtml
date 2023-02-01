@@ -18,7 +18,7 @@ $itemSP = new PhieuXuatNhap($data);
 <div class="container">
     <div class="box box-primary">
         <div class="box-header">
-            <h3 class="box-title">Thông Tin Chi Tiết Của Phiếu <?php echo $itemSP->IdPhieu;?> </h3>
+            <h3 class="box-title">Thông Tin Chi Tiết Của Phiếu <?php echo $itemSP->IdPhieu; ?> </h3>
         </div>
         <div class="box-body">
             <div class="col-md-12">
@@ -46,13 +46,20 @@ $itemSP = new PhieuXuatNhap($data);
             <div class="col-md-12">
                 <fieldset>
                     <legend>Danh sách thuốc</legend>
-                    <table class="table table-bordered" style="margin-bottom: 5px;" >
+                    <table class="table table-bordered" style="margin-bottom: 5px;">
                         <tr>
                             <th>Mã thuốc </th>
                             <th>Thuốc <?php FormRender::ToolTipElement("Tên thuốc"); ?></th>
                             <th>Số lượng <?php FormRender::ToolTipElement("Số lượng nhập xuất phiếu"); ?></th>
                             <th>Số Lô <?php FormRender::ToolTipElement("Số lô sản phẩm"); ?></th>
-                            <th>Hạn sử dụng <?php FormRender::ToolTipElement("Hạn sử dụng"); ?></th>
+                            <?php
+                            if ($itemSP->XuatNhap == 1) {
+                            ?>
+                                <th>Hạn sử dụng <?php FormRender::ToolTipElement("Hạn sử dụng"); ?></th>
+                            <?php
+                            }
+                            ?>
+
                             <th>Giá <?php FormRender::ToolTipElement("Giá nhập xuất phiếu"); ?></th>
                             <th>Thành tiền <?php FormRender::ToolTipElement("Thành tiền"); ?></th>
                         </tr>
@@ -65,7 +72,13 @@ $itemSP = new PhieuXuatNhap($data);
                                 <td><?php echo $_chiTiet->SanPham()->Name ?></td>
                                 <td><b><?php echo $_chiTiet->SoLuong ?></b></td>
                                 <td><?php echo $_chiTiet->SoLo ?></td>
-                                <td><?php echo $_chiTiet->HanSuDung() ?></td>
+                                <?php
+                                if ($itemSP->XuatNhap == 1) {
+                                ?>
+                                    <td><?php echo $_chiTiet->HanSuDung() ?></td>
+                                <?php
+                                }
+                                ?>
                                 <td><b><?php echo $_chiTiet->Price() ?></b></td>
                                 <td><b><?php echo $_chiTiet->ThanhTien(); ?></b></td>
                             </tr>
@@ -73,7 +86,7 @@ $itemSP = new PhieuXuatNhap($data);
                         }
                         ?>
                         <tr>
-                            <td colspan="6" class="text-right"> <b>Tổng Tiền</b></td>
+                            <td colspan="<?php echo $itemSP->XuatNhap == 1 ? "6" : "5" ?>" class="text-right"> <b>Tổng Tiền</b></td>
                             <td><b><?php echo $itemSP->getTongTien(); ?></b></td>
                         </tr>
                     </table>

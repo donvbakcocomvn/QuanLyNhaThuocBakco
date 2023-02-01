@@ -115,28 +115,18 @@ $IdDonThuoc = $donthuoc->Id;
             <div style="margin: 0; border-bottom: 0px solid #00000042">
                 <table class="table-hover" style="width: 100%;">
                     <thead>
-                        <th>
-                        <td>Họ và tên : <?php echo $donthuoc->NameBN; ?></b></td>
-                        </th>
-                        <th>
-                        <td>Tuổi : <?php echo date('Y') - date('Y', strtotime($donthuoc->NgaySinh)); ?></td>
-                        </th>
-                        <td>Giới: <?php echo $donthuoc->GioiTinh(); ?></td>
-                        </th>
-                    </thead>
-                    <thead>
-                        <th>
-                        <td>Đ/C : <?php echo DonThuoc::GetItemById('Address', $donthuoc->IdBenhNhan); ?>
-                        </td>
-                        <td>
-                            SĐT : <?php echo DonThuoc::GetItemById('Phone', $donthuoc->IdBenhNhan); ?>
-                        </td>
-                        </th>
-                    </thead>
-                    <thead>
-                        <th>
-                        <td>Chẩn đoán : <?php echo $donthuoc->ChanDoanBenh; ?></td>
-                        </th>
+                        <tr>
+                            <td>Họ và tên : <?php echo $donthuoc->NameBN; ?></b></td>
+                            <td>Năm sinh : <?php echo  date('Y', strtotime($donthuoc->NgaySinh)); ?></td>
+                            <td>Giới: <?php echo $donthuoc->GioiTinh(); ?></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Địa chỉ : <?php echo DonThuoc::GetItemById('Address', $donthuoc->IdBenhNhan); ?> </td>
+                            <td> SĐT : <?php echo DonThuoc::GetItemById('Phone', $donthuoc->IdBenhNhan); ?> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">Chẩn đoán : <?php echo $donthuoc->ChanDoanBenh; ?></td>
+                        </tr>
                     </thead>
                 </table>
             </div>
