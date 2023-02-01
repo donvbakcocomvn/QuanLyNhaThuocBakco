@@ -107,7 +107,7 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
     public static function GetDetailById($IdDonThuoc)
     {
         $donthuoc = new DonThuoc();
-        $sql = "SELECT * FROM `lap1_toathuoc_detail` WHERE `IdDonThuoc` = '$IdDonThuoc' Order By `Id`";
+        $sql = "SELECT * FROM `lap1_toathuoc_detail` WHERE `IdDonThuoc` = '$IdDonThuoc' Order By `Id` asc";
         $result = $donthuoc->GetRows($sql);
         return $result;
     }
@@ -239,8 +239,9 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
 
     public function Delete($Id)
     {
-        $where = " `Id` = '{$Id}' ";
-        $this->DeleteDB($where);
+        $item  = $this->GetById($Id);
+        $item["IsDelete"] = 1;
+        return $this->Put($item);
     }
 
     public function GetById($Id)

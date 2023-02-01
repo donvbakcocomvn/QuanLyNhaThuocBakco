@@ -226,7 +226,7 @@ class Common
 
     public static function ViewPrice($number)
     {
-        return number_format($number, 0, ".", ".") . " VND";
+        return number_format($number, 0, ".", ".") . " đ";
     }
 
     public static function ViewNumber($number)
