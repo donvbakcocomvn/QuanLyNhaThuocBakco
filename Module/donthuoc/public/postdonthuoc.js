@@ -18,6 +18,7 @@ $(document).ready(function () {
             var idChieu = "#chieu" + $("#" + $(this).attr("id")).attr("index");
             var idSoLuong = "#soluong" + $("#" + $(this).attr("id")).attr("index");
             var idGiaBan = "#giaban" + $("#" + $(this).attr("id")).attr("index");
+            var idGhiChu = "#ghichu" + index;
 
             $.ajax({
                 url: `/donthuoc/index/capnhatsoluong/`,
@@ -30,6 +31,7 @@ $(document).ready(function () {
                     "sang": $(idSang).val(),
                     "chieu": $(idChieu).val(),
                     "trua": $(idTrua).val(),
+                    "ghichu": $(idGhiChu).val(),
                     "ngaydungthuoc": $(idSoNgaySD).val(),
                 }),
                 contentType: false,
@@ -140,7 +142,7 @@ $(document).ready(function () {
                     $(idSang).val(response.Sang);
                     $(idTrua).val(response.Trua);
                     $(idChieu).val(response.Chieu);
-                    // $(idSoNgaySD).val(response.SoNgaySDThuoc);
+                    $(idSoNgaySD).val(response.SoNgaySDThuoc);
                     $(idSoLuong).val(response.Soluong);
                     $(idCachDungThuoc).val(response.CachDung);
                     $(idGhiChu).val(response.Ghichu);

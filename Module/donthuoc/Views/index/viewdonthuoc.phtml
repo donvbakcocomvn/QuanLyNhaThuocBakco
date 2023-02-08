@@ -174,7 +174,7 @@ $IdDonThuoc = $donthuoc->Id;
                                     </span>
                                 </td>
                                 <?php
-                                if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy]) == true) {
+                                if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, "XemGiaThuoc"]) == true) {
                                 ?>
                                     <td class="text-center">
                                         <?php
@@ -206,9 +206,7 @@ $IdDonThuoc = $donthuoc->Id;
                                 if ($DTdetail['GhiChu']) { ?>
                                     <td class="text-center">
                                         <i>
-                                            <?php
-                                            $thuoc = new SanPham($DTdetail['IdThuoc']);
-                                            echo '(' . $thuoc->Ghichu . ')'; ?>
+                                            <?php echo '(' . $DTdetail['GhiChu'] . ')'; ?>
                                         </i>
                                     </td>
                                 <?php

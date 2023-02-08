@@ -314,7 +314,7 @@ class index extends \Application implements \Controller\IControllerBE
         $thuoc["Trua"] = floatval($data["trua"] ?? 0);
         $thuoc["Chieu"] = floatval($data["chieu"] ?? 0);
         $thuoc["SoNgaySDThuoc"] = $data["ngaydungthuoc"];
-        // $thuoc["GhiChu"] = $data["Ghichu"];
+        $thuoc["Ghichu"] = $data["ghichu"];
         // var_dump($thuoc["Sang"]);
         // var_dump($thuoc["Trua"]);
         // var_dump($thuoc["Chieu"]);
@@ -517,8 +517,8 @@ class index extends \Application implements \Controller\IControllerBE
                 $itemBN["Id"] = $benhnhan->Id;
                 $itemBN["Name"] = $itemBenhNhan["Name"];
                 $itemBN["Gioitinh"] = $itemBenhNhan["Gioitinh"];
-                $ngay = $itemBenhNhan["NgaySinh"] ? $itemBenhNhan["Ngaysinh"] : '01';
-                $thang = $itemBenhNhan["ThangSinh"] ? $itemBenhNhan["Thangsinh"] : '01';
+                $ngay = $itemBenhNhan["NgaySinh"] ?? '01';
+                $thang = $itemBenhNhan["ThangSinh"] ?? '01';
                 $nam = $itemBenhNhan["NamSinh"] ?? date('Y');
                 // $itemBN["Ngaysinh"] = date('Y-m-d', strtotime($nam . '-' . $thang . '-' . $ngay));
                 $itemBN["Ngaysinh"] = $nam . '-' . $thang . '-' . $ngay;
@@ -546,6 +546,7 @@ class index extends \Application implements \Controller\IControllerBE
                 $detail->DeleteDetail($donthuoc->Id);
 
                 foreach (DonThuocDetail::DsThuoc() as $mathuoc => $thuoc) {
+                    // var_dump($thuoc);
                     $sp = new SanPham();
                     if (isset($thuoc["Id"]) == true) {
                         $idThuoc = $thuoc["Id"];
@@ -564,10 +565,11 @@ class index extends \Application implements \Controller\IControllerBE
                         $detail = new DonThuocDetail();
                         $detail->Post($itemDetail);
                         // var_dump($thuoc);
+                        // die();
                     }
                     DonThuocDetail::ClearSession();
                 }
-                new \Model\Error(\Model\Error::success, "Đã Thêm Toa Thuốc");
+                new \Model\Error(\Model\Error::success, "Đã Lưu Toa Thuốc");
                 $donthuoc = new DonThuoc($itemDonThuoc["Id"]);
                 \Model\Common::ToUrl("/donthuoc/index/viewdonthuoc/?id=" . $donthuoc->Id . "");
             }

@@ -97,13 +97,12 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
             $item = $thuocDetail->GetById($thuoc["IdThuoc"]);
             // var_dump($thuoc);
             // $item["SoNgaySDThuoc"] = $thuoc["SoNgaySDThuoc"];
-            // $item["SoNgaySDThuoc"] = $thuoc["SoNgaySDThuoc"];
+            // $item["SoNgaySDThuoc"] = $thuoc["SoNgaySsDThuoc"];
             $item["SoNgaySDThuoc"] = $thuoc["SoNgaySDThuoc"];
-            // $item["GhiChu"] = $thuoc["Ghichu"];
+            $item["Ghichu"] = $thuoc["GhiChu"];
             $item["Sang"] = floatval($thuoc["Sang"]);
             $item["Trua"] = floatval($thuoc["Trua"]);
             $item["Chieu"] = floatval($thuoc["Chieu"]);
-
             $detail->CapNhatThuoc($item, $key);
         }
     }

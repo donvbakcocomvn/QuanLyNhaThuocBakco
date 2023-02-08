@@ -133,13 +133,13 @@ $bn = new FormBenhNhan();
                                 </th>
                                 <th>STT</th>
                                 <th>Tên Thuốc</th>
-                                <th>Ngày Dùng</th>
-                                <th>Cách Dùng</th>
-                                <th>Đơn Vị Tính</th>
+                                <th>SL tồn</th>
+                                <th>N.Dùng</th>
+                                <th>ĐVT</th>
                                 <th>Sáng</th>
                                 <th>Trưa</th>
                                 <th>Tối</th>
-                                <th>Số Lượng</th>
+                                <th>SL</th>
                                 <th>Ghi Chú</th>
                             </tr>
                         </thead>
@@ -152,44 +152,44 @@ $bn = new FormBenhNhan();
 
                             ?>
                                 <tr>
-                                    <th>
-                                        <button data-toggle="tooltip" data-placement="top" title="" type="button" class="btn  btn-danger deleterow" id="delete0" index="0" data-original-title="Xóa thuốc">
+                                    <th style="width: 50px;">
+                                        <button data-toggle="tooltip" data-placement="top" title="Xóa thuốc" type="button" title="Xóa thuốc này?" class="btn  btn-danger deleterows" id="<?php echo 'delete' . $mathuoc ?>" index=<?php echo $mathuoc ?>>
                                             <i class="fa fa-minus" aria-hidden="true"></i>
                                         </button>
                                     </th>
-                                    <td style="display: table-cell; vertical-align: middle;">
+                                    <td style="width: 40px;display: table-cell; vertical-align: middle;">
                                         <div class="text-center">
                                             <?php echo $i + 1; ?>
                                         </div>
                                     </td>
-                                    <td style="width:250px;">
+                                    <th style="width: 200px;">
                                         <?php
-                                        echo $form->Name($thuoc["Id"] ?? "", "donthuoc" . $i, $i)->renderHTML() ?>
+                                        echo $form->Name($thuoc["Id"] ?? "", "donthuoc" . $i, $i)->renderHTML();
+                                        ?>
+                                    </th>
+                                    <td style="width: 80px;">
+                                        <?php echo $form->SLHienTai($sanPham->SLHienTai ?? "", "SLHienTai" . $i, $i)->render(); ?>
                                     </td>
-                                    <td style="width:100px;">
+                                    <td style="width: 80px;">
                                         <?php echo $form->SoNgaySDThuoc($thuoc["SoNgaySDThuoc"] ?? "", "SoNgaySD" . $i, $i)->render(); ?>
                                     </td>
-                                    <td style="width: 150px;">
-                                        <?php echo $form->CachDung($sanPham->CachDungThuoc(), "cachdungthuoc" . $i, $i)->render(); ?>
-                                    </td>
-                                    <td style="width: 100px;">
+                                    <td style="width: 70px;">
                                         <?php echo $form->DVT($sanPham->DonViTinh(), "dvt" . $i, $i)->render(); ?>
                                     </td>
-                                    <td style="width: 100px;">
+                                    <td style="width: 80px;">
                                         <?php echo $form->Sang($thuoc["Sang"] ?? "", "sang" . $i, $i)->render(); ?>
                                     </td>
-                                    <td style="width: 100px;">
+                                    <td style="width: 80px;">
                                         <?php echo $form->Trua($thuoc["Trua"] ?? "", "trua" . $i, $i)->render(); ?>
                                     </td>
-                                    <td style="width: 100px;">
-                                        <?php
-                                        echo $form->Chieu($thuoc["Chieu"] ?? "", "chieu" . $i, $i)->render(); ?>
+                                    <td style="width: 80px;">
+                                        <?php echo $form->Chieu($thuoc["Chieu"] ?? "", "chieu" . $i, $i)->render(); ?>
                                     </td>
-                                    <td>
+                                    <td style="width: 60px;">
                                         <?php echo $form->SoLuong($thuoc["Soluong"] ?? "", "soluong" . $i, $i)->render(); ?>
                                     </td>
                                     <td>
-                                        <?php echo $form->GhiChu($sanPham->Ghichu, "ghichu" . $i, $i)->render(); ?>
+                                        <?php echo $form->GhiChu($thuoc["Ghichu"] ?? "", "ghichu" . $i, $i)->render(); ?>
                                     </td>
                                 </tr>
                             <?php

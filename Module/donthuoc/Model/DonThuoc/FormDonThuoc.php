@@ -78,7 +78,7 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 		$option = SanPham::CapChaTpOptions();
 		$option = ["" => ""] + $option;
 		// $properties = ["class" => "assl"+"sdfsdfsd"];
-		$properties["value"] =$val;
+		$properties["value"] = $val;
 		$properties["id"] = $id;
 		$properties["index"] = $index;
 		$properties["class"] = "select2 form-control changename ";
@@ -397,7 +397,8 @@ class FormDonThuoc implements iFormDonThuoc, iFormDonThuocDetail
 		$properties = self::$properties;
 		$properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
 		$properties["id"] = $id;
-		$properties["index"] = $index; 
+		$properties["index"] = $index;
+		$properties["class"] = "form-control changenumber";
 		$name = self::$ElementsName . "[" . __FUNCTION__ . "]" . "[]";
 		return new FormRender(new Textbox("", $name, $properties));
 	}

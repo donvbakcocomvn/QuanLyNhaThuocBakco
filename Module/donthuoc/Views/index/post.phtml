@@ -188,7 +188,7 @@ $roleDetail = new Model\Role();
                                         <?php echo $form->SoLuong($thuoc["Soluong"] ?? "", "soluong" . $i, $i)->render(); ?>
                                     </td>
                                     <td>
-                                        <?php echo $form->GhiChu($sanPham->Ghichu, "ghichu" . $i, $i)->render(); ?>
+                                        <?php echo $form->GhiChu($thuoc["Ghichu"] ?? "", "ghichu" . $i, $i)->render(); ?>
                                     </td>
                                 </tr>
 
