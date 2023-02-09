@@ -123,7 +123,7 @@ $roleDetail = new Model\Role();
                                             </th>
                                             <th class="hansudung">
                                                 <?php
-                                                echo $formChiTiet->HanSuDung($sanPham->HSD, "HanSuDung" . $i, $i)->render(); ?>
+                                                echo $formChiTiet->HanSuDung($thuoc["HSD"] ?? date("Y-m-d", time()), "HanSuDung" . $i, $i)->render(); ?>
                                             </th>
                                             <th>
                                                 <?php echo $formChiTiet->Price($sanPham->Giaban, "Price" . $i, $i)->render(); ?>
@@ -148,7 +148,7 @@ $roleDetail = new Model\Role();
                         </fieldset>
                     </div>
                     <div class="col-md-12 ">
-                        <button id="LamLai" class="btn btn-warning" type="reset">Làm Lại</button>
+                        <!-- <button id="LamLai" class="btn btn-warning" type="reset">Làm Lại</button> -->
                         <button id="btnTaoPhieu" class="btn btn-success" name="LuuThoat">Tạo phiếu</button>
                     </div>
                 </div>

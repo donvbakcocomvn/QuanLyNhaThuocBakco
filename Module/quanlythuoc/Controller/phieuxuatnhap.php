@@ -53,15 +53,18 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
         header('Content-Type: application/json; charset=utf-8');
         $id = $this->getParams(0);
         $index = $this->getParams(1);
+
+        $thuoc =  \Module\quanlythuoc\Model\PhieuXuatNhap::GetThuocPhieuNhap($index);
+
         $donthuocdetail = new \Module\quanlythuoc\Model\PhieuXuatNhap();
         $sanpham = new SanPham($id);
         $_sanpham = $sanpham->GetById($id);
         $_sanpham["Soluong"] = $donthuocdetail->GetThuocPhieuXuatNhap($index)["Soluong"] ?? 1;
         $_sanpham["Solo"] = $donthuocdetail->GetThuocPhieuXuatNhap($index)["Solo"] ?? "";
         $_sanpham["Soluong"] = max($_sanpham["Soluong"], 1);
-        $_sanpham["HSD"] = date("Y-m-d",time());
-        $_sanpham["Giaban"] = floatval($_sanpham["Giaban"]);
-        $_sanpham["Gianhap"] = floatval($_sanpham["Gianhap"]);
+        $_sanpham["HSD"] = $thuoc["HSD"] ?? date("Y-m-d", time());
+        $_sanpham["Giaban"] = floatval($_sanpham["Giaban"] ?? 0);
+        $_sanpham["Gianhap"] = floatval($_sanpham["Gianhap"] ?? 0);
         $_sanpham["ThanhTien"] = floatval($_sanpham["Giaban"] * $_sanpham["Soluong"]);
         $_sanpham["TongTien"] = \Module\quanlythuoc\Model\PhieuXuatNhap::TongTien();
         // $_sanpham["HSD"] = null;
@@ -89,10 +92,7 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
         $_sanpham["NuocSX"] = $dataRequest["nuocSanXuat"] ?? "";
         $_sanpham["Solo"] = $dataRequest["soLo"] ?? "";
         if ($dataRequest["hsd"] != "") {
-            var_dump($dataRequest["hsd"]);
             $_sanpham["HSD"] = date("Y-m-d", strtotime($dataRequest["hsd"]));
-        } else {
-            $_sanpham["HSD"] = time();
         }
         $_sanpham["Gianhap"] = floatval($_sanpham["Gianhap"] ?? 0);
         $_sanpham["Giaban"] = floatval($dataRequest["gia"]);

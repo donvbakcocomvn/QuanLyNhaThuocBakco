@@ -138,6 +138,12 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
         return $_SESSION["DSThuocPhieuNhap"];
     }
 
+    // SESSION Danh sách thuốc trong phiếu
+    public static function GetThuocPhieuNhap($index)
+    {
+        return $_SESSION["DSThuocPhieuNhap"][$index] ?? [];
+    }
+
     public static function DeleteAllThuocPhieuNhap()
     {
         return $_SESSION["DSThuocPhieuNhap"] = [];
