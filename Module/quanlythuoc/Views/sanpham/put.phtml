@@ -16,8 +16,8 @@ $roleDetail = new Model\Role();
         <div class="box-header">
             <h3 class="box-title">Sửa Thuốc</h3>
             <div class="box-tools">
-                <?php 
-                    \Model\FormRender::HuongDan("suathuoc", "Hướng dẫn sửa thuốc")
+                <?php
+                \Model\FormRender::HuongDan("suathuoc", "Hướng dẫn sửa thuốc")
                 ?>
             </div>
         </div>
@@ -75,22 +75,28 @@ $roleDetail = new Model\Role();
                         <?php $sp->Canhbao($item->Canhbao)->renderHtml();  ?>
                     </div>
                     <div class="col-md-4">
-                        <?php 
+                        <?php
                         $sp->Ngaysx($item->Ngaysx)->renderHtml();  ?>
                     </div>
                     <div class="col-md-4">
-                        <?php 
-                        $sp->HSD($item->HSD)->renderHtml();  ?>
+                        <?php
+                        // $sp->HSD($item->HSD)->renderHtml();  
+                        ?>
                     </div>
-                    <div class="col-md-4">
-                        <?php $sp->Tacdung($item->Tacdung)->renderHtml();  ?>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <?php $sp->Tacdung($item->Tacdung)->renderHtml();  ?>
+                            </div>
+                            <div class="col-md-4">
+                                <?php $sp->Cochetacdung($item->Cochetacdung)->renderHtml();  ?>
+                            </div>
+                            <div class="col-md-4">
+                                <?php $sp->Ghichu($item->Ghichu)->renderHtml();  ?>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <?php $sp->Cochetacdung($item->Cochetacdung)->renderHtml();  ?>
-                    </div>
-                    <div class="col-md-4">
-                        <?php $sp->Ghichu($item->Ghichu)->renderHtml();  ?>
-                    </div>
+
                     <div class="col-md-12 ">
                         <button class="btn btn-warning" type="reset">Làm Lại</button>
                         <!-- <button class="btn btn-success">Lưu</button> -->

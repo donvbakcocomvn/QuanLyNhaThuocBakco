@@ -13,7 +13,7 @@ class FormBenhNhan implements iFormBenhNhan
 
         static $properties = ["class" => "form-control"];
         static $ElementsName = "BenhNhan";
-        static $FormData = [];
+        static $FormData = [[],[],[]];
 
         //put your code here
         public function __construct($formData = null)

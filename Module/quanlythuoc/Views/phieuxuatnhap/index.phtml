@@ -1,3 +1,10 @@
+<?php
+
+use Module\quanlythuoc\Model\PhieuXuatNhap\FormPhieuXuatNhap;
+
+$phieu = new FormPhieuXuatNhap();
+
+?>
 <ol class="breadcrumb">
     <li><a href="/index.php?controller=backend">Home</a></li>
     <li> Danh Sách Phiếu Xuất Nhập</li>
@@ -8,11 +15,16 @@
 <div class="container-fluid">
     <form method="get" action="/quanlythuoc/phieuxuatnhap/index/">
         <div class="form-group d-flex">
-            <label class="btn btn-default"><input ng-change="isShowMore(showMore);" ng-model="showMore" style="display: none" type="checkbox"><i class="fa fa-share" aria-hidden="true"></class=></i></label>
-            <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập vào mã phiếu hoặc nội dung phiếu để tìm kiếm">
-            <button class="btn btn-primary no-border-radius" name="btnTim" type="submit">
-                <i class="fa fa-search"></i> Tìm Kiếm
-            </button>
+            <div style="width: 50%;" class="form-group">
+                <label>Từ khoá</label>
+                <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập vào mã phiếu hoặc nội dung phiếu để tìm kiếm">
+            </div>
+            <?php $phieu->SearchXuatNhap($_GET["SearchXuatNhap"] ?? "")->renderHtml(); ?>
+            <div style="padding-top: 25px;">
+                <button class="btn btn-primary no-border-radius" name="btnTim" type="submit">
+                    Lọc <i class="fa fa-filter"></i>
+                </button>
+            </div>
         </div>
     </form>
     <div class="clearfix">
@@ -21,12 +33,13 @@
                 <h3 class="box-title">Danh Sách Phiếu</h3>
                 <div class="box-tools">
                     <?php
+
                     use Model\Common;
                     use Model\FormRender;
                     use Module\quanlythuoc\Model\PhieuXuatNhap;
 
                     Module\quanlythuoc\Model\btnHtml::btnThemPhieuXuatNhap();
-                    FormRender::HuongDan("danhsachphieu",'Hướng dẫn phiếu xuất/nhập');
+                    FormRender::HuongDan("danhsachphieu", 'Hướng dẫn phiếu xuất/nhập');
                     ?>
                 </div>
             </div>

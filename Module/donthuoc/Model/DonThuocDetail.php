@@ -65,7 +65,7 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
 
     public static function ClearSession()
     {
-        $_SESSION["DetailThuoc"] = [];
+        $_SESSION["DetailThuoc"] = [[],[],[],[],[],[],[],[],[],[],[],[],[],[]];
     }
 
     public static function DsThuoc()

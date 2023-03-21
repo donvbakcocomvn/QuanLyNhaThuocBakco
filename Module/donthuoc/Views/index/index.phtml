@@ -85,13 +85,20 @@ use Module\donthuoc\Model\DonThuoc;
                                 // var_dump($_item);
                             ?>
                                 <tr>
-                                    <td style="width:200px">
-                                        <?php
-                                        echo Module\donthuoc\Model\btnHtml::btnCopyDonThuoc($_item->Id);
-                                        echo Module\donthuoc\Model\btnHtml::btnXoaDonThuoc($_item->Id);
-                                        echo Module\donthuoc\Model\btnHtml::btnSuaDonThuoc($_item->Id);
-                                        echo Module\donthuoc\Model\btnHtml::btnchitiet($_item->Id);
-                                        ?>
+                                    <td style="width:100px">
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fa fa-ellipsis-v"></i>
+                                            </button>
+                                            <div class="dropdown-menu table-dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <?php
+                                                echo Module\donthuoc\Model\btnHtml::btnCopyDonThuoc($_item->Id);
+                                                echo Module\donthuoc\Model\btnHtml::btnXoaDonThuoc($_item->Id);
+                                                echo Module\donthuoc\Model\btnHtml::btnSuaDonThuoc($_item->Id);
+                                                echo Module\donthuoc\Model\btnHtml::btnchitiet($_item->Id);
+                                                ?>
+                                            </div>
+                                        </div>
                                     </td>
                                     <td class="text-center">
                                         <?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?>

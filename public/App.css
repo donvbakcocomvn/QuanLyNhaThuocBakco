@@ -64,6 +64,22 @@ select.form-control {
 .table_Thuoc tr th {
     padding: 4px !important;
 }
-.table-thuoc input{
+
+.table-thuoc input {
     padding: 4px !important;
+}
+
+.table-dropdown-menu .btn span {
+    display: block;
+    margin-left: 10px;
+}
+
+.table-dropdown-menu .btn {
+    display: flex;
+    width: 100%;
+    border: none;
+}
+
+.btn span {
+    display: none;
 }

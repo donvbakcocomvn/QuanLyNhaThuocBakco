@@ -32,6 +32,7 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
         $modelItem = new \Module\quanlythuoc\Model\PhieuXuatNhap();
         $params["keyword"] = isset($_REQUEST["keyword"]) ? \Model\Common::TextInput($_REQUEST["keyword"]) : "";
         $params["danhmuc"] = isset($_REQUEST["danhmuc"]) ? \Model\Common::TextInput($_REQUEST["danhmuc"]) : "";
+        $params["SearchXuatNhap"] = isset($_REQUEST["SearchXuatNhap"]) ? \Model\Common::TextInput($_REQUEST["SearchXuatNhap"]) : "";
         $params["isShow"] = isset($_REQUEST["isShow"]) ? \Model\Common::TextInput($_REQUEST["isShow"]) : "";
         $indexPage = isset($_GET["indexPage"]) ? intval($_GET["indexPage"]) : 1;
         $indexPage = max(1, $indexPage);

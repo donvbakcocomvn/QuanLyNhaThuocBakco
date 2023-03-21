@@ -47,6 +47,7 @@ class btnHtml
     ?>
         <a class="btn btn-default" <?php echo \Model\FormRender::ToolTip("Chi tiết đơn thuốc"); ?> href="/index.php?module=donthuoc&controller=index&action=viewdonthuoc&id=<?php echo $id; ?>">
             <i class="fa fa-eye text-yellow"></i>
+            <span>Chi tiết đơn thuốc</span>
         </a>
     <?php
     }
@@ -114,6 +115,7 @@ class btnHtml
     ?>
         <a class="btn btn-default no-print" <?php echo \Model\FormRender::ToolTip("Sửa đơn thuốc"); ?> href="/index.php?module=donthuoc&isnew=1&controller=index&action=put&id=<?php echo $id; ?>">
             <i class="fa fa-pencil text-blue"></i>
+            <span>Sửa đơn thuốc</span>
         </a>
     <?php
     }
@@ -124,11 +126,13 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-primary" <?php echo \Model\FormRender::ToolTip("Sao chép đơn thuốc"); ?> href="/donthuoc/index/copy/?id=<?php echo $id; ?>">
+        <a class="btn  " <?php echo \Model\FormRender::ToolTip("Sao chép đơn thuốc"); ?> href="/donthuoc/index/copy/?id=<?php echo $id; ?>">
             <i class="fa fa-files-o"></i>
+            <span>Sao chép đơn thuốc</span>
         </a>
-        <a class="btn btn-default" <?php echo \Model\FormRender::ToolTip("Sao chép đơn thuốc cho bệnh nhân khác"); ?> href="/donthuoc/index/copy/?id=<?php echo $id; ?>&isnew=1">
+        <a class="btn " <?php echo \Model\FormRender::ToolTip("Sao chép đơn thuốc cho bệnh nhân khác"); ?> href="/donthuoc/index/copy/?id=<?php echo $id; ?>&isnew=1">
             <i class="fa fa-files-o"></i>
+            <span>Sao chép đơn thuốc cho bệnh nhân khác</span>
         </a>
     <?php
     }
@@ -139,8 +143,8 @@ class btnHtml
             return;
         }
     ?>
-        <a class="btn btn-sm btn-danger" title="Bạn có muốn xóa đơn thuốc này?" href="/donthuoc/index/delete/?id=<?php echo $id; ?>">
-            Xóa
+        <a class="btn   btn-danger" title="Bạn có muốn xóa đơn thuốc này?" href="/donthuoc/index/delete/?id=<?php echo $id; ?>">
+            <i class="fa fa-times"></i> <span>Xóa</span> 
         </a>
 <?php
     }

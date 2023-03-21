@@ -52,6 +52,15 @@ class FormPhieuXuatNhap implements iFormPhieuXuatNhap
 	}
 
 
+	function SearchXuatNhap($val = null)
+	{
+		$properties = self::$properties;
+		$properties["value"] = $val ?? $this->getVal(__FUNCTION__);
+		$properties["class"] = "form-control";
+		$name =   __FUNCTION__;
+		$options = [1 => "Phiếu Nhập", -1 => "Phiếu Xuất"];
+		return new FormRender(new Element\Select("Loại Phiếu", $name, $options, $properties));
+	}
 	function XuatNhap($val = null, $id = null, $index = null)
 	{
 		$properties = self::$properties;

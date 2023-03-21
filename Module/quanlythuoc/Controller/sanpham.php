@@ -228,7 +228,7 @@ class sanpham extends \Application implements \Controller\IControllerBE
                 $model["Giaban"] = $itemHtml["Giaban"];
                 $model["DVT"] = $itemHtml["DVT"];
                 $model["Ngaysx"] = Date("Y-m-d", strtotime($itemHtml["Ngaysx"])) ?? "";
-                $model["HSD"] = Date("Y-m-d", strtotime($itemHtml["HSD"])) ?? "";
+                // $model["HSD"] = Date("Y-m-d", strtotime($itemHtml["HSD"])) ?? "";
                 $model["Tacdung"] = $itemHtml["Tacdung"];
                 $model["Cochetacdung"] = $itemHtml["Cochetacdung"];
                 $model["Ghichu"] = $itemHtml["Ghichu"];

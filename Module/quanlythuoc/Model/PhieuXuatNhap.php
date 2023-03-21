@@ -138,7 +138,7 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
         return $_SESSION["DSThuocPhieuNhap"];
     }
 
-    // SESSION Danh sách thuốc trong phiếu
+    // SESSION  thuốc trong phiếu
     public static function GetThuocPhieuNhap($index)
     {
         return $_SESSION["DSThuocPhieuNhap"][$index] ?? [];
@@ -219,17 +219,22 @@ class PhieuXuatNhap extends \Model\DB implements \Model\IModelService
     {
         $name = isset($params["keyword"]) ? $params["keyword"] : '';
         $danhmuc = isset($params["danhmuc"]) ? $params["danhmuc"] : null;
+        $SearchXuatNhap = $params["SearchXuatNhap"] ?? null;
         $isShow = isset($params["isShow"]) ? $params["isShow"] : null;
         $isShowSql = "and `IsDelete` = 0 ";
         $danhmucSql = "";
         if ($isShow) {
             $isShowSql = "and `IsDelete` = '{$isShow}' ";
         }
+        $searchXuatNhapSql = "";
+        if ($SearchXuatNhap) {
+            $searchXuatNhapSql = "and `XuatNhap` = '{$SearchXuatNhap}' ";
+        }
         if ($danhmuc) {
             $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
         }
         // self::$Debug = true;
-        $where = " (`NoiDungPhieu` like '%{$name}%' or `IdPhieu` like '%{$name}%' {$danhmucSql}) {$isShowSql} Order By `CreateRecord`  DESC";
+        $where = " (`NoiDungPhieu` like '%{$name}%' or `IdPhieu` like '%{$name}%' {$danhmucSql}) {$isShowSql} {$searchXuatNhapSql} Order By `CreateRecord`  DESC";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 
