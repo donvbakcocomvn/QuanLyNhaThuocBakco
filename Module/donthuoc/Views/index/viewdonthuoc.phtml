@@ -98,7 +98,9 @@ $IdDonThuoc = $donthuoc->Id;
     <ol class="breadcrumb no-print">
         <li><a href="/index.php?controller=backend">Home</a></li>
         <li><a href="/index.php?module=donthuoc&controller=index&action=index">Danh Sách Đơn Thuốc</a></li>
-        <li class="text-capitalize"> Đơn thuốc chi tiết <?php echo $IdDonThuoc; ?> </li>
+        <li class="text-capitalize"> Đơn thuốc chi tiết
+            <?php echo $IdDonThuoc; ?>
+        </li>
     </ol>
     <div class="main main-body">
         <div class="salesslip">
@@ -116,16 +118,28 @@ $IdDonThuoc = $donthuoc->Id;
                 <table class="table-hover" style="width: 100%;">
                     <thead>
                         <tr>
-                            <td><b>Họ và tên</b> : <?php echo $donthuoc->NameBN; ?></b></td>
-                            <td><b>Năm sinh </b>: <?php echo  date('Y', strtotime($donthuoc->NgaySinh)); ?></td>
-                            <td><b>Giới</b>: <?php echo $donthuoc->GioiTinh(); ?></td>
+                            <td><b>Họ và tên</b> :
+                                <?php echo $donthuoc->NameBN; ?></b>
+                            </td>
+                            <td><b>Năm sinh </b>:
+                                <?php echo date('Y', strtotime($donthuoc->NgaySinh)); ?>
+                            </td>
+                            <td><b>Giới</b>:
+                                <?php echo $donthuoc->GioiTinh(); ?>
+                            </td>
                         </tr>
                         <tr>
-                            <td colspan="2"><b>Địa chỉ</b> : <?php echo DonThuoc::GetItemById('Address', $donthuoc->IdBenhNhan); ?> </td>
-                            <td> <b>SĐT </b>: <?php echo DonThuoc::GetItemById('Phone', $donthuoc->IdBenhNhan); ?> </td>
+                            <td colspan="2"><b>Địa chỉ</b> :
+                                <?php echo DonThuoc::GetItemById('Address', $donthuoc->IdBenhNhan); ?>
+                            </td>
+                            <td> <b>SĐT </b>:
+                                <?php echo DonThuoc::GetItemById('Phone', $donthuoc->IdBenhNhan); ?>
+                            </td>
                         </tr>
                         <tr>
-                            <td colspan="3"><b>Chẩn đoán </b>: <?php echo $donthuoc->ChanDoanBenh; ?></td>
+                            <td colspan="3"><b>Chẩn đoán </b>:
+                                <?php echo $donthuoc->ChanDoanBenh; ?>
+                            </td>
                         </tr>
                     </thead>
                 </table>
@@ -136,19 +150,22 @@ $IdDonThuoc = $donthuoc->Id;
                     <thead>
                         <tr style="border-bottom: 1px solid #00000042;">
                             <th class="text-center">STT</th>
-                            <th class="text-left">Tên thuốc</th>
+                            <th style="padding-left: 10px;" class="text-left">Tên thuốc</th>
                             <th class="text-center">Số lượng</th>
                             <?php
                             if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, "XemGiaThuoc"]) == true) {
-                            ?>
+                                ?>
                                 <th class="text-center">
                                     <?php
                                     echo $donthuoc->ThuocLoaiDon != 2 ? "Đơn giá" : ""
-                                    ?></th>
-                                <th><?php
+                                        ?>
+                                </th>
+                                <th>
+                                    <?php
                                     echo $donthuoc->ThuocLoaiDon != 2 ? "Thành Tiền" : ""
-                                    ?></th>
-                            <?php
+                                        ?>
+                                </th>
+                                <?php
                             }
                             ?>
                         </tr>
@@ -166,16 +183,17 @@ $IdDonThuoc = $donthuoc->Id;
                                         <?php echo $index + 1 ?>
                                     </b>
                                 </td>
-                                <th style="white-space: nowrap;">
+                                <th style="white-space: nowrap;padding-left:10px;">
                                     <?php echo SanPham::GetNameById($DTdetail['IdThuoc']); ?>
                                 </th>
                                 <td class="text-center"><span style="font-weight: 400 !important;">
-                                        <b> <?php echo $DTdetail['SoLuong'] . '</b> ' . $DTdetail['DVT']; ?>
+                                        <b>
+                                            <?php echo $DTdetail['SoLuong'] . '</b> ' . $DTdetail['DVT']; ?>
                                     </span>
                                 </td>
                                 <?php
                                 if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, "XemGiaThuoc"]) == true) {
-                                ?>
+                                    ?>
                                     <td class="text-center">
                                         <?php
                                         if ($donthuoc->ThuocLoaiDon != 2) {
@@ -189,7 +207,7 @@ $IdDonThuoc = $donthuoc->Id;
                                         }
                                         ?>
                                     </td>
-                                <?php
+                                    <?php
                                 }
                                 ?>
                                 <td>
@@ -213,34 +231,38 @@ $IdDonThuoc = $donthuoc->Id;
                                             ?>
                                         </i>
                                     </td>
-                                <?php
+                                    <?php
                                 }
                                 ?>
 
                             </tr>
                             <tr>
-                                <td colspan="<?php echo (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, "XemGiaThuoc"]) == true) ? 6 : 4; ?>">
+                                <td
+                                    colspan="<?php echo (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, "XemGiaThuoc"]) == true) ? 6 : 4; ?>">
                                     <table width="100%">
                                         <tr style="border-bottom: 0px solid #00000042;">
                                             <td width="1" style="padding-left: 25px;"></td>
                                             <td width="2" style="width:80px;padding-left: 22px;"><i>Sáng: </i>
 
-                                                <?php if ($DTdetail['Sang'] > 0) echo SanPham::GetDesByVal($DTdetail['Sang'], 'donviquydoi') . ' ' . $DTdetail['DVT']; ?>
+                                                <?php if ($DTdetail['Sang'] > 0)
+                                                    echo SanPham::GetDesByVal($DTdetail['Sang'], 'donviquydoi') . ' ' . $DTdetail['DVT']; ?>
 
 
                                             </td>
                                             <td width="2" style="width:80px;"><i>Trưa:</i>
-                                                <?php if ($DTdetail['Trua'] > 0) echo SanPham::GetDesByVal($DTdetail['Trua'], 'donviquydoi') . ' ' . $DTdetail['DVT'] ?? ""; ?>
+                                                <?php if ($DTdetail['Trua'] > 0)
+                                                    echo SanPham::GetDesByVal($DTdetail['Trua'], 'donviquydoi') . ' ' . $DTdetail['DVT'] ?? ""; ?>
                                             </td>
                                             <td width="2" style="width:80px;"><i>Tối:</i>
-                                                <?php if ($DTdetail['Chieu'] > 0) echo SanPham::GetDesByVal($DTdetail['Chieu'], 'donviquydoi') . ' ' . $DTdetail['DVT'] ?? "" ?>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
+                                                <?php if ($DTdetail['Chieu'] > 0)
+                                                    echo SanPham::GetDesByVal($DTdetail['Chieu'], 'donviquydoi') . ' ' . $DTdetail['DVT'] ?? "" ?>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
 
-                        <?php
+                            <?php
                         }
                         ?>
                     </tbody>
@@ -252,11 +274,11 @@ $IdDonThuoc = $donthuoc->Id;
                     <?php
 
                     if ($donthuoc->ThuocLoaiDon != 2) {
-                    ?>
+                        ?>
                         <b>Tổng cộng :</b><span style="float : right; font-weight: bold;">
                             <?php echo Common::ViewPrice($sum) . " " . "( " . $common->convert_number_to_words($sum) . " )" ?>
                         </span>
-                    <?php
+                        <?php
                     }
                     ?>
                 </td>

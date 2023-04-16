@@ -108,7 +108,7 @@ $searchXuatNhap = $_GET["SearchXuatNhap"] ?? "-1";
                         )->render();
                         ?>
                         <?php
-                        $searchXuatNhap = $_GET["SearchXuatNhap"];
+                        
                         $linkPhanTrang = "/quanlythuoc/phieuxuatnhap/index/?SearchXuatNhap={$searchXuatNhap}&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
                         echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
                         ?>
@@ -125,8 +125,7 @@ $searchXuatNhap = $_GET["SearchXuatNhap"] ?? "-1";
         linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
         window.location.href = linkPhanTrang;
     }
-    $(document).ready(function () {
-
+    $(document).ready(function () { 
         // Change Thuốc 
         // console.log(e.attr("id"));
         $("#DongBoPhieu").change(function (param) {
