@@ -46,7 +46,7 @@ class btnHtml
             return;
         }
         ?>
-        <a class="btn btn-default" href="index.php?module=benhnhan&controller=index&action=put&id=<?php echo $id; ?>">
+        <a class="btn btn-default" href="/benhnhan/index/put/?id=<?php echo $id; ?>">
             <i class="fa fa-edit text-yellow"></i>
             <span>Cập nhật thông tin bệnh nhân</span>
         </a>

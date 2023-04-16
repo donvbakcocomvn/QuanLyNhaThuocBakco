@@ -98,10 +98,10 @@ use Module\donthuoc\Model\DonThuoc;
                                                 aria-labelledby="dropdownMenuButton">
                                                 <?php
                                                 echo Module\donthuoc\Model\btnHtml::btnCopyDonThuoc($_item->Id);
-                                                echo Module\donthuoc\Model\btnHtml::btnXoaDonThuoc($_item->Id);
                                                 echo Module\donthuoc\Model\btnHtml::btnSuaDonThuoc($_item->Id);
                                                 echo Module\donthuoc\Model\btnHtml::btnchitiet($_item->Id);
-                                                echo Module\donthuoc\Model\btnHtml::btnchitiet($_item->BenhNhan()->Id);
+                                                echo Module\donthuoc\Model\btnHtml::btnSuaBenhNhan($_item->BenhNhan()->Id);
+                                                echo Module\donthuoc\Model\btnHtml::btnXoaDonThuoc($_item->Id);
                                                 ?>
                                             </div>
                                         </div>
@@ -113,7 +113,7 @@ use Module\donthuoc\Model\DonThuoc;
                                         <?php echo $_item->Id; ?>
                                     </td>
                                     <td>
-                                        <?php echo $_item->NameBN; ?>
+                                        <?php echo $_item->BenhNhan()->Name; ?>
                                     </td>
                                     <td>
                                         <?php echo $_item->BenhNhan()->Gioitinh(); ?>
