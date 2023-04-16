@@ -144,7 +144,7 @@ class btnHtml
         }
         ?>
         <a class="btn  " <?php echo \Model\FormRender::ToolTip("Sao chép đơn thuốc"); ?>
-            href="/donthuoc/index/copy/?id=<?php echo $id; ?>">
+            href="/donthuoc/index/copydonbyid/?id=<?php echo $id; ?>">
             <i class="fa fa-files-o"></i>
             <span>Sao chép đơn thuốc</span>
         </a>

@@ -108,7 +108,7 @@ class BenhNhan extends \Model\DB implements \Model\IModelService
 
     public static function ConvertDateToString($arr)
     {
-        $krr    = explode('-', $arr);
+        $krr = explode('-', $arr);
         $result = implode("", $krr);
         return $result;
     }
@@ -126,6 +126,7 @@ class BenhNhan extends \Model\DB implements \Model\IModelService
 
     public function Delete($Id)
     {
+
         $DM = new BenhNhan();
         return $DM->DeleteById($Id);
     }
@@ -180,15 +181,24 @@ class BenhNhan extends \Model\DB implements \Model\IModelService
     {
         return $this->UpdateRow($model);
     }
+    public function PutFromForm($model)
+    {
+        
+        $model["Ngaysinh"] = "{$model["NamSinh"]}-{$model["ThangSinh"]}-{$model["NgaySinh"]}";
+        unset($model["NamSinh"]);
+        unset($model["ThangSinh"]);
+        unset($model["NgaySinh"]);
+        return $this->UpdateRow($model);
+    }
 
-    // public static function CapChaTpOptions($dungTatCa = false) {
-    //     $dm = new BenhNhan();
-    //     $where = "`parentsId` != '' or `parentsId` is null ";
-    //     $a = $dm->SelectToOptions($where, ["Id", "Name"]);
-    //     if ($dungTatCa == true) {
-    //         $a = ["" => "Tất Cả"] + $a;
-    //     }
-    //     return $a;
-    // }
+// public static function CapChaTpOptions($dungTatCa = false) {
+//     $dm = new BenhNhan();
+//     $where = "`parentsId` != '' or `parentsId` is null ";
+//     $a = $dm->SelectToOptions($where, ["Id", "Name"]);
+//     if ($dungTatCa == true) {
+//         $a = ["" => "Tất Cả"] + $a;
+//     }
+//     return $a;
+// }
 
 }

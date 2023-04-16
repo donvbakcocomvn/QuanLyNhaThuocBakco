@@ -60,7 +60,6 @@ $roleDetail = new Model\Role();
                                                 <?php btnHtml::btnCapNhatNgayDung(); ?>
                                             </div>
                                         </div>
-
                                         <div>
                                             <?php echo $form->ThuocLoaiDon()->renderHTML(); ?>
                                         </div>
@@ -125,7 +124,8 @@ $roleDetail = new Model\Role();
                         <thead>
                             <tr>
                                 <th>
-                                    <button data-toggle="tooltip" data-placement="top" title="Thêm thuốc mới" type="button" class="btn btn-success" id="btn-add">
+                                    <button data-toggle="tooltip" data-placement="top" title="Thêm thuốc mới"
+                                        type="button" class="btn btn-success" id="btn-add">
                                         <i class="fa fa-plus" aria-hidden="true"></i>
                                     </button>
                                 </th>
@@ -149,10 +149,12 @@ $roleDetail = new Model\Role();
                             foreach (DonThuocDetail::DsThuoc() as $mathuoc => $thuoc) {
                                 $sanPham = new SanPham($thuoc);
                                 // $i = $mathuoc;
-                            ?>
+                                ?>
                                 <tr>
                                     <th style="width: 50px;">
-                                        <button data-toggle="tooltip" data-placement="top" title="Xóa thuốc" type="button" title="Xóa thuốc này?" class="btn  btn-danger deleterows" id="<?php echo 'delete' . $mathuoc ?>" index=<?php echo $mathuoc ?>>
+                                        <button data-toggle="tooltip" data-placement="top" title="Xóa thuốc" type="button"
+                                            title="Xóa thuốc này?" class="btn  btn-danger deleterows"
+                                            id="<?php echo 'delete' . $mathuoc ?>" index=<?php echo $mathuoc ?>>
                                             <i class="fa fa-minus" aria-hidden="true"></i>
                                         </button>
                                     </th>
@@ -192,7 +194,7 @@ $roleDetail = new Model\Role();
                                     </td>
                                 </tr>
 
-                            <?php
+                                <?php
                                 $i++;
                             }
                             ?>

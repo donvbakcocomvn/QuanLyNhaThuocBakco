@@ -11,6 +11,7 @@ $(document).ready(function () {
             var idName = "#" + $(this).attr("id");
             var idDVT = "#dvt" + $("#" + $(this).attr("id")).attr("index");
             var index = $("#" + $(this).attr("id")).attr("index");
+            var idloaiDonThuoc = "#loaiDonThuoc";
             var idThuoc = $(idName).val();
             var idSoNgaySD = "#SoNgaySD" + $("#" + $(this).attr("id")).attr("index");
             var idSang = "#sang" + $("#" + $(this).attr("id")).attr("index");
@@ -32,6 +33,7 @@ $(document).ready(function () {
                     "chieu": $(idChieu).val(),
                     "trua": $(idTrua).val(),
                     "ghichu": $(idGhiChu).val(),
+                    "idloaiDonThuoc": $(idloaiDonThuoc).val(),
                     "ngaydungthuoc": $(idSoNgaySD).val(),
                 }),
                 contentType: false,
@@ -98,6 +100,7 @@ $(document).ready(function () {
             var index = $("#" + $(this).attr("id")).attr("index");
             var idName = "#" + $(this).attr("id");
             var idDVT = "#dvt" + index;
+
             var idThuoc = $(idName).val();
             var idSoNgaySD = "#SoNgaySD" + index;
             var idSang = "#sang" + index;
@@ -177,7 +180,7 @@ $(document).ready(function () {
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             dataType: 'json',
             success: function (response) {
-
+                console.log(response);
             },
             error: function () {
                 // alert("error");

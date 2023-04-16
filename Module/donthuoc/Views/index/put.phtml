@@ -25,7 +25,7 @@ use Module\quanlythuoc\Model\SanPham;
 $roleDetail = new Model\Role();
 $form = new FormDonThuoc();
 
-$donthuoc  = new DonThuoc($donthuoc);
+$donthuoc = new DonThuoc($donthuoc);
 // var_dump($donthuoc);
 $benhnhan = new BenhNhan($donthuoc->IdBenhNhan);
 
@@ -38,24 +38,26 @@ $bn = new FormBenhNhan();
 <div class="container-fluid">
     <div class="box box-primary">
         <div class="box-header">
-            <h3 class="box-title">Sửa Đơn Thuốc</h3>
+            <h3 class="box-title">Sửa Đơn Thuốc
+                <?php echo $donthuoc->Status(); ?>
+            </h3>
             <div class="box-tools">
                 <div class="box-tools">
                     <?php
                     \Model\FormRender::HuongDan("suadonthuoc", "Hướng dẫn sửa đơn thuốc")
-                    ?>
+                        ?>
                 </div>
             </div>
         </div>
         <div class="box-body">
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="" method="post" id="formKhachHang" enctype="multipart/form-data">
                 <div class="col-md-4">
                     <div class="row">
                         <fieldset>
                             <legend>Thông tin đơn thuốc</legend>
                             <?php
 
-                            $form = new FormDonThuoc();
+                            $form = new FormDonThuoc((array) $donthuoc);
                             ?>
                             <div class="col-md-9">
                                 <?php
@@ -76,8 +78,11 @@ $bn = new FormBenhNhan();
                             <div class="col-md-12">
                                 <?php echo $form->Id($donthuoc->Id)->renderHTML(); ?>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <?php echo $form->ThoiGianKham($donthuoc->ThoiGianKham)->renderHTML(); ?>
+                            </div>
+                            <div class="col-md-6">
+                                <?php  //echo $form->Status($donthuoc->Status)->renderHTML(); ?>
                             </div>
                         </fieldset>
                     </div>
@@ -87,37 +92,37 @@ $bn = new FormBenhNhan();
                         <fieldset>
                             <legend>Thông tin bệnh nhân</legend>
                             <div class="col-md-6">
-                                <?php $bn->Name($donthuoc->NameBN, null, 'tenbenhnhan')->renderHtml();  ?>
+                                <?php $bn->Name($donthuoc->NameBN, null, 'tenbenhnhan')->renderHtml(); ?>
                             </div>
                             <div class="col-md-6">
-                                <?php $bn->Phone($benhnhan->Phone, null, 'sodienthoai')->renderHtml();  ?>
+                                <?php $bn->Phone($benhnhan->Phone, null, 'sodienthoai')->renderHtml(); ?>
                             </div>
                             <div class="col-md-6">
-                                <?php $bn->CMND($benhnhan->CMND)->renderHtml();  ?>
+                                <?php $bn->CMND($benhnhan->CMND)->renderHtml(); ?>
                             </div>
                             <div class="col-md-6">
-                                <?php $bn->Gioitinh($benhnhan->Gioitinh)->renderHtml();  ?>
+                                <?php $bn->Gioitinh($benhnhan->Gioitinh)->renderHtml(); ?>
                             </div>
                             <div class="col-md-4">
-                                <?php $bn->Namsinh(date("Y", strtotime($benhnhan->Ngaysinh)))->renderHtml();  ?>
+                                <?php $bn->Namsinh(date("Y", strtotime($benhnhan->Ngaysinh)))->renderHtml(); ?>
                             </div>
                             <div class="col-md-4">
-                                <?php $bn->Thangsinh(date("m", strtotime($benhnhan->Ngaysinh)))->renderHtml();  ?>
+                                <?php $bn->Thangsinh(date("m", strtotime($benhnhan->Ngaysinh)))->renderHtml(); ?>
                             </div>
                             <div class="col-md-4">
-                                <?php $bn->Ngaysinh(date("d", strtotime($benhnhan->Ngaysinh)))->renderHtml();  ?>
+                                <?php $bn->Ngaysinh(date("d", strtotime($benhnhan->Ngaysinh)))->renderHtml(); ?>
                             </div>
                             <div class="col-md-12">
-                                <?php $bn->Address($benhnhan->Address)->renderHtml();  ?>
+                                <?php $bn->Address($benhnhan->Address)->renderHtml(); ?>
                             </div>
                             <div class="col-md-4 form-group">
-                                <?php $bn->TinhThanh($benhnhan->TinhThanh, "TinhThanhBenhNhan", "#QuanHuyenBenhNhan")->renderHtml();  ?>
+                                <?php $bn->TinhThanh($benhnhan->TinhThanh, "TinhThanhBenhNhan", "#QuanHuyenBenhNhan")->renderHtml(); ?>
                             </div>
                             <div class="col-md-4 form-group">
-                                <?php $bn->QuanHuyen($benhnhan->QuanHuyen, "QuanHuyenBenhNhan", "#PhuongXaBenhNhan")->renderHtml();  ?>
+                                <?php $bn->QuanHuyen($benhnhan->QuanHuyen, "QuanHuyenBenhNhan", "#PhuongXaBenhNhan")->renderHtml(); ?>
                             </div>
                             <div class="col-md-4 form-group">
-                                <?php $bn->PhuongXa($benhnhan->PhuongXa, "PhuongXaBenhNhan")->renderHtml();  ?>
+                                <?php $bn->PhuongXa($benhnhan->PhuongXa, "PhuongXaBenhNhan")->renderHtml(); ?>
                             </div>
                         </fieldset>
                     </div>
@@ -127,9 +132,17 @@ $bn = new FormBenhNhan();
                         <thead>
                             <tr>
                                 <th>
-                                    <button data-toggle="tooltip" data-placement="top" title="Thêm thuốc mới" type="button" class="btn btn-success" id="btn-add">
-                                        <i class="fa fa-plus" aria-hidden="true"></i>
-                                    </button>
+                                    <?php
+                                    if ($donthuoc->Status != "3") {
+                                        ?>
+                                        <button data-toggle="tooltip" data-placement="top" title="Thêm thuốc mới"
+                                            type="button" class="btn btn-success" id="btn-add">
+                                            <i class="fa fa-plus" aria-hidden="true"></i>
+                                        </button>
+                                        <?php
+                                    }
+                                    ?>
+
                                 </th>
                                 <th>STT</th>
                                 <th>Tên Thuốc</th>
@@ -150,12 +163,21 @@ $bn = new FormBenhNhan();
                             foreach (DonThuocDetail::DsThuoc() as $mathuoc => $thuoc) {
                                 $sanPham = new SanPham($thuoc["Id"] ?? null);
 
-                            ?>
+                                ?>
                                 <tr>
                                     <th style="width: 50px;">
-                                        <button data-toggle="tooltip" data-placement="top" title="Xóa thuốc" type="button" title="Xóa thuốc này?" class="btn  btn-danger deleterows" id="<?php echo 'delete' . $mathuoc ?>" index=<?php echo $mathuoc ?>>
-                                            <i class="fa fa-minus" aria-hidden="true"></i>
-                                        </button>
+                                        <?php
+                                        if ($donthuoc->Status != "3") {
+                                            ?>
+                                            <button data-toggle="tooltip" data-placement="top" title="Xóa thuốc" type="button"
+                                                title="Xóa thuốc này?" class="btn  btn-danger deleterows"
+                                                id="<?php echo 'delete' . $mathuoc ?>" index=<?php echo $mathuoc ?>>
+                                                <i class="fa fa-minus" aria-hidden="true"></i>
+                                            </button>
+                                            <?php
+                                        }
+                                        ?>
+
                                     </th>
                                     <td style="width: 40px;display: table-cell; vertical-align: middle;">
                                         <div class="text-center">
@@ -192,7 +214,7 @@ $bn = new FormBenhNhan();
                                         <?php echo $form->GhiChu($thuoc["Ghichu"] ?? "", "ghichu" . $i, $i)->render(); ?>
                                     </td>
                                 </tr>
-                            <?php
+                                <?php
                                 $i++;
                             }
                             ?>
@@ -200,8 +222,16 @@ $bn = new FormBenhNhan();
                     </table>
                 </fieldset>
                 <div class="col-md-12 ">
-                    <button class="btn btn-warning" type="reset">Làm lại</button>
-                    <button class="btn btn-success" name="LuuThoat">Lưu đơn thuốc</button>
+
+                    <?php
+                    if ($donthuoc->Status != "3") {
+                        ?>
+                        <button class="btn btn-warning" type="reset">Làm lại</button>
+                        <button class="btn btn-success" name="LuuThoat">Lưu đơn thuốc</button>
+                        <?php
+                    }
+                    ?>
+
                 </div>
             </form>
         </div>

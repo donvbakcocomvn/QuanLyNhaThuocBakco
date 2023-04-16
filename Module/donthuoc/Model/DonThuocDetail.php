@@ -65,7 +65,7 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
 
     public static function ClearSession()
     {
-        $_SESSION["DetailThuoc"] = [[],[],[],[],[],[],[],[],[],[],[],[],[],[]];
+        $_SESSION["DetailThuoc"] = [[], [], [], [], [], [], [], [], [], [], [], [], [], []];
     }
 
     public static function DsThuoc()
@@ -170,15 +170,19 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
         // var_dump($Chieu);
         // var_dump($Trua);
         $detailThuoc["Soluong"] = ceil(($Sang + $Chieu + $Trua) * $detailThuoc["SoNgaySDThuoc"]);
-        if ($detailThuoc["Soluong"] > $spThuoc['SLHienTai']) {
-            // return $_SESSION["DetailThuoc"][$index] = null;
-            $detailThuoc["Sang"] = 0;
-            $detailThuoc["Trua"] =  0;
-            $detailThuoc["Chieu"] =  0;
-            $detailThuoc["Soluong"] = 0;
-            $_SESSION["DetailThuoc"][$index] = $detailThuoc;
-            return false;
+        // nếu thuốc trong kho không đủ -> tất cả về 0
+        $detailThuoc["idloaiDonThuoc"] = $detailThuoc["idloaiDonThuoc"] ?? null;
+        if ($detailThuoc["idloaiDonThuoc"] == "3") {
+            if ($detailThuoc["Soluong"] > $spThuoc['SLHienTai']) {
+                $detailThuoc["Sang"] = 0;
+                $detailThuoc["Trua"] = 0;
+                $detailThuoc["Chieu"] = 0;
+                $detailThuoc["Soluong"] = 0;
+                $_SESSION["DetailThuoc"][$index] = $detailThuoc;
+                return false;
+            }
         }
+
 
         $_SESSION["DetailThuoc"][$index] = $detailThuoc;
         return true;
@@ -203,10 +207,10 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
         $data .= $_SERVER['REMOTE_ADDR'];
         $data .= $_SERVER['REMOTE_PORT'];
         $hash = strtoupper(hash('ripemd128', $uid . $guid . md5($data)));
-        $guid = substr($hash,  0,  8) . '-' .
-            substr($hash,  8,  4) . '-' .
-            substr($hash, 12,  4) . '-' .
-            substr($hash, 16,  4) . '-' .
+        $guid = substr($hash, 0, 8) . '-' .
+            substr($hash, 8, 4) . '-' .
+            substr($hash, 12, 4) . '-' .
+            substr($hash, 16, 4) . '-' .
             substr($hash, 20, 12);
         return $guid;
     }
@@ -235,7 +239,7 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
 
     public static function ConvertDateToString($arr)
     {
-        $krr    = explode('-', $arr);
+        $krr = explode('-', $arr);
         $result = implode("", $krr);
         return $result;
     }
@@ -298,14 +302,14 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
         return $this->UpdateRow($model);
     }
 
-    // public static function CapChaTpOptions($dungTatCa = false) {
-    //     $dm = new BenhNhan();
-    //     $where = "`parentsId` != '' or `parentsId` is null ";
-    //     $a = $dm->SelectToOptions($where, ["Id", "Name"]);
-    //     if ($dungTatCa == true) {
-    //         $a = ["" => "Tất Cả"] + $a;
-    //     }
-    //     return $a;
-    // }
+// public static function CapChaTpOptions($dungTatCa = false) {
+//     $dm = new BenhNhan();
+//     $where = "`parentsId` != '' or `parentsId` is null ";
+//     $a = $dm->SelectToOptions($where, ["Id", "Name"]);
+//     if ($dungTatCa == true) {
+//         $a = ["" => "Tất Cả"] + $a;
+//     }
+//     return $a;
+// }
 
 }

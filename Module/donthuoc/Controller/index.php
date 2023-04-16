@@ -152,7 +152,7 @@ class index extends \Application implements \Controller\IControllerBE
     {
     }
 
-    private  function ExportByFilter($params)
+    private function ExportByFilter($params)
     {
         $modelItem = new DonThuoc();
         $item = $modelItem->GetAll($params);
@@ -310,10 +310,11 @@ class index extends \Application implements \Controller\IControllerBE
         $donthuocdetail = new DonThuocDetail();
         $thuoc = DonThuocDetail::DsThuoc()[$data["index"]];
 
-        $thuoc["Sang"] = floatval($data["sang"] ?? 0);
-        $thuoc["Trua"] = floatval($data["trua"] ?? 0);
-        $thuoc["Chieu"] = floatval($data["chieu"] ?? 0);
+        $thuoc["Sang"] = floatval($data["sang"]);
+        $thuoc["Trua"] = floatval($data["trua"]);
+        $thuoc["Chieu"] = floatval($data["chieu"]);
         $thuoc["SoNgaySDThuoc"] = $data["ngaydungthuoc"];
+        $thuoc["idloaiDonThuoc"] = $data["idloaiDonThuoc"];
         $thuoc["Ghichu"] = $data["ghichu"];
         // var_dump($thuoc["Sang"]);
         // var_dump($thuoc["Trua"]);
@@ -456,9 +457,11 @@ class index extends \Application implements \Controller\IControllerBE
                     // DonThuocDetail::ClearSession();
                 }
 
-                DonThuocDetail::ClearSession();
+
                 new \Model\Error(\Model\Error::success, "Đã Thêm Toa Thuốc");
                 $donthuoc = new DonThuoc($itemDonThuoc["Id"]);
+                DonThuocDetail::ClearSession();
+                FormBenhNhan::SetFormData([]);
                 \Model\Common::ToUrl("/donthuoc/index/viewdonthuoc/?id=" . $donthuoc->Id . "");
             }
         } catch (\Exception $exc) {
@@ -467,8 +470,9 @@ class index extends \Application implements \Controller\IControllerBE
         $isnew = \Model\Request::Get("isnew", null);
         if ($isnew != null) {
             DonThuocDetail::ClearSession();
+            $_SESSION["FormDataDonThuoc"] = [];
             FormBenhNhan::SetFormData([]);
-            Common::ToUrl('/index.php?module=donthuoc&controller=index&action=post');
+            Common::ToUrl('/donthuoc/index/post');
         }
         $this->View();
     }
@@ -476,6 +480,8 @@ class index extends \Application implements \Controller\IControllerBE
     public function saveFormKhachHang()
     {
         $benhNhan = $_POST['BenhNhan'];
+        $bnModel = new BenhNhan();
+        $bnModel->PutFromForm($benhNhan);
         $donThuoc = $_POST['DonThuoc'];
         FormDonThuoc::SetFormData($donThuoc);
         FormBenhNhan::SetFormData($benhNhan);
@@ -610,7 +616,7 @@ class index extends \Application implements \Controller\IControllerBE
         \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DonThuoc_Copy]);
 
         try {
-            DonThuocDetail::ClearSession();
+            // DonThuocDetail::ClearSession();
             if (\Model\Request::Post(FormDonThuoc::$ElementsName, null) && \Model\Request::Post(FormBenhNhan::$ElementsName, null)) {
                 $benhnhan = new BenhNhan();
                 $itemBenhNhan = \Model\Request::Post(FormBenhNhan::$ElementsName, null);
@@ -685,19 +691,19 @@ class index extends \Application implements \Controller\IControllerBE
         }
         $DM = new DonThuoc();
         $data["donthuoc"] = $DM->GetById($id);
-
         if (isset($_GET["isnew"])) {
             DonThuocDetail::setDsThuoc($id);
             Common::ToUrl("/donthuoc/index/copy/?id={$id}&isnewbn=1");
-        }  
-
+        }
         $this->View($data);
     }
-    public function copydonbyid(){
-		$id = \Model\Request::Get("id", null);
-		DonThuocDetail::setDsThuoc($id);
-		Common::ToUrl("/donthuoc/index/copy/?id={$id}");
-	}
+
+    public function copydonbyid()
+    {
+        $id = \Model\Request::Get("id", null);
+        DonThuocDetail::setDsThuoc($id);
+        Common::ToUrl("/donthuoc/index/copy/?id={$id}");
+    }
 
     public function delete()
     {

@@ -284,7 +284,7 @@ class SanPham extends \Model\DB implements \Model\IModelService
     {
         $dm = new SanPham();
         $where = "`Name` != '' or `Name` is null or `IsDelete` = 0 ";
-        $a = $dm->SelectToOptions($where, ["Id", "Name"]);
+        $a = $dm->SelectToOptions($where, ["Id", "Name","SLHienTai"]);
         if ($dungTatCa == true) {
             $a = ["" => "Tất Cả"] + $a;
         }

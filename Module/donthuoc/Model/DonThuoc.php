@@ -48,6 +48,13 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
         }
     }
 
+
+    public function btnchitiet()
+    {
+        return btnHtml::btnchitiet($this->Id);
+    }
+
+
     public function XoaDonThuocTheoBenhNhan($DanhSachMaBenhNhan)
     {
         $DanhSachMaBenhNhan = implode("','", $DanhSachMaBenhNhan);
@@ -312,7 +319,7 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
         }
         $fromdateIsDeleteSQL = "and `IsDelete` = '0'";
 
-        $where = " (`Id` like '%{$name}%' or `NameBN` like '%{$name}%') {$fromdateSql} {$statusSql} {$todateSql} {$fromdateIsDeleteSQL} {$loaidonthuocSql}  ORDER BY `CreateRecord` DESC";
+        $where = " (`IdBenhNhan` like '%{$name}%' or `Id` like '%{$name}%' or `NameBN` like '%{$name}%') {$fromdateSql} {$statusSql} {$todateSql} {$fromdateIsDeleteSQL} {$loaidonthuocSql}  ORDER BY `CreateRecord` DESC";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 
