@@ -3,7 +3,7 @@
 use Module\quanlythuoc\Model\PhieuXuatNhap\FormPhieuXuatNhap;
 
 $phieu = new FormPhieuXuatNhap();
-
+$searchXuatNhap = $_GET["SearchXuatNhap"] ?? "-1";
 ?>
 <ol class="breadcrumb">
     <li><a href="/index.php?controller=backend">Home</a></li>
@@ -17,7 +17,9 @@ $phieu = new FormPhieuXuatNhap();
         <div class="form-group d-flex">
             <div style="width: 50%;" class="form-group">
                 <label>Từ khoá</label>
-                <input id="keyword" class="form-control" name="keyword" value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>" type="" placeholder="Nhập vào mã phiếu hoặc nội dung phiếu để tìm kiếm">
+                <input id="keyword" class="form-control" name="keyword"
+                    value="<?php echo isset($_GET["keyword"]) ? \Model\Common::TextInput($_GET["keyword"]) : "" ?>"
+                    type="" placeholder="Nhập vào mã phiếu hoặc nội dung phiếu để tìm kiếm">
             </div>
             <?php $phieu->SearchXuatNhap($_GET["SearchXuatNhap"] ?? "")->renderHtml(); ?>
             <div style="padding-top: 25px;">
@@ -32,10 +34,11 @@ $phieu = new FormPhieuXuatNhap();
             <div class="box-header">
                 <h3 class="box-title">Danh Sách Phiếu</h3>
                 <div class="box-tools">
-                    <?php 
+                    <?php
                     use Model\Common;
                     use Model\FormRender;
-                    use Module\quanlythuoc\Model\PhieuXuatNhap; 
+                    use Module\quanlythuoc\Model\PhieuXuatNhap;
+
                     Module\quanlythuoc\Model\btnHtml::btnThemPhieuXuatNhap();
                     FormRender::HuongDan("danhsachphieu", 'Hướng dẫn phiếu xuất/nhập');
                     ?>
@@ -58,21 +61,33 @@ $phieu = new FormPhieuXuatNhap();
                         <?php
                         foreach ($items as $index => $item) {
                             $_item = new PhieuXuatNhap($item);
-                        ?>
+                            ?>
                             <tr>
                                 <td class="text-center">
-                                    <?php 
+                                    <?php
                                     echo Module\quanlythuoc\Model\btnHtml::btnChiTietPhieuXuatNhap($_item->Id);
                                     ?>
                                 </td>
-                                <td><?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?></td>
-                                <td><?php echo $_item->IdPhieu; ?></td>
-                                <td><?php echo $_item->XuatNhap(); ?></td>
-                                <td><?php echo $_item->NoiDungPhieu ?></td>
-                                <td><?php echo $_item->getTongTien(); ?></td>
-                                <td><?php echo $_item->NgayNhap() ?></td>
+                                <td>
+                                    <?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?>
+                                </td>
+                                <td>
+                                    <?php echo $_item->IdPhieu; ?>
+                                </td>
+                                <td>
+                                    <?php echo $_item->XuatNhap(); ?>
+                                </td>
+                                <td>
+                                    <?php echo $_item->NoiDungPhieu ?>
+                                </td>
+                                <td>
+                                    <?php echo $_item->getTongTien(); ?>
+                                </td>
+                                <td>
+                                    <?php echo $_item->NgayNhap() ?>
+                                </td>
                             </tr>
-                        <?php
+                            <?php
                         }
                         ?>
                     </tbody>
@@ -94,7 +109,7 @@ $phieu = new FormPhieuXuatNhap();
                         ?>
                         <?php
                         $searchXuatNhap = $_GET["SearchXuatNhap"];
-                        $linkPhanTrang = "/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=index&SearchXuatNhap={$searchXuatNhap}&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
+                        $linkPhanTrang = "/quanlythuoc/phieuxuatnhap/index/?SearchXuatNhap={$searchXuatNhap}&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
                         echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
                         ?>
                     </div>
@@ -104,16 +119,17 @@ $phieu = new FormPhieuXuatNhap();
     </div>
 </div>
 <script type="text/javascript">
-    var SoDongHienThi = function(evalue) {
-        var linkPhanTrang = '/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=index&indexPage=1&pageNumber=[j]';
+
+    var SoDongHienThi = function (evalue) {
+        var linkPhanTrang = '/quanlythuoc/phieuxuatnhap/index/?SearchXuatNhap=<?php echo $searchXuatNhap; ?>&indexPage=1&pageNumber=[j]';
         linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
         window.location.href = linkPhanTrang;
     }
-    $(document).ready(function() {
+    $(document).ready(function () {
 
         // Change Thuốc 
         // console.log(e.attr("id"));
-        $("#DongBoPhieu").change(function(param) {
+        $("#DongBoPhieu").change(function (param) {
             // $.ajax({
             //     url: `/quanlythuoc/phieuxuatnhap/capnhatdanhsachsanpham/${idThuoc}/${index}/`,
             //     type: 'get',
