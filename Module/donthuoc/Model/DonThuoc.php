@@ -239,7 +239,7 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
 
     public function Delete($Id)
     {
-        $item  = $this->GetById($Id);
+        $item = $this->GetById($Id);
         $item["IsDelete"] = 1;
         return $this->Put($item);
     }
@@ -402,14 +402,14 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
         return $this->UpdateRow($model);
     }
 
-    // public static function CapChaTpOptions($dungTatCa = false) {
-    //     $dm = new BenhNhan();
-    //     $where = "`parentsId` != '' or `parentsId` is null ";
-    //     $a = $dm->SelectToOptions($where, ["Id", "Name"]);
-    //     if ($dungTatCa == true) {
-    //         $a = ["" => "Tất Cả"] + $a;
-    //     }
-    //     return $a;
-    // }
+// public static function CapChaTpOptions($dungTatCa = false) {
+//     $dm = new BenhNhan();
+//     $where = "`parentsId` != '' or `parentsId` is null ";
+//     $a = $dm->SelectToOptions($where, ["Id", "Name"]);
+//     if ($dungTatCa == true) {
+//         $a = ["" => "Tất Cả"] + $a;
+//     }
+//     return $a;
+// }
 
 }

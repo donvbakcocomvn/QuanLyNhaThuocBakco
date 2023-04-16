@@ -1,7 +1,7 @@
 <ol class="breadcrumb">
     <li><a href="/index.php?controller=backend">Home</a></li>
-    <li><a href="/index.php?module=benhnhan&controller=index&action=index"> Danh Sách Khách Hàng</a></li>
-    <li> Sửa Khách Hàng </li>
+    <li><a href="/index.php?module=benhnhan&controller=index&action=index"> Danh Sách Bệnh Nhân</a></li>
+    <li> Sửa  </li>
 </ol>
 <?php
 
@@ -41,7 +41,8 @@ $roleDetail = new Model\Role();
                         $bn->Gioitinh($itemBN->Gioitinh)->renderHtml();  ?>
                     </div>
                     <div class="col-md-4">
-                        <?php $bn->Ngaysinh($itemBN->Ngaysinh)->renderHtml();  ?>
+                        <?php 
+                        $bn->NgaySinhFull($itemBN->Ngaysinh)->renderHtml();  ?>
                     </div>
                     <div class="col-md-4">
                         <?php $bn->CMND($itemBN->CMND)->renderHtml();  ?>

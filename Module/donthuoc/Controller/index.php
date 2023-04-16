@@ -610,7 +610,7 @@ class index extends \Application implements \Controller\IControllerBE
         \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DonThuoc_Copy]);
 
         try {
-            // DonThuocDetail::ClearSession();
+            DonThuocDetail::ClearSession();
             if (\Model\Request::Post(FormDonThuoc::$ElementsName, null) && \Model\Request::Post(FormBenhNhan::$ElementsName, null)) {
                 $benhnhan = new BenhNhan();
                 $itemBenhNhan = \Model\Request::Post(FormBenhNhan::$ElementsName, null);
@@ -685,14 +685,19 @@ class index extends \Application implements \Controller\IControllerBE
         }
         $DM = new DonThuoc();
         $data["donthuoc"] = $DM->GetById($id);
+
         if (isset($_GET["isnew"])) {
             DonThuocDetail::setDsThuoc($id);
             Common::ToUrl("/donthuoc/index/copy/?id={$id}&isnewbn=1");
-        }
+        }  
 
         $this->View($data);
     }
-
+    public function copydonbyid(){
+		$id = \Model\Request::Get("id", null);
+		DonThuocDetail::setDsThuoc($id);
+		Common::ToUrl("/donthuoc/index/copy/?id={$id}");
+	}
 
     public function delete()
     {

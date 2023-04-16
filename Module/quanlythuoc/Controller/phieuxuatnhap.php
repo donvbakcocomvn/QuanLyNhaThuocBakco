@@ -55,7 +55,7 @@ class phieuxuatnhap extends \Application implements \Controller\IControllerBE
         $id = $this->getParams(0);
         $index = $this->getParams(1);
 
-        $thuoc =  \Module\quanlythuoc\Model\PhieuXuatNhap::GetThuocPhieuNhap($index);
+        $thuoc = \Module\quanlythuoc\Model\PhieuXuatNhap::GetThuocPhieuNhap($index);
 
         $donthuocdetail = new \Module\quanlythuoc\Model\PhieuXuatNhap();
         $sanpham = new SanPham($id);

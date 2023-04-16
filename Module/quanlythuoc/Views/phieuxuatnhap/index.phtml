@@ -32,12 +32,10 @@ $phieu = new FormPhieuXuatNhap();
             <div class="box-header">
                 <h3 class="box-title">Danh Sách Phiếu</h3>
                 <div class="box-tools">
-                    <?php
-
+                    <?php 
                     use Model\Common;
                     use Model\FormRender;
-                    use Module\quanlythuoc\Model\PhieuXuatNhap;
-
+                    use Module\quanlythuoc\Model\PhieuXuatNhap; 
                     Module\quanlythuoc\Model\btnHtml::btnThemPhieuXuatNhap();
                     FormRender::HuongDan("danhsachphieu", 'Hướng dẫn phiếu xuất/nhập');
                     ?>
@@ -63,9 +61,7 @@ $phieu = new FormPhieuXuatNhap();
                         ?>
                             <tr>
                                 <td class="text-center">
-                                    <?php
-                                    // echo Module\quanlythuoc\Model\btnHtml::btnSuaPhieuXuatNhap($_item->Id);
-                                    // echo Module\quanlythuoc\Model\btnHtml::btnXoaPhieuXuatNhap($_item->Id);
+                                    <?php 
                                     echo Module\quanlythuoc\Model\btnHtml::btnChiTietPhieuXuatNhap($_item->Id);
                                     ?>
                                 </td>
@@ -97,7 +93,8 @@ $phieu = new FormPhieuXuatNhap();
                         )->render();
                         ?>
                         <?php
-                        $linkPhanTrang = "/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=index&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
+                        $searchXuatNhap = $_GET["SearchXuatNhap"];
+                        $linkPhanTrang = "/index.php?module=quanlythuoc&controller=phieuxuatnhap&action=index&SearchXuatNhap={$searchXuatNhap}&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
                         echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
                         ?>
                     </div>

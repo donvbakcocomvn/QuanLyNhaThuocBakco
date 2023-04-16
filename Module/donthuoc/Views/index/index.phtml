@@ -51,7 +51,8 @@ use Module\donthuoc\Model\DonThuoc;
                                 <p style="margin-bottom: 2px;">
                                     &nbsp;
                                 </p>
-                                <button type="submit" style="border-radius: 5px;" class="btn btn-success" name="btnTim" id="keyword">
+                                <button type="submit" style="border-radius: 5px;" class="btn btn-success" name="btnTim"
+                                    id="keyword">
                                     Tìm kiếm
                                 </button>
                                 <button type="submit" style="border-radius: 5px;" class="btn btn-success" name="export">
@@ -72,7 +73,8 @@ use Module\donthuoc\Model\DonThuoc;
                                 <th>Bệnh Nhân</th>
                                 <th style="width: 60px;">GT <i class="fa fa-transgender"></i></th>
                                 <th style="width: 100px;">N.Sinh <i class="fa fa-calendar" aria-hidden="true"></i> </th>
-                                <th style="width: 150px;">T.G Khám Bệnh <i class="fa fa-calendar" aria-hidden="true"></i></th>
+                                <th style="width: 150px;">T.G Khám Bệnh <i class="fa fa-calendar"
+                                        aria-hidden="true"></i></th>
                                 <th style="width: 100px;">Chẩn Đoán</th>
                                 <th style="width: 150px;">Tình trạng</th>
                                 <th style="width: 180px;">Thuộc Loại Đơn</th>
@@ -83,19 +85,23 @@ use Module\donthuoc\Model\DonThuoc;
                             foreach ($items as $index => $item) {
                                 $_item = new DonThuoc($item);
                                 // var_dump($_item);
-                            ?>
+                                ?>
                                 <tr>
                                     <td style="width:100px">
                                         <div class="dropdown">
-                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button"
+                                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
                                                 <i class="fa fa-ellipsis-v"></i>
                                             </button>
-                                            <div class="dropdown-menu table-dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <div class="dropdown-menu table-dropdown-menu"
+                                                aria-labelledby="dropdownMenuButton">
                                                 <?php
                                                 echo Module\donthuoc\Model\btnHtml::btnCopyDonThuoc($_item->Id);
                                                 echo Module\donthuoc\Model\btnHtml::btnXoaDonThuoc($_item->Id);
                                                 echo Module\donthuoc\Model\btnHtml::btnSuaDonThuoc($_item->Id);
                                                 echo Module\donthuoc\Model\btnHtml::btnchitiet($_item->Id);
+                                                echo Module\donthuoc\Model\btnHtml::btnchitiet($_item->BenhNhan()->Id);
                                                 ?>
                                             </div>
                                         </div>
@@ -103,25 +109,33 @@ use Module\donthuoc\Model\DonThuoc;
                                     <td class="text-center">
                                         <?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?>
                                     </td>
-                                    <td><?php echo $_item->Id; ?></td>
                                     <td>
-                                        <?php echo $_item->BenhNhan()->Name; ?>
+                                        <?php echo $_item->Id; ?>
                                     </td>
-                                    <td><?php echo $_item->BenhNhan()->Gioitinh(); ?></td>
+                                    <td>
+                                        <?php echo $_item->NameBN; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $_item->BenhNhan()->Gioitinh(); ?>
+                                    </td>
                                     <td>
                                         <?php echo Common::ForMatDMY($_item->BenhNhan()->Ngaysinh); ?>
                                     </td>
-                                    <td><?php echo date("d-m-Y H:i:s", strtotime($_item->ThoiGianKham)); ?></td>
+                                    <td>
+                                        <?php echo date("d-m-Y H:i:s", strtotime($_item->ThoiGianKham)); ?>
+                                    </td>
                                     <td>
                                         <?php echo $_item->ChanDoanBenh ?>
                                     </td>
                                     <!-- <td><?php echo $_item->TongNgayDung; ?></td> -->
-                                    <td><?php echo $_item->Status(); ?></td>
+                                    <td>
+                                        <?php echo $_item->Status(); ?>
+                                    </td>
                                     <td>
                                         <?php echo $_item->LoaiDonThuoc() ?>
                                     </td>
                                 </tr>
-                            <?php
+                                <?php
                             }
                             ?>
                         </tbody>
@@ -154,7 +168,7 @@ use Module\donthuoc\Model\DonThuoc;
     </div>
 </div>
 <script type="text/javascript">
-    var SoDongHienThi = function(evalue) {
+    var SoDongHienThi = function (evalue) {
         var linkPhanTrang = '/index.php?module=donthuoc&controller=index&action=index&indexPage=1&pageNumber=[j]';
         linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
         window.location.href = linkPhanTrang;

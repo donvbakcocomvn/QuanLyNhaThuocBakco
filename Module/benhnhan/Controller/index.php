@@ -30,7 +30,16 @@ class index extends \Application implements \Controller\IControllerBE
         // var_dump($item);
         // $data[] = ["BẢNG KÊ THUỐC PHÒNG KHÁM PHƯƠNG UYÊN"];
         $data[] = [
-            "Mã bệnh nhân", "Tên bệnh nhân", "Giới tính", "Ngày sinh", "CMND/CCCD", "Số điện thoại", "Địa chỉ", "Tỉnh/thành Phố", "Quận/huyện", "Phưỡng/xã"
+            "Mã bệnh nhân",
+            "Tên bệnh nhân",
+            "Giới tính",
+            "Ngày sinh",
+            "CMND/CCCD",
+            "Số điện thoại",
+            "Địa chỉ",
+            "Tỉnh/thành Phố",
+            "Quận/huyện",
+            "Phưỡng/xã"
         ];
         if ($item) {
             foreach ($item as $row) {
@@ -159,7 +168,8 @@ class index extends \Application implements \Controller\IControllerBE
                 $model["Id"] = $itemHtml["Id"];
                 $model["Name"] = $itemHtml["Name"];
                 $model["Gioitinh"] = $itemHtml["Gioitinh"];
-                $model["Ngaysinh"] = date("Y-m-d", strtotime($itemHtml["NgaySinh"] ?? ""));
+                $model["Ngaysinh"] = date("Y-m-d", strtotime($itemHtml["Ngaysinh"] ?? ""));
+
                 $model["CMND"] = $itemHtml["CMND"];
                 $model["Address"] = $itemHtml["Address"];
                 $model["TinhThanh"] = $itemHtml["TinhThanh"] ?? "";
