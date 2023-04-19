@@ -534,7 +534,7 @@ class index extends \Application implements \Controller\IControllerBE
 
                 $benhnhan = new BenhNhan($donthuoc->IdBenhNhan);
                 $itemBenhNhan = \Model\Request::Post(FormBenhNhan::$ElementsName, null);
-                $itemBN["Id"] = $benhnhan->Id; 
+                $itemBN["Id"] = $benhnhan->Id;
                 $itemBN["Gioitinh"] = $itemBenhNhan["Gioitinh"];
                 $ngay = $itemBenhNhan["NgaySinh"] ?? '01';
                 $thang = $itemBenhNhan["ThangSinh"] ?? '01';

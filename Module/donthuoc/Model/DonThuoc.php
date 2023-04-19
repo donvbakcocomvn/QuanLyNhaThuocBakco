@@ -338,7 +338,7 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
             $danhmucSql = "and `DanhMucId` = '{$danhmuc}' ";
         }
         // self::$Debug = true;
-        $where = " (`Id` like '%{$name}%' or `IdBenhNhan` like '%{$name}%' or `NameBN` like '%{$name}%' ) {$danhmucSql} {$isShowSql} and `ThuocLoaiDon`  = 3 ORDER BY `status` asc";
+        $where = " (`Id` like '%{$name}%' or `IdBenhNhan` like '%{$name}%' or `NameBN` like '%{$name}%' ) {$danhmucSql} {$isShowSql} and `ThuocLoaiDon`  = 3 and `status`  = 1 ORDER BY `status` asc";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 
