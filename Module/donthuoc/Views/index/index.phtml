@@ -23,17 +23,17 @@ use Module\donthuoc\Model\DonThuoc;
                     <div class="row">
                         <div class="col-sm-2 ">
                             <?php
-                            FormSearch::Keyword($_GET['keyword'] ?? null)->renderHtml(null, null);
+                            FormSearch::Keyword($_GET['keyword'] ?? null, ["onChange" => "submit()"])->renderHtml(null, null);
                             ?>
                         </div>
                         <div class="col-sm-2 ">
                             <?php
-                            FormSearch::SelectStatus($_GET['status'] ?? null)->renderHtml(null, null, '');
+                            FormSearch::SelectStatus($_GET['status'] ?? null, ["onChange" => "submit()"])->renderHtml(null, null, '');
                             ?>
                         </div>
                         <div class="col-sm-2 ">
                             <?php
-                            FormSearch::ThuocLoaiDon($_GET['loaidonthuoc'] ?? null)->renderHtml(null, null, '');
+                            FormSearch::ThuocLoaiDon($_GET['loaidonthuoc'] ?? null, ["onChange" => "submit()"])->renderHtml(null, null, '');
                             ?>
                         </div>
                         <div class="col-sm-2 ">
@@ -61,120 +61,115 @@ use Module\donthuoc\Model\DonThuoc;
                             </div>
                         </div>
                     </div>
-                </form>
 
-                <div class="table-responsive">
-                    <table class="table table-hover table-bordered">
-                        <thead>
-                            <tr>
-                                <th class="text-center">Thao Tác</th>
-                                <th style="width: 50px;" class="text-center">STT</th>
-                                <th style="width: 100px;">Mã</th>
-                                <th>Tên Bệnh Nhân</th>
-                                <th>Đơn Thuốc </th>
-                                <th style="width: 60px;">GT <i class="fa fa-transgender"></i></th>
-                                <th style="width: 100px;">N.Sinh <i class="fa fa-calendar" aria-hidden="true"></i> </th>
-                                <th style="width: 150px;">T.G Khám Bệnh <i class="fa fa-calendar"
-                                        aria-hidden="true"></i></th>
-                                <th style="width: 100px;">Chẩn Đoán</th>
-                                <th style="width: 150px;">Tình trạng</th>
-                                <th style="width: 180px;">Thuộc Loại Đơn</th>
-                            </tr>
-                        </thead>
-                        <tbody  style="min-height: 200px;">
-                            <?php
-                            foreach ($items as $index => $item) {
-                                $_item = new DonThuoc($item);
-                                // var_dump($_item);
-                                ?>
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered">
+                            <thead>
                                 <tr>
-                                    <td style="width:100px">
-                                        <div class="dropdown">
-                                            <button class="btn btn-secondary dropdown-toggle" type="button"
-                                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false">
-                                                <i class="fa fa-ellipsis-v"></i>
-                                            </button>
-                                            <div class="dropdown-menu table-dropdown-menu"
-                                                aria-labelledby="dropdownMenuButton">
-                                                <?php
-                                                echo Module\donthuoc\Model\btnHtml::btnCopyDonThuoc($_item->Id);
-                                                echo Module\donthuoc\Model\btnHtml::btnSuaDonThuoc($_item->Id);
-                                                echo Module\donthuoc\Model\btnHtml::btnchitiet($_item->Id);
-                                                echo Module\donthuoc\Model\btnHtml::btnSuaBenhNhan($_item->BenhNhan()->Id);
-                                                echo Module\donthuoc\Model\btnHtml::btnXoaDonThuoc($_item->Id);
-                                                ?>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="text-center">
-                                        <?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $_item->Id; ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $_item->BenhNhan()->Name; ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $_item->NameBN; ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $_item->BenhNhan()->Gioitinh(); ?>
-                                    </td>
-                                    <td>
-                                        <?php echo Common::ForMatDMY($_item->BenhNhan()->Ngaysinh); ?>
-                                    </td>
-                                    <td>
-                                        <?php echo date("d-m-Y H:i:s", strtotime($_item->ThoiGianKham)); ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $_item->ChanDoanBenh ?>
-                                    </td>
-                                    <!-- <td><?php echo $_item->TongNgayDung; ?></td> -->
-                                    <td>
-                                        <?php echo $_item->Status(); ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $_item->LoaiDonThuoc() ?>
-                                    </td>
+                                    <th class="text-center">Thao Tác</th>
+                                    <th style="width: 50px;" class="text-center">STT</th>
+                                    <th style="width: 100px;">Mã</th>
+                                    <th>Tên Bệnh Nhân</th>
+                                    <th>Đơn Thuốc </th>
+                                    <th style="width: 60px;">GT <i class="fa fa-transgender"></i></th>
+                                    <th style="width: 100px;">N.Sinh <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    </th>
+                                    <th style="width: 150px;">T.G Khám Bệnh <i class="fa fa-calendar"
+                                            aria-hidden="true"></i></th>
+                                    <th style="width: 100px;">Chẩn Đoán</th>
+                                    <th style="width: 150px;">Tình trạng</th>
+                                    <th style="width: 180px;">Thuộc Loại Đơn</th>
                                 </tr>
+                            </thead>
+                            <tbody style="min-height: 200px;">
                                 <?php
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="box-footer">
-                    <div class="d-flex">
-                        <?php
-                        \Model\FormCommon::Select(
-                            "",
-                            "",
-                            [10, 20, 50, 100],
-                            [
-                                "style" => "max-width:50px;",
-                                "class" => "form-control",
-                                "value" => $pageNumber,
-                                "onchange" => "SoDongHienThi(this.value)",
-                            ]
-                        )->render();
-                        ?>
-                        <?php
-                        $linkPhanTrang = "/index.php?module=donthuoc&controller=index&action=index&keyword={$params["keyword"]}&indexPage=[i]&pageNumber={$pageNumber}";
-                        echo \Model\Common::PhanTrang($total, $indexPage, $pageNumber, $linkPhanTrang);
-                        ?>
+                                foreach ($items as $index => $item) {
+                                    $_item = new DonThuoc($item);
+                                    // var_dump($_item);
+                                    ?>
+                                    <tr>
+                                        <td style="width:100px">
+                                            <div class="dropdown">
+                                                <button class="btn btn-secondary dropdown-toggle" type="button"
+                                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false">
+                                                    <i class="fa fa-ellipsis-v"></i>
+                                                </button>
+                                                <div class="dropdown-menu table-dropdown-menu"
+                                                    aria-labelledby="dropdownMenuButton">
+                                                    <?php
+                                                    echo Module\donthuoc\Model\btnHtml::btnCopyDonThuoc($_item->Id);
+                                                    echo Module\donthuoc\Model\btnHtml::btnSuaDonThuoc($_item->Id);
+                                                    echo Module\donthuoc\Model\btnHtml::btnchitiet($_item->Id);
+                                                    echo Module\donthuoc\Model\btnHtml::btnSuaBenhNhan($_item->BenhNhan()->Id);
+                                                    echo Module\donthuoc\Model\btnHtml::btnXoaDonThuoc($_item->Id);
+                                                    ?>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $_item->Id; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $_item->BenhNhan()->Name; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $_item->NameBN; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $_item->BenhNhan()->Gioitinh(); ?>
+                                        </td>
+                                        <td>
+                                            <?php echo Common::ForMatDMY($_item->BenhNhan()->Ngaysinh); ?>
+                                        </td>
+                                        <td>
+                                            <?php echo date("d-m-Y H:i:s", strtotime($_item->ThoiGianKham)); ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $_item->ChanDoanBenh ?>
+                                        </td>
+                                        <!-- <td><?php echo $_item->TongNgayDung; ?></td> -->
+                                        <td>
+                                            <?php echo $_item->Status(); ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $_item->LoaiDonThuoc() ?>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                }
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
-                </div>
+
+                    <div class="box-footer">
+                        <div class="d-flex">
+                            <?php
+                            \Model\FormCommon::Select(
+                                "",
+                                "pageNumber",
+                                [10, 20, 50, 100],
+                                [
+                                    "style" => "max-width:50px;",
+                                    "class" => "form-control",
+                                    "value" => $pageNumber,
+                                    "onchange" => "submit()"
+                                ]
+
+                            )->render();
+                            ?>
+                            <?php
+                            $linkPhanTrang = "/donthuoc/index/index/";
+                            echo \Model\Common::PhanTrangParams($total, $indexPage, $pageNumber, $linkPhanTrang, $_GET);
+                            ?>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    var SoDongHienThi = function (evalue) {
-        var linkPhanTrang = '/index.php?module=donthuoc&controller=index&action=index&indexPage=1&pageNumber=[j]';
-        linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
-        window.location.href = linkPhanTrang;
-    }
-</script>

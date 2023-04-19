@@ -50,24 +50,35 @@ class FormSearch
         return new FormRender(new Textbox('Địa chỉ', 'address', ['value' => $value, 'placeholder' => 'Nhập địa chỉ', 'style' => 'border-radius: 5px', 'class' => 'form-control']));
     }
 
-    static function Keyword($value = null)
+    static function Keyword($value = null, $prop = [])
     {
-        return new FormRender(new Textbox('Từ Khóa', 'keyword', ['value' => $value, 'placeholder' => 'Nhập vào mã hoặc bệnh nhân', 'style' => 'border-radius: 5px', 'class' => 'form-control']));
+        $prop['value'] = $value;
+        $prop['placeholder'] = 'Nhập vào mã hoặc bệnh nhân';
+        $prop['style'] = 'border-radius: 5px';
+        $prop['class'] = 'form-control';
+        return new FormRender(new Textbox('Từ Khóa', 'keyword', $prop));
     }
 
-    static function SelectStatus($value = null)
+    static function SelectStatus($value = null, $prop = [])
     {
         $option1 = ["" => "Tất Cả"];
         $option2 = OptionsService::GetGroupsToSelect('optiondonthuoc');
         $options = $option1 + $option2;
-        return new FormRender(new Select('Thuộc Loại Đơn', 'status', $options, ['value' => $value, 'style' => 'border-radius: 5px', 'class' => 'form-control ']));
+        $prop['value'] = $value;
+        $prop['style'] = 'border-radius: 5px';
+        $prop['class'] = 'form-control';
+
+        return new FormRender(new Select('Thuộc Loại Đơn', 'status', $options, $prop));
     }
-    static function ThuocLoaiDon($value = null)
+    static function ThuocLoaiDon($value = null, $prop = [])
     {
         $option1 = ["" => "Tất Cả"];
         $option2 = OptionsService::GetGroupsToSelect('trangthai');
         $options = $option1 + $option2;
-        return new FormRender(new Select('Tình Trạng', 'loaidonthuoc', $options, ['value' => $value, 'style' => 'border-radius: 5px', 'class' => 'form-control ']));
+        $prop['value'] = $value;
+        $prop['style'] = 'border-radius: 5px';
+        $prop['class'] = 'form-control';
+        return new FormRender(new Select('Tình Trạng', 'loaidonthuoc', $options, $prop));
     }
 
     static function Fromdate($value = "")

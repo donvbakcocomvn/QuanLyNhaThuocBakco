@@ -82,10 +82,10 @@ class Common
         $data .= $_SERVER['REMOTE_ADDR'];
         $data .= $_SERVER['REMOTE_PORT'];
         $hash = strtoupper(hash('ripemd128', $uid . $guid . md5($data)));
-        $guid = substr($hash,  0,  8) . '-' .
-            substr($hash,  8,  4) . '-' .
-            substr($hash, 12,  4) . '-' .
-            substr($hash, 16,  4) . '-' .
+        $guid = substr($hash, 0, 8) . '-' .
+            substr($hash, 8, 4) . '-' .
+            substr($hash, 12, 4) . '-' .
+            substr($hash, 16, 4) . '-' .
             substr($hash, 20, 12);
         return $guid;
     }
@@ -163,31 +163,40 @@ class Common
 
 
         ob_start();
-?>
+        ?>
         <ul class="pagination pagination-md no-margin">
-            <li><a><?php echo $TrangThuBaoNhieu . "/" . $SoTrang; ?></a></li>
+            <li><a>
+                    <?php echo $TrangThuBaoNhieu . "/" . $SoTrang; ?>
+                </a></li>
             <li><a href="<?php echo $_linkTrangDau ?>"><i class="fa fa-angle-double-left"></i></a></li>
             <li><a href="<?php echo $_linkTrangTrai ?>"><i class="fa fa-angle-left"></i></a></li>
             <li class="hidden-xs"><a href="<?php echo $_linkTrangTraiCham ?>">...</a></li>
             <?php
             for ($index = $TrangMin; $index <= $TrangMax; $index++) {
                 $_link = str_replace("[i]", $index, $LinkPhanTrang);
-            ?>
+                ?>
                 <li class="<?php echo $TrangThuBaoNhieu == $index ? 'active' : ''; ?>">
                     <a href="<?php echo $_link; ?>"><?php echo $index; ?></a>
                 </li>
-            <?php
+                <?php
             }
             ?>
             <li class="hidden-xs"><a href="<?php echo $_linkTrangPhaiCham ?>">...</a></li>
             <li><a href="<?php echo $_linkTrangPhai ?>"><i class="fa fa-angle-right"></i></a></li>
             <li><a href="<?php echo $_linkTrangCuoi ?>"><i class="fa fa-angle-double-right"></i></a></li>
         </ul>
-<?php
+        <?php
         $str = ob_get_clean();
         return $str;
     }
-
+    public static function PhanTrangParams($TongSoDong, $TrangThuBaoNhieu, $SoDong, $LinkPhanTrang, $Params)
+    {
+        $link = $LinkPhanTrang;
+        unset($Params["indexPage"]);
+        $queryString = http_build_query($Params);
+        $link .= "?indexPage=[i]&" . $queryString;
+        return self::PhanTrang($TongSoDong, $TrangThuBaoNhieu, $SoDong, $link);
+    }
     public static function BoDauTienViet($str)
     {
         if (!$str)
@@ -312,46 +321,46 @@ class Common
 
     function convert_number_to_words($number)
     {
-        $hyphen      = ' ';
+        $hyphen = ' ';
         $conjunction = '  ';
-        $separator   = ' ';
-        $negative    = 'âm ';
-        $decimal     = ' phẩy ';
-        $dictionary  = array(
-            0                   => 'không',
-            1                   => 'một',
-            2                   => 'hai',
-            3                   => 'ba',
-            4                   => 'bốn',
-            5                   => 'năm',
-            6                   => 'sáu',
-            7                   => 'bảy',
-            8                   => 'tám',
-            9                   => 'chín',
-            10                  => 'mười',
-            11                  => 'mười một',
-            12                  => 'mười hai',
-            13                  => 'mười ba',
-            14                  => 'mười bốn',
-            15                  => 'mười năm',
-            16                  => 'mười sáu',
-            17                  => 'mười bảy',
-            18                  => 'mười tám',
-            19                  => 'mười chín',
-            20                  => 'hai mươi',
-            30                  => 'ba mươi',
-            40                  => 'bốn mươi',
-            50                  => 'năm mươi',
-            60                  => 'sáu mươi',
-            70                  => 'bảy mươi',
-            80                  => 'tám mươi',
-            90                  => 'chín mươi',
-            100                 => 'trăm',
-            1000                => 'nghìn',
-            1000000             => 'triệu',
-            1000000000          => 'tỷ',
-            1000000000000       => 'nghìn tỷ',
-            1000000000000000    => 'nghìn triệu triệu',
+        $separator = ' ';
+        $negative = 'âm ';
+        $decimal = ' phẩy ';
+        $dictionary = array(
+            0 => 'không',
+            1 => 'một',
+            2 => 'hai',
+            3 => 'ba',
+            4 => 'bốn',
+            5 => 'năm',
+            6 => 'sáu',
+            7 => 'bảy',
+            8 => 'tám',
+            9 => 'chín',
+            10 => 'mười',
+            11 => 'mười một',
+            12 => 'mười hai',
+            13 => 'mười ba',
+            14 => 'mười bốn',
+            15 => 'mười năm',
+            16 => 'mười sáu',
+            17 => 'mười bảy',
+            18 => 'mười tám',
+            19 => 'mười chín',
+            20 => 'hai mươi',
+            30 => 'ba mươi',
+            40 => 'bốn mươi',
+            50 => 'năm mươi',
+            60 => 'sáu mươi',
+            70 => 'bảy mươi',
+            80 => 'tám mươi',
+            90 => 'chín mươi',
+            100 => 'trăm',
+            1000 => 'nghìn',
+            1000000 => 'triệu',
+            1000000000 => 'tỷ',
+            1000000000000 => 'nghìn tỷ',
+            1000000000000000 => 'nghìn triệu triệu',
             1000000000000000000 => 'tỷ tỷ'
         );
         if (!is_numeric($number)) {
@@ -377,15 +386,15 @@ class Common
                 $string = $dictionary[$number];
                 break;
             case $number < 100:
-                $tens   = ((int) ($number / 10)) * 10;
-                $units  = $number % 10;
+                $tens = ((int) ($number / 10)) * 10;
+                $units = $number % 10;
                 $string = $dictionary[$tens];
                 if ($units) {
                     $string .= $hyphen . $dictionary[$units];
                 }
                 break;
             case $number < 1000:
-                $hundreds  = $number / 100;
+                $hundreds = $number / 100;
                 $remainder = $number % 100;
                 $string = $dictionary[$hundreds] . ' ' . $dictionary[100];
                 if ($remainder) {
