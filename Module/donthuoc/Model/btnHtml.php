@@ -112,7 +112,7 @@ class btnHtml
         ?>
         <button type="button" <?php echo \Model\FormRender::ToolTip("Cập nhật tổng ngày dùng thuốc"); ?> class="btn btn-info"
             id="btn-capnhattongngaydungthuoc">
-            Cập nhật
+            <i class="fa fa-refresh"></i>
         </button>
         <?php
     }

@@ -75,14 +75,11 @@ $bn = new FormBenhNhan();
                             <div class="col-md-12">
                                 <?php echo $form->ChanDoanBenh($donthuoc->ChanDoanBenh)->renderHTML(); ?>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <?php echo $form->Id($donthuoc->Id)->renderHTML(); ?>
                             </div>
                             <div class="col-md-6">
                                 <?php echo $form->ThoiGianKham($donthuoc->ThoiGianKham)->renderHTML(); ?>
-                            </div>
-                            <div class="col-md-6">
-                                <?php  //echo $form->Status($donthuoc->Status)->renderHTML(); ?>
                             </div>
                         </fieldset>
                     </div>
@@ -91,25 +88,29 @@ $bn = new FormBenhNhan();
                     <div class="row">
                         <fieldset>
                             <legend>Thông tin bệnh nhân</legend>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
+                                <?php $bn->Id($donthuoc->Id)->renderHtml(); ?>
+                            </div>
+                            <div class="col-md-4">
+                                <?php $bn->IdValue($benhnhan->Id)->render(); ?>
                                 <?php $bn->Name($donthuoc->NameBN, null, 'tenbenhnhan')->renderHtml(); ?>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <?php $bn->Phone($benhnhan->Phone, null, 'sodienthoai')->renderHtml(); ?>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <?php $bn->CMND($benhnhan->CMND)->renderHtml(); ?>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-2">
                                 <?php $bn->Gioitinh($benhnhan->Gioitinh)->renderHtml(); ?>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                                 <?php $bn->Namsinh(date("Y", strtotime($benhnhan->Ngaysinh)))->renderHtml(); ?>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                                 <?php $bn->Thangsinh(date("m", strtotime($benhnhan->Ngaysinh)))->renderHtml(); ?>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                                 <?php $bn->Ngaysinh(date("d", strtotime($benhnhan->Ngaysinh)))->renderHtml(); ?>
                             </div>
                             <div class="col-md-12">

@@ -314,7 +314,7 @@ class index extends \Application implements \Controller\IControllerBE
         $thuoc["Trua"] = floatval($data["trua"]);
         $thuoc["Chieu"] = floatval($data["chieu"]);
         $thuoc["SoNgaySDThuoc"] = $data["ngaydungthuoc"];
-        $thuoc["idloaiDonThuoc"] = $data["idloaiDonThuoc"];
+        $thuoc["idloaiDonThuoc"] = $data["idloaiDonThuoc"] ?? null;
         $thuoc["Ghichu"] = $data["ghichu"];
         // var_dump($thuoc["Sang"]);
         // var_dump($thuoc["Trua"]);
@@ -480,9 +480,23 @@ class index extends \Application implements \Controller\IControllerBE
     public function saveFormKhachHang()
     {
         $benhNhan = $_POST['BenhNhan'];
-        $bnModel = new BenhNhan();
-        $bnModel->PutFromForm($benhNhan);
         $donThuoc = $_POST['DonThuoc'];
+
+
+
+        if (isset($benhNhan["Id"])) {
+            $ttbn = $benhNhan;
+            unset($ttbn["Name"]);
+            $bnModel = new BenhNhan();
+            $bnModel->PutFromForm($ttbn);
+        }
+        // cập nhật đơn thuốc
+        if (isset($donThuoc["Id"])) {
+            $dtModel = new DonThuoc();
+            $DTDB = $dtModel->GetById($donThuoc["Id"]);
+            $DTDB["NameBN"] = $benhNhan["Name"];
+            $dtModel->Put($DTDB);
+        }
         FormDonThuoc::SetFormData($donThuoc);
         FormBenhNhan::SetFormData($benhNhan);
         echo json_encode($_POST);
@@ -494,9 +508,9 @@ class index extends \Application implements \Controller\IControllerBE
         $benhNhan = $_POST['BenhNhan'];
 
         $name = $benhNhan["Name"];
-        $phone = $benhNhan['Phone'];
+        $phone = $benhNhan['Phone'] ?? "";
         $bn = new BenhNhan();
-        $a = $bn->GetByNameAndPhone($name, "");
+        $a = $bn->GetByNameAndPhone($name, $phone);
         if ($a != null) {
             $a["NamSinh"] = date("Y", strtotime($a["Ngaysinh"]));
             $a["NgaySinh"] = date("d", strtotime($a["Ngaysinh"]));
@@ -520,8 +534,7 @@ class index extends \Application implements \Controller\IControllerBE
 
                 $benhnhan = new BenhNhan($donthuoc->IdBenhNhan);
                 $itemBenhNhan = \Model\Request::Post(FormBenhNhan::$ElementsName, null);
-                $itemBN["Id"] = $benhnhan->Id;
-                $itemBN["Name"] = $itemBenhNhan["Name"];
+                $itemBN["Id"] = $benhnhan->Id; 
                 $itemBN["Gioitinh"] = $itemBenhNhan["Gioitinh"];
                 $ngay = $itemBenhNhan["NgaySinh"] ?? '01';
                 $thang = $itemBenhNhan["ThangSinh"] ?? '01';
@@ -539,7 +552,7 @@ class index extends \Application implements \Controller\IControllerBE
                 $itemForm = \Model\Request::Post(FormDonThuoc::$ElementsName, null);
                 $itemDonThuoc["Id"] = $donthuoc->Id;
                 $itemDonThuoc["IdBenhNhan"] = $itemBN["Id"];
-                $itemDonThuoc["NameBN"] = $itemBN["Name"];
+                $itemDonThuoc["NameBN"] = $itemBenhNhan["Name"];
                 $itemDonThuoc["Ngaysinh"] = $itemBN["Ngaysinh"];
                 $itemDonThuoc["Gioitinh"] = $itemBN["Gioitinh"];
                 $itemDonThuoc["ChanDoanBenh"] = $itemForm["ChanDoanBenh"];

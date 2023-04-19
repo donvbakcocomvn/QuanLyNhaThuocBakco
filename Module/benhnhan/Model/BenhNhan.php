@@ -61,7 +61,7 @@ class BenhNhan extends \Model\DB implements \Model\IModelService
 
     function GetByNameAndPhone($name, $phone)
     {
-        echo $sql = "SELECT * FROM `lap1_benhnhan` WHERE `Name` LIKE '$name' or `Phone` LIKE '$phone'";
+        $sql = "SELECT * FROM `lap1_benhnhan` WHERE `Name` LIKE '$name' or `Phone` LIKE '$phone'";
         $result = $this->GetRow($sql);
         return $result;
     }
@@ -183,7 +183,7 @@ class BenhNhan extends \Model\DB implements \Model\IModelService
     }
     public function PutFromForm($model)
     {
-        
+
         $model["Ngaysinh"] = "{$model["NamSinh"]}-{$model["ThangSinh"]}-{$model["NgaySinh"]}";
         unset($model["NamSinh"]);
         unset($model["ThangSinh"]);

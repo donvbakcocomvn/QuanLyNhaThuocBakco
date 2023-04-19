@@ -299,7 +299,8 @@ $IdDonThuoc = $donthuoc->Id;
             <div class="row">
                 <div class="col-xs-6"></div>
                 <div class="col-xs-6 text-center">
-                    <h6 style=" font-weight: 500; margin: 10px 0; margin-top: -20px">
+                    <h6
+                        style=" font-weight: 500; margin: 10px 0;<?php echo $donthuoc->ThuocLoaiDon != 2 ? "margin-top: -20px" : "" ?> ">
                         <i>
                             <?php $date = getdate();
                             // echo $date['weekday'] . ", ";

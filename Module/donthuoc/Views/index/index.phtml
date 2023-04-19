@@ -70,7 +70,8 @@ use Module\donthuoc\Model\DonThuoc;
                                 <th class="text-center">Thao Tác</th>
                                 <th style="width: 50px;" class="text-center">STT</th>
                                 <th style="width: 100px;">Mã</th>
-                                <th>Bệnh Nhân</th>
+                                <th>Tên Bệnh Nhân</th>
+                                <th>Đơn Thuốc </th>
                                 <th style="width: 60px;">GT <i class="fa fa-transgender"></i></th>
                                 <th style="width: 100px;">N.Sinh <i class="fa fa-calendar" aria-hidden="true"></i> </th>
                                 <th style="width: 150px;">T.G Khám Bệnh <i class="fa fa-calendar"
@@ -80,7 +81,7 @@ use Module\donthuoc\Model\DonThuoc;
                                 <th style="width: 180px;">Thuộc Loại Đơn</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody  style="min-height: 200px;">
                             <?php
                             foreach ($items as $index => $item) {
                                 $_item = new DonThuoc($item);
@@ -114,6 +115,9 @@ use Module\donthuoc\Model\DonThuoc;
                                     </td>
                                     <td>
                                         <?php echo $_item->BenhNhan()->Name; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $_item->NameBN; ?>
                                     </td>
                                     <td>
                                         <?php echo $_item->BenhNhan()->Gioitinh(); ?>
