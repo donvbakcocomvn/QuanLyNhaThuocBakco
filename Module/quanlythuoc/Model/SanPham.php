@@ -283,7 +283,7 @@ class SanPham extends \Model\DB implements \Model\IModelService
     public static function CapChaTpOptions($dungTatCa = false)
     {
         $dm = new SanPham();
-        $where = "`Name` != '' or `Name` is null or `IsDelete` = 0 ";
+        $where = "(`Name` != '' or `Name` is null) and `IsDelete` = 0 ";
         $a = $dm->SelectToOptions($where, ["Id", "Name"]);
         if ($dungTatCa == true) {
             $a = ["" => "Tất Cả"] + $a;
