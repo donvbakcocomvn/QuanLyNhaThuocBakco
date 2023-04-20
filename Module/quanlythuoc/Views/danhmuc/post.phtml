@@ -1,6 +1,6 @@
 <ol class="breadcrumb">
     <li><a href="/index.php?controller=backend">Home</a></li>
-    <li><a href="index.php?module=quanlythuoc&controller=danhmuc&action=index"> Danh Mục Thuốc</a></li>
+    <li><a href="/quanlythuoc/danhmuc/index"> Danh Mục Thuốc</a></li>
     <li> Thêm Danh Mục </li>
 </ol>
 <?php
@@ -18,8 +18,8 @@ $roleDetail = new Model\Role();
             <div class="box-tools">
                 <?php
                 // Module\quanlythuoc\Model\btnHtml::btnViewDanhMuc();
-                \Model\FormRender::HuongDan("themdanhmuc","Hướng dẫn thêm danh mục")
-                ?>
+                \Model\FormRender::HuongDan("themdanhmuc", "Hướng dẫn thêm danh mục")
+                    ?>
 
             </div>
         </div>
@@ -34,13 +34,13 @@ $roleDetail = new Model\Role();
                         <?php $dm->Id(DanhMuc::CreatId())->renderHtml(); ?>
                     </div>
                     <div class="col-md-6">
-                        <?php $dm->Name()->renderHtml();  ?>
+                        <?php $dm->Name()->renderHtml(); ?>
                     </div>
                     <div class="col-md-6">
-                        <?php $dm->Link()->renderHtml();  ?>
+                        <?php $dm->Link()->renderHtml(); ?>
                     </div>
                     <div class="col-md-6">
-                        <?php $dm->GhiChu()->renderHtml();  ?>
+                        <?php $dm->GhiChu()->renderHtml(); ?>
                     </div>
                     <div class="col-md-12 ">
                         <button class="btn btn-warning" type="reset">Làm Lại</button>

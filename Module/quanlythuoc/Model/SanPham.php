@@ -10,6 +10,7 @@ namespace Module\quanlythuoc\Model;
 use Model\OptionsService;
 use Module\quanlythuoc\Permission;
 use Model\Common;
+use Model\DB;
 use Model\ThongKe;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -19,7 +20,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
  *
  * @author MSI
  */
-class SanPham extends \Model\DB implements \Model\IModelService
+class SanPham extends DB implements \Model\IModelService
 {
 
     public $Id;
@@ -272,12 +273,18 @@ class SanPham extends \Model\DB implements \Model\IModelService
     static function CreatId()
     {
         $sp = new SanPham();
-        $sql = " SELECT COUNT(*) AS `Tong` FROM `lap1_qlthuoc_thuoc` WHERE 1";
+        $sql = " SELECT COUNT(*) AS `Tong` FROM `" . prefixTable . "qlthuoc_thuoc` WHERE 1";
         $result = $sp->GetRow($sql);
         $tong = $result["Tong"] + 1;
-        $Id = Common::NumberToStringFomatZero($tong, 4);
-        $IdCreate = "MT" . "-" . $Id;
-        return $IdCreate;
+        while (true) {
+            $Id = Common::NumberToStringFomatZero($tong, 4);
+            $IdCreate = "MT" . "-" . $Id;
+            $item = $sp->GetById($IdCreate);
+            if ($item == null) {
+                return $IdCreate;
+            }
+            $tong++;
+        }
     }
 
     public static function CapChaTpOptions($dungTatCa = false)
@@ -372,11 +379,11 @@ class SanPham extends \Model\DB implements \Model\IModelService
         if (\Model\Permission::CheckPremision([\Model\User::Admin, "quanlysanpham_sanpham_delete"]) == false) {
             return;
         }
-?>
+        ?>
         <button class="btn btn-danger" title="Xóa Các Sản Phẩm Đã Chọn?">
             <i class="fa fa-times"></i>Xóa Chọn
         </button>
-    <?php
+        <?php
     }
 
     public function LichSuXuatNhan()
@@ -439,11 +446,11 @@ class SanPham extends \Model\DB implements \Model\IModelService
         if (\Model\Permission::CheckPremision([\Model\User::Admin, "quanlysanpham_sanpham_delete"]) == false) {
             return;
         }
-    ?>
+        ?>
         <a class="btn btn-danger" title="Xóa Sản Phẩm Này?" href="/quanlysanpham/sanpham/delete/?id=<?php echo $this->Id; ?>">
             <i class="fa fa-times"></i>Xóa
         </a>
-<?php
+        <?php
     }
 
     /**

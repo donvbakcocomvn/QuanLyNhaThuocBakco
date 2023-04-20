@@ -151,19 +151,14 @@ $IdDonThuoc = $donthuoc->Id;
                         <tr style="border-bottom: 1px solid #00000042;">
                             <th class="text-center">STT</th>
                             <th style="padding-left: 10px;" class="text-left">Tên thuốc</th>
-                            <th class="text-center">Số lượng</th>
+                            <th class="text-center" style="padding-right: 10px;" >Số lượng</th>
                             <?php
                             if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, "XemGiaThuoc"]) == true) {
                                 ?>
-                                <th class="text-center">
-                                    <?php
-                                    echo $donthuoc->ThuocLoaiDon != 2 ? "Đơn giá" : ""
-                                        ?>
-                                </th>
                                 <th>
                                     <?php
-                                    echo $donthuoc->ThuocLoaiDon != 2 ? "Thành Tiền" : ""
-                                        ?>
+                                    echo $donthuoc->ThuocLoaiDon != 2 ? "Thành Tiền" : "";
+                                    ?>
                                 </th>
                                 <?php
                             }
@@ -186,7 +181,7 @@ $IdDonThuoc = $donthuoc->Id;
                                 <th style="white-space: nowrap;padding-left:10px;">
                                     <?php echo SanPham::GetNameById($DTdetail['IdThuoc']); ?>
                                 </th>
-                                <td class="text-center"><span style="font-weight: 400 !important;">
+                                <td class="text-center"><span style="white-space: nowrap; font-weight: 400 !important;">
                                         <b>
                                             <?php echo $DTdetail['SoLuong'] . '</b> ' . $DTdetail['DVT']; ?>
                                     </span>
@@ -194,13 +189,7 @@ $IdDonThuoc = $donthuoc->Id;
                                 <?php
                                 if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, "XemGiaThuoc"]) == true) {
                                     ?>
-                                    <td class="text-center">
-                                        <?php
-                                        if ($donthuoc->ThuocLoaiDon != 2) {
-                                            echo Common::ViewNumber($DTdetail['GiaBan']);
-                                        } ?>
-                                    </td>
-                                    <td>
+                                    <td style="white-space: nowrap;">
                                         <?php
                                         if ($donthuoc->ThuocLoaiDon != 2) {
                                             echo Common::ViewPrice($DTdetail['SoLuong'] * $DTdetail['GiaBan']);

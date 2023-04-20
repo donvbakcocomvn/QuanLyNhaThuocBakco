@@ -10,103 +10,95 @@ use Module\quanlythuoc\Model\SanPham;
 use Module\quanlythuoc\Model\SanPham\FormSanPham;
 
 $roleDetail = new Model\Role();
+$sp = new FormSanPham();
+// var_dump($data);
+$item = new SanPham($items);
+// var_dump($item);
 ?>
 <div class="container-fluid">
     <div class="box box-primary">
         <div class="box-header">
-            <h3 class="box-title">Sửa Thuốc</h3>
+            <h3 class="box-title">Thêm Thuốc Mới</h3>
             <div class="box-tools">
+                <!-- <?php
+                Module\quanlythuoc\Model\btnHtml::btnViewSanPham();
+                ?> -->
                 <?php
-                \Model\FormRender::HuongDan("suathuoc", "Hướng dẫn sửa thuốc")
-                ?>
+                \Model\FormRender::HuongDan("suathuoc", "Hướng dẫn thêm thuốc")
+                    ?>
             </div>
         </div>
         <!-- <div class="box-body"> -->
         <form action="" method="post" enctype="multipart/form-data">
             <div class="box-body">
                 <?php
-                $sp = new FormSanPham();
-
-                // var_dump($data);
-                $item = new SanPham($items);
-                // var_dump($item);
+                $sp = new \Module\quanlythuoc\Model\SanPham\FormSanPham();
                 ?>
                 <div class="">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <?php $sp->Id($item->Id)->renderHtml(); ?>
                     </div>
-                    <div class="col-md-4">
-                        <?php $sp->Idloaithuoc($item->Idloaithuoc)->renderHtml();  ?>
+                    <div class="col-md-3">
+                        <?php $sp->Name($item->Name)->renderHtml(); ?>
                     </div>
-                    <div class="col-md-4">
-                        <?php $sp->Name($item->Name)->renderHtml();  ?>
-                    </div>
-                    <!-- <div class="col-md-4">
-                        <?php $sp->Namebietduoc($item->Namebietduoc)->renderHtml();  ?>
+                    <!-- <div class="col-md-3">
+                        <?php $sp->Namebietduoc($item->Namebietduoc)->renderHtml(); ?>
                     </div> -->
-                    <div class="col-md-4">
-                        <?php $sp->CachDung($item->CachDung)->renderHtml();  ?>
+                    <div class="col-md-3">
+                        <?php $sp->Idloaithuoc($item->Idloaithuoc)->renderHtml(); ?>
+                    </div>
+                    <div class="col-md-3">
+                        <?php $sp->CachDung($item->CachDung)->renderHtml(); ?>
+                    </div>
+                    <div class="col-md-3">
+                        <?php $sp->Soluong($item->Soluong)->renderHtml(); ?>
+                    </div>
+                    <div class="col-md-3">
+                        <?php $sp->NhaSX($item->NhaSX)->renderHtml(); ?>
+                    </div>
+                    <div class="col-md-3">
+                        <?php $sp->NuocSX($item->NuocSX)->renderHtml(); ?>
+                    </div>
+                    <div class="col-md-3">
+                        <?php $sp->Solo($item->Solo)->renderHtml(); ?>
+                    </div>
+                    <div class="col-md-3">
+                        <?php $sp->Gianhap($item->Gianhap)->renderHtml(); ?>
+                    </div>
+                    <div class="col-md-3">
+                        <?php $sp->Giaban($item->Giaban)->renderHtml(); ?>
+                    </div>
+                    <div class="col-md-3">
+                        <?php $sp->DVQuyDoi($item->DVQuyDoi)->renderHtml(); ?>
+                    </div>
+                    <div class="col-md-3">
+                        <?php $sp->DVT($item->DVT)->renderHtml(); ?>
                     </div>
                     <div class="col-md-4">
-                        <?php $sp->Soluong($item->Soluong)->renderHtml();  ?>
+                        <?php $sp->Ngaysx($item->Ngaysx)->renderHtml(); ?>
                     </div>
                     <div class="col-md-4">
-                        <?php $sp->NhaSX($item->NhaSX)->renderHtml();  ?>
+                        <?php $sp->HSD($item->HSD)->renderHtml(); ?>
                     </div>
                     <div class="col-md-4">
-                        <?php $sp->NuocSX($item->NuocSX)->renderHtml();  ?>
+                        <?php $sp->Canhbao($item->Canhbao)->renderHtml(); ?>
                     </div>
                     <div class="col-md-4">
-                        <?php $sp->Solo($item->Solo)->renderHtml();  ?>
+                        <?php $sp->Tacdung($item->Tacdung)->renderHtml(); ?>
                     </div>
                     <div class="col-md-4">
-                        <?php $sp->Gianhap($item->Gianhap)->renderHtml();  ?>
+                        <?php $sp->Cochetacdung($item->Cochetacdung)->renderHtml(); ?>
                     </div>
                     <div class="col-md-4">
-                        <?php $sp->Giaban($item->Giaban)->renderHtml();  ?>
+                        <?php $sp->Ghichu($item->Ghichu)->renderHtml(); ?>
                     </div>
-                    <div class="col-md-4">
-                        <?php $sp->DVQuyDoi($item->DVQuyDoi)->renderHtml();  ?>
-                    </div>
-                    <div class="col-md-4">
-                        <?php $sp->DVT($item->DVT)->renderHtml();  ?>
-                    </div>
-                    <div class="col-md-4">
-                        <?php $sp->Canhbao($item->Canhbao)->renderHtml();  ?>
-                    </div>
-                    <div class="col-md-4">
-                        <?php
-                        $sp->Ngaysx($item->Ngaysx)->renderHtml();  ?>
-                    </div>
-                    <div class="col-md-4">
-                        <?php
-                        // $sp->HSD($item->HSD)->renderHtml();  
-                        ?>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <?php $sp->Tacdung($item->Tacdung)->renderHtml();  ?>
-                            </div>
-                            <div class="col-md-4">
-                                <?php $sp->Cochetacdung($item->Cochetacdung)->renderHtml();  ?>
-                            </div>
-                            <div class="col-md-4">
-                                <?php $sp->Ghichu($item->Ghichu)->renderHtml();  ?>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="col-md-12 ">
                         <button class="btn btn-warning" type="reset">Làm Lại</button>
                         <!-- <button class="btn btn-success">Lưu</button> -->
                         <button class="btn btn-success" name="LuuThoat">Lưu Lại</button>
                     </div>
                 </div>
+            </div>
         </form>
     </div>
-</div>
-</form>
-</div>
-</div>
 </div>

@@ -1,5 +1,5 @@
 <ol class="breadcrumb">
-    <li><a href="/index.php?controller=backend">Home</a></li>
+    <li><a href="/backend/">Home</a></li>
     <li> Danh Sách Danh Mục Thuốc </li>
 </ol>
 
@@ -29,8 +29,10 @@
                                     </div>
                                     <div class="col-sm-3 form-group">
                                         <div class="form-group has-success has-feedback">
-                                            <label for="inputSuccess2" class="text-capitalize"><em>Nhấn vào đây&nbsp; </em><i class="fa fa-check"></i></label>
-                                            <button type="submit" style="border-radius: 5px;" class="form-control btn btn-success" name="btnTim" id="keyword">
+                                            <label for="inputSuccess2" class="text-capitalize"><em>Nhấn vào đây&nbsp;
+                                                </em><i class="fa fa-check"></i></label>
+                                            <button type="submit" style="border-radius: 5px;"
+                                                class="form-control btn btn-success" name="btnTim" id="keyword">
                                                 <i class="fa fa-filter"></i>&nbsp; Tìm kiếm theo bộ lọc
                                             </button>
                                         </div>
@@ -51,7 +53,7 @@
 
                     Module\quanlythuoc\Model\btnHtml::btnThemDanhMuc();
                     \Model\FormRender::HuongDan("danhmucthuoc", "Hướng dẫn danh mục thuốc")
-                    ?>
+                        ?>
                 </div>
             </div>
 
@@ -73,7 +75,7 @@
                             $_item = new DanhMuc($item);
                             // var_dump($items);
                             // echo $_item->Id;
-                        ?>
+                            ?>
                             <tr>
                                 <td class="text-center">
                                     <?php
@@ -81,13 +83,23 @@
                                     echo Module\quanlythuoc\Model\btnHtml::btnXoaDanhMuc($_item->Id);
                                     ?>
                                 </td>
-                                <td scope="row"><?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?></td>
-                                <td><?php echo $_item->Id; ?></td>
-                                <td><?php echo $_item->Name; ?></td>
-                                <td><?php echo $_item->Link; ?></td>
-                                <td><?php echo $_item->GhiChu; ?></td>
+                                <td scope="row">
+                                    <?php echo (($indexPage - 1) * $pageNumber) + $index + 1; ?>
+                                </td>
+                                <td>
+                                    <?php echo $_item->Id; ?>
+                                </td>
+                                <td>
+                                    <?php echo $_item->Name; ?>
+                                </td>
+                                <td>
+                                    <?php echo $_item->Link; ?>
+                                </td>
+                                <td>
+                                    <?php echo $_item->GhiChu; ?>
+                                </td>
                             </tr>
-                        <?php
+                            <?php
                         }
                         ?>
                     </tbody>
@@ -118,7 +130,7 @@
     </div>
 </div>
 <script type="text/javascript">
-    var SoDongHienThi = function(evalue) {
+    var SoDongHienThi = function (evalue) {
         var linkPhanTrang = '/index.php?module=quanlythuoc&controller=danhmuc&action=index&indexPage=1&pageNumber=[j]';
         linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
         window.location.href = linkPhanTrang;
