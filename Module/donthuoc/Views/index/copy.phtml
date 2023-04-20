@@ -32,8 +32,8 @@ $donthuoc = new DonThuoc($donthuoc);
 $benhnhan = new BenhNhan($donthuoc->IdBenhNhan);
 if (isset($_GET["isnewbn"])) {
     $benhnhan = new BenhNhan();
+    $bn->SetFormData((array) $benhnhan);
 }
-
 
 // echo $benhnhan->Ngaysinh;
 // echo $a = substr($benhnhan->Ngaysinh,5,2)
@@ -74,7 +74,9 @@ if (isset($_GET["isnewbn"])) {
                                 <?php echo $form->ChanDoanBenh($donthuoc->ChanDoanBenh)->renderHTML(); ?>
                             </div>
                             <div class="col-md-12">
-                                <?php echo $form->Id($donthuoc->Id)->renderHTML(); ?>
+                                <?php
+                                echo $form->Id($donthuoc->CreatId())->renderHTML();
+                                ?>
                             </div>
                             <div class="col-md-12">
                                 <?php echo $form->ThoiGianKham($donthuoc->ThoiGianKham)->renderHTML(); ?>
@@ -87,8 +89,11 @@ if (isset($_GET["isnewbn"])) {
                         <fieldset style="min-height: 400px;">
                             <legend>Thông tin bệnh nhân</legend>
                             <div class="col-md-6">
-                                <?php $bn->IdValue($benhnhan->Id)->render(); ?>
-                                <?php $bn->Name($benhnhan->Name, null)->renderHtml(); ?>
+                                <?php
+                                if (!isset($_GET["isnewbn"])) {
+                                    $bn->IdValue($benhnhan->Id)->render();
+                                }
+                                $bn->Name($benhnhan->Name, null)->renderHtml(); ?>
                             </div>
                             <div class="col-md-6">
                                 <?php $bn->Phone($benhnhan->Phone, null)->renderHtml(); ?>

@@ -20,7 +20,7 @@ class FormRender
 
     public static function GetValue($value, $name, $formData)
     {
-        if ($value == null) {
+        if ($value === null) {
             return $formData[$name] ?? "";
         }
         return $value;

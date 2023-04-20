@@ -18,6 +18,7 @@ class FormBenhNhan implements iFormBenhNhan
         //put your code here
         public function __construct($formData = null)
         {
+
                 self::$FormData = $formData;
         }
         static public function SetFormData($data, $name = "FormDataBenhNhan")
@@ -55,7 +56,7 @@ class FormBenhNhan implements iFormBenhNhan
         function Name($val = null, $id = null)
         {
                 $properties = self::$properties;
-                $properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
+                echo $properties["value"] = FormRender::GetValue($val, __FUNCTION__, self::GetFormData());
                 $properties["class"] = " form-control saveinfor changeinfo";
                 $properties["id"] = $id;
                 $properties[FormRender::Required] = "true";

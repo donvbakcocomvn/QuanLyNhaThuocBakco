@@ -482,14 +482,13 @@ class index extends \Application implements \Controller\IControllerBE
         $benhNhan = $_POST['BenhNhan'];
         $donThuoc = $_POST['DonThuoc'];
 
-
-
         if (isset($benhNhan["Id"])) {
             $ttbn = $benhNhan;
             unset($ttbn["Name"]);
             $bnModel = new BenhNhan();
             $bnModel->PutFromForm($ttbn);
         }
+        // chỉ cập nhật đơn thuốc mới
         // cập nhật đơn thuốc
         if (isset($donThuoc["Id"])) {
             $dtModel = new DonThuoc();
@@ -634,7 +633,7 @@ class index extends \Application implements \Controller\IControllerBE
                 $benhnhan = new BenhNhan();
                 $itemBenhNhan = \Model\Request::Post(FormBenhNhan::$ElementsName, null);
 
-                $itemBN["Id"] = $itemBenhNhan["Id"] ?? $benhnhan->CreatId();
+
                 $itemBN["Name"] = $itemBenhNhan["Name"];
                 $itemBN["Gioitinh"] = $itemBenhNhan["Gioitinh"];
                 $ngay = $itemBenhNhan["NgaySinh"] ? $itemBenhNhan["NgaySinh"] : '01';
@@ -647,7 +646,16 @@ class index extends \Application implements \Controller\IControllerBE
                 $itemBN["QuanHuyen"] = $itemBenhNhan["QuanHuyen"] ?? '';
                 $itemBN["PhuongXa"] = $itemBenhNhan["PhuongXa"] ?? '';
                 $itemBN["Phone"] = $itemBenhNhan["Phone"];
-                if ($itemBenhNhan["Id"] == "") {
+                // copy benh nhân cũ
+                if (isset($itemBenhNhan["Id"])) {
+                    $itemBN["Id"] = $itemBenhNhan["Id"];
+                    $itemPut = $itemBN;
+                    $benhnhan = new BenhNhan();
+                    unset($itemPut["Name"]);
+                    $benhnhan->Put($itemPut);
+                } else {
+                    // benh nhân mới
+                    $benhnhan = new BenhNhan();
                     $itemBN["Id"] = $benhnhan->CreatId();
                     $benhnhan->Post($itemBN);
                 }
