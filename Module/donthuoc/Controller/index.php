@@ -431,8 +431,10 @@ class index extends \Application implements \Controller\IControllerBE
                 $itemDonThuoc["ThuocLoaiDon"] = $itemForm["ThuocLoaiDon"];
                 $itemDonThuoc["TongNgayDung"] = $itemForm["TongNgayDung"];
                 $itemDonThuoc["Status"] = 1;
-                $donthuoc->Post($itemDonThuoc);
-
+                // có thuốc mới thêm
+                if (DonThuocDetail::DsThuoc()) {
+                    $donthuoc->Post($itemDonThuoc);
+                }
                 $sum = 0;
                 foreach (DonThuocDetail::DsThuoc() as $mathuoc => $thuoc) {
                     $sp = new SanPham();
@@ -546,6 +548,7 @@ class index extends \Application implements \Controller\IControllerBE
                 $itemBN["QuanHuyen"] = $itemBenhNhan["QuanHuyen"] ?? '';
                 $itemBN["PhuongXa"] = $itemBenhNhan["PhuongXa"] ?? '';
                 $itemBN["Phone"] = $itemBenhNhan["Phone"];
+
                 $benhnhan->Put($itemBN);
 
                 $itemForm = \Model\Request::Post(FormDonThuoc::$ElementsName, null);
@@ -558,7 +561,9 @@ class index extends \Application implements \Controller\IControllerBE
                 $itemDonThuoc["ThuocLoaiDon"] = $itemForm["ThuocLoaiDon"];
                 $itemDonThuoc["TongNgayDung"] = $itemForm["TongNgayDung"];
                 $donthuocItem = new DonThuoc();
-                $donthuocItem->Put($itemDonThuoc);
+                if (DonThuocDetail::DsThuoc()) {
+                    $donthuocItem->Put($itemDonThuoc);
+                }
 
                 $detail = new DonThuocDetail();
                 $detail->DeleteDetail($donthuoc->Id);
@@ -670,10 +675,13 @@ class index extends \Application implements \Controller\IControllerBE
                 $itemDonThuoc["ThuocLoaiDon"] = $itemForm["ThuocLoaiDon"];
                 $itemDonThuoc["TongNgayDung"] = $itemForm["TongNgayDung"];
                 $itemDonThuoc["Status"] = 1;
-                // tạo benh nhân
-                if ($itemDonThuoc) {
-                    $donthuoc->Post($itemDonThuoc);
+                if (DonThuocDetail::DsThuoc()) {
+                    // tạo benh nhân
+                    if ($itemDonThuoc) {
+                        $donthuoc->Post($itemDonThuoc);
+                    }
                 }
+
                 $detail = new DonThuocDetail();
                 $iddonthuoc = \Model\Request::Get("id", null);
                 $DonThuocModel = new DonThuoc($iddonthuoc);
