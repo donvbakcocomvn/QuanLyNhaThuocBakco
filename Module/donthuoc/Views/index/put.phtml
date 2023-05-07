@@ -200,13 +200,16 @@ $bn = new FormBenhNhan();
                                         <?php echo $form->DVT($sanPham->DonViTinh(), "dvt" . $i, $i)->render(); ?>
                                     </td>
                                     <td style="width: 80px;">
-                                        <?php echo $form->Sang($thuoc["Sang"] ?? "", "sang" . $i, $i)->render(); ?>
+                                        <?php
+                                        echo $form->Sang($thuoc["Sang"] ?? "0", "sang" . $i, $i)->render(); ?>
                                     </td>
                                     <td style="width: 80px;">
-                                        <?php echo $form->Trua($thuoc["Trua"] ?? "", "trua" . $i, $i)->render(); ?>
+                                        <?php
+                                        echo $form->Trua($thuoc["Trua"] ?? "0", "trua" . $i, $i)->render(); ?>
                                     </td>
                                     <td style="width: 80px;">
-                                        <?php echo $form->Chieu($thuoc["Chieu"] ?? "", "chieu" . $i, $i)->render(); ?>
+                                        <?php
+                                        echo $form->Chieu($thuoc["Chieu"] ?? "0", "chieu" . $i, $i)->render(); ?>
                                     </td>
                                     <td style="width: 60px;">
                                         <?php echo $form->SoLuong($thuoc["Soluong"] ?? "", "soluong" . $i, $i)->render(); ?>
