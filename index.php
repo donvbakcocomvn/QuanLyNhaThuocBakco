@@ -1,11 +1,23 @@
 <?php
 
+use Model\Mail;
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include './config.php';
 include './vendor/autoload.php';
 $url = $_SERVER['REQUEST_URI'];
+
+new Mail([
+    "Host" => "smtp.gmail.com",
+    "Username" => "soaivong01@gmail.com",
+    "Password" => "wdngabwpsdnzesmv",
+    "FromMail" => "soaivong01@gmail.com",
+    "FromName" => "Bệnh Viện Demo",
+    "Port" => "465",
+]);
+
 new Router($url);
 $_module = Application::$_Module;
 $_controllerName = Application::$_Controller;

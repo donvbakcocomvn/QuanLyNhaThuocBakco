@@ -104,8 +104,8 @@ class DB
         $TableName = self::$TableName;
         $sql = "SELECT * FROM `{$TableName}` WHERE {$where}";
         if ($col) {
-            $strCol = implode("`,`", $col);
-            $sql = "SELECT `{$strCol}` FROM `{$TableName}` WHERE {$where}";
+            $strCol = implode(",", $col);
+            $sql = "SELECT {$strCol} FROM `{$TableName}` WHERE {$where}";
         }
         return $this->GetRows($sql);
     }

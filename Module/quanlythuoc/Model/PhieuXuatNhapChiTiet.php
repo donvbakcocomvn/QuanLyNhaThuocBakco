@@ -25,8 +25,6 @@ class PhieuXuatNhapChiTiet extends \Model\DB implements \Model\IModelService
     public $NgayNhap;
     public $IsDelete;
 
-
-
     public function __construct($dm = null)
     {
         self::$TableName = prefixTable . "qlthuoc_phieuxuatnhap_chitiet";

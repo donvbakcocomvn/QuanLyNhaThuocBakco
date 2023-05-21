@@ -54,7 +54,7 @@ if (isset($_GET["isnewbn"])) {
             <form action="" method="post" id="formKhachHang" enctype="multipart/form-data">
                 <div class="col-md-4">
                     <div class="row">
-                        <fieldset style="min-height: 400px;">
+                        <fieldset>
                             <legend>Thông tin đơn thuốc</legend>
                             <?php
                             $form = new FormDonThuoc();
@@ -73,12 +73,12 @@ if (isset($_GET["isnewbn"])) {
                             <div class="col-md-12">
                                 <?php echo $form->ChanDoanBenh($donthuoc->ChanDoanBenh)->renderHTML(); ?>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <?php
                                 echo $form->Id($donthuoc->CreatId())->renderHTML();
                                 ?>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <?php echo $form->ThoiGianKham($donthuoc->ThoiGianKham)->renderHTML(); ?>
                             </div>
                         </fieldset>
@@ -86,7 +86,7 @@ if (isset($_GET["isnewbn"])) {
                 </div>
                 <div class="col-md-8">
                     <div class="row">
-                        <fieldset style="min-height: 400px;">
+                        <fieldset>
                             <legend>Thông tin bệnh nhân</legend>
                             <div class="col-md-6">
                                 <?php
@@ -98,19 +98,19 @@ if (isset($_GET["isnewbn"])) {
                             <div class="col-md-6">
                                 <?php $bn->Phone($benhnhan->Phone, null)->renderHtml(); ?>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <?php $bn->CMND($benhnhan->CMND)->renderHtml(); ?>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-2">
                                 <?php $bn->Gioitinh($benhnhan->Gioitinh)->renderHtml(); ?>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                                 <?php $bn->Namsinh(substr($benhnhan->Ngaysinh, 0, 4))->renderHtml(); ?>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                                 <?php $bn->Thangsinh(substr($benhnhan->Ngaysinh, 5, 2))->renderHtml(); ?>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                                 <?php $bn->Ngaysinh(substr($benhnhan->Ngaysinh, 8, 2))->renderHtml(); ?>
                             </div>
                             <div class="col-md-12">
@@ -206,8 +206,10 @@ if (isset($_GET["isnewbn"])) {
                         </tbody>
                     </table>
                     <div class="col-md-12 ">
-                        <button class="btn btn-warning" type="reset">Làm Lại</button>
-                        <button class="btn btn-primary" name="LuuThoat">Sao chép đơn thuốc</button>
+                        <button class="btn btn-primary" onclick="return confirm('Bạn có muốn lưu đơn thuốc này?')"
+                            name="LuuThoat">
+                            Sao chép đơn thuốc
+                        </button>
                     </div>
                 </fieldset>
             </form>

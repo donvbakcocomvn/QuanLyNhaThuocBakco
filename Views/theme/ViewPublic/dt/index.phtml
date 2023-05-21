@@ -1,0 +1,45 @@
+<?php
+use Module\donthuoc\Model\DonThuoc;
+
+$dt = new DonThuoc($_GET["id"]);
+?>
+
+<div style="margin: auto;width: 200px;text-align: center;">
+    <div style="float: left;width: 200px;text-align: center;">
+        <img style="width: 100%;"
+            src="/public/phpqrcode/index.php?data=https://nhathuoc.2splus.com/dt/detail/?id=<?php echo $dt->Id; ?>"
+            alt="qrcode">
+        <div style="text-align: left;margin: auto;width: 200px;padding-left: 25px;">
+            <p>BN:
+                <strong>
+                    <?php echo $dt->BenhNhan()->Name ?>
+                </strong>
+            </p>
+            <p>SĐT:
+                <b>
+                    <?php echo "0372779xxx" ?>
+                </b>
+            </p>
+            <p>GT:
+                <b>
+                    <?php echo $dt->BenhNhan()->Name ?>
+                </b>
+            </p>
+            <p>NS:
+                <b>
+                    <?php echo $dt->BenhNhan()->Ngaysinh ?>
+                </b>
+            </p>
+            <p>NM: A</p>
+        </div>
+    </div>
+</div>
+<button type="submit" onclick="window.print()" class="no-print btn">
+    In
+</button>
+<style type = "text/css">
+ 
+      @media print {
+         .no-print {display: none;}
+      }
+  </style>

@@ -1,0 +1,53 @@
+<ol class="breadcrumb">
+    <li><a href="/datlich/index/post">Đặt Lịch</a></li>
+    <li> Thanh toán</li>
+</ol>
+<div class="container">
+    <div class="box box-primary">
+        <div class="box-header">
+            <h3 class="box-title">Thanh toán</h3>
+        </div>
+        <div class="box-body">
+            <form action="" method="post">
+                <?php
+
+                use Model\FormCommon;
+                use Model\FormRender;
+                use Module\datlich\Model\DatLich;
+                use Module\datlich\Model\DatLichForm;
+
+                $datLich = new DatLich($Id);
+                $dlForm = new DatLichForm();
+                ?>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2>Thông tin phiếu hẹn</h2>
+                        <?php
+                        echo $datLich->PhieuHen();
+                        ?>
+                    </div>
+                    <div class="col-md-6">
+                        <h2 style="text-align: center;">Nhập mã thẻ và mã PIN để thanh toán phiếu hẹn</h2>
+                        <?php
+                        echo FormCommon::TextBox("Mã Thẻ", "TT[MaThe]", [FormRender::Required => "", "class" => "form-control", "type" => "password"])->renderHTML();
+                        echo FormCommon::TextBox("Mã PIN", "TT[MAPIN]", [FormRender::Required => "", "class" => "form-control", "type" => "password"])->renderHTML();
+                        ?>
+                        <div class="text-right">
+                            <button class="btn btn-success">Xác Nhận</button>
+                        </div>
+                    </div>
+                </div>
+
+
+            </form>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var SoDongHienThi = function (evalue) {
+        var linkPhanTrang = '/nhanvien/index/index/?indexPage=1&pageNumber=[j]';
+        linkPhanTrang = linkPhanTrang.replace("[j]", evalue);
+        window.location.href = linkPhanTrang;
+    }
+</script>

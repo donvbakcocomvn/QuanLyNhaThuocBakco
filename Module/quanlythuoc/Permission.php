@@ -7,11 +7,12 @@ use Model\Role;
 class Permission
 {
     //put your code here
+    const QLT_BaoCao = "QLT_BaoCao";
     const QLT_DanhMuc_DS = "QLT_DanhMuc_DS";
     const QLT_DanhMuc_Post = "QLT_DanhMuc_Post";
     const QLT_DanhMuc_Put = "QLT_DanhMuc_Put";
     const QLT_DanhMuc_Delete = "QLT_DanhMuc_Delete";
-    
+
     const QLT_Thuoc_DS = "QLT_Thuoc_DS";
     const QLT_Thuoc_Post = "QLT_Thuoc_Post";
     const QLT_Thuoc_Put = "QLT_Thuoc_Put";
@@ -140,7 +141,7 @@ class Permission
         $dsRole = self::DanhSachQuyen();
         $modelRole = new Role();
         foreach ($dsRole as $role) {
-            if ($modelRole->GetById($role["Id"])==null) {
+            if ($modelRole->GetById($role["Id"]) == null) {
                 $modelRole->Post($role);
             }
         }
@@ -154,6 +155,6 @@ class Permission
         }
     }
 
-    
+
 
 }

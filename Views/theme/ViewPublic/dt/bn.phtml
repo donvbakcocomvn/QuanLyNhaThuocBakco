@@ -1,0 +1,32 @@
+<?php
+use Module\benhnhan\Model\BenhNhan;
+
+$bn = new BenhNhan($Item);
+?>
+
+<table class="table" >
+    <tr>
+        <td>Mã BN:</td>
+        <td>
+            <?php echo $bn->Id; ?>
+        </td>
+    </tr>
+    <tr>
+        <td>Họ & Tên:</td>
+        <td>
+            <?php echo $bn->Name; ?>
+        </td>
+    </tr>
+    <tr>
+        <td>SĐT:</td>
+        <td>
+            <?php echo $bn->Phone; ?>
+        </td>
+    </tr>
+    <tr>
+        <td>Địa Chỉ:</td>
+        <td>
+            <?php echo $bn->Address; ?>
+        </td>
+    </tr>
+</table>

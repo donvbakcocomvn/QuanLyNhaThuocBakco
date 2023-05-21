@@ -226,12 +226,13 @@ $bn = new FormBenhNhan();
                     </table>
                 </fieldset>
                 <div class="col-md-12 ">
-
                     <?php
                     if ($donthuoc->Status != "3") {
                         ?>
-                        <button class="btn btn-warning" type="reset">Làm lại</button>
-                        <button class="btn btn-success" name="LuuThoat">Lưu đơn thuốc</button>
+                        <!-- <button class="btn btn-warning" type="reset">Làm lại</button> -->
+                        <button class="btn btn-success" onclick="return confirm('Bạn có muốn cập nhật đơn thuốc?') "
+                            name="LuuThoat">Lưu
+                            đơn thuốc</button>
                         <?php
                     }
                     ?>

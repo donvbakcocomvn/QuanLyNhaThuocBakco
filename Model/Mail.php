@@ -6,54 +6,67 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-class Mail {
+class Mail
+{
 
-    static function GetConfig() {
-        return [
-            "Host" => "smtp.gmail.com",
-            // "Username" => "namdong92@gmail.com",
-            // "Password" => "polgzebtetoogcip",
-            "Username" => "lthanhphuc99@gmail.com",
-            "Password" => "rnefujzphorfomre",
-            "Port" => "465"
-        ];
+    public static $Host;
+    public static $Username;
+    public static $Password;
+    public static $FromMail;
+    public static $FromName;
+    public static $Port;
+
+    public function __construct($config = null)
+    {
+        if ($config) {
+            self::$Host = $config["Host"] ?? null;
+            self::$Username = $config["Username"] ?? null;
+            self::$Password = $config["Password"] ?? null;
+            self::$FromMail = $config["FromMail"] ?? null;
+            self::$FromName = $config["FromName"] ?? null;
+            self::$Port = $config["Port"] ?? null;
+        }
+
     }
 
-    static function SendMail($title, $content, $addressMail) {
+
+
+    function SendMail($title, $content, $addressMail, $fileAttachment = [])
+    {
+        if ($addressMail == "") {
+            return;
+        }
+
+        $addressMail = explode(";", $addressMail);
+ 
         $mail = new PHPMailer(true);
         try {
-            //Server settings
-            $mail->SMTPDebug = SMTP::DEBUG_OFF;                      //Enable verbose debug output
-            $mail->isSMTP();   
-            $mail->CharSet = 'utf-8';                                   //Send using SMTP
-            $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = 'lthanhphuc99@gmail.com';                     //SMTP username
-            $mail->Password   = 'rnefujzphorfomre';                               //SMTP password
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-            $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
-            //Recipients
-            $mail->setFrom('lthanhphuc99@gmail.com', 'Phòng Khám Bác Sỹ Uyên');
-            $mail->addAddress($addressMail);     //Add a recipient
-            // $mail->addAddress('ellen@example.com');               //Name is optional
-            // $mail->addReplyTo('info@example.com', 'Information');
-            // $mail->addCC('cc@example.com');
-            // $mail->addBCC('bcc@example.com');
+            $mail->SMTPDebug = SMTP::DEBUG_OFF;
+            $mail->isSMTP();
+            $mail->CharSet = 'utf-8';
+            $mail->Host = self::$Host;
+            $mail->SMTPAuth = true;
+            $mail->Username = self::$Username;
+            $mail->Password = self::$Password;
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $mail->Port = self::$Port;
+            $mail->setFrom(self::$FromMail, self::$FromName);
+            foreach ($addressMail as $key => $value) {
+                $mail->addAddress($value);
+            }
 
-            // Attachments
-            // $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
-            // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
-
-            //Content
-            $mail->isHTML(true);                                  //Set email format to HTML
+            if ($fileAttachment) {
+                foreach ($fileAttachment as $key => $value) {
+                    $mail->addAttachment($value, basename($value));
+                }
+            }
+            $mail->isHTML(true);
             $mail->Subject = $title;
-            $mail->Body    = $content;
-            // $mail->AltBody = 'Click On This Link to Reset Password '.$link.'';
+            $mail->Body = $content;
             $mail->send();
-            echo "<script>alert('Mail của bạn đã được gửi đi.\nHãy kiểm tra hộp thư đến để xem kết quả');</script>";
         } catch (\Exception $e) {
-            echo "Lỗi rồi kìa : {$e->getMessage()}";
+
         }
     }
 

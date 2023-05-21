@@ -1,0 +1,23 @@
+<ol class="breadcrumb">
+    <li><a href="/datlich/index/post">Đặt Lịch</a></li>
+    <li> Phiếu Hẹn</li>
+</ol>
+<div class="container">
+    <div class="box box-primary">
+        <div class="box-body">
+            <div  >
+                <?php
+                use Module\datlich\Model\DatLich;
+
+                $phieu = new DatLich($Id);
+                echo $phieu->PhieuHen(); ?>
+
+                <img style="width: 200px;margin: auto;margin-bottom: 15px;display: block;"
+                    src="/public/phpqrcode/index.php?data=https://nhathuoc.2splus.com/dt/ph/?id=<?php echo $phieu->Code; ?>"
+                    alt="qrcode">
+
+            </div>
+            <a href="/datlich/index/post" class="btn btn-primary" >Đặt Lịch</a>
+        </div>
+    </div>
+</div>

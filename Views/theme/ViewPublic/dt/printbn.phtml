@@ -1,0 +1,47 @@
+<?php
+
+use Module\benhnhan\Model\BenhNhan;
+
+$dt = new BenhNhan($_GET["id"]);
+?>
+
+<div style="margin: auto;text-align: center;">
+    <div style="float: left;width: 200px;text-align: center;">
+        <img style="width: 100%;margin-bottom: 15px;"
+            src="/public/phpqrcode/index.php?data=https://nhathuoc.2splus.com/dt/bn/?id=<?php echo $dt->Id; ?>"
+            alt="qrcode">
+            <div style="clear: both;" ></div>
+        <div style="margin-top: 20px ;transform: rotate(90deg);text-align: left;margin: auto;width: 200px;padding-left: 35px;">
+            <p>Name:
+                <strong>
+                    <?php echo $dt->Name ?>
+                </strong>
+            </p>
+            <p>Phone:
+                <b>
+                    <?php echo $dt->Phone ?>
+                </b>
+            </p>
+            <p>SEX:
+                <b>
+                    <?php echo $dt->Gioitinh ?>
+                </b>
+            </p>
+            <p>BOD:
+                <b>
+                    <?php echo $dt->Ngaysinh ?>
+                </b>
+            </p>
+             
+        </div>
+    </div>
+</div>
+<button type="submit" onclick="window.print()" class="no-print btn">
+    In
+</button>
+<style type = "text/css">
+ 
+      @media print {
+         .no-print {display: none;}
+      }
+  </style>
