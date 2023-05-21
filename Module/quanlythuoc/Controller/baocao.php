@@ -2,6 +2,7 @@
 namespace Module\quanlythuoc\Controller;
 
 use Model\Request;
+use Module\quanlythuoc\Model\SanPham;
 
 class baocao extends \Application implements \Controller\IControllerBE
 {
@@ -19,6 +20,17 @@ class baocao extends \Application implements \Controller\IControllerBE
         $xuatNhap = Request::Get("Type", "");
         $data = $baoCao->GetSoLanNhapThuoc($fromDate, $toDate, $xuatNhap);
         $this->View(["Item" => $data]);
+    }
+    public function thuoc()
+    {
+        $baoCao = new \Module\quanlythuoc\Model\BaoCao();
+        $idThuoc = $this->getParams(0);
+        $fromDate = Request::Get("FromDate", "");
+        $toDate = Request::Get("ToDate", "");
+        $xuatNhap = Request::Get("Type", "1");
+        $data = $baoCao->GetSoLanNhapTheoThuoc($idThuoc, $fromDate, $toDate, $xuatNhap);
+        $thuoc = new SanPham($idThuoc);
+        $this->View(["Item" => $data, "Thuoc" => (array) $thuoc]);
     }
 
     /**

@@ -1,6 +1,8 @@
 <?php
 namespace Module\quanlythuoc\Model;
 
+use Model\DB;
+
 class BaoCao extends PhieuXuatNhapChiTiet
 {
 
@@ -20,6 +22,17 @@ class BaoCao extends PhieuXuatNhapChiTiet
         {$sqlXuatNhap}
         GROUP BY `IdThuoc`";
         return $this->Select($where, ["COUNT(`IdThuoc`) as `SoLan`", "IdThuoc"]);
+    }
+    public function GetSoLanNhapTheoThuoc($idThuoc, $fromDate, $toDate, $xuatNhap)
+    {
+        $sqlXuatNhap = "";
+        if ($xuatNhap) {
+            $sqlXuatNhap = "and `XuatNhap` ='{$xuatNhap}'";
+        }
+        $where = "`CreateRecord` > '{$fromDate}' 
+        and `CreateRecord` < '{$toDate}' and `IdThuoc` = '{$idThuoc}' {$sqlXuatNhap}";
+         
+        return $this->Select($where);
     }
 
 }
