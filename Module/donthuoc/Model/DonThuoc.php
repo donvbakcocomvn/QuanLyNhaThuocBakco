@@ -409,7 +409,7 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
         return $this->UpdateRow($model);
     }
 
-// public static function CapChaTpOptions($dungTatCa = false) {
+    // public static function CapChaTpOptions($dungTatCa = false) {
 //     $dm = new BenhNhan();
 //     $where = "`parentsId` != '' or `parentsId` is null ";
 //     $a = $dm->SelectToOptions($where, ["Id", "Name"]);
@@ -418,5 +418,19 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
 //     }
 //     return $a;
 // }
+
+
+    static function GetDonThuocCopyId($isObjec = true)
+    {
+        $_SESSION["DonThuocCopy"] = $_SESSION["DonThuocCopy"] ?? null;
+        if($isObjec == true){
+            return new DonThuoc($_SESSION["DonThuocCopy"]);
+        }
+        return $_SESSION["DonThuocCopy"];
+    }
+    static function SetDonThuocCopyId($id)
+    {
+        $_SESSION["DonThuocCopy"] = $id;
+    }
 
 }

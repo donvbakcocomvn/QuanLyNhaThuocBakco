@@ -44,7 +44,8 @@ class FormBenhNhan implements iFormBenhNhan
                 $properties["readonly"] = $val;
                 $properties[FormRender::Required] = "true";
                 $name = self::$ElementsName . "[" . __FUNCTION__ . "]";
-                return new FormRender(new Element\Textbox("Mã Khách Hàng", $name, $properties));
+                $html = "<a target='__blank' href='/benhnhan/index/detail/?id={$val}' >xem</a>";
+                return new FormRender(new Element\Textbox("Mã Bệnh Nhân {$html}", $name, $properties));
         }
 
         /**

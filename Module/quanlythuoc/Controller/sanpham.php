@@ -213,7 +213,8 @@ class sanpham extends \Application implements \Controller\IControllerBE
      */
     function put()
     {
-        \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Thuoc_Put]);
+        \Model\Permission::Check([
+            \Model\User::Admin, \Model\User::QuanLy, Permission::QLT_Thuoc_Put]);
         try {
             if (\Model\Request::Post(FormSanPham::$ElementsName, null)) {
 

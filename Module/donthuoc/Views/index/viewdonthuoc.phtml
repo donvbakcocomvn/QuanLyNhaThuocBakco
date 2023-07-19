@@ -151,7 +151,7 @@ $IdDonThuoc = $donthuoc->Id;
                         <tr style="border-bottom: 1px solid #00000042;">
                             <th class="text-center">STT</th>
                             <th style="padding-left: 10px;" class="text-left">Tên thuốc</th>
-                            <th class="text-center" style="padding-right: 10px;">Số lượng</th>
+                            <th class="text-center" style="padding-right: 10px;" >Số lượng</th>
                             <?php
                             if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, "XemGiaThuoc"]) == true) {
                                 ?>
@@ -308,7 +308,7 @@ $IdDonThuoc = $donthuoc->Id;
                 </h5>
             </div>
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-xs-4">
                     <button type="submit" onclick="window.print()" class="no-print btn">
                         Print
                     </button>

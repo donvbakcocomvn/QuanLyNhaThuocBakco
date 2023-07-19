@@ -86,11 +86,13 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
     public static function setDsThuoc($IdDonThuoc)
     {
 
+        DonThuoc::SetDonThuocCopyId($IdDonThuoc);
         $_SESSION["DetailThuoc"] = [];
+        $_SESSION["SoNgaySDThuoc"] = DonThuoc::GetDonThuocCopyId()->TongNgayDung;
         self::DsThuoc();
-
         $detail = new DonThuocDetail();
         $danhSachThuoc = $detail->getByIdDonThuoc($IdDonThuoc);
+
 
         foreach ($danhSachThuoc as $key => $thuoc) {
             $thuocDetail = new ModelSanPham($thuoc["IdThuoc"]);
@@ -133,16 +135,12 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
 
     public function CapNhatThuoc($detailThuoc, $index)
     {
-        // $item = $_SESSION["DetailThuoc"][$index];
-        // $sang = $item["Sang"] ?? 0;
-        // $chieu = $item["Chieu"] ?? 0;
-        // $trua = $item["Trua"] ?? 0;
+        $DonThuoc = DonThuoc::GetDonThuocCopyId();
 
         $sp = new ModelSanPham($detailThuoc);
-
         $sanpham = new \Module\quanlythuoc\Model\SanPham();
         $spThuoc = $sanpham->GetById($detailThuoc["Id"]);
-        $detailThuoc["Id"] = $detailThuoc["Id"];
+        // $detailThuoc["Id"] = $detailThuoc["Id"];
         $detailThuoc["IdThuoc"] = $detailThuoc["Id"];
         $detailThuoc["DVT"] = $sp->DVT;
         $detailThuoc["DVTTitle"] = $sp->DonViTinh();
@@ -150,7 +148,7 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
         $detailThuoc["Sang"] = $detailThuoc["Sang"] ?? 0;
         $detailThuoc["Trua"] = $detailThuoc["Trua"] ?? 0;
         $detailThuoc["Chieu"] = $detailThuoc["Chieu"] ?? 0;
-        $detailThuoc["Giaban"] = $detailThuoc["Giaban"];
+        // $detailThuoc["Giaban"] = $detailThuoc["Giaban"];
         $detailThuoc["Ghichu"] = $detailThuoc["Ghichu"] ?? "";
         $detailThuoc["CachDung"] = $sp->CachDungThuoc();
         // echo $sp->DVQuyDoi;
@@ -168,24 +166,28 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
         }
         // var_dump($Sang);
         // var_dump($Chieu);
-        // var_dump($Trua);
-        $detailThuoc["Soluong"] = ceil(($Sang + $Chieu + $Trua) * $detailThuoc["SoNgaySDThuoc"]);
-        // nếu thuốc trong kho không đủ -> tất cả về 0
+        // var_dump($Trua);  
+        // echo $detailThuoc["SoNgaySDThuoc"];
+        $detailThuoc["Soluong"] = ceil(($Sang + $Chieu + $Trua) * intval($detailThuoc["SoNgaySDThuoc"]));
         $detailThuoc["idloaiDonThuoc"] = $detailThuoc["idloaiDonThuoc"] ?? null;
-        if ($detailThuoc["idloaiDonThuoc"] == "3") {
-            if ($detailThuoc["Soluong"] > $spThuoc['SLHienTai']) {
-                $detailThuoc["Sang"] = 0;
-                $detailThuoc["Trua"] = 0;
-                $detailThuoc["Chieu"] = 0;
-                $detailThuoc["Soluong"] = 0;
-                $_SESSION["DetailThuoc"][$index] = $detailThuoc;
-                return false;
+        // nếu thuốc trong kho không đủ -> tất cả về 0 
+        // var_dump($DonThuoc->ThuocLoaiDon);
+        if ($DonThuoc->ThuocLoaiDon == "3") {
+            $SLHienTai = intval($spThuoc['SLHienTai']);
+            // echo "<br>";
+            $detailThuoc["Soluong"] = intval($detailThuoc["Soluong"]);
+            // echo "<br>";
+            if ($detailThuoc["Soluong"] > $SLHienTai) {
+                // $detailThuoc["Sang"] = 0;
+                // $detailThuoc["Trua"] = 0;
+                // $detailThuoc["Chieu"] = 0;
+                // $detailThuoc["Soluong"] = 0;
+                $detailThuoc["SoNgaySDThuoc"] = 0;
             }
         }
-
-
+        $detailThuoc["Soluong"] = ceil(($Sang + $Chieu + $Trua) * $detailThuoc["SoNgaySDThuoc"]);
         $_SESSION["DetailThuoc"][$index] = $detailThuoc;
-        return true;
+        return $detailThuoc;
     }
 
     public function GetName()
@@ -302,7 +304,7 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
         return $this->UpdateRow($model);
     }
 
-// public static function CapChaTpOptions($dungTatCa = false) {
+    // public static function CapChaTpOptions($dungTatCa = false) {
 //     $dm = new BenhNhan();
 //     $where = "`parentsId` != '' or `parentsId` is null ";
 //     $a = $dm->SelectToOptions($where, ["Id", "Name"]);

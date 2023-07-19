@@ -99,7 +99,15 @@ class btnHtml
     }
     public static function btnBaoCao($id)
     {
-        if (\Model\Permission::CheckPremision([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_BaoCao]) == false) {
+        if (
+            \Model\Permission::CheckPremision(
+                [
+                    \Model\User::Admin,
+                    \Model\User::QuanLy,
+                    Permission::QLT_BaoCao
+                ]
+            ) == false
+        ) {
             return;
         }
         ?>

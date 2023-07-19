@@ -93,7 +93,7 @@ if (isset($_GET["isnewbn"])) {
                                 if (!isset($_GET["isnewbn"])) {
                                     $bn->IdValue($benhnhan->Id)->render();
                                 }
-                                $bn->Name($benhnhan->Name, null)->renderHtml(); ?>
+                                $bn->Name($donthuoc->NameBN, null)->renderHtml(); ?>
                             </div>
                             <div class="col-md-6">
                                 <?php $bn->Phone($benhnhan->Phone, null)->renderHtml(); ?>
@@ -139,7 +139,7 @@ if (isset($_GET["isnewbn"])) {
                                     </button>
                                 </th>
                                 <th>STT</th>
-                                <th>Tên Thuốc</th>
+                                <th>Tên Thuốc</th> 
                                 <th>Số Ngày Dùng</th>
                                 <th>Cách Dùng</th>
                                 <th>Đơn Vị Tính</th>
@@ -173,7 +173,7 @@ if (isset($_GET["isnewbn"])) {
                                     <td style="width:250px;">
                                         <?php
                                         echo $form->Name($thuoc["Id"] ?? "", "donthuoc" . $i, $i)->renderHTML() ?>
-                                    </td>
+                                    </td> 
                                     <td style="width:120px;">
                                         <?php echo $form->SoNgaySDThuoc($thuoc["SoNgaySDThuoc"] ?? "", "SoNgaySD" . $i, $i)->render(); ?>
                                     </td>

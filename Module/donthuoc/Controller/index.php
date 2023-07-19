@@ -332,11 +332,13 @@ class index extends \Application implements \Controller\IControllerBE
     public function capnhatngaydungthuoc()
     {
         $number = $this->getParams(0);
-        $_SESSION["SoNgaySDThuoc"] = $number;
+        $_SESSION["SoNgaySDThuoc"] = intval($number);
+        // số ngày dùng thuốc
         $DsThuoc = DonThuocDetail::DsThuoc();
         $donthuocdetail = new DonThuocDetail();
         foreach ($DsThuoc as $key => $value) {
             if (isset($value["SoNgaySDThuoc"])) {
+                // số ngày dùng thuốc của từng thuốc
                 $value["SoNgaySDThuoc"] = $number;
                 $donthuocdetail->CapNhatThuoc($value, $key);
             }
@@ -366,7 +368,6 @@ class index extends \Application implements \Controller\IControllerBE
             return;
         }
         $donthuocdetail->CapNhatThuoc($_sanpham, $index);
-        // echo $sanpham->DonViTinh();
         echo json_encode(DonThuocDetail::DsThuoc()[$index], JSON_UNESCAPED_UNICODE);
     }
 
@@ -637,7 +638,6 @@ class index extends \Application implements \Controller\IControllerBE
             if (\Model\Request::Post(FormDonThuoc::$ElementsName, null) && \Model\Request::Post(FormBenhNhan::$ElementsName, null)) {
                 $benhnhan = new BenhNhan();
                 $itemBenhNhan = \Model\Request::Post(FormBenhNhan::$ElementsName, null);
-
 
                 $itemBN["Name"] = $itemBenhNhan["Name"];
                 $itemBN["Gioitinh"] = $itemBenhNhan["Gioitinh"];

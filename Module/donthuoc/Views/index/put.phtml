@@ -28,6 +28,7 @@ $form = new FormDonThuoc();
 $donthuoc = new DonThuoc($donthuoc);
 // var_dump($donthuoc);
 $benhnhan = new BenhNhan($donthuoc->IdBenhNhan);
+ 
 
 // echo $benhnhan->Ngaysinh;
 // echo $a = substr($benhnhan->Ngaysinh,5,2)
@@ -89,7 +90,8 @@ $bn = new FormBenhNhan();
                         <fieldset>
                             <legend>Thông tin bệnh nhân</legend>
                             <div class="col-md-4">
-                                <?php $bn->Id($donthuoc->Id)->renderHtml(); ?>
+                                <?php $bn->Id($benhnhan->Id)->renderHtml(); ?>
+                                
                             </div>
                             <div class="col-md-4">
                                 <?php $bn->IdValue($benhnhan->Id)->render(); ?>
