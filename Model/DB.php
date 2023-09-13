@@ -150,9 +150,13 @@ class DB
 
     function UpdateRow($model)
     {
+
         // self::$Debug = true;
-        $where = " `Id` = '{$model["Id"]}' ";
-        return $this->Update($model, $where);
+        if ($model["Id"]) {
+            $where = " `Id` = '{$model["Id"]}' ";
+            return $this->Update($model, $where);
+        }
+        return null;
     }
 
     // xóa data base

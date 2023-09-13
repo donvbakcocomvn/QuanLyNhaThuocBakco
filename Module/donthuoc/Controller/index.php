@@ -509,16 +509,22 @@ class index extends \Application implements \Controller\IControllerBE
             $bnModel = new BenhNhan();
             $bnModel->PutFromForm($ttbn);
         }
+        $benhNhan["Ngaysinh"] = date(
+            "Y-m-d",
+            strtotime($benhNhan["NamSinh"] . "-" . $benhNhan["ThangSinh"] . "-" . $benhNhan["NgaySinh"])
+        );
+        FormBenhNhan::SetFormData($benhNhan);
         // chỉ cập nhật đơn thuốc mới
         // cập nhật đơn thuốc
         if (isset($donThuoc["Id"])) {
             $dtModel = new DonThuoc();
             $DTDB = $dtModel->GetById($donThuoc["Id"]);
+            $DTDB["Id"] = $donThuoc["Id"];
             $DTDB["NameBN"] = $benhNhan["Name"];
             $dtModel->Put($DTDB);
         }
+
         FormDonThuoc::SetFormData($donThuoc);
-        FormBenhNhan::SetFormData($benhNhan);
         echo json_encode($_POST);
     }
     // Call API
@@ -698,7 +704,7 @@ class index extends \Application implements \Controller\IControllerBE
                     if ($itemDonThuoc) {
                         $donthuoc->Post($itemDonThuoc);
                     }
-                } 
+                }
                 $detail = new DonThuocDetail();
                 $iddonthuoc = \Model\Request::Get("id", null);
                 $DonThuocModel = new DonThuoc($iddonthuoc);
@@ -726,6 +732,7 @@ class index extends \Application implements \Controller\IControllerBE
                 }
                 new \Model\Error(\Model\Error::success, "Đã sao chép đơn thuốc");
                 $donthuoc = new DonThuoc($itemDonThuoc["Id"]);
+                FormBenhNhan::SetFormData(null);
                 \Model\Common::ToUrl("/donthuoc/index/viewdonthuoc/?id=" . $donthuoc->Id . "");
             }
         } catch (\Exception $exc) {
@@ -739,6 +746,9 @@ class index extends \Application implements \Controller\IControllerBE
         $data["donthuoc"] = $DM->GetById($id);
         if (isset($_GET["isnew"])) {
             DonThuocDetail::setDsThuoc($id);
+            $benhnhan = new BenhNhan();
+            $benhnhan->Name = $data["donthuoc"]["NameBN"];
+            FormBenhNhan::SetFormData((array) $benhnhan);
             Common::ToUrl("/donthuoc/index/copy/?id={$id}&isnewbn=1");
         }
         $this->View($data);
@@ -748,6 +758,12 @@ class index extends \Application implements \Controller\IControllerBE
     {
         $id = \Model\Request::Get("id", null);
         DonThuocDetail::setDsThuoc($id);
+        $donthuoc = new DonThuoc($id);
+        $benhnhan = new BenhNhan($donthuoc->IdBenhNhan);
+        if ($benhnhan) {
+            $benhnhan->Name = $donthuoc->NameBN;
+            FormBenhNhan::SetFormData((array) $benhnhan);
+        }
         Common::ToUrl("/donthuoc/index/copy/?id={$id}");
     }
 

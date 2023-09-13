@@ -28,13 +28,18 @@ $bn = new FormBenhNhan();
 $donthuoc = new DonThuoc($donthuoc);
 // var_dump($donthuoc);
 // lấy thông tin bệnh nhân cũ
-
 $benhnhan = new BenhNhan($donthuoc->IdBenhNhan);
-if (isset($_GET["isnewbn"])) {
-    $benhnhan = new BenhNhan();
-    $bn->SetFormData((array) $benhnhan);
-}
 
+// if (isset($_GET["isnewbn"])) {
+//     $benhnhan = new BenhNhan();
+//     $bn->SetFormData((array) $benhnhan);
+// }
+
+$_SESSION["FormDataBenhNhan"] = $_SESSION["FormDataBenhNhan"] ?? null;
+if ($_SESSION["FormDataBenhNhan"]) {
+    // var_dump($_SESSION["FormDataBenhNhan"]);
+    $benhnhan = new BenhNhan($_SESSION["FormDataBenhNhan"]);
+}
 // echo $benhnhan->Ngaysinh;
 // echo $a = substr($benhnhan->Ngaysinh,5,2)
 ?>
@@ -93,7 +98,7 @@ if (isset($_GET["isnewbn"])) {
                                 if (!isset($_GET["isnewbn"])) {
                                     $bn->IdValue($benhnhan->Id)->render();
                                 }
-                                $bn->Name($donthuoc->NameBN, null)->renderHtml(); ?>
+                                $bn->Name($benhnhan->Name, null)->renderHtml(); ?>
                             </div>
                             <div class="col-md-6">
                                 <?php $bn->Phone($benhnhan->Phone, null)->renderHtml(); ?>
@@ -105,6 +110,7 @@ if (isset($_GET["isnewbn"])) {
                                 <?php $bn->Gioitinh($benhnhan->Gioitinh)->renderHtml(); ?>
                             </div>
                             <div class="col-md-2">
+                                <?php // var_dump($benhnhan->Ngaysinh); ?>
                                 <?php $bn->Namsinh(substr($benhnhan->Ngaysinh, 0, 4))->renderHtml(); ?>
                             </div>
                             <div class="col-md-2">
@@ -139,7 +145,7 @@ if (isset($_GET["isnewbn"])) {
                                     </button>
                                 </th>
                                 <th>STT</th>
-                                <th>Tên Thuốc</th> 
+                                <th>Tên Thuốc</th>
                                 <th>Số Ngày Dùng</th>
                                 <th>Cách Dùng</th>
                                 <th>Đơn Vị Tính</th>
@@ -173,7 +179,7 @@ if (isset($_GET["isnewbn"])) {
                                     <td style="width:250px;">
                                         <?php
                                         echo $form->Name($thuoc["Id"] ?? "", "donthuoc" . $i, $i)->renderHTML() ?>
-                                    </td> 
+                                    </td>
                                     <td style="width:120px;">
                                         <?php echo $form->SoNgaySDThuoc($thuoc["SoNgaySDThuoc"] ?? "", "SoNgaySD" . $i, $i)->render(); ?>
                                     </td>

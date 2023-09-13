@@ -191,7 +191,7 @@ class BenhNhan extends \Model\DB implements \Model\IModelService
         return $this->UpdateRow($model);
     }
 
-// public static function CapChaTpOptions($dungTatCa = false) {
+    // public static function CapChaTpOptions($dungTatCa = false) {
 //     $dm = new BenhNhan();
 //     $where = "`parentsId` != '' or `parentsId` is null ";
 //     $a = $dm->SelectToOptions($where, ["Id", "Name"]);

@@ -180,7 +180,7 @@ $(document).ready(function () {
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             dataType: 'json',
             success: function (response) {
-                console.log(response);
+                console.log('response');
             },
             error: function () {
                 // alert("error");
