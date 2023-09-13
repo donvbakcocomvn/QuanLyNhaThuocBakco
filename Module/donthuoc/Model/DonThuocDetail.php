@@ -95,9 +95,9 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
         foreach ($danhSachThuoc as $key => $thuoc) {
             $thuocDetail = new ModelSanPham($thuoc["IdThuoc"]);
             $item = $thuocDetail->GetById($thuoc["IdThuoc"]);
-            
             $item["SoNgaySDThuoc"] = $thuoc["SoNgaySDThuoc"];
             $item["Ghichu"] = $thuoc["GhiChu"];
+            
             $item["Sang"] = floatval($thuoc["Sang"]);
             $item["Trua"] = floatval($thuoc["Trua"]);
             $item["Chieu"] = floatval($thuoc["Chieu"]);

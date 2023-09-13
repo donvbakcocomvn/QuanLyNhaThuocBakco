@@ -19,7 +19,7 @@ class FormRender
 
 
     public static function GetValue($value, $name, $formData)
-    {
+    { 
         if ($value === null) {
             return $formData[$name] ?? "";
         }
@@ -51,7 +51,8 @@ class FormRender
         ?>
         <a class="btn btn-primary" target="_self" data-toggle="modal" href='#huongdan<?php echo $id; ?>'>
             <i class="fa fa-info" aria-hidden="true"></i>
-            &nbsp;<?php echo $title ?>
+            &nbsp;
+            <?php echo $title ?>
         </a>
         <div class="modal fade" id="huongdan<?php echo $id; ?>">
             <div class="modal-dialog modal-lg">

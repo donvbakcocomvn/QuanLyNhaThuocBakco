@@ -169,7 +169,16 @@ $(document).ready(function () {
         }
         return data;
     }
+    $(".saveinfor").focus(function () {
+        $("#btn-add").hide();
+        $(".deleterows").hide();
+    });
+    $(".saveinfor").blur(function () {
+        $("#btn-add").show();
+        $(".deleterows").show();
+    });
     $(".saveinfor").change(() => {
+        $("#btn-add").prop('disabled', true);
         var formData = $("#formKhachHang").serializeArray();
         var dataFormBenhNhan = getFormDataByName("BenhNhan", formData);
         var dataFormDonThuoc = getFormDataByName("DonThuoc", formData);
@@ -180,58 +189,57 @@ $(document).ready(function () {
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             dataType: 'json',
             success: function (response) {
-                console.log('response');
+                $("#btn-add").prop('disabled', false);
             },
             error: function () {
                 // alert("error");
             }
         });
     });
-    $(".changeinfo").each(function (index, e) {
-        $(this).change(function (param) {
-            $($(this).attr("id")).val();
-            var formData = $("#formKhachHang").serializeArray();
-            // lấy thông tin theo từng form
-            var dataForm = getFormDataByName("BenhNhan", formData);
-            $id = $("#tenbenhnhan").val();
-            $sdt = $("#sodienthoai").val();
-            var dataFormString = dataForm;
-            // console.log(dataFormString);
-            $.ajax({
-                url: `/donthuoc/index/timkhachhang/`,
-                type: 'POST',
-                data: dataFormString,
-                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-                dataType: 'json',
-                success: function (response) {
-                    if (response.Name != null) {
+    // $(".changeinfo").each(function (index, e) {
+    //     $(this).change(function (param) {
+    //         $("#btn-add").prop('disabled', true);
+    //         $($(this).attr("id")).val();
+    //         var formData = $("#formKhachHang").serializeArray();
+    //         // lấy thông tin theo từng form
+    //         var dataForm = getFormDataByName("BenhNhan", formData);
+    //         $id = $("#tenbenhnhan").val();
+    //         $sdt = $("#sodienthoai").val();
+    //         var dataFormString = dataForm; 
+    //         $.ajax({
+    //             url: `/donthuoc/index/timkhachhang/`,
+    //             type: 'POST',
+    //             data: dataFormString,
+    //             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    //             dataType: 'json',
+    //             success: function (response) {
+    //                 if (response.Name != null) { 
+    //                     $("#tenbenhnhan").val(response.Name);
+    //                     $("#Namsinh").val((response.Ngaysinh).substring(0, 4));
+    //                     $("#Thangsinh").val((response.Ngaysinh).substring(5, 7));
+    //                     $("#Ngaysinh").val((response.Ngaysinh).substring(8, 10));
+    //                     $("#sodienthoai").val(response.Phone);
+    //                     $('#CMND').val(response.CMND);
+    //                     $('#Gioitinh').val(response.Gioitinh);
+    //                     $('#TinhThanh').val(response.Address);
+    //                     $('#tinhThanh').val(response.TinhThanh).change();
+    //                     // $('#quanHuyen').val(response.QuanHuyen);
+    //                     $(`select#quanHuyen option[value="` + $(response.QuanHuyen) + `"]`).attr("selected", true);
+    //                     $('#quanHuyen').data('value', response.QuanHuyen);
+    //                     $('#quanHuyen').change();
 
-                        $("#tenbenhnhan").val(response.Name);
-                        $("#Namsinh").val((response.Ngaysinh).substring(0, 4));
-                        $("#Thangsinh").val((response.Ngaysinh).substring(5, 7));
-                        $("#Ngaysinh").val((response.Ngaysinh).substring(8, 10));
-                        $("#sodienthoai").val(response.Phone);
-                        $('#CMND').val(response.CMND);
-                        $('#Gioitinh').val(response.Gioitinh);
-                        $('#TinhThanh').val(response.Address);
-                        $('#tinhThanh').val(response.TinhThanh).change();
-                        // $('#quanHuyen').val(response.QuanHuyen);
-                        $(`select#quanHuyen option[value="` + $(response.QuanHuyen) + `"]`).attr("selected", true);
-                        $('#quanHuyen').data('value', response.QuanHuyen);
-                        $('#quanHuyen').change();
-
-                        $(`select#phuongXa option[value="` + $(response.PhuongXa) + `"]`).attr("selected", true);
-                        $('#phuongXa').data('value', response.PhuongXa);
-                        $('#phuongXa').change();
-                    }
-
-                },
-                error: function () {
-                    // alert("error");
-                }
-            });
-        });
-    });
+    //                     $(`select#phuongXa option[value="` + $(response.PhuongXa) + `"]`).attr("selected", true);
+    //                     $('#phuongXa').data('value', response.PhuongXa);
+    //                     $('#phuongXa').change();
+    //                     $("#btn-add").prop('disabled', false);
+    //                 } 
+    //             },
+    //             error: function () {
+                   
+    //             }
+    //         });
+    //     });
+    // });
 
 
     // Thêm SESSION
@@ -258,7 +266,11 @@ $(document).ready(function () {
 
     // Xóa SESSION
     $(".deleterows").click(function () {
+        if (confirm("Bạn có muốn bỏ dòng này?") == false) {
+            return;
+        }
         var index = $("#" + $(this).attr("id")).attr("index");
+        var $self = $(this);
         // var TongNgayDungThuoc = $("#TongNgayDungThuoc").val();
         $.ajax({
             url: `/donthuoc/index/DeleteSP/${index}/`,
@@ -268,7 +280,8 @@ $(document).ready(function () {
             contentType: false,
             processData: false,
             success: function (response) {
-                window.location.reload();
+                // window.location.reload();
+                $self.parents("tr").remove();
                 console.log(response);
             },
             complete: function () {

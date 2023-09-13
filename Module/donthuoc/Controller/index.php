@@ -4,6 +4,7 @@ namespace Module\donthuoc\Controller;
 
 use LengthException;
 use Model\Common;
+use Model\DB;
 use Model\FormRender;
 use Model\OptionsService;
 use Module\benhnhan\Model\BenhNhan;
@@ -110,7 +111,6 @@ class index extends \Application implements \Controller\IControllerBE
     public function themdong()
     {
         $_SESSION["DetailThuoc"][] = [];
-        var_dump($_SESSION["DetailThuoc"]);
         return $_SESSION["DetailThuoc"];
     }
 
@@ -494,38 +494,43 @@ class index extends \Application implements \Controller\IControllerBE
             $_SESSION["FormDataDonThuoc"] = [];
             FormBenhNhan::SetFormData([]);
             Common::ToUrl('/donthuoc/index/post');
+            die();
         }
         $this->View();
     }
 
     public function saveFormKhachHang()
     {
-        $benhNhan = $_POST['BenhNhan'];
-        $donThuoc = $_POST['DonThuoc'];
-
-        if (isset($benhNhan["Id"])) {
-            $ttbn = $benhNhan;
-            unset($ttbn["Name"]);
-            $bnModel = new BenhNhan();
-            $bnModel->PutFromForm($ttbn);
+        try {
+            $benhNhan = $_POST['BenhNhan'];
+            // $donThuoc = $_POST['DonThuoc']; 
+            // if (isset($benhNhan["Id"])) {
+            //     $ttbn = $benhNhan;
+            //     unset($ttbn["Name"]);
+            //     $bnModel = new BenhNhan();
+            //     $bnModel->PutFromForm($ttbn);
+            // }
+            $benhNhan["Ngaysinh"] = date(
+                "Y-m-d",
+                strtotime($benhNhan["NamSinh"] . "-" . $benhNhan["ThangSinh"] . "-" . $benhNhan["NgaySinh"])
+            );
+            $benhNhan = new BenhNhan($benhNhan);
+            FormBenhNhan::SetFormData((array) $benhNhan);
+            $benhNhan = (array) $benhNhan;
+            // chỉ cập nhật đơn thuốc mới
+            // cập nhật đơn thuốc
+            // if (isset($donThuoc["Id"])) {
+            //     $dtModel = new DonThuoc();
+            //     $DTDB = $dtModel->GetById($donThuoc["Id"]);
+            //     $DTDB["Id"] = $donThuoc["Id"];
+            //     $DTDB["NameBN"] = $benhNhan["Name"];
+            //     $dtModel->Put($DTDB);
+            // }
+            // FormDonThuoc::SetFormData($donThuoc);
+            echo json_encode($benhNhan);
+        } catch (\Exception $exc) {
+            echo $exc->getMessage();
         }
-        $benhNhan["Ngaysinh"] = date(
-            "Y-m-d",
-            strtotime($benhNhan["NamSinh"] . "-" . $benhNhan["ThangSinh"] . "-" . $benhNhan["NgaySinh"])
-        );
-        FormBenhNhan::SetFormData($benhNhan);
-        // chỉ cập nhật đơn thuốc mới
-        // cập nhật đơn thuốc
-        if (isset($donThuoc["Id"])) {
-            $dtModel = new DonThuoc();
-            $DTDB = $dtModel->GetById($donThuoc["Id"]);
-            $DTDB["Id"] = $donThuoc["Id"];
-            $DTDB["NameBN"] = $benhNhan["Name"];
-            $dtModel->Put($DTDB);
-        }
-
-        FormDonThuoc::SetFormData($donThuoc);
-        echo json_encode($_POST);
     }
     // Call API
     public function timkhachhang()
@@ -656,7 +661,8 @@ class index extends \Application implements \Controller\IControllerBE
     function copy()
     {
         \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy, Permission::QLT_DonThuoc_Copy]);
-
+        // var_dump($_SESSION["FormDataBenhNhan"]);
+        // echo "______________";
         try {
             // DonThuocDetail::ClearSession();
             if (\Model\Request::Post(FormDonThuoc::$ElementsName, null) && \Model\Request::Post(FormBenhNhan::$ElementsName, null)) {
@@ -741,9 +747,12 @@ class index extends \Application implements \Controller\IControllerBE
 
         $id = \Model\Request::Get("id", null);
         if ($id == null) {
+            Common::ToUrl("/donthuoc/index/index");
         }
         $DM = new DonThuoc();
+        // DB::$Debug = true;
         $data["donthuoc"] = $DM->GetById($id);
+
         if (isset($_GET["isnew"])) {
             DonThuocDetail::setDsThuoc($id);
             $benhnhan = new BenhNhan();
@@ -751,6 +760,7 @@ class index extends \Application implements \Controller\IControllerBE
             FormBenhNhan::SetFormData((array) $benhnhan);
             Common::ToUrl("/donthuoc/index/copy/?id={$id}&isnewbn=1");
         }
+
         $this->View($data);
     }
 

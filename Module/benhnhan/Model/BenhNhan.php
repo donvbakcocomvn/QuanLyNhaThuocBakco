@@ -27,7 +27,7 @@ class BenhNhan extends \Model\DB implements \Model\IModelService
 
     public function __construct($bn = null)
     {
-        self::$TableName = prefixTable . "benhnhan";
+        self::$TableName = prefixTable . "benhnhan"; 
         parent::__construct();
         if ($bn) {
             if (!is_array($bn)) {
@@ -154,7 +154,7 @@ class BenhNhan extends \Model\DB implements \Model\IModelService
         $addressSql = "";
         $phoneSql = "";
         if ($name) {
-            $nameSql = " and `Name` LIKE '%$name%'";
+            $nameSql = " or `Name` LIKE '%$name%'";
         }
         if ($gioitinh) {
             $gioitinhSql = " and `Gioitinh` LIKE '%$gioitinh%'";
@@ -166,7 +166,7 @@ class BenhNhan extends \Model\DB implements \Model\IModelService
             $phoneSql = " and `Phone` LIKE '%$phone%'";
         }
         // self::$Debug = true;
-        $where = " (`Id` like '%{$id}%' {$nameSql}{$gioitinhSql}{$phoneSql}) and `isDelete` = 0 ";
+        $where = " (`Id` like '%{$id}%' {$nameSql})  {$gioitinhSql} {$phoneSql} and `isDelete` = 0 ";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 

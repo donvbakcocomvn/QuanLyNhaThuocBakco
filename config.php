@@ -28,7 +28,7 @@ if (FALSE) {
     $INI['host'] = "localhost";
     $INI['username'] = "root";
     $INI['password'] = "";
-    $INI['DBname'] = "nhathuoc1";
+    $INI['DBname'] = "nhathuoc";
 }
 
 //#mbne6Y3&foG

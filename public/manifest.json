@@ -5,12 +5,12 @@
     "orientation": "portrait",
     "icons": [
         {
-            "src": "http://nhanvien.bakco.vn/public/Logo_full.png",
+            "src": "/public/Logo_full.png",
             "type": "image/png",
             "sizes": "192x192"
         },
         {
-            "src": "http://nhanvien.bakco.vn/public/Logo_full.png",
+            "src": "/public/Logo_full.png",
             "type": "image/png",
             "sizes": "512x512"
         }

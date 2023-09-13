@@ -36,7 +36,7 @@ class Functions
         <link rel="dns-prefetch" href="//www.facebook.com" />
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />
         <title>Quản Lý Phòng khám </title>
-        <link rel=icon href=https://www.bakco.com.vn/wp-content/uploads/2017/10/cropped-bakco_favicon-1-32x32.png sizes=32x32>
+        <link rel="icon" href="/public/Logo_full.ico" sizes=32x32>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.5 -->
@@ -57,7 +57,7 @@ class Functions
         <link rel="stylesheet" href="/public/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
         <!-- Date Picker -->
         <link rel="stylesheet" href="/public/plugins/datepicker/datepicker3.css">
-        <link rel="manifest" href="/public/manifest.json?v=<?php echo filemtime('public/manifest.json') ?>">
+        <!-- <link rel="manifest" href="/public/manifest.json?v=<?php echo filemtime('public/manifest.json') ?>"> -->
         <!-- Daterange picker -->
         <link rel="stylesheet" href="/public/plugins/daterangepicker/daterangepicker-bs3.css">
         <link rel="stylesheet" href="/public/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
