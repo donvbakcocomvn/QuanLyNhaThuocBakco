@@ -148,6 +148,24 @@ class index extends \Application implements \Controller\IControllerBE
         $this->View($data);
     }
 
+
+    function DongBoDonThuoc()
+    {
+        $donThuoc = new DonThuoc();
+        $indexPage = 1;
+        $pageNumber = 1000;
+        $total = 0;
+        $dsDonThuoc = $donThuoc->GetItems([], $indexPage, $pageNumber, $total);
+        echo $total . "<br>";
+        foreach ($dsDonThuoc as $key => $value) {
+            $value["NameBN"] = str_replace("  ", " ", $value["NameBN"]);
+            $value["NameBN"] = mb_convert_encoding($value["NameBN"], 'UTF-8');
+
+            $donThuoc->Put($value);
+            echo $value["Id"] . "<br>";
+        }
+    }
+
     function export()
     {
     }
@@ -680,8 +698,7 @@ class index extends \Application implements \Controller\IControllerBE
                     if ($itemDonThuoc) {
                         $donthuoc->Post($itemDonThuoc);
                     }
-                }
-
+                } 
                 $detail = new DonThuocDetail();
                 $iddonthuoc = \Model\Request::Get("id", null);
                 $DonThuocModel = new DonThuoc($iddonthuoc);

@@ -91,15 +91,11 @@ class DonThuocDetail extends \Model\DB implements \Model\IModelService
         $_SESSION["SoNgaySDThuoc"] = DonThuoc::GetDonThuocCopyId()->TongNgayDung;
         self::DsThuoc();
         $detail = new DonThuocDetail();
-        $danhSachThuoc = $detail->getByIdDonThuoc($IdDonThuoc);
-
-
+        $danhSachThuoc = $detail->getByIdDonThuoc($IdDonThuoc); 
         foreach ($danhSachThuoc as $key => $thuoc) {
             $thuocDetail = new ModelSanPham($thuoc["IdThuoc"]);
             $item = $thuocDetail->GetById($thuoc["IdThuoc"]);
-            // var_dump($thuoc);
-            // $item["SoNgaySDThuoc"] = $thuoc["SoNgaySDThuoc"];
-            // $item["SoNgaySDThuoc"] = $thuoc["SoNgaySsDThuoc"];
+            
             $item["SoNgaySDThuoc"] = $thuoc["SoNgaySDThuoc"];
             $item["Ghichu"] = $thuoc["GhiChu"];
             $item["Sang"] = floatval($thuoc["Sang"]);

@@ -294,8 +294,9 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
 
 
     public function GetItems($params, $indexPage, $pageNumber, &$total)
-    {
+    { 
         $name = isset($params["keyword"]) ? $params["keyword"] : '';
+        $name = mb_convert_encoding($name, 'UTF-8');
         $isShow = isset($params["isDelete"]) ? $params["isDelete"] : 0;
         $fromdate = isset($params["fromdate"]) ? $params["fromdate"] : '';
         $todate = isset($params["todate"]) ? $params["todate"] : '';
@@ -319,7 +320,7 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
         }
         $fromdateIsDeleteSQL = "and `IsDelete` = '0'";
 
-        $where = " (`IdBenhNhan` like '%{$name}%' or `Id` like '%{$name}%' or `NameBN` like '%{$name}%') {$fromdateSql} {$statusSql} {$todateSql} {$fromdateIsDeleteSQL} {$loaidonthuocSql}  ORDER BY `CreateRecord` DESC";
+        $where = " (`NameBN` like '%{$name}%' or `IdBenhNhan` like '%{$name}%' or `Id` like '%{$name}%') {$fromdateSql} {$statusSql} {$todateSql} {$fromdateIsDeleteSQL} {$loaidonthuocSql}  ORDER BY `CreateRecord` DESC";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 

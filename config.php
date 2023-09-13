@@ -23,12 +23,12 @@ if (FALSE) {
     $INI['host'] = "localhost";
     $INI['username'] = "root";
     $INI['password'] = "root";
-    $INI['DBname'] = "nhathuoc";
+    $INI['DBname'] = "nhathuoc1";
 } else {
     $INI['host'] = "localhost";
     $INI['username'] = "root";
     $INI['password'] = "";
-    $INI['DBname'] = "nhathuoc";
+    $INI['DBname'] = "nhathuoc1";
 }
 
 //#mbne6Y3&foG
