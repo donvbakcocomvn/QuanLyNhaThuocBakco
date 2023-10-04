@@ -14,6 +14,7 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
     public $Id;
     public $IdBenhNhan;
     public $NameBN;
+    public $TenKhongDau;
     public $GioiTinh;
     public $NgaySinh;
     public $ThoiGianKham;
@@ -36,6 +37,7 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
             if ($bn) {
                 $this->Id = isset($bn["Id"]) ? $bn["Id"] : null;
                 $this->IdBenhNhan = isset($bn["IdBenhNhan"]) ? $bn["IdBenhNhan"] : null;
+                $this->TenKhongDau = isset($bn["TenKhongDau"]) ? $bn["TenKhongDau"] : null;
                 $this->NameBN = isset($bn["NameBN"]) ? $bn["NameBN"] : null;
                 $this->GioiTinh = isset($bn["GioiTinh"]) ? $bn["GioiTinh"] : null;
                 $this->NgaySinh = isset($bn["NgaySinh"]) ? $bn["NgaySinh"] : null;
@@ -47,7 +49,16 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
             }
         }
     }
-
+    function Conver()
+    {
+        $a = $this->Select("1=1");
+        foreach ($a as $k => $v) {
+            $this->Put([
+                "Id" => $v["Id"],
+                "TenKhongDau" => str_replace("-", " ", Common::BoDauTienViet($v["NameBN"]))
+            ]);
+        }
+    }
 
     public function btnchitiet()
     {
@@ -294,9 +305,9 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
 
 
     public function GetItems($params, $indexPage, $pageNumber, &$total)
-    { 
+    {
         $name = isset($params["keyword"]) ? $params["keyword"] : '';
-        $name = mb_convert_encoding($name, 'UTF-8');
+
         $isShow = isset($params["isDelete"]) ? $params["isDelete"] : 0;
         $fromdate = isset($params["fromdate"]) ? $params["fromdate"] : '';
         $todate = isset($params["todate"]) ? $params["todate"] : '';
@@ -319,8 +330,9 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
             $todateSql = "and `CreateRecord` <= '{$todate}' ";
         }
         $fromdateIsDeleteSQL = "and `IsDelete` = '0'";
-
-        $where = " (`NameBN` like '%{$name}%' or `IdBenhNhan` like '%{$name}%' or `Id` like '%{$name}%') {$fromdateSql} {$statusSql} {$todateSql} {$fromdateIsDeleteSQL} {$loaidonthuocSql}  ORDER BY `CreateRecord` DESC";
+        $nameKD = Common::BoDauTienViet($name);
+        $nameKD = str_replace("-", "_", $name);
+        $where = " (`NameBN` like '%{$name}%' or `IdBenhNhan` like '%{$name}%' or `Id` like '%{$name}%' or `TenKhongDau` like '%{$nameKD}%') {$fromdateSql} {$statusSql} {$todateSql} {$fromdateIsDeleteSQL} {$loaidonthuocSql}  ORDER BY `CreateRecord` DESC";
         return $this->SelectPT($where, $indexPage, $pageNumber, $total);
     }
 
@@ -402,11 +414,13 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
 
     public function Post($model)
     {
+        $model["TenKhongDau"] = Common::TenKhongDau($model["NameBN"]);
         return $this->Insert($model);
     }
 
     public function Put($model)
     {
+        $model["TenKhongDau"] = Common::TenKhongDau($model["NameBN"]);
         return $this->UpdateRow($model);
     }
 
@@ -424,7 +438,7 @@ class DonThuoc extends \Model\DB implements \Model\IModelService
     static function GetDonThuocCopyId($isObjec = true)
     {
         $_SESSION["DonThuocCopy"] = $_SESSION["DonThuocCopy"] ?? null;
-        if($isObjec == true){
+        if ($isObjec == true) {
             return new DonThuoc($_SESSION["DonThuocCopy"]);
         }
         return $_SESSION["DonThuocCopy"];

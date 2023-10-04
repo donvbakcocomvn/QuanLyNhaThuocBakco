@@ -32,6 +32,13 @@ class index extends \Application implements \Controller\IControllerBE
         self::$_Theme = "backend";
     }
 
+    function convertNameAlias()
+    {
+        $donthuoc = new DonThuoc();
+        $donthuoc->Conver();
+
+    }
+
     function soanthuoc()
     {
         \Model\Permission::Check([\Model\User::Admin, \Model\User::QuanLy]);
@@ -160,7 +167,9 @@ class index extends \Application implements \Controller\IControllerBE
         foreach ($dsDonThuoc as $key => $value) {
             $value["NameBN"] = str_replace("  ", " ", $value["NameBN"]);
             $value["NameBN"] = mb_convert_encoding($value["NameBN"], 'UTF-8');
-
+            $TenKD = Common::BoDauTienViet($value["NameBN"]);
+            $TenKD = str_replace("-", " ", $TenKD);
+            $value["TenKhongDau"] = $TenKD;
             $donThuoc->Put($value);
             echo $value["Id"] . "<br>";
         }

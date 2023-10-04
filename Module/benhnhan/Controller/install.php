@@ -3,11 +3,14 @@
 namespace Module\benhnhan\Controller;
 
 use Model\Common;
+use Module\benhnhan\Model\BenhNhan;
 use Module\benhnhan\Permission;
 
-class install extends \Application  {
+class install extends \Application
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         /**
          * kiem tra đăng nhap
          * @param {type} parameter
@@ -16,15 +19,17 @@ class install extends \Application  {
         self::$_Theme = "backend";
     }
 
-    function index() {
+    function index()
+    {
     }
-
-    function install() {
-        Permission::install();
-        Common::ToUrl("/benhnhan/index");
+    function install()
+    {
+        // Permission::install();
+        // Common::ToUrl("/benhnhan/index");
 
     }
-    function uninstall() {
+    function uninstall()
+    {
         Permission::uninstall();
         Common::ToUrl("/benhnhan/index");
     }

@@ -7,7 +7,7 @@ class index extends \Application {
     public function __construct() {
         new backend();
         self::$_Theme = "backend";
-    }
+    }   
 
     function index() {
         $this->View();

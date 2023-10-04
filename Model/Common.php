@@ -176,7 +176,9 @@ class Common
                 $_link = str_replace("[i]", $index, $LinkPhanTrang);
                 ?>
                 <li class="<?php echo $TrangThuBaoNhieu == $index ? 'active' : ''; ?>">
-                    <a href="<?php echo $_link; ?>"><?php echo $index; ?></a>
+                    <a href="<?php echo $_link; ?>">
+                        <?php echo $index; ?>
+                    </a>
                 </li>
                 <?php
             }
@@ -231,6 +233,12 @@ class Common
         $str = preg_replace('/[^a-zA-Z0-9\ ]/', '', $str);
         $str = str_replace(" ", "-", $str);
         return $str;
+    }
+    public static function TenKhongDau($str)
+    {
+        $str1 = self::BoDauTienViet($str);
+        $str1 = str_replace("-", " ", $str1);
+        return $str1;
     }
 
     public static function ViewPrice($number)
